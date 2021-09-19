@@ -11,6 +11,7 @@
 @import "./_metronic/_assets/sass/themes/layout/brand/dark.scss";
 @import "./_metronic/_assets/sass/themes/layout/aside/dark.scss";
 
+@import "./scss/variables";
 // Header themes
 // Light
 //@import "./_metronic/_assets/sass/themes/layout/header/base/light.scss";
@@ -107,4 +108,120 @@
 
 .display-block {
   display: block;
+}
+
+.notification-badge-wrapper {
+  background-color: #fff;
+  position: relative;
+  padding: 1rem;
+  border-radius: 2rem 0rem 2rem 0rem;
+  min-height: 11rem;
+  box-shadow: 10px 10px 10px #aaaaaa;
+  .notification-badge__container{
+    color: #fff;
+    padding: 1rem 0;
+    min-height: 8rem;
+    border-radius: 2rem 0rem 2rem 0rem;
+    
+  }
+  .notification-badge-wrapper__count{
+    position: absolute;
+    background: #fff;
+    bottom: 0.7rem;
+    padding: 0.3rem;
+    font-size: 2rem;
+  }
+}
+
+.light-green__bg {
+  background-color: #51D657;
+}
+
+.light-purple__bg {
+  background-color: #C05DFD;
+}
+
+.orange__bg {
+  background-color: #FC8720;
+}
+
+.light-pink__bg{
+  background-color: #F65D94;
+}
+
+.light-pink-container__bg {
+  background-color: #FFE2E5;
+}
+
+.light-green-container__bg {
+  background-color: #E8FFF3;
+}
+
+.progress {
+  height: .5rem;
+}
+
+
+
+.order-stats__wrapper {
+  margin: 1rem 0;
+  padding: 1.5rem;
+  min-height: 14rem;
+  box-shadow: 5px 5px 10px #aaaaaa;
+  .order-stats-pink__container{
+    h3 {
+      color: $base-pink-color;
+      margin: 1rem 0;
+    }
+    p{
+      display: inline-block;
+      color: #a0a0a0;
+    }
+    .order-stats-wrapper__info {
+      margin: 1rem 0;
+      span{
+        font-size: 1.5rem;
+        font-weight: bold;
+        margin-right: 0.2rem;
+      }
+    }
+    .general-progress-bar{
+      .progress {
+        background-color: $base-light-pink-color;
+      }
+    
+      .progress-bar{
+        background-color: $base-pink-color;
+      }
+    }
+  }
+
+  .order-stats-green__container{
+    h3 {
+      color: $base-dark-green-color;
+      margin: 1rem 0;
+    }
+    p{
+      display: inline-block;
+      color: #a0a0a0;
+    }
+    .order-stats-wrapper__info {
+      margin: 1rem 0;
+      span{
+        font-size: 1.5rem;
+        font-weight: bold;
+        margin-right: 0.2rem;
+      }
+    }
+    .general-progress-bar{
+      .progress {
+        background-color: $base-light-green-color;
+      }
+    
+      .progress-bar{
+        background-color: $base-dark-green-color;
+      }
+    }
+  }
+  
 }

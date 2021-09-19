@@ -57,42 +57,45 @@ export const reducer = persistReducer(
 );
 
 export const actions = {
-  login: (payload) => ({ type: actionTypes.Login, payload }),
+  login: (authToken) => ({ type: actionTypes.Login, payload: { authToken } }),
   register: (authToken) => ({
     type: actionTypes.Register,
     payload: { authToken },
   }),
   logout: () => ({ type: actionTypes.Logout }),
-  requestUser: (user) => ({
-    type: actionTypes.UserRequested,
-    payload: { user },
-  }),
+  requestUser: (user) => {
+    console.log(user);
+    return ({
+      type: actionTypes.UserRequested,
+      payload: { user },
+    })
+  },
   fulfillUser: (user) => ({ type: actionTypes.UserLoaded, payload: { user } }),
   setUser: (user) => ({ type: actionTypes.SetUser, payload: { user } }),
 };
 
 export function* saga() {
-  yield takeLatest(actionTypes.Login, function* loginSaga({payload, callback}) {
-    try{
-      const response = yield call(Api.post, endpoints.login, payload );
+  yield takeLatest(actionTypes.Login, function* loginSaga() {
+    yield put(actions.requestUser());
+    // try{
+    //   const response = yield call(Api.post, endpoints.login, props.payload );
 
-      if (response.ok){
-        if (typeof callback === "function") {
-          callback(response.data);
-        }
-      }else{
-        yield put({
-          type: 'LOGIN FAILED',
-          payload: "Invalid email/password"
-        });
-      }
-    }catch(e){
-      yield put({
-        type: 'NETWORK ERROR',
-        payload: e
-      });
-    }
-    // yield put(actions.requestUser());
+    //   if (response.ok){
+    //     if (typeof props.callback === "function") {
+    //       props.callback(response.data);
+    //     }
+    //   }else{
+    //     yield put({
+    //       type: 'LOGIN FAILED',
+    //       payload: "Invalid email/password"
+    //     });
+    //   }
+    // }catch(e){
+    //   yield put({
+    //     type: 'NETWORK ERROR',
+    //     payload: e
+    //   });
+    // }
   });
 
   yield takeLatest(actionTypes.Register, function* registerSaga() {

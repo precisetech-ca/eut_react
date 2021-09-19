@@ -17,8 +17,8 @@ import { login } from "../_redux/authCrud";
 */
 
 const initialValues = {
-  email: "",
-  password: "",
+  email: "admin@demo.com",
+  password: "demo",
 };
 
 function Login(props) {
@@ -73,7 +73,7 @@ function Login(props) {
         login(values.email, values.password)
           .then(({ data: { accessToken } }) => {
             disableLoading();
-            props.login(values);
+            props.login(accessToken);
           })
           .catch(() => {
             disableLoading();

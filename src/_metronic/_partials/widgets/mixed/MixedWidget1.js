@@ -54,19 +54,7 @@ export function MixedWidget1({ className }) {
       {/* Header */}
       <div className="card-header border-0 bg-danger py-5">
         <h3 className="card-title font-weight-bolder text-white">Sales Stat</h3>
-        <div className="card-toolbar">
-          <Dropdown className="dropdown-inline" drop="down" alignRight>
-            <Dropdown.Toggle
-              className="btn btn-transparent-white btn-sm font-weight-bolder dropdown-toggle px-5"
-              variant="transparent"
-              id="dropdown-toggle-top">
-              Export
-            </Dropdown.Toggle>
-            <Dropdown.Menu className="dropdown-menu dropdown-menu-sm dropdown-menu-right">
-              <DropdownMenu2 />
-            </Dropdown.Menu>
-          </Dropdown>
-        </div>
+        
       </div>
       {/* Body */}
       <div className="card-body p-0 position-relative overflow-hidden">
@@ -90,7 +78,7 @@ export function MixedWidget1({ className }) {
                 href="#"
                 className="text-warning font-weight-bold font-size-h6"
               >
-                Weekly Sales
+                Order
               </a>
             </div>
             <div className="col bg-light-primary px-6 py-8 rounded-xl mb-7">
@@ -105,7 +93,7 @@ export function MixedWidget1({ className }) {
                 href="#"
                 className="text-primary font-weight-bold font-size-h6 mt-2"
               >
-                New Users
+                Part
               </a>
             </div>
           </div>
@@ -120,7 +108,7 @@ export function MixedWidget1({ className }) {
                 href="#"
                 className="text-danger font-weight-bold font-size-h6 mt-2"
               >
-                Item Orders
+                PO
               </a>
             </div>
             <div className="col bg-light-success px-6 py-8 rounded-xl">
@@ -135,7 +123,7 @@ export function MixedWidget1({ className }) {
                 href="#"
                 className="text-success font-weight-bold font-size-h6 mt-2"
               >
-                Bug Reports
+                Receiving
               </a>
             </div>
           </div>
