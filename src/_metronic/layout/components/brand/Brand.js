@@ -28,8 +28,10 @@ export function Brand() {
           id="kt_brand"
       >
         {/* begin::Logo */}
-        <Link to="" className="brand-logo">
-          <img alt="logo" src={layoutProps.headerLogo}/>
+        <Link to="" className="brand-logo" style={{
+          fontSize: "2rem"
+        }}>
+          EUT
         </Link>
         {/* end::Logo */}
 
