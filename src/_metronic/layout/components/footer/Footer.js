@@ -20,17 +20,6 @@ export function Footer() {
       <div
         className={`${layoutProps.footerContainerClasses} d-flex flex-column flex-md-row align-items-center justify-content-between`}
       >
-        <div className="text-dark order-2 order-md-1">
-          <span className="text-muted font-weight-bold mr-2">{today.toString()}</span> &copy;{" "}
-          <a
-            href="http://keenthemes.com/metronic"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-dark-75 text-hover-primary"
-          >
-            Keenthemes
-          </a>
-        </div>
         <div className="nav nav-dark order-1 order-md-2">
           <a
             href="http://keenthemes.com/metronic"
