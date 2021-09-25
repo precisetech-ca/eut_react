@@ -36,7 +36,7 @@ export function AsideMenuList({ layoutProps }) {
         {/* Applications */}
         {/* begin::section */}
         <li className="menu-section ">
-          <h4 className="menu-text">Applications</h4>
+          <h4 className="menu-text">EUT Navigation</h4>
           <i className="menu-icon flaticon-more-v2"></i>
         </li>
         {/* end:: section */}
@@ -55,14 +55,14 @@ export function AsideMenuList({ layoutProps }) {
             <span className="svg-icon menu-icon">
               <SVG src={toAbsoluteUrl("/media/svg/icons/Shopping/Bag2.svg")} />
             </span>
-            <span className="menu-text">eCommerce</span>
+            <span className="menu-text">Inventory</span>
           </NavLink>
           <div className="menu-submenu">
             <i className="menu-arrow" />
             <ul className="menu-subnav">
               <li className="menu-item menu-item-parent" aria-haspopup="true">
                 <span className="menu-link">
-                  <span className="menu-text">eCommerce</span>
+                  <span className="menu-text">Inventory</span>
                 </span>
               </li>
               {/*begin::2 Level*/}
@@ -76,25 +76,11 @@ export function AsideMenuList({ layoutProps }) {
                   <i className="menu-bullet menu-bullet-dot">
                     <span />
                   </i>
-                  <span className="menu-text">Customers</span>
+                  <span className="menu-text">Item Master</span>
                 </NavLink>
               </li>
               {/*end::2 Level*/}
               {/*begin::2 Level*/}
-              <li
-                className={`menu-item ${getMenuItemActive(
-                  "/e-commerce/products"
-                )}`}
-                aria-haspopup="true"
-              >
-                <NavLink className="menu-link" to="/e-commerce/products">
-                  <i className="menu-bullet menu-bullet-dot">
-                    <span />
-                  </i>
-                  <span className="menu-text">Products</span>
-                </NavLink>
-              </li>
-              {/*end::2 Level*/}
             </ul>
           </div>
         </li>

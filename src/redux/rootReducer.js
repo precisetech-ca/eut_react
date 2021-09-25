@@ -6,6 +6,7 @@ import {customersSlice} from "../app/modules/ECommerce/_redux/customers/customer
 import {productsSlice} from "../app/modules/ECommerce/_redux/products/productsSlice";
 import {remarksSlice} from "../app/modules/ECommerce/_redux/remarks/remarksSlice";
 import {specificationsSlice} from "../app/modules/ECommerce/_redux/specifications/specificationsSlice";
+import {watcherGetterSaga, watcherSaga} from '../app/generic/sagas';
 
 export const rootReducer = combineReducers({
   auth: auth.reducer,
@@ -16,5 +17,9 @@ export const rootReducer = combineReducers({
 });
 
 export function* rootSaga() {
-  yield all([auth.saga()]);
+  yield all([
+    auth.saga(),
+    watcherGetterSaga(),
+    watcherSaga()
+  ]);
 }
