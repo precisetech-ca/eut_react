@@ -3,5 +3,5 @@ import Inventory from "./inventory/Inventory";
 import { MainDashboard } from "./MainDashboard";
 
 export function DashboardPage() {
-  return <Inventory />;
+  return <MainDashboard />;
 }
