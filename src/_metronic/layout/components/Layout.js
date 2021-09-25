@@ -49,7 +49,7 @@ export function Layout({ children }) {
                             id="kt_content"
                             className={`content ${layoutProps.contentCssClasses} d-flex flex-column flex-column-fluid`}
                         >
-                            {/* {layoutProps.subheaderDisplay && <SubHeader/>} */}
+                            {layoutProps.subheaderDisplay && <SubHeader/>}
                             {/*begin::Entry*/}
                             {!layoutProps.contentExtended && (
                                 <div className="d-flex flex-column-fluid">
