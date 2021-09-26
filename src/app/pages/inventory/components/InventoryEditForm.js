@@ -41,7 +41,7 @@ export function InventoryEditForm({
   actionsLoading,
   onHide,
 }) {
-  const { warehouseMockData, prefferedSupplier } = useCustomersUIContext();
+  const { warehouseMockData, prefferedSupplier, weightMockProps } = useCustomersUIContext();
 
   return (
     <>
@@ -178,13 +178,37 @@ export function InventoryEditForm({
                   </div>
                   <div className="col-lg-6">
                     {/* Type */}
+                    <Select name="uom" label="UOM">
+                      <option value="">Please select</option>
+                      {prefferedSupplier?.map(({id, title}) => <option value={id}>{title}</option>)}
+                    </Select>
+                  </div>
+                  
+                </div>
+                
+                <div className="form-group row">
+                  {/* Gender */}
+                  <div className="col-lg-2">
+                    <Select name="weight" label="Weight">
+                      <option value="">Please select</option>
+                      {weightMockProps?.map(({id, title}) => <option value={id}>{title}</option>)}
+                    </Select>
                     <Field
-                      name="uom"
+                      name="weight"
                       component={Input}
-                      placeholder="UOM"
-                      label="Re-ordering UOM"
+                      placeholder="Weight"
+                      label="Weight"
                       className="form-control form-control-sm"
                     />
+                  </div>
+                  <div className="col-lg-2"></div>
+                  <div className="col-lg-2"></div>
+                  <div className="col-lg-6">
+                    {/* Type */}
+                    <Select name="re_ordering_uom" label="Re-Ordering UOM">
+                      <option value="">Please select</option>
+                      {prefferedSupplier?.map(({id, title}) => <option value={id}>{title}</option>)}
+                    </Select>
                   </div>
                 </div>
                 <div className="form-group row">
