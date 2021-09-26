@@ -13,6 +13,14 @@ export const CustomersUIConsumer = CustomersUIContext.Consumer;
 export function CustomersUIProvider({customersUIEvents, children}) {
   const [queryParams, setQueryParamsBase] = useState(initialFilter);
   const [ids, setIds] = useState([]);
+  const warehouseMockData = [
+    {id: "1", title: "King PIN 5th Wheel"},
+    {id: "2", title: "Alloy Rims"}
+  ];
+
+  const prefferedSupplier = [
+    {id: "1", title: "Vancouver Fire Prevention"},
+  ];
   const setQueryParams = useCallback(nextQueryParams => {
     setQueryParamsBase(prevQueryParams => {
       if (isFunction(nextQueryParams)) {
@@ -52,7 +60,9 @@ export function CustomersUIProvider({customersUIEvents, children}) {
     openDeleteCustomerDialog: customersUIEvents.openDeleteCustomerDialog,
     openDeleteCustomersDialog: customersUIEvents.openDeleteCustomersDialog,
     openFetchCustomersDialog: customersUIEvents.openFetchCustomersDialog,
-    openUpdateCustomersStatusDialog: customersUIEvents.openUpdateCustomersStatusDialog
+    openUpdateCustomersStatusDialog: customersUIEvents.openUpdateCustomersStatusDialog,
+    warehouseMockData,
+    prefferedSupplier
   };
 
   return <CustomersUIContext.Provider value={value}>{children}</CustomersUIContext.Provider>;
