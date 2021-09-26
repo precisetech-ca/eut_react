@@ -13,7 +13,7 @@ import {
 } from "../../../../_metronic/_partials/controls";
 
 // Validation schema
-const CustomerEditSchema = Yup.object().shape({
+const InventoryEditSchema = Yup.object().shape({
   firstName: Yup.string()
     .min(3, "Minimum 3 symbols")
     .max(50, "Maximum 50 symbols")
@@ -32,7 +32,7 @@ const CustomerEditSchema = Yup.object().shape({
   ipAddress: Yup.string().required("IP Address is required"),
 });
 
-export function CustomerEditForm({
+export function InventoryEditForm({
   saveCustomer,
   customer,
   actionsLoading,
@@ -43,7 +43,7 @@ export function CustomerEditForm({
       <Formik
         enableReinitialize={true}
         initialValues={customer}
-        validationSchema={CustomerEditSchema}
+        validationSchema={InventoryEditSchema}
         onSubmit={(values) => {
           saveCustomer(values);
         }}
@@ -59,25 +59,19 @@ export function CustomerEditForm({
               <Form className="form form-label-right">
                 <div className="form-group row">
                   {/* First Name */}
-                  <div className="col-lg-4">
+                  <div className="col-lg-6">
                     <Field
-                      name="firstName"
+                      name="details"
                       component={Input}
-                      placeholder="First Name"
-                      label="First Name"
+                      placeholder="Details"
+                      label="Details"
+                      className="form-control form-control-sm"
                     />
                   </div>
                   {/* Last Name */}
-                  <div className="col-lg-4">
-                    <Field
-                      name="lastName"
-                      component={Input}
-                      placeholder="Last Name"
-                      label="Last Name"
-                    />
-                  </div>
+                  
                   {/* Login */}
-                  <div className="col-lg-4">
+                  <div className="col-lg-6">
                     <Field
                       name="userName"
                       component={Input}
@@ -88,13 +82,13 @@ export function CustomerEditForm({
                 </div>
                 {/* Email */}
                 <div className="form-group row">
-                  <div className="col-lg-4">
+                  <div className="col-lg-6">
                     <Field
-                      type="email"
-                      name="email"
+                      name="barcode"
                       component={Input}
-                      placeholder="Email"
-                      label="Email"
+                      placeholder="Barcode"
+                      label="Barcode"
+                      className="form-control form-control-sm"
                     />
                   </div>
                   {/* Date of birth */}
