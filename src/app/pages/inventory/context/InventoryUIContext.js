@@ -21,6 +21,12 @@ export function CustomersUIProvider({customersUIEvents, children}) {
   const prefferedSupplier = [
     {id: "1", title: "Vancouver Fire Prevention"},
   ];
+
+  const weightMockProps = [
+    {id: 1, title: "ml"},
+    {id: 2, title: "g"},
+    {id: 3, title: "oz"},
+  ];
   const setQueryParams = useCallback(nextQueryParams => {
     setQueryParamsBase(prevQueryParams => {
       if (isFunction(nextQueryParams)) {
@@ -62,7 +68,8 @@ export function CustomersUIProvider({customersUIEvents, children}) {
     openFetchCustomersDialog: customersUIEvents.openFetchCustomersDialog,
     openUpdateCustomersStatusDialog: customersUIEvents.openUpdateCustomersStatusDialog,
     warehouseMockData,
-    prefferedSupplier
+    prefferedSupplier,
+    weightMockProps,
   };
 
   return <CustomersUIContext.Provider value={value}>{children}</CustomersUIContext.Provider>;
