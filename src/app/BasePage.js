@@ -3,7 +3,7 @@ import { Redirect, Switch, Route } from "react-router-dom";
 import { LayoutSplashScreen, ContentRoute } from "../_metronic/layout";
 import { BuilderPage } from "./pages/BuilderPage";
 import { MyPage } from "./pages/MyPage";
-import { DashboardPage } from "./pages/DashboardPage";
+import { DashboardPage } from "./pages/dashboard/DashboardPage";
 
 const GoogleMaterialPage = lazy(() =>
   import("./modules/GoogleMaterialExamples/GoogleMaterialPage")
@@ -11,8 +11,8 @@ const GoogleMaterialPage = lazy(() =>
 const ReactBootstrapPage = lazy(() =>
   import("./modules/ReactBootstrapExamples/ReactBootstrapPage")
 );
-const ECommercePage = lazy(() =>
-  import("./modules/ECommerce/pages/eCommercePage")
+const InventoryPage = lazy(() =>
+  import("./pages/inventory/Inventory")
 );
 const UserProfilepage = lazy(() =>
   import("./modules/UserProfile/UserProfilePage")
@@ -36,7 +36,7 @@ export default function BasePage() {
         <ContentRoute path="/my-page" component={MyPage} />
         <Route path="/google-material" component={GoogleMaterialPage} />
         <Route path="/react-bootstrap" component={ReactBootstrapPage} />
-        <Route path="/e-commerce" component={ECommercePage} />
+        <Route path="/inventory" component={InventoryPage} />
         <Route path="/user-profile" component={UserProfilepage} />
         <Redirect to="error/error-v1" />
       </Switch>

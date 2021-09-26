@@ -1,14 +1,11 @@
 import React from 'react'
 import {
     MixedWidget1,
-    ListsWidget9,
-    StatsWidget11,
-    StatsWidget12,
     AdvanceTablesWidget2,
     AdvanceTablesWidget7,
-  } from "../../_metronic/_partials/widgets";
-import NotificationWidget from './custom_widgets/NotificationWidget';
-import OrderStatsWidget from './custom_widgets/OrderStatsWidget';
+  } from "../../../_metronic/_partials/widgets";
+import NotificationWidget from '../custom_widgets/NotificationWidget';
+import OrderStatsWidget from '../custom_widgets/OrderStatsWidget';
 
 
 export function MainDashboard() {
