@@ -43,7 +43,7 @@ export function InventoryEditDialog({ id, show, onHide }) {
 
   return (
     <Modal
-      size="lg"
+      size="xl"
       show={show}
       onHide={onHide}
       aria-labelledby="example-modal-sizes-title-lg"
