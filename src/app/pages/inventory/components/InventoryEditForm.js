@@ -13,7 +13,7 @@ import {
 } from "../../../../_metronic/_partials/controls";
 
 // Validation schema
-const CustomerEditSchema = Yup.object().shape({
+const InventoryEditSchema = Yup.object().shape({
   firstName: Yup.string()
     .min(3, "Minimum 3 symbols")
     .max(50, "Maximum 50 symbols")
@@ -32,7 +32,7 @@ const CustomerEditSchema = Yup.object().shape({
   ipAddress: Yup.string().required("IP Address is required"),
 });
 
-export function CustomerEditForm({
+export function InventoryEditForm({
   saveCustomer,
   customer,
   actionsLoading,
@@ -43,7 +43,7 @@ export function CustomerEditForm({
       <Formik
         enableReinitialize={true}
         initialValues={customer}
-        validationSchema={CustomerEditSchema}
+        validationSchema={InventoryEditSchema}
         onSubmit={(values) => {
           saveCustomer(values);
         }}

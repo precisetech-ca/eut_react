@@ -3,7 +3,7 @@ import { Modal } from "react-bootstrap";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import * as actions from "../_redux/actions";
 import { CustomerEditDialogHeader } from "./CustomerEditDialogHeader";
-import { CustomerEditForm } from "./CustomerEditForm";
+import { InventoryEditForm } from "./InventoryEditForm";
 import { useCustomersUIContext } from "../context/InventoryUIContext";
 
 export function InventoryEditDialog({ id, show, onHide }) {
@@ -49,7 +49,7 @@ export function InventoryEditDialog({ id, show, onHide }) {
       aria-labelledby="example-modal-sizes-title-lg"
     >
       <CustomerEditDialogHeader id={id} />
-      <CustomerEditForm
+      <InventoryEditForm
         saveCustomer={saveCustomer}
         actionsLoading={actionsLoading}
         customer={customerForEdit || customersUIProps.initCustomer}
