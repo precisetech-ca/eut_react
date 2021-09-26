@@ -1,11 +1,13 @@
 import React from "react";
+import { Route } from "react-router-dom";
 import { CustomersUIProvider } from "./context/InventoryUIContext";
 import { InventoryCard } from "./components/InventoryCard";
+import { InventoryEditDialog } from "./components/EditInventoryDialog";
 
 const Inventory = ({dispatch, history}) => {
     const customersUIEvents = {
         newCustomerButtonClick: () => {
-          history.push("/e-commerce/customers/new");
+          history.push("/inventory/new");
         },
         openEditCustomerDialog: (id) => {
           history.push(`/e-commerce/customers/${id}/edit`);
@@ -27,6 +29,16 @@ const Inventory = ({dispatch, history}) => {
 
   return (
     <CustomersUIProvider customersUIEvents={customersUIEvents}>
+        <Route path="/inventory/new">
+          {({ history, match }) => (
+            <InventoryEditDialog
+              show={match != null}
+              onHide={() => {
+                history.push("/inventory");
+              }}
+            />
+          )}
+        </Route>
         <InventoryCard />
     </CustomersUIProvider>
   );
