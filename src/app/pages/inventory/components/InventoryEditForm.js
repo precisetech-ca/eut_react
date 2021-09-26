@@ -11,6 +11,9 @@ import {
   Select,
   DatePickerField,
 } from "../../../../_metronic/_partials/controls";
+import { FormLabel } from "react-bootstrap";
+import { FormSwitch } from "./FormSwitch";
+import { useCustomersUIContext } from "../context/InventoryUIContext";
 
 // Validation schema
 const InventoryEditSchema = Yup.object().shape({
@@ -38,6 +41,8 @@ export function InventoryEditForm({
   actionsLoading,
   onHide,
 }) {
+  const { warehouseMockData, prefferedSupplier } = useCustomersUIContext();
+
   return (
     <>
       <Formik
@@ -59,30 +64,31 @@ export function InventoryEditForm({
               <Form className="form form-label-right">
                 <div className="form-group row">
                   {/* First Name */}
-                  <div className="col-lg-6">
+                  <div className="col-lg-6 col-sm-6">
                     <Field
                       name="details"
                       component={Input}
                       placeholder="Details"
-                      label="Details"
+                      label="SKU"
                       className="form-control form-control-sm"
                     />
                   </div>
                   {/* Last Name */}
                   
                   {/* Login */}
-                  <div className="col-lg-6">
-                    <Field
-                      name="userName"
-                      component={Input}
-                      placeholder="Login"
-                      label="Login"
-                    />
+                  <div className="col-lg-3 col-sm-3">
+                    <FormLabel>Stock Item</FormLabel>
+                    <FormSwitch />
+                   
+                  </div>
+                  <div className="col-lg-3 col-sm-3">
+                    <FormLabel>Status</FormLabel>
+                    <FormSwitch />
                   </div>
                 </div>
                 {/* Email */}
                 <div className="form-group row">
-                  <div className="col-lg-6">
+                  <div className="col-lg-6 col-sm-6">
                     <Field
                       name="barcode"
                       component={Input}
@@ -91,38 +97,169 @@ export function InventoryEditForm({
                       className="form-control form-control-sm"
                     />
                   </div>
-                  {/* Date of birth */}
-                  <div className="col-lg-4">
-                    <DatePickerField
-                      name="dateOfBbirth"
-                      label="Date of Birth"
+                  {/* Login */}
+                  <div className="col-lg-3 col-sm-3">
+                    <FormLabel>Allow Negative OH</FormLabel>
+                    <FormSwitch />
+                   
+                  </div>
+                  <div className="col-lg-3 col-sm-3">
+                    <FormLabel>Texable</FormLabel>
+                    <FormSwitch />
+                  </div>
+                </div>
+                <div className="form-group row">
+                  {/* Gender */}
+                  <div className="col-lg-6">
+                    <Field
+                      name="name"
+                      component={Input}
+                      placeholder="Name"
+                      label="Name"
+                      className="form-control form-control-sm"
                     />
                   </div>
-                  {/* IP Address */}
-                  <div className="col-lg-4">
+                  {/* Type */}
+                  <div className="col-lg-6">
+                    <Select name="type" label="Warehouse">
+                    <option value="">Please select</option>
+                      {warehouseMockData?.map(({id, title}) => <option value={id}>{title}</option>)}
+                    </Select>
+                  </div>
+                </div>
+                <div className="form-group row">
+                  {/* Gender */}
+                  <div className="col-lg-6">
                     <Field
-                      name="ipAddress"
+                      name="description"
                       component={Input}
-                      placeholder="IP Address"
-                      label="IP Address"
-                      customFeedbackLabel="We'll never share customer IP Address with anyone else"
+                      placeholder="Description"
+                      label="Description"
+                      className="form-control form-control-sm"
+                    />
+                  </div>
+                  {/* Type */}
+                  <div className="col-lg-6">
+                    <Select name="type" label="Preferred Supply">
+                      <option value="">Please select</option>
+                      {prefferedSupplier?.map(({id, title}) => <option value={id}>{title}</option>)}
+                    </Select>
+                  </div>
+                </div>
+
+                <div className="form-group row">
+                  {/* Gender */}
+                  <div className="col-lg-2">
+                    <Field
+                      name="length_dimensions"
+                      component={Input}
+                      placeholder="L"
+                      label="Dimension (L)"
+                      className="form-control form-control-sm"
+                    />
+                  </div>
+                  <div className="col-lg-2">
+                    <Field
+                        name="height_dimensions"
+                        component={Input}
+                        placeholder="H"
+                        label="Dimension (H)"
+                        className="form-control form-control-sm"
+                    />
+                  </div>
+                  <div className="col-lg-2">
+                    <Field
+                        name="width_dimensions"
+                        component={Input}
+                        placeholder="W"
+                        label="Dimension (W)"
+                        className="form-control form-control-sm"
+                    />
+                  </div>
+                  <div className="col-lg-6">
+                    {/* Type */}
+                    <Field
+                      name="uom"
+                      component={Input}
+                      placeholder="UOM"
+                      label="Re-ordering UOM"
+                      className="form-control form-control-sm"
                     />
                   </div>
                 </div>
                 <div className="form-group row">
                   {/* Gender */}
-                  <div className="col-lg-4">
-                    <Select name="Gender" label="Gender">
-                      <option value="Female">Female</option>
-                      <option value="Male">Male</option>
-                    </Select>
+                  <div className="col-lg-6">
+                    <Field
+                      name="on_hand_quantity"
+                      component={Input}
+                      placeholder="On Hand Quantity"
+                      label="On Hand Quantity"
+                      className="form-control form-control-sm"
+                    />
                   </div>
                   {/* Type */}
-                  <div className="col-lg-4">
-                    <Select name="type" label="Type">
-                      <option value="0">Business</option>
-                      <option value="1">Individual</option>
-                    </Select>
+                  <div className="col-lg-6">
+                    <Field
+                      name="conversion_uom"
+                      component={Input}
+                      placeholder="Conversion to UOM"
+                      label="Conversion to UOM"
+                      className="form-control form-control-sm"
+                    />
+                  </div>
+                </div>
+
+                <div className="form-group row">
+                  {/* Gender */}
+                  <div className="col-lg-6">
+                    <Field
+                      name="available_quantity"
+                      component={Input}
+                      placeholder="Quantity Available"
+                      label="Quantity Available"
+                      className="form-control form-control-sm"
+                    />
+                  </div>
+                  {/* Type */}
+                  <div className="col-lg-6"></div>
+                </div>
+
+                <div className="form-group row">
+                  {/* Gender */}
+                  <div className="col-lg-6">
+                    <Field
+                      name="cost_price"
+                      component={Input}
+                      placeholder="Cost Price"
+                      label="Cost Price"
+                      className="form-control form-control-sm"
+                    />
+                  </div>
+                  {/* Type */}
+                  <div className="col-lg-6"></div>
+                </div>
+
+                <div className="form-group row">
+                  {/* Gender */}
+                  <div className="col-lg-6">
+                    <Field
+                      name="average_cost"
+                      component={Input}
+                      placeholder="Average Cost"
+                      label="Average Cost"
+                      className="form-control form-control-sm"
+                    />
+                  </div>
+                  {/* Type */}
+                  <div className="col-lg-6">
+                    <Field
+                      name="standard_cost"
+                      component={Input}
+                      placeholder="Standard Cost"
+                      label="Standard Cost"
+                      className="form-control form-control-sm"
+                    />
                   </div>
                 </div>
               </Form>
