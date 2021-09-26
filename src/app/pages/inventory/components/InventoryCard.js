@@ -15,8 +15,8 @@ export const InventoryCard = () => {
     const customersUIContext = useCustomersUIContext();
     const customersUIProps = useMemo(() => {
         return {
-        ids: customersUIContext.ids,
-        newCustomerButtonClick: customersUIContext.newCustomerButtonClick,
+            ids: customersUIContext.ids,
+            newCustomerButtonClick: customersUIContext.newCustomerButtonClick,
         };
     }, [customersUIContext]);
 
