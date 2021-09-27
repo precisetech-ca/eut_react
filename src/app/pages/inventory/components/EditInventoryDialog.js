@@ -60,12 +60,12 @@ export function InventoryEditDialog({ id, show, onHide }) {
         <Tab eventKey={key} 
               title={title} 
               className="mt-2 ml-1">
-          <InventoryEditForm
+          {key === "details" ? <InventoryEditForm
             saveCustomer={saveCustomer}
             actionsLoading={actionsLoading}
             customer={customerForEdit || customersUIProps.initCustomer}
             onHide={onHide}
-          />
+          /> : <h1>{title}</h1>}
         </Tab>)}
       </Tabs>
     </Modal>
