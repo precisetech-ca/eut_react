@@ -8,6 +8,7 @@ import {Dropdown} from "react-bootstrap";
 import {toAbsoluteUrl} from "../../../_helpers";
 import {useHtmlClassService} from "../../../layout";
 import {DropdownMenu2} from "../../dropdowns";
+import { Link } from "react-router-dom";
 
 export function MixedWidget1({ className }) {
   const uiService = useHtmlClassService();
@@ -89,12 +90,12 @@ export function MixedWidget1({ className }) {
                   )}
                 ></SVG>
               </span>
-              <a
-                href="#"
+              <Link
+                to="/inventory"
                 className="text-primary font-weight-bold font-size-h6 mt-2"
               >
                 Part
-              </a>
+              </Link>
             </div>
           </div>
           <div className="row m-0">
