@@ -1,5 +1,5 @@
-import React, { useEffect, useMemo } from "react";
-import { Modal } from "react-bootstrap";
+import React, { useEffect, useMemo, useState } from "react";
+import { Modal, Tabs, Tab } from "react-bootstrap";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import * as actions from "../_redux/actions";
 import { CustomerEditDialogHeader } from "./CustomerEditDialogHeader";
@@ -9,6 +9,7 @@ import { useCustomersUIContext } from "../context/InventoryUIContext";
 export function InventoryEditDialog({ id, show, onHide }) {
   // Customers UI Context
   const customersUIContext = useCustomersUIContext();
+  const [key, setKey] = useState('details');
   const customersUIProps = useMemo(() => {
     return {
       initCustomer: customersUIContext.initCustomer,
@@ -49,12 +50,24 @@ export function InventoryEditDialog({ id, show, onHide }) {
       aria-labelledby="example-modal-sizes-title-lg"
     >
       <CustomerEditDialogHeader id={id} />
-      <InventoryEditForm
-        saveCustomer={saveCustomer}
-        actionsLoading={actionsLoading}
-        customer={customerForEdit || customersUIProps.initCustomer}
-        onHide={onHide}
-      />
+      <Tabs
+        id="controlled-tab-example"
+        activeKey={key}
+        onSelect={(k) => setKey(k)}
+        className="mb-3 mt-3"
+      >
+        {customersUIContext.inventoryTabs.map(({key, title}) => 
+        <Tab eventKey={key} 
+              title={title} 
+              className="mt-2 ml-1">
+          <InventoryEditForm
+            saveCustomer={saveCustomer}
+            actionsLoading={actionsLoading}
+            customer={customerForEdit || customersUIProps.initCustomer}
+            onHide={onHide}
+          />
+        </Tab>)}
+      </Tabs>
     </Modal>
   );
 }
