@@ -223,5 +223,33 @@
       }
     }
   }
-  
+}
+
+.nav-tabs .nav-link.active, 
+.nav-tabs .nav-item.show .nav-link {
+  background-color: #000000;
+  border-color: #E4E6EF #E4E6EF #ffffff;
+}
+
+.nav .show > .nav-link, 
+.nav .nav-link:hover:not(.disabled), 
+.nav .nav-link.active {
+  color: #fff;
+}
+
+.nav-tabs .nav-link {
+  background: #1bc5bd;
+  border-top-left-radius: 0 !important;
+  border-top-right-radius: 0 !important;
+  color: #fff;
+}
+
+.nav-tabs {
+  border-bottom: 0px;
+}
+
+.nav.nav-tabs .nav-item{
+  margin-top: 0.25rem;
+  margin-left: 0.25rem;
+  margin-right: 0;
 }

@@ -1,6 +1,7 @@
 import React, {createContext, useContext, useState, useCallback} from "react";
 import {isEqual, isFunction} from "lodash";
 import {initialFilter} from "../utils/InventoryUIHelpers";
+import { InventoryEditForm } from "../components/InventoryEditForm";
 
 const CustomersUIContext = createContext();
 
@@ -27,6 +28,20 @@ export function CustomersUIProvider({customersUIEvents, children}) {
     {id: 2, title: "g"},
     {id: 3, title: "oz"},
   ];
+
+  const inventoryTabs = [
+    {key: "details", title: "Details", Component: () => <h1>hello</h1>},
+    {key: "override_amount", title: "Override Amount"},
+    {key: "price_list", title: "Price List"},
+    {key: "catalog", title: "Catalog"},
+    {key: "override_supplier_by_inventory", title: "Override Supplier By Inventory"},
+    {key: "attachments", title: "Attachments"},
+    {key: "stock_availability", title: "Stock Availability"},
+    {key: "history", title: "History"},
+    {key: "part_interchange", title: "Part Interchange"},
+    {key: "audit_log", title: "Audit Log"},
+  ];
+
   const setQueryParams = useCallback(nextQueryParams => {
     setQueryParamsBase(prevQueryParams => {
       if (isFunction(nextQueryParams)) {
@@ -70,6 +85,7 @@ export function CustomersUIProvider({customersUIEvents, children}) {
     warehouseMockData,
     prefferedSupplier,
     weightMockProps,
+    inventoryTabs,
   };
 
   return <CustomersUIContext.Provider value={value}>{children}</CustomersUIContext.Provider>;
