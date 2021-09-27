@@ -8,12 +8,12 @@ import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import {
   Input,
-  Select,
   DatePickerField,
 } from "../../../../_metronic/_partials/controls";
 import { FormLabel } from "react-bootstrap";
 import { FormSwitch } from "./FormSwitch";
 import { useCustomersUIContext } from "../context/InventoryUIContext";
+import Select from 'react-select'
 
 // Validation schema
 const InventoryEditSchema = Yup.object().shape({
@@ -121,10 +121,8 @@ export function InventoryEditForm({
                   </div>
                   {/* Type */}
                   <div className="col-lg-6">
-                    <Select name="type" label="Warehouse">
-                    <option value="">Please select</option>
-                      {warehouseMockData?.map(({id, title}) => <option value={id}>{title}</option>)}
-                    </Select>
+                    <FormLabel>Warehouse</FormLabel>
+                    <Select options={warehouseMockData} />
                   </div>
                 </div>
                 <div className="form-group row">
@@ -140,10 +138,8 @@ export function InventoryEditForm({
                   </div>
                   {/* Type */}
                   <div className="col-lg-6">
-                    <Select name="type" label="Preferred Supply">
-                      <option value="">Please select</option>
-                      {prefferedSupplier?.map(({id, title}) => <option value={id}>{title}</option>)}
-                    </Select>
+                    <FormLabel>Preferred Supply</FormLabel>
+                    <Select options={prefferedSupplier} />
                   </div>
                 </div>
 
@@ -177,11 +173,8 @@ export function InventoryEditForm({
                     />
                   </div>
                   <div className="col-lg-6">
-                    {/* Type */}
-                    <Select name="uom" label="UOM">
-                      <option value="">Please select</option>
-                      {prefferedSupplier?.map(({id, title}) => <option value={id}>{title}</option>)}
-                    </Select>
+                    <FormLabel>UOM</FormLabel>
+                    <Select options={prefferedSupplier} />
                   </div>
                   
                 </div>
@@ -189,26 +182,14 @@ export function InventoryEditForm({
                 <div className="form-group row">
                   {/* Gender */}
                   <div className="col-lg-2">
-                    <Select name="weight" label="Weight">
-                      <option value="">Please select</option>
-                      {weightMockProps?.map(({id, title}) => <option value={id}>{title}</option>)}
-                    </Select>
-                    <Field
-                      name="weight"
-                      component={Input}
-                      placeholder="Weight"
-                      label="Weight"
-                      className="form-control form-control-sm"
-                    />
+                    <FormLabel>Weight</FormLabel>
+                    <Select options={weightMockProps} />
                   </div>
                   <div className="col-lg-2"></div>
                   <div className="col-lg-2"></div>
                   <div className="col-lg-6">
-                    {/* Type */}
-                    <Select name="re_ordering_uom" label="Re-Ordering UOM">
-                      <option value="">Please select</option>
-                      {prefferedSupplier?.map(({id, title}) => <option value={id}>{title}</option>)}
-                    </Select>
+                    <FormLabel>Re-Ordering UOM</FormLabel>
+                    <Select options={prefferedSupplier} />
                   </div>
                 </div>
                 <div className="form-group row">

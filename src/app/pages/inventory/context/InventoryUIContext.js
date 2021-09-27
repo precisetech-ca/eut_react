@@ -15,18 +15,18 @@ export function CustomersUIProvider({customersUIEvents, children}) {
   const [queryParams, setQueryParamsBase] = useState(initialFilter);
   const [ids, setIds] = useState([]);
   const warehouseMockData = [
-    {id: "1", title: "King PIN 5th Wheel"},
-    {id: "2", title: "Alloy Rims"}
+    {value: "1", label: "King PIN 5th Wheel"},
+    {value: "2", label: "Alloy Rims"}
   ];
 
   const prefferedSupplier = [
-    {id: "1", title: "Vancouver Fire Prevention"},
+    {value: "1", label: "Vancouver Fire Prevention"},
   ];
 
   const weightMockProps = [
-    {id: 1, title: "ml"},
-    {id: 2, title: "g"},
-    {id: 3, title: "oz"},
+    {value: 1, label: "ml"},
+    {value: 2, label: "g"},
+    {value: 3, label: "oz"},
   ];
 
   const inventoryTabs = [
