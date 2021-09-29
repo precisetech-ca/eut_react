@@ -14,6 +14,11 @@ export const CustomersUIConsumer = CustomersUIContext.Consumer;
 export function CustomersUIProvider({customersUIEvents, children}) {
   const [queryParams, setQueryParamsBase] = useState(initialFilter);
   const [ids, setIds] = useState([]);
+  const [edit, setEdit] = useState(false);
+
+  const setEditHandler = (value) => {
+    setEdit(value);
+  }
   const warehouseMockData = [
     {value: "1", label: "King PIN 5th Wheel"},
     {value: "2", label: "Alloy Rims"}
@@ -86,6 +91,8 @@ export function CustomersUIProvider({customersUIEvents, children}) {
     prefferedSupplier,
     weightMockProps,
     inventoryTabs,
+    setEditHandler,
+    editState: edit,
   };
 
   return <CustomersUIContext.Provider value={value}>{children}</CustomersUIContext.Provider>;

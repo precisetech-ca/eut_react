@@ -33,6 +33,7 @@ export function InventoryTable() {
       setQueryParams: customersUIContext.setQueryParams,
       openEditCustomerDialog: customersUIContext.openEditCustomerDialog,
       openDeleteCustomerDialog: customersUIContext.openDeleteCustomerDialog,
+      setEdit: customersUIContext.setEditHandler,
     };
   }, [customersUIContext]);
 
@@ -112,7 +113,10 @@ export function InventoryTable() {
       text: "Actions",
       formatter: columnFormatters.ActionsColumnFormatter,
       formatExtraData: {
-        openEditCustomerDialog: customersUIProps.openEditCustomerDialog,
+        openEditCustomerDialog: () => {
+          customersUIProps.openEditCustomerDialog();
+          customersUIContext.setEditHandler(true);
+        },
         openDeleteCustomerDialog: customersUIProps.openDeleteCustomerDialog,
       },
       classes: "text-right pr-0",

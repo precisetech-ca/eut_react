@@ -28,7 +28,10 @@ export const InventoryCard = () => {
                 <button
                     type="button"
                     className="btn btn-primary"
-                    onClick={customersUIProps?.newCustomerButtonClick}
+                    onClick={() => {
+                        customersUIProps.newCustomerButtonClick();
+                        customersUIContext.setEditHandler(false);
+                    }}
                 >
                     New Part
                 </button>
