@@ -1,10 +1,12 @@
 import React from "react";
 import { Route } from "react-router-dom";
-import { CustomersUIProvider } from "./context/InventoryUIContext";
+import { CustomersUIProvider, useCustomersUIContext } from "./context/InventoryUIContext";
 import { InventoryCard } from "./components/InventoryCard";
 import { InventoryEditDialog } from "./components/EditInventoryDialog";
 
 const Inventory = ({dispatch, history}) => {
+    const customersUIContext = useCustomersUIContext();
+
     const customersUIEvents = {
         newCustomerButtonClick: () => {
           history.push("/inventory/new");

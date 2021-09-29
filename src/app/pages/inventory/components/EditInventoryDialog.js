@@ -42,6 +42,49 @@ export function InventoryEditDialog({ id, show, onHide }) {
     }
   };
 
+  const showOtherForm = (text) => {
+    console.log(customersUIContext);
+    if (customersUIContext.editState){
+      return <h1>{text}</h1>;
+    }
+  }
+
+  const renderTabs = ({items}) => {
+    return items.map((item, index) => {
+      console.log(index);
+      if (index === 0 && !customersUIContext.editState) {
+        return <Tab eventKey={item.key} 
+          title={item.title} 
+          className="mt-2 ml-1">
+          <InventoryEditForm
+            saveCustomer={saveCustomer}
+            actionsLoading={actionsLoading}
+            customer={customerForEdit || customersUIProps.initCustomer}
+            onHide={onHide}
+          />
+        </Tab>
+      } else if (index === 0 && customersUIContext.editState) {
+        return <Tab eventKey={item.key} 
+          title={item.title} 
+          className="mt-2 ml-1">
+          <InventoryEditForm
+            saveCustomer={saveCustomer}
+            actionsLoading={actionsLoading}
+            customer={customerForEdit || customersUIProps.initCustomer}
+            onHide={onHide}
+          />
+        </Tab>;
+      } else if (index >= 1 && customersUIContext.editState) {
+        return <Tab eventKey={item.key} 
+          title={item.title} 
+          className="mt-2 ml-1">
+          {item.title}
+        </Tab>;
+      }
+      
+    })
+  }
+
   return (
     <Modal
       size="xl"
@@ -56,17 +99,7 @@ export function InventoryEditDialog({ id, show, onHide }) {
         onSelect={(k) => setKey(k)}
         className="mb-3 mt-3"
       >
-        {customersUIContext.inventoryTabs.map(({key, title}) => 
-        <Tab eventKey={key} 
-              title={title} 
-              className="mt-2 ml-1">
-          {key === "details" ? <InventoryEditForm
-            saveCustomer={saveCustomer}
-            actionsLoading={actionsLoading}
-            customer={customerForEdit || customersUIProps.initCustomer}
-            onHide={onHide}
-          /> : <h1>{title}</h1>}
-        </Tab>)}
+        {renderTabs({items: customersUIContext?.inventoryTabs})}
       </Tabs>
     </Modal>
   );
