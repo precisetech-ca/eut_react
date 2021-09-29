@@ -10,7 +10,7 @@ const Inventory = ({dispatch, history}) => {
           history.push("/inventory/new");
         },
         openEditCustomerDialog: (id) => {
-          history.push(`/e-commerce/customers/${id}/edit`);
+          history.push(`/inventory/${id}/edit`);
         },
         openDeleteCustomerDialog: (id) => {
           history.push(`/e-commerce/customers/${id}/delete`);
@@ -39,6 +39,17 @@ const Inventory = ({dispatch, history}) => {
             />
           )}
         </Route>
+        <Route path="/inventory/:id/edit">
+          {({ history, match }) => (
+          <InventoryEditDialog
+            show={match != null}
+            id={match && match.params.id}
+            onHide={() => {
+              history.push("/inventory");
+            }}
+          />
+        )}
+      </Route>
         <InventoryCard />
     </CustomersUIProvider>
   );
