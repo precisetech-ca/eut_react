@@ -30,10 +30,11 @@ export function UIProvider({customersUIEvents, children}) {
   ];
 
   const inventoryTabs = [
-    {key: "order", title: "Purchase Order", Component: () => <h1>hello</h1>},
-    {key: "order_detail", title: "Purchase Order Details"},
-    // {key: "price_list", title: "Price List"},
-    // {key: "catalog", title: "Catalog"},
+    {key: "order", title: "Product", Component: () => <h1>hello</h1>},
+    {key: "order_detail", title: "Receiving"},
+    {key: "Storage", title: "Storage"},
+    {key: "catalog", title: "Payables"},
+    {key: "audit", title: "Audit Log"},
     // {key: "override_supplier_by_inventory", title: "Override Supplier By Inventory"},
     // {key: "attachments", title: "Attachments"},
     // {key: "stock_availability", title: "Stock Availability"},

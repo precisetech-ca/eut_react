@@ -64,7 +64,7 @@ export function InventoryEditForm({
               <Form className="form form-label-right">
                 <div className="form-group row">
                   {/* First Name */}
-                  <div className="col-lg-4 col-sm-4">
+                  <div className="col-lg-3 col-sm-3">
                     <Field
                       name="PONumber"
                       component={Input}
@@ -73,7 +73,7 @@ export function InventoryEditForm({
                       className="form-control "
                     />
                   </div>
-                  <div className="col-lg-4 col-sm-4">
+                  <div className="col-lg-3 col-sm-3">
                     <Field
                       name="PODate"
                       component={Input}
@@ -82,30 +82,7 @@ export function InventoryEditForm({
                       className="form-control "
                     />
                   </div>
-
-                  <div className="col-lg-2 col-sm-2">
-                    <FormLabel>Closed</FormLabel>
-                    <FormSwitch />
-                   
-                  </div>
-                  <div className="col-lg-2 col-sm-2">
-                    <FormLabel>Void</FormLabel>
-                    <FormSwitch />
-                  </div>
-                </div>
-                {/* Email */}
-                <div className="form-group row">
-                  
-                  <div className="col-lg-4">
-                    <FormLabel>Supplier</FormLabel>
-                    <Select options={warehouseMockData} />
-                  </div>
-                 
-                  <div className="col-lg-4">
-                    <FormLabel>Warehouse</FormLabel>
-                    <Select options={warehouseMockData} />
-                  </div>
-                  <div className="col-lg-4">
+                  <div className="col-lg-3">
                     <Field
                       name="average_cost"
                       component={Input}
@@ -114,11 +91,29 @@ export function InventoryEditForm({
                       className="form-control"
                     />
                   </div>
-                  
+                  <div className="col-lg-1 col-sm-1">
+                    <FormLabel>Closed</FormLabel>
+                    <FormSwitch />
+                   
+                  </div>
+                  <div className="col-lg-1 col-sm-1">
+                    <FormLabel>Void</FormLabel>
+                    <FormSwitch />
+                  </div>
                 </div>
+                {/* Email */}
                 <div className="form-group row">
-                  {/* Gender */}
-                  <div className="col-lg-4">
+                  
+                  <div className="col-lg-3">
+                    <FormLabel>Supplier</FormLabel>
+                    <Select options={warehouseMockData} />
+                  </div>
+                 
+                  <div className="col-lg-3">
+                    <FormLabel>Warehouse</FormLabel>
+                    <Select options={warehouseMockData} />
+                  </div>
+                  <div className="col-lg-3">
                     <Field
                       name="description"
                       component={Input}
@@ -127,7 +122,7 @@ export function InventoryEditForm({
                       className="form-control "
                     />
                   </div>
-                  <div className="col-lg-4">
+                  <div className="col-lg-3">
                     <Field
                       name="description"
                       component={Input}
@@ -136,8 +131,11 @@ export function InventoryEditForm({
                       className="form-control "
                     />
                   </div>
-                  {/* Type */}
-                  <div className="col-lg-4">
+                  
+                </div>
+                <div className="form-group row">
+                   
+                  <div className="col-lg-3">
                     <Field
                       name="description"
                       component={Input}
@@ -146,9 +144,7 @@ export function InventoryEditForm({
                       className="form-control "
                     />
                   </div>
-                </div> 
-                <div className="form-group row">
-                  <div className="col-lg-6">
+                  <div className="col-lg-3">
                     <Field
                       name="standard_cost"
                       component={Input}
@@ -157,7 +153,8 @@ export function InventoryEditForm({
                       className="form-control form-control-xl"
                     />
                   </div>
-                </div>
+                </div> 
+                
               </Form>
             </Modal.Body>
             <Modal.Footer>

@@ -5,6 +5,7 @@ import * as actions from "../_redux/actions";
 import { CustomerEditDialogHeader } from "./EditDialogHeader";
 import { InventoryEditForm } from "./EditForm";
 import { useUIContext } from "../context/UIContext";
+import { Table } from './ProductTable';
 
 export function EditDialog({ id, show, onHide }) {
   // Customers UI Context
@@ -44,12 +45,18 @@ export function EditDialog({ id, show, onHide }) {
 
   return (
     <Modal
-      size="lg"
+      size="xl"
       show={show}
       onHide={onHide}
       aria-labelledby="example-modal-sizes-title-lg"
     >
       <CustomerEditDialogHeader id={id} />
+      <InventoryEditForm
+            saveCustomer={saveCustomer}
+            actionsLoading={actionsLoading}
+            customer={customerForEdit || customersUIProps.initCustomer}
+            onHide={onHide}
+          />
       <Tabs
         id="controlled-tab-example"
         activeKey={key}
@@ -60,12 +67,7 @@ export function EditDialog({ id, show, onHide }) {
         <Tab eventKey={key} 
               title={title} 
               className="mt-2 ml-1">
-          {key === "order" ? <InventoryEditForm
-            saveCustomer={saveCustomer}
-            actionsLoading={actionsLoading}
-            customer={customerForEdit || customersUIProps.initCustomer}
-            onHide={onHide}
-          /> : <h1>{title}</h1>}
+          {key === "order" ? <Table /> : <h1>{title}</h1>}
         </Tab>)}
       </Tabs>
     </Modal>
