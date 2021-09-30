@@ -20,6 +20,7 @@ import * as uiHelpers from "../utils/InventoryUIHelpers";
 import * as columnFormatters from "../column-formatter";
 import { Pagination } from "../../../../_metronic/_partials/controls";
 import { useCustomersUIContext } from "../context/InventoryUIContext";
+import {callGenericGetterAsync} from '../../../generic/actions';
 
 export function InventoryTable() {
   // Customers UI Context
@@ -32,6 +33,7 @@ export function InventoryTable() {
       setQueryParams: customersUIContext.setQueryParams,
       openEditCustomerDialog: customersUIContext.openEditCustomerDialog,
       openDeleteCustomerDialog: customersUIContext.openDeleteCustomerDialog,
+      setEdit: customersUIContext.setEditHandler,
     };
   }, [customersUIContext]);
 
@@ -48,7 +50,11 @@ export function InventoryTable() {
     // clear selections list
     customersUIProps.setIds([]);
     // server call by queryParams
-    dispatch(actions.fetchCustomers(customersUIProps.queryParams));
+    dispatch(callGenericGetterAsync("/", (res) => {
+      dispatch(actions.fetchCustomers(customersUIProps.queryParams));
+      if (res) {
+      }
+    }))
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [customersUIProps.queryParams, dispatch]);
   // Table columns
@@ -107,7 +113,10 @@ export function InventoryTable() {
       text: "Actions",
       formatter: columnFormatters.ActionsColumnFormatter,
       formatExtraData: {
-        openEditCustomerDialog: customersUIProps.openEditCustomerDialog,
+        openEditCustomerDialog: () => {
+          customersUIProps.openEditCustomerDialog();
+          customersUIContext.setEditHandler(true);
+        },
         openDeleteCustomerDialog: customersUIProps.openDeleteCustomerDialog,
       },
       classes: "text-right pr-0",
