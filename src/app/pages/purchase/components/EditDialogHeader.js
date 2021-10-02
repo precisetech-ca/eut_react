@@ -3,7 +3,7 @@ import { shallowEqual, useSelector } from "react-redux";
 import { Modal } from "react-bootstrap";
 import {ModalProgressBar} from "../../../../_metronic/_partials/controls";
 
-export function CustomerEditDialogHeader({ id }) {
+export function CustomerEditDialogHeader({ id, headerTitle }) {
   // Customers Redux state
   const { customerForEdit, actionsLoading } = useSelector(
     (state) => ({
@@ -29,7 +29,7 @@ export function CustomerEditDialogHeader({ id }) {
     <>
       {actionsLoading && <ModalProgressBar />}
       <Modal.Header closeButton>
-        <Modal.Title id="example-modal-sizes-title-lg">{title}</Modal.Title>
+        <Modal.Title id="example-modal-sizes-title-lg">{headerTitle}</Modal.Title>
       </Modal.Header>
     </>
   );

@@ -3,7 +3,7 @@ import { Modal, Tabs, Tab } from "react-bootstrap";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import * as actions from "../_redux/actions";
 import { CustomerEditDialogHeader } from "./EditDialogHeader";
-import { InventoryEditForm } from "./EditForm";
+import { EditForm } from "./EditForm";
 import { useUIContext } from "../context/UIContext";
 import { Table } from './ProductTable';
 
@@ -50,13 +50,13 @@ export function EditDialog({ id, show, onHide }) {
       onHide={onHide}
       aria-labelledby="example-modal-sizes-title-lg"
     >
-      <CustomerEditDialogHeader id={id} />
-      <InventoryEditForm
-            saveCustomer={saveCustomer}
-            actionsLoading={actionsLoading}
-            customer={customerForEdit || customersUIProps.initCustomer}
-            onHide={onHide}
-          />
+      <CustomerEditDialogHeader headerTitle="Purchase Order" />
+      <EditForm
+        saveCustomer={saveCustomer}
+        actionsLoading={actionsLoading}
+        customer={customerForEdit || customersUIProps.initCustomer}
+        onHide={onHide}
+      />
       <Tabs
         id="controlled-tab-example"
         activeKey={key}
