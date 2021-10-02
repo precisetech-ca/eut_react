@@ -40,17 +40,17 @@ const Purchase = ({dispatch, history}) => {
           />
         )}
       </Route>
-        <Route path="/purchase/new">
-          {({ history, match }) => (
-            <EditDialog
-              show={match != null}
-              onHide={() => {
-                history.push("/purchase");
-              }}
-            />
-          )}
-        </Route>
-        <TableCard />
+      <Route path="/purchase/new">
+        {({ history, match }) => (
+          <EditDialog
+            show={match != null}
+            onHide={() => {
+              history.push("/purchase");
+            }}
+          />
+        )}
+      </Route>
+      <TableCard />
     </UIProvider>
   );
 }

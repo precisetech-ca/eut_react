@@ -52,7 +52,7 @@ const Inventory = ({dispatch, history}) => {
           />
         )}
       </Route>
-        <InventoryCard />
+      <InventoryCard />
     </CustomersUIProvider>
   );
 }
