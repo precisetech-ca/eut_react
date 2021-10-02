@@ -1,15 +1,16 @@
 import React from "react";
-import { Route } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import { UIProvider } from "./context/UIContext";
-import { TableCard } from "./components/TableCard";
-import { EditDialog } from "./components/EditDialog";
+import { EditPurchaseOrder } from "./components/EditPurchaseOrder";
+import { HomePageCard } from "./components/HomePageCard";
+import { NewPurchaseOrder } from "./components/NewPurchaseOrder";
 
 const Purchase = ({dispatch, history}) => {
-    const customersUIEvents = {
-        newCustomerButtonClick: () => {
+    const purchaseUIEvents = {
+        newPurchaseForm: () => {
           history.push("/purchase/new");
         },
-        openEditCustomerDialog: (id) => {
+        editPurchaseForm: (id) => {
           history.push(`/purchase/${id}/edit`);
         },
         openDeleteCustomerDialog: (id) => {
@@ -28,29 +29,24 @@ const Purchase = ({dispatch, history}) => {
     
 
   return (
-    <UIProvider customersUIEvents={customersUIEvents}>
-        <Route path="/purchase/:id/edit">
-        {({ history, match }) => (
-          <EditDialog
-            show={match != null}
-            id={match && match.params.id}
-            onHide={() => {
-              history.push("/purchase");
-            }}
-          />
-        )}
-      </Route>
-      <Route path="/purchase/new">
-        {({ history, match }) => (
-          <EditDialog
-            show={match != null}
-            onHide={() => {
-              history.push("/purchase");
-            }}
-          />
-        )}
-      </Route>
-      <TableCard />
+    <UIProvider purchaseUIEvents={purchaseUIEvents}>
+      <Switch>
+        <Route exact path="/purchase/new">
+          {({ history, match }) => (
+            <NewPurchaseOrder />
+          )}
+        </Route>
+        <Route exact path="/purchase/:id/edit">
+          {({ history, match }) => (
+            <EditPurchaseOrder />
+          )}
+        </Route>
+        <Route exact path="/purchase">
+          {({ history, match }) => (
+            <HomePageCard />
+          )}
+        </Route>
+      </Switch>
     </UIProvider>
   );
 }

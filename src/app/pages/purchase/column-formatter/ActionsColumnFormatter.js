@@ -9,14 +9,14 @@ export function ActionsColumnFormatter(
   cellContent,
   row,
   rowIndex,
-  { openEditCustomerDialog, openDeleteCustomerDialog }
+  { editPurchaseForm, openDeleteCustomerDialog }
 ) {
   return (
     <>
       <a
         title="Edit customer"
         className="btn btn-icon btn-light btn-hover-primary btn-sm mx-3"
-        onClick={() => openEditCustomerDialog(row.id)}
+        onClick={() => editPurchaseForm(row.id)}
       >
         <span className="svg-icon svg-icon-md svg-icon-primary">
           <SVG

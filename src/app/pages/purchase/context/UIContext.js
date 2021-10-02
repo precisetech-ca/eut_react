@@ -1,7 +1,7 @@
 import React, {createContext, useContext, useState, useCallback} from "react";
 import {isEqual, isFunction} from "lodash";
 import {initialFilter} from "../utils/UIHelpers";
-import { EditForm } from "../components/EditForm";
+import { useHistory } from "react-router-dom";
 
 const UIContext = createContext();
 
@@ -11,7 +11,8 @@ export function useUIContext() {
 
 export const CustomersUIConsumer = UIContext.Consumer;
 
-export function UIProvider({customersUIEvents, children}) {
+export function UIProvider({purchaseUIEvents, children}) {
+  const history = useHistory();
   const [queryParams, setQueryParamsBase] = useState(initialFilter);
   const [ids, setIds] = useState([]);
   const warehouseMockData = [
@@ -70,6 +71,10 @@ export function UIProvider({customersUIEvents, children}) {
     type: 1
   };
 
+  const backToHome = () => {
+    history.push('/purchase');
+  }
+
   const value = {
     queryParams,
     setQueryParamsBase,
@@ -77,16 +82,17 @@ export function UIProvider({customersUIEvents, children}) {
     setIds,
     setQueryParams,
     initCustomer,
-    newCustomerButtonClick: customersUIEvents.newCustomerButtonClick,
-    openEditCustomerDialog: customersUIEvents.openEditCustomerDialog,
-    openDeleteCustomerDialog: customersUIEvents.openDeleteCustomerDialog,
-    openDeleteCustomersDialog: customersUIEvents.openDeleteCustomersDialog,
-    openFetchCustomersDialog: customersUIEvents.openFetchCustomersDialog,
-    openUpdateCustomersStatusDialog: customersUIEvents.openUpdateCustomersStatusDialog,
     warehouseMockData,
     prefferedSupplier,
     weightMockProps,
     inventoryTabs,
+    backToHome,
+    newPurchaseForm: purchaseUIEvents.newPurchaseForm,
+    editPurchaseForm: purchaseUIEvents.editPurchaseForm,
+    openDeleteCustomerDialog: purchaseUIEvents.openDeleteCustomerDialog,
+    openDeleteCustomersDialog: purchaseUIEvents.openDeleteCustomersDialog,
+    openFetchCustomersDialog: purchaseUIEvents.openFetchCustomersDialog,
+    openUpdateCustomersStatusDialog: purchaseUIEvents.openUpdateCustomersStatusDialog,
   };
 
   return <UIContext.Provider value={value}>{children}</UIContext.Provider>;

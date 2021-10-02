@@ -35,7 +35,7 @@ const EditFormSchema = Yup.object().shape({
   ipAddress: Yup.string().required("IP Address is required"),
 });
 
-export function EditForm({
+export function SaveForm({
   saveCustomer,
   customer,
   actionsLoading,
@@ -178,7 +178,7 @@ export function EditForm({
                 onClick={() => handleSubmit()}
                 className="btn btn-primary btn-elevate"
               >
-                Edit
+                Save
               </button>
             </Modal.Footer>
           </>
