@@ -30,7 +30,7 @@ export function Table() {
       setIds: UIContext.setIds,
       queryParams: UIContext.queryParams,
       setQueryParams: UIContext.setQueryParams,
-      openEditCustomerDialog: UIContext.openEditCustomerDialog,
+      editPurchaseForm: UIContext.editPurchaseForm,
       openDeleteCustomerDialog: UIContext.openDeleteCustomerDialog,
     };
   }, [UIContext]);
@@ -113,7 +113,7 @@ export function Table() {
       text: "Actions",
       formatter: columnFormatters.ActionsColumnFormatter,
       formatExtraData: {
-        openEditCustomerDialog: customersUIProps.openEditCustomerDialog,
+        editPurchaseForm: customersUIProps.editPurchaseForm,
         openDeleteCustomerDialog: customersUIProps.openDeleteCustomerDialog,
       },
       classes: "text-right pr-0",
