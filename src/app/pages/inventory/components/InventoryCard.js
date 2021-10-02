@@ -42,6 +42,6 @@ export const InventoryCard = () => {
                 {customersUIProps?.ids?.length > 0 && <CustomersGrouping />}
                 <InventoryTable />
             </CardBody>
-            </Card>
+        </Card>
     )
 }
