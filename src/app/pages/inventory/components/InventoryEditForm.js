@@ -2,7 +2,7 @@
 // Data validation is based on Yup
 // Please, be familiar with article first:
 // https://hackernoon.com/react-form-validation-with-formik-and-yup-8b76bda62e10
-import React from "react";
+import React, {useState} from "react";
 import { Modal } from "react-bootstrap";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
@@ -13,6 +13,7 @@ import {
 import { FormLabel } from "react-bootstrap";
 import { FormSwitch } from "./FormSwitch";
 import { useCustomersUIContext } from "../context/InventoryUIContext";
+import FileUpload from '../../../utils/FileUpload';
 import Select from 'react-select'
 
 // Validation schema
@@ -42,6 +43,8 @@ export function InventoryEditForm({
   onHide,
 }) {
   const { warehouseMockData, prefferedSupplier, weightMockProps } = useCustomersUIContext();
+  const [thumbPath, setThumbPath] = useState([]);
+  const [filePath, setFilePath] = useState([]);
 
   return (
     <>
@@ -227,7 +230,19 @@ export function InventoryEditForm({
                     />
                   </div>
                   {/* Type */}
-                  <div className="col-lg-6"></div>
+                  <div className="col-lg-6">
+                    <FileUpload
+                      name="inventoryFile"
+                      isSubmitting={false}
+                      filePath={thumbPath ? thumbPath : 'https://via.placeholder.com/1000x200'}
+                      endpoint={`${process.env.REACT_APP_API_BASE_URL}/inventory/uploads`}
+                      responseCallback={(res) => {
+                          setThumbPath(res.data.thumbnails);
+                          setFilePath(res.data.filePath);
+                      }}
+                      setFieldValue={(name, file) => console.log(name, '=>', file)}
+                    />
+                  </div>
                 </div>
 
                 <div className="form-group row">
