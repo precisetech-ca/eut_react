@@ -1,29 +1,19 @@
 // React bootstrap table next =>
 // DOCS: https://react-bootstrap-table.github.io/react-bootstrap-table2/docs/
 // STORYBOOK: https://react-bootstrap-table.github.io/react-bootstrap-table2/storybook/index.html
-import React, { useEffect, useMemo } from "react";
-import BootstrapTable from "react-bootstrap-table-next";
-import paginationFactory, {
-  PaginationProvider,
-} from "react-bootstrap-table2-paginator";
+import React, { useEffect, useMemo, useState } from "react";
+import DataTable from "react-data-table-component";
+
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import * as actions from "../_redux/actions";
-import {
-  getSelectRow,
-  getHandlerTableChange,
-  NoRecordsFoundMessage,
-  PleaseWaitMessage,
-  sortCaret,
-  headerSortingClasses,
-} from "../../../../_metronic/_helpers";
-import * as uiHelpers from "../utils/UIHelpers";
-import * as columnFormatters from "../column-formatter";
-import { Pagination } from "../../../../_metronic/_partials/controls";
 import { useUIContext } from "../context/UIContext";
+import {Button, Input} from "reactstrap";
+import DateTimePicker from 'react-datetime-picker';
 
 export function Table() {
   // Customers UI Context
   const UIContext = useUIContext();
+  const [value, onChange] = useState(new Date());
   const customersUIProps = useMemo(() => {
     return {
       ids: UIContext.ids,
@@ -37,136 +27,130 @@ export function Table() {
 
   // Getting curret state of customers list from store (Redux)
   const { currentState } = useSelector(
-    (state) => ({ currentState: state.customers }),
+    (state) => ({ currentState: state.purchase }),
     shallowEqual
   );
-  const { totalCount, entities, listLoading } = currentState;
-
+  const {entities } = currentState;
+  console.log(currentState);
   // Customers Redux state
   const dispatch = useDispatch();
   useEffect(() => {
-    // clear selections list
-    customersUIProps.setIds([]);
     // server call by queryParams
-    dispatch(actions.fetchCustomers(customersUIProps.queryParams));
+    dispatch(actions.fetchProducts());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [customersUIProps.queryParams, dispatch]);
+  
   // Table columns
   const columns = [
     {
-      dataField: "id",
-      text: "ID",
-      sort: true,
-      sortCaret: sortCaret,
-      headerSortingClasses,
-    },
-    {
-      dataField: "firstName",
-      text: "PO Number",
-      sort: true,
-      sortCaret: sortCaret,
-      headerSortingClasses,
-    },
-    {
-      dataField: "lastName",
-      text: "PO Date",
-      sort: true,
-      sortCaret: sortCaret,
-      headerSortingClasses,
-    },
-    {
-      dataField: "email",
-      text: "Lead Time",
-      sort: true,
-      sortCaret: sortCaret,
-      headerSortingClasses,
-    },
-    {
-      dataField: "gender",
-      text: "Supplier",
-      sort: false,
-      sortCaret: sortCaret,
-    },
-    {
-      dataField: "status",
-      text: "Warehouse",
-      sort: true,
-      sortCaret: sortCaret,
-      headerSortingClasses,
-    },
-    {
-      dataField: "type",
-      text: "PO Finalized Date",
-      sort: true,
-      sortCaret: sortCaret,
-      headerSortingClasses,
-    },
-    {
-      dataField: "type",
-      text: "VOID",
-      sort: true,
-      sortCaret: sortCaret,
-      headerSortingClasses,
-    },
-    {
-      dataField: "action",
-      text: "Actions",
-      formatter: columnFormatters.ActionsColumnFormatter,
-      formatExtraData: {
-        editPurchaseForm: customersUIProps.editPurchaseForm,
-        openDeleteCustomerDialog: customersUIProps.openDeleteCustomerDialog,
-      },
-      classes: "text-right pr-0",
-      headerClasses: "text-right pr-3",
-      style: {
-        minWidth: "100px",
+      id: "sku",
+      name: "SKU",
+      selector: ({sku}) => {
+        
+        return (
+        <>
+          <Input type="select" name="select" id="exampleSelect">
+            {sku.map(({id, value}) => 
+              <option value={id}>{value}</option>
+            )}
+          </Input>
+          <Button className="mt-2" color="dark">+ Create</Button>
+        </>)
       },
     },
+    {
+      id: "barcode",
+      name: "Barcode",
+      selector: row => row.barcode,
+    },
+    {
+      id: "desc",
+      name: "Desc",
+      selector: row => row.desc,
+    },
+    {
+      id: "lot_no",
+      name: "Lot #",
+      selector: row => row.lot_no,
+    },
+    {
+      id: "expiry",
+      name: "Expiry",
+      width: "300px",
+      selector: row => <DateTimePicker
+        onChange={(e) => {
+            onChange(e);
+        }}
+        value={value}
+        name="expiry"
+    />,
+    },
+    {
+      id: "oh_qty",
+      name: "OH QTY",
+      selector: ({oh_qty}) => oh_qty,
+    },
+    {
+      id: "available_qty",
+      name: "Avl Qty",
+      selector: ({available_qty}) => available_qty,
+    },
+    {
+      id: "odr_qty",
+      name: "Odr Qty",
+      selector: ({odr_qty}) => <Input type="text" name="cost" value={odr_qty}  />,
+    },
+    {
+      id: "uom",
+      name: "UoM",
+      selector: row => row.uom,
+    },
+    {
+      id: "cost",
+      name: "Cost",
+      selector: ({cost}) => <Input type="text" name="cost" value={cost} readOnly={true} />,
+    },
+    {
+      id: "tax",
+      name: "Tax",
+      selector: ({tax}) => {
+        return (
+        <>
+          <Input type="select" name="select" id="exampleSelect">
+            {tax.map(({id, title}) => 
+              <option value={id}>{title}</option>
+            )}
+          </Input>
+        </>)
+      },
+    },
+    {
+      id: "last_cost",
+      name: "Last Cost",
+      selector: row => row.last_cost,
+    },
+    {
+      id: "sub_total",
+      name: "Sub Total",
+      selector: row => row.sub_total,
+    },
+    {
+      id: "action",
+      name: "Action",
+      selector: (row) => {
+        return <Button color="danger">Delete</Button>
+      },
+    },
+
   ];
-  // Table pagination properties
-  const paginationOptions = {
-    custom: true,
-    totalSize: totalCount,
-    sizePerPageList: uiHelpers.sizePerPageList,
-    sizePerPage: customersUIProps.queryParams.pageSize,
-    page: customersUIProps.queryParams.pageNumber,
-  };
+  
   return (
     <>
-      <PaginationProvider pagination={paginationFactory(paginationOptions)}>
-        {({ paginationProps, paginationTableProps }) => {
-          return (
-            <Pagination
-              isLoading={listLoading}
-              paginationProps={paginationProps}
-            >
-              <BootstrapTable
-                wrapperClasses="table-responsive"
-                bordered={false}
-                classes="table table-head-custom table-vertical-center overflow-hidden"
-                bootstrap4
-                remote
-                keyField="id"
-                data={entities === null ? [] : entities}
-                columns={columns}
-                defaultSorted={uiHelpers.defaultSorted}
-                onTableChange={getHandlerTableChange(
-                  customersUIProps.setQueryParams
-                )}
-                selectRow={getSelectRow({
-                  entities,
-                  ids: customersUIProps.ids,
-                  setIds: customersUIProps.setIds,
-                })}
-                {...paginationTableProps}
-              >
-                <PleaseWaitMessage entities={entities} />
-                <NoRecordsFoundMessage entities={entities} />
-              </BootstrapTable>
-            </Pagination>
-          );
-        }}
-      </PaginationProvider>
+      <DataTable 
+        title="Movie List" 
+        columns={columns} 
+        data={entities?.length > 0 ? entities : []} 
+         />
     </>
   );
 }

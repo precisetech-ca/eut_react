@@ -101,14 +101,18 @@ const InnerForm = ({
                 <Col>
                     <FormGroup>
                         <Label for="po_date">PO Date/Lead Time</Label>
-                        <DateTimePicker
-                            onChange={(e) => {
-                                onChange(e);
-                                setFieldValue("po_date", dateFormat(e, "isoDateTime"))
-                            }}
-                            value={value}
-                            name="po_date"
-                        />
+                        <Row>
+                            <Col>
+                                <DateTimePicker
+                                    onChange={(e) => {
+                                        onChange(e);
+                                        setFieldValue("po_date", dateFormat(e, "isoDateTime"))
+                                    }}
+                                    value={value}
+                                    name="po_date"
+                                />
+                            </Col>
+                        </Row>
                         {/* <Input size="sm" tag={Field} name="po_date" id="po_date" placeholder="po_date" /> */}
                     </FormGroup>
                 </Col>

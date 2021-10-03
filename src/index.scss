@@ -258,9 +258,18 @@
   margin-right: 0;
 }
 
-.react-datetime-picker-wrapper,
-.react-datepicker__input-container,
-.react-datepicker__input-container input {
-    display: block;
-    width: 100%;
+.react-datetime-picker__wrapper {
+    border-radius: 0.3rem;
+    border: 1px solid #E4E6EF;
+}
+
+@media only screen and (min-width: 1400px) {
+  .container, 
+  .container-sm, 
+  .container-md, 
+  .container-lg, 
+  .container-xl, 
+  .container-xxl {
+    max-width: 1650px;
+  }
 }
