@@ -7,8 +7,9 @@ import DataTable from "react-data-table-component";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import * as actions from "../_redux/actions";
 import { useUIContext } from "../context/UIContext";
-import {Button, Input} from "reactstrap";
+import {Button, Input, Row, Col} from "reactstrap";
 import DateTimePicker from 'react-datetime-picker';
+import { Summary } from "./supplier/Summary";
 
 export function Table() {
   // Customers UI Context
@@ -31,7 +32,7 @@ export function Table() {
     shallowEqual
   );
   const {entities } = currentState;
-  console.log(currentState);
+
   // Customers Redux state
   const dispatch = useDispatch();
   useEffect(() => {
@@ -39,7 +40,12 @@ export function Table() {
     dispatch(actions.fetchProducts());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [customersUIProps.queryParams, dispatch]);
+
+  const deleteProduct = (id) => {
+    dispatch(actions.deleteProduct(id));
+  }
   
+
   // Table columns
   const columns = [
     {
@@ -54,7 +60,7 @@ export function Table() {
               <option value={id}>{value}</option>
             )}
           </Input>
-          <Button className="mt-2" color="dark">+ Create</Button>
+          <Button className="mt-2" color="dark" >+ Create</Button>
         </>)
       },
     },
@@ -138,7 +144,7 @@ export function Table() {
       id: "action",
       name: "Action",
       selector: (row) => {
-        return <Button color="danger">Delete</Button>
+        return <Button color="danger" onClick={() => deleteProduct(row?.id)}>Delete</Button>
       },
     },
 
@@ -147,10 +153,30 @@ export function Table() {
   return (
     <>
       <DataTable 
-        title="Movie List" 
+        title="Product List" 
         columns={columns} 
         data={entities?.length > 0 ? entities : []} 
-         />
+      />
+
+      <Row className="mt-4">
+        <Col className="col-lg-6">
+          <a href="#addproduct" onClick={(e) => {
+            e.preventDefault();
+            dispatch(actions.addProduct())
+          }}>Add a product</a>
+        </Col>
+      </Row>
+      
+      <Row className="mt-4">
+        <Col className="col-lg-6">
+          <Input type="textarea" />
+        </Col>
+        <Col className="col-lg-4"></Col>
+        <Col className="col-lg-2">
+          <Summary />
+        </Col>
+      </Row>
+      
     </>
   );
 }

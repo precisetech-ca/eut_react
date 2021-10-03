@@ -104,6 +104,15 @@ export const deleteCustomers = ids => dispatch => {
     });
 };
 
+export const addProduct = () => dispatch => {
+  const { actions } = purchaseSlice;
+  dispatch(actions.addProduct());
+}
+
+export const deleteProduct = (id) => dispatch => {
+  const { actions } = purchaseSlice;
+  dispatch(actions.deleteProduct(id));
+}
 
 export const fetchProducts = () => dispatch => {
   const { actions } = purchaseSlice;
