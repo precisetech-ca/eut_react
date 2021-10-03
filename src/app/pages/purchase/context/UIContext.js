@@ -37,17 +37,8 @@ export function UIProvider({purchaseUIEvents, children}) {
   ];
 
   const inventoryTabs = [
-    {key: "order", title: "Product", Component: () => <h1>hello</h1>},
-    {key: "order_detail", title: "Receiving"},
-    {key: "Storage", title: "Storage"},
-    {key: "catalog", title: "Payables"},
+    {key: "order", title: "Product"},
     {key: "audit", title: "Audit Log"},
-    // {key: "override_supplier_by_inventory", title: "Override Supplier By Inventory"},
-    // {key: "attachments", title: "Attachments"},
-    // {key: "stock_availability", title: "Stock Availability"},
-    // {key: "history", title: "History"},
-    // {key: "part_interchange", title: "Part Interchange"},
-    // {key: "audit_log", title: "Audit Log"},
   ];
 
   const setQueryParams = useCallback(nextQueryParams => {
@@ -64,18 +55,6 @@ export function UIProvider({purchaseUIEvents, children}) {
     });
   }, []);
 
-  const initCustomer = {
-    id: undefined,
-    firstName: "",
-    lastName: "",
-    email: "",
-    userName: "",
-    gender: "Female",
-    status: 0,
-    dateOfBbirth: "",
-    ipAddress: "",
-    type: 1
-  };
 
   const backToHome = () => {
     history.push('/purchase');
@@ -87,7 +66,6 @@ export function UIProvider({purchaseUIEvents, children}) {
     ids,
     setIds,
     setQueryParams,
-    initCustomer,
     warehouseMockData,
     prefferedSupplier,
     weightMockProps,

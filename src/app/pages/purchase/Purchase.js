@@ -4,7 +4,7 @@ import { UIProvider } from "./context/UIContext";
 import { EditPurchaseOrder } from "./components/EditPurchaseOrder";
 import { HomePageCard } from "./components/HomePageCard";
 import { NewPurchaseOrder } from "./components/NewPurchaseOrder";
-import { SupplierForm } from "./components/supplier/SupplierForm";
+import { SupplierForm } from "./components/forms/SupplierForm";
 
 const Purchase = ({dispatch, history}) => {
     const purchaseUIEvents = {

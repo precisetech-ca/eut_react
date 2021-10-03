@@ -9,7 +9,7 @@ import { useDispatch } from "react-redux";
 import * as actions from "../_redux/actions";
 import { Table } from './TableData';
 import { useUIContext } from "../context/UIContext";
-import { EditForm } from './EditForm';
+import { PurchaseOrderForm } from './forms/PurchaseOrderForm';
 
 
 export const EditPurchaseOrder = ({id}) => {
@@ -26,7 +26,7 @@ export const EditPurchaseOrder = ({id}) => {
       <Card>
         <CardHeader title="Purchase List"></CardHeader>
         <CardBody>
-          <EditForm backToHome={UIContext.backToHome} />
+          <PurchaseOrderForm backToHome={UIContext.backToHome} />
           <Tabs
             id="controlled-tab-example"
             activeKey={key}
