@@ -15,6 +15,12 @@ export function UIProvider({purchaseUIEvents, children}) {
   const history = useHistory();
   const [queryParams, setQueryParamsBase] = useState(initialFilter);
   const [ids, setIds] = useState([]);
+
+  const [showSupplierModal, setShowSupplierModal] = useState(false);
+  const toggleSupplierHandler = () => {
+    setShowSupplierModal(!showSupplierModal)
+  };
+
   const warehouseMockData = [
     {value: "1", label: "King PIN 5th Wheel"},
     {value: "2", label: "Alloy Rims"}
@@ -87,6 +93,8 @@ export function UIProvider({purchaseUIEvents, children}) {
     weightMockProps,
     inventoryTabs,
     backToHome,
+    showSupplierModal,
+    toggleSupplierHandler,
     newPurchaseForm: purchaseUIEvents.newPurchaseForm,
     editPurchaseForm: purchaseUIEvents.editPurchaseForm,
     openDeleteCustomerDialog: purchaseUIEvents.openDeleteCustomerDialog,

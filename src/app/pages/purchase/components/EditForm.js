@@ -8,7 +8,6 @@ import { Formik, Field } from "formik";
 import * as Yup from "yup";
 import {
   Input,
-  DatePickerField,
 } from "../../../../_metronic/_partials/controls";
 import { FormLabel } from "react-bootstrap";
 import { FormSwitch } from "./FormSwitch";
@@ -41,7 +40,7 @@ export function EditForm({
   actionsLoading,
   backToHome,
 }) {
-  const { warehouseMockData } = useUIContext();
+  const { warehouseMockData, toggleSupplierHandler} = useUIContext();
 
   return (
     <>
@@ -139,7 +138,7 @@ export function EditForm({
                   <div className="col-lg-4">
                     <FormLabel>Supplier</FormLabel>
                     <Select options={warehouseMockData} />
-                    <Button className="btn btn-dark mt-2">+ Create</Button>
+                    <Button className="btn btn-dark mt-2" onClick={toggleSupplierHandler}>+ Create</Button>
                   </div>
                   <div className="col-lg-4">
                     <Field

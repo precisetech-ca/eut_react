@@ -11,7 +11,6 @@ import * as actions from "../_redux/actions";
 import { Table } from './TableData';
 import { Filter } from "../filters/Filter";
 import { useUIContext } from "../context/UIContext";
-import { EditForm } from './EditForm';
 import { Grouping } from "../grouping/Grouping";
 
 export const HomePageCard = () => {
