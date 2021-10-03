@@ -41,7 +41,7 @@ export function SaveForm({
   actionsLoading,
   backToHome,
 }) {
-  const { warehouseMockData } = useUIContext();
+  const { warehouseMockData, toggleSupplierHandler } = useUIContext();
 
   return (
     <>
@@ -139,7 +139,7 @@ export function SaveForm({
                   <div className="col-lg-4">
                     <FormLabel>Supplier</FormLabel>
                     <Select options={warehouseMockData} />
-                    <Button className="btn btn-dark mt-2">+ Create</Button>
+                    <Button className="btn btn-dark mt-2" onClick={toggleSupplierHandler}>+ Create</Button>
                   </div>
                   <div className="col-lg-4">
                     <Field
