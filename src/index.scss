@@ -257,3 +257,10 @@
   margin-left: 0.25rem;
   margin-right: 0;
 }
+
+.react-datetime-picker-wrapper,
+.react-datepicker__input-container,
+.react-datepicker__input-container input {
+    display: block;
+    width: 100%;
+}
