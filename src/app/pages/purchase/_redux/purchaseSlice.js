@@ -45,7 +45,7 @@ export const purchaseSlice = createSlice({
         const { totalCount, entities } = action.payload;
         state.listLoading = false;
         state.error = null;
-        state.entities = entities;
+        state.purchaseList = entities;
         state.totalCount = totalCount;
       },
       // findCustomers

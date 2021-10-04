@@ -25,7 +25,7 @@ export function HomePageTable() {
     (state) => ({ currentState: state.purchase }),
     shallowEqual
   );
-  const {entities } = currentState;
+  const { purchaseList } = currentState;
 
   // Customers Redux state
   const dispatch = useDispatch();
@@ -110,7 +110,7 @@ export function HomePageTable() {
 
   return (
     <>
-      {entities && <ReactTable tableColumns={columns} tableData={entities} deleteProduct={deleteProduct}/>}
+      {purchaseList && <ReactTable tableColumns={columns} tableData={purchaseList} deleteProduct={deleteProduct}/>}
     </>
   );
 }
