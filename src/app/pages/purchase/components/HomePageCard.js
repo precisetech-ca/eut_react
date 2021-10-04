@@ -8,10 +8,10 @@ import {
 } from "_metronic/_partials/controls";
 import { useDispatch } from "react-redux";
 import * as actions from "../_redux/actions";
-import { Table } from './TableData';
 import { Filter } from "../filters/Filter";
 import { useUIContext } from "../context/UIContext";
 import { Grouping } from "../grouping/Grouping";
+import { HomePageTable } from './HomePageTable';
 
 export const HomePageCard = () => {
     const UIContext = useUIContext();
@@ -40,9 +40,7 @@ export const HomePageCard = () => {
                 </CardHeaderToolbar>
             </CardHeader>
             <CardBody>
-                <Filter />
-                {customersUIProps?.ids?.length > 0 && <Grouping />}
-                <Table />
+                <HomePageTable />
             </CardBody>
         </Card>
     )
