@@ -1,172 +1,178 @@
 // React bootstrap table next =>
 // DOCS: https://react-bootstrap-table.github.io/react-bootstrap-table2/docs/
 // STORYBOOK: https://react-bootstrap-table.github.io/react-bootstrap-table2/storybook/index.html
-import React, { useEffect, useMemo } from "react";
-import BootstrapTable from "react-bootstrap-table-next";
-import paginationFactory, {
-  PaginationProvider,
-} from "react-bootstrap-table2-paginator";
+import React, { useEffect, useMemo, useState } from "react";
+import DataTable from "react-data-table-component";
+
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import * as actions from "../_redux/actions";
-import {
-  getSelectRow,
-  getHandlerTableChange,
-  NoRecordsFoundMessage,
-  PleaseWaitMessage,
-  sortCaret,
-  headerSortingClasses,
-} from "../../../../_metronic/_helpers";
-import * as uiHelpers from "../utils/UIHelpers";
-import * as columnFormatters from "../column-formatter";
-import { Pagination } from "../../../../_metronic/_partials/controls";
 import { useUIContext } from "../context/UIContext";
+import {Button, Input, Row, Col} from "reactstrap";
+
+import { Summary } from "./supplier/Summary";
+import { ReactTable } from "../../custom_widgets/table/ReactTable";
+import DateTimePicker from 'react-datetime-picker';
 
 export function Table() {
   // Customers UI Context
   const UIContext = useUIContext();
+  const [value, onChange] = useState(new Date());
   const customersUIProps = useMemo(() => {
     return {
-      ids: UIContext.ids,
-      setIds: UIContext.setIds,
       queryParams: UIContext.queryParams,
-      setQueryParams: UIContext.setQueryParams,
-      editPurchaseForm: UIContext.editPurchaseForm,
-      openDeleteCustomerDialog: UIContext.openDeleteCustomerDialog,
     };
   }, [UIContext]);
 
   // Getting curret state of customers list from store (Redux)
   const { currentState } = useSelector(
-    (state) => ({ currentState: state.customers }),
+    (state) => ({ currentState: state.purchase }),
     shallowEqual
   );
-  const { totalCount, entities, listLoading } = currentState;
+  const {entities } = currentState;
 
   // Customers Redux state
   const dispatch = useDispatch();
   useEffect(() => {
-    // clear selections list
-    customersUIProps.setIds([]);
     // server call by queryParams
-    dispatch(actions.fetchCustomers(customersUIProps.queryParams));
+    dispatch(actions.fetchProducts());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [customersUIProps.queryParams, dispatch]);
-  // Table columns
+
+  const deleteProduct = (id) => {
+    dispatch(actions.deleteProduct(id));
+  }
+
   const columns = [
     {
-      dataField: "id",
-      text: "ID",
-      sort: true,
-      sortCaret: sortCaret,
-      headerSortingClasses,
+        Header: () => {
+            return <div className="d-flex justify-content-center">SKU</div>
+        },
+        Footer: "SKU",
+        accessor: "sku",
+        disableFilters: true,
+        Cell: ({value}) => {
+            return (<div style={{width: "200px"}}>
+                <Input type="select" className="d-inline-block" name="select" id="exampleSelect">
+                    {value?.map(({id, value}) => 
+                        <option value={id}>{value}</option>
+                    )}
+                </Input>
+                <Button className="mt-2" color="dark" >+ Create</Button>
+            </div>)
+        }
     },
     {
-      dataField: "firstName",
-      text: "PO Number",
-      sort: true,
-      sortCaret: sortCaret,
-      headerSortingClasses,
+        Header: "Barcode",
+        Footer: "Barcode",
+        accessor: "barcode",
+        Cell: ({value}) => value,
     },
     {
-      dataField: "lastName",
-      text: "PO Date",
-      sort: true,
-      sortCaret: sortCaret,
-      headerSortingClasses,
+        Header: "Desc",
+        Footer: "Desc",
+        accessor: "desc",
+        Cell: ({value}) => value,
+    },
+    
+    {
+        Header: "Lot #",
+        Footer: "Lot #",
+        accessor: "lot_no",
+        Cell: ({value}) => value,
     },
     {
-      dataField: "email",
-      text: "Lead Time",
-      sort: true,
-      sortCaret: sortCaret,
-      headerSortingClasses,
+        Header: () => <div style={{width: "250px"}}>Expiry</div>,
+        Footer: "Expiry",
+        accessor: "expiry",
+        Cell: () => <DateTimePicker onChange={onChange} value={value} />
     },
     {
-      dataField: "gender",
-      text: "Supplier",
-      sort: false,
-      sortCaret: sortCaret,
+        Header: "OH QTY",
+        Footer: "OH QTY",
+        accessor: "oh_qty",
+        Cell: ({value}) => value,
     },
     {
-      dataField: "status",
-      text: "Warehouse",
-      sort: true,
-      sortCaret: sortCaret,
-      headerSortingClasses,
+        Header: "Avl Qty",
+        Footer: "Avl Qty",
+        accessor: "available_qty",
+        Cell: ({value}) => value,
     },
     {
-      dataField: "type",
-      text: "PO Finalized Date",
-      sort: true,
-      sortCaret: sortCaret,
-      headerSortingClasses,
+        Header: "Odr Qty",
+        Footer: "Odr Qty",
+        accessor: "odr_qty",
+        Cell: ({value}) => value,
     },
     {
-      dataField: "type",
-      text: "VOID",
-      sort: true,
-      sortCaret: sortCaret,
-      headerSortingClasses,
+        Header: "UoM",
+        Footer: "UoM",
+        accessor: "uom",
+        Cell: ({value}) => value,
     },
     {
-      dataField: "action",
-      text: "Actions",
-      formatter: columnFormatters.ActionsColumnFormatter,
-      formatExtraData: {
-        editPurchaseForm: customersUIProps.editPurchaseForm,
-        openDeleteCustomerDialog: customersUIProps.openDeleteCustomerDialog,
-      },
-      classes: "text-right pr-0",
-      headerClasses: "text-right pr-3",
-      style: {
-        minWidth: "100px",
-      },
+        Header: "Cost",
+        Footer: "Cost",
+        accessor: "cost",
+        Cell: ({value}) => value,
     },
-  ];
-  // Table pagination properties
-  const paginationOptions = {
-    custom: true,
-    totalSize: totalCount,
-    sizePerPageList: uiHelpers.sizePerPageList,
-    sizePerPage: customersUIProps.queryParams.pageSize,
-    page: customersUIProps.queryParams.pageNumber,
-  };
+    {
+        Header: () => <div style={{width: "200px"}} className="text-center">Tax</div>,
+        Footer: "Tax",
+        accessor: "tax",
+        disableFilters: true,
+        Cell: ({value}) => <Input type="select" className="d-inline-block" name="select" id="exampleSelect">
+            {value?.map(({id, title}) => 
+                <option value={id}>{title}</option>
+            )}
+        </Input>,
+    },
+    {
+        Header: "Last Cost",
+        Footer: "Last Cost",
+        accessor: "last_cost",
+        Cell: ({value}) => value,
+    },
+    {
+        Header: "Sub Total",
+        Footer: "Sub Total",
+        accessor: "sub_total",
+        Cell: ({value}) => value
+    },
+    {
+        Header: "Action",
+        Footer: "Sub Total",
+        accessor: "action",
+        disableFilters: true,
+        Cell: () => {
+            return <Button color="danger">Delete</Button>
+        }
+    },
+];
+
   return (
     <>
-      <PaginationProvider pagination={paginationFactory(paginationOptions)}>
-        {({ paginationProps, paginationTableProps }) => {
-          return (
-            <Pagination
-              isLoading={listLoading}
-              paginationProps={paginationProps}
-            >
-              <BootstrapTable
-                wrapperClasses="table-responsive"
-                bordered={false}
-                classes="table table-head-custom table-vertical-center overflow-hidden"
-                bootstrap4
-                remote
-                keyField="id"
-                data={entities === null ? [] : entities}
-                columns={columns}
-                defaultSorted={uiHelpers.defaultSorted}
-                onTableChange={getHandlerTableChange(
-                  customersUIProps.setQueryParams
-                )}
-                selectRow={getSelectRow({
-                  entities,
-                  ids: customersUIProps.ids,
-                  setIds: customersUIProps.setIds,
-                })}
-                {...paginationTableProps}
-              >
-                <PleaseWaitMessage entities={entities} />
-                <NoRecordsFoundMessage entities={entities} />
-              </BootstrapTable>
-            </Pagination>
-          );
-        }}
-      </PaginationProvider>
+      {entities && <ReactTable tableColumns={columns} tableData={entities} deleteProduct={deleteProduct}/>}
+
+      <Row className="mt-4">
+        <Col className="col-lg-6">
+          <a href="#addproduct" onClick={(e) => {
+            e.preventDefault();
+            dispatch(actions.addProduct())
+          }}>Add a product</a>
+        </Col>
+      </Row>
+      
+      <Row className="mt-4">
+        <Col className="col-lg-6">
+          <Input type="textarea" />
+        </Col>
+        <Col className="col-lg-2"></Col>
+        <Col className="col-lg-4">
+          <Summary />
+        </Col>
+      </Row>
+      
     </>
   );
 }
