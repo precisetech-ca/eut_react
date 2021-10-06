@@ -281,3 +281,23 @@
     margin-left: 2rem;
   }
 }
+
+.react-table-container {
+  input{
+    margin-top: 0;
+    margin-left: 0;
+  }
+}
+
+.table-utils-container {
+  background-color: #363940;
+  button {
+    background-color: inherit !important;
+    border-radius: 100px;
+    border-color: #2eb3a6 !important;
+    color: #fff !important;
+    &:hover {
+      background: #2eb3a6 !important;
+    }
+  }
+}

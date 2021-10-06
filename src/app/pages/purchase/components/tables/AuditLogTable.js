@@ -5,15 +5,14 @@ import React, { useEffect, useMemo, useState } from "react";
 import DataTable from "react-data-table-component";
 
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
-import * as actions from "../_redux/actions";
-import { useUIContext } from "../context/UIContext";
+import * as actions from "../../_redux/actions";
+import { useUIContext } from "../../context/UIContext";
 import {Button, Input, Row, Col} from "reactstrap";
 
-import { Summary } from "./supplier/Summary";
-import { ReactTable } from "../../custom_widgets/table/ReactTable";
+import { ReactTable } from "../../../custom_widgets/table/ReactTable";
 import DateTimePicker from 'react-datetime-picker';
 
-export function Table() {
+export function AuditLogTable() {
   // Customers UI Context
   const UIContext = useUIContext();
   const [value, onChange] = useState(new Date());
@@ -148,26 +147,6 @@ export function Table() {
   return (
     <>
       {entities && <ReactTable tableColumns={columns} tableData={entities} deleteProduct={deleteProduct}/>}
-
-      <Row className="mt-4">
-        <Col className="col-lg-6">
-          <a href="#addproduct" onClick={(e) => {
-            e.preventDefault();
-            dispatch(actions.addProduct())
-          }}>Add a product</a>
-        </Col>
-      </Row>
-      
-      <Row className="mt-4">
-        <Col className="col-lg-6">
-          <Input type="textarea" />
-        </Col>
-        <Col className="col-lg-2"></Col>
-        <Col className="col-lg-4">
-          <Summary />
-        </Col>
-      </Row>
-      
     </>
   );
 }

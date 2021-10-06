@@ -1,8 +1,7 @@
 import React, {useMemo} from 'react'
-import {useTable, useFilters, usePagination} from 'react-table';
+import {useTable, useFilters, usePagination, useSortBy} from 'react-table';
 import { Table, Button } from 'react-bootstrap';
 import { ColumnFilter } from './ColumnFilter';
-
 
 export const  ReactTable = ({tableData, tableColumns}) => {
     const columns = useMemo(() => tableColumns, []);
@@ -22,7 +21,7 @@ export const  ReactTable = ({tableData, tableColumns}) => {
         initialState: {
             pageIndex: 0
         }
-    }, useFilters, usePagination);
+    }, useFilters, useSortBy, usePagination );
 
     const {
         getTableProps,
@@ -33,7 +32,6 @@ export const  ReactTable = ({tableData, tableColumns}) => {
         nextPage,
         canNextPage,
         canPreviousPage,
-        pageOptions,
         state,
         gotoPage,
         pageCount,
@@ -46,13 +44,20 @@ export const  ReactTable = ({tableData, tableColumns}) => {
 
     return (
         <>
-            <Table {...getTableProps()} striped bordered hover size="sm" responsive={true} >
+            <Table 
+                {...getTableProps()} 
+                bordered 
+                responsive={true} 
+                className="react-table-container" >
                 <thead>
                     {headerGroups.map(headerGroup => {
                         return (<tr {...headerGroup.getHeaderGroupProps()}>
                             {headerGroup?.headers?.map(column => {
-                                return (<th {...column.getHeaderProps()}>
+                                return (<th {...column.getHeaderProps(column.getSortByToggleProps())}>
                                     {column.render("Header")}
+                                    <span>
+                                        {column.isSorted ? (column.isSortedDesc ? ' 🔽' : ' 🔼') : ''}
+                                    </span>
                                     <div>{column.canFilter ? column.render('Filter') : ''}</div>
                                 </th>);
                             })}
@@ -69,34 +74,34 @@ export const  ReactTable = ({tableData, tableColumns}) => {
                         </tr>;
                     })}
                 </tbody>
-                
             </Table>
-            <span className="d-flex justify-content-center">
-                <strong className="d-flex justify-content-center ml-1 mr-1 " style={{alignItems: "center"}}>
-                    {pageIndex + 1} of {pageOptions.length}
-                </strong>
-                <select value={pageSize} onChange={ e=> setPageSize(Number(e.target.value))}>
-                    {[10, 15, 25].map (pageSize => (
-                        <option key={pageSize} value={pageSize}>
-                            Show {pageSize}
-                        </option>
-                    ))}
-                </select>
-            </span>
             
-            <div className="d-flex justify-content-center">
+            
+            <div className="d-flex table-utils-container">
                 <Button onClick={() => gotoPage(0)} disabled={!canPreviousPage} className="m-1">
                     {'<<'}
                 </Button> 
                 <Button onClick={() => previousPage()} disabled={!canPreviousPage} className="m-1">
-                    Previous
+                    {'<'}
                 </Button>
                 <Button onClick={() => nextPage()} disabled={!canNextPage} className="m-1">
-                    Next
+                    {'>'}
                 </Button>
                 <Button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage} className="m-1">
                     {'>>'}
                 </Button>
+                <span className="d-flex justify-content-center">
+                    <select className="ml-2" value={pageSize} onChange={ e=> setPageSize(Number(e.target.value))}>
+                        {[10, 15, 25].map (pageSize => (
+                            <option key={pageSize} value={pageSize}>
+                                Show {pageSize}
+                            </option>
+                        ))}
+                    </select>
+                    <span className="d-flex text-white ml-2 align-items-center">
+                        Items per page
+                    </span>
+                </span>
             </div>
         </>
     )
