@@ -48,7 +48,6 @@ export function Table() {
             return <div className="d-flex justify-content-center">SKU</div>
         },
         disableSortBy: true,
-        Footer: "SKU",
         accessor: "sku",
         disableFilters: true,
         Cell: ({value}) => {
@@ -63,85 +62,104 @@ export function Table() {
         }
     },
     {
+      Header: "Barcode",
+      disableFilters: true,
       disableSortBy: true,
         accessor: "barcode",
         Cell: ({value}) => value,
     },
     {
+      Header: "Desc",
+      disableFilters: true,
       disableSortBy: true,
         accessor: "desc",
         Cell: ({value}) => value,
     },
     
     {
+      Header: "Lot #",
+      disableFilters: true,
       disableSortBy: true,
         accessor: "lot_no",
         Cell: ({value}) => value,
     },
     {
+      disableFilters: true,
       disableSortBy: true,
-        Header: () => <div style={{width: "200px"}}></div>,
+        Header: () => <div style={{width: "200px"}}>Expiry</div>,
         accessor: "expiry",
         Cell: () => <DateTimePicker onChange={onChange} value={value} />
     },
     {
+      Header: "Oh Qty",
+      disableFilters: true,
       disableSortBy: true,
         accessor: "oh_qty",
         Cell: ({value}) => value,
     },
     {
+      Header: "Avl Qty",
+      disableFilters: true,
       disableSortBy: true,
         accessor: "available_qty",
         Cell: ({value}) => value,
     },
     {
+      Header: "Order Qty",
+      disableFilters: true,
       disableSortBy: true,
       Footer: "uom",
-        accessor: "odr_qty",
-        Cell: ({value}) => value,
+      accessor: "odr_qty",
+      Cell: ({value}) => value,
     },
     {
+      disableFilters: true,
       disableSortBy: true,
-      Footer: "uom",
-        accessor: "uom",
-        Cell: ({value}) => value,
+      Header: "uom",
+      accessor: "uom",
+      Cell: ({value}) => value,
     },
     {
+      disableFilters: true,
       disableSortBy: true,
+      Header: "Cost",
+      accessor: "cost",
+      Cell: ({value}) => value,
+    },
+    {
+      disableFilters: true,
+      disableSortBy: true,
+      Header: () => <div style={{width: "200px"}} className="text-center">Tax</div>,
       Footer: "Tax",
-        accessor: "cost",
-        Cell: ({value}) => value,
+      accessor: "tax",
+      Cell: ({value}) => <Input type="select" className="d-inline-block" name="select" id="exampleSelect">
+          {value?.map(({id, title}) => 
+              <option value={id}>{title}</option>
+          )}
+      </Input>,
     },
     {
+      Header: "Last Cost",
+      disableFilters: true,
       disableSortBy: true,
-        Header: () => <div style={{width: "200px"}} className="text-center"></div>,
-        Footer: "Tax",
-        accessor: "tax",
-        disableFilters: true,
-        Cell: ({value}) => <Input type="select" className="d-inline-block" name="select" id="exampleSelect">
-            {value?.map(({id, title}) => 
-                <option value={id}>{title}</option>
-            )}
-        </Input>,
+      accessor: "last_cost",
+      Cell: ({value}) => value,
     },
     {
+      Header: "Sub Total",
+      disableFilters: true,
       disableSortBy: true,
-        accessor: "last_cost",
-        Cell: ({value}) => value,
+      accessor: "sub_total",
+      Cell: ({value}) => value
     },
     {
+      disableFilters: true,
       disableSortBy: true,
-        accessor: "sub_total",
-        Cell: ({value}) => value
-    },
-    {
-      disableSortBy: true,
-        Header: "Action",
-        accessor: "action",
-        disableFilters: true,
-        Cell: () => {
-            return <i class="fa fa-trash text-danger" aria-hidden="true"></i>
-        }
+      Header: "Action",
+      accessor: "action",
+      Cell: () => {
+          return <i class="fa fa-trash text-danger" aria-hidden="true"></i>
+      }
     },
 ];
 
