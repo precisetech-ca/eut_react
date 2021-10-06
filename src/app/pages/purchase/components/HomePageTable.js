@@ -104,7 +104,11 @@ export function HomePageTable() {
         disableSortBy: true,
         disableFilters: true,
         Cell: () => {
-            return <i class="fas fa-pencil-alt"></i>
+            return (
+              <>
+                <i class="fas fa-pencil-alt text-primary"></i>
+                <i class="fas fa-trash text-danger ml-3"></i>
+            </>)
         }
     },
 ];

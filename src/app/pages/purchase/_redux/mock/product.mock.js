@@ -21,6 +21,13 @@ export const data = [
     }
 ]
 
+export const auditLogData = [
+    {
+        date_time: "2021-03-20",
+        message: "Hello",
+        user: "Salman"
+    }
+];
   
 export const purchaseData = [{
     sku: "AKC-132123",

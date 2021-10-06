@@ -7,7 +7,6 @@ export const  ReactTable = ({tableData, tableColumns}) => {
     const columns = useMemo(() => tableColumns, []);
     const data = tableData
 
-    console.log(data, tableData);
     const defaultColumn = useMemo(() => {
         return {
             Filter: ColumnFilter,

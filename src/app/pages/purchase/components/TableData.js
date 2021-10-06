@@ -140,7 +140,7 @@ export function Table() {
         accessor: "action",
         disableFilters: true,
         Cell: () => {
-            return <Button color="danger">Delete</Button>
+            return <i class="fa fa-trash text-danger" aria-hidden="true"></i>
         }
     },
 ];
