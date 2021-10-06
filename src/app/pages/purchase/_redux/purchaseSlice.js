@@ -56,6 +56,13 @@ export const purchaseSlice = createSlice({
         state.entities = entities;
         state.totalCount = totalCount;
       },
+      auditLogs: (state, action) => {
+        const { totalCount, entities } = action.payload;
+        state.listLoading = false;
+        state.error = null;
+        state.auditLogs = entities;
+        state.totalCount = totalCount;
+      },
       addProduct: (state, action) => {
         state.entities.push({
             id: uuidv4(),

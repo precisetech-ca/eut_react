@@ -1,7 +1,7 @@
 import { callGenericGetterAsync } from "app/generic/actions";
 import * as requestFromServer from "./customersCrud";
 import {customersSlice, callTypes} from "./customersSlice";
-import { data, purchaseData } from "./mock/product.mock";
+import { data, purchaseData, auditLogData } from "./mock/product.mock";
 import { purchaseSlice } from "./purchaseSlice";
 
 const {actions} = customersSlice;
@@ -126,6 +126,20 @@ export const fetchPurchaseList = () => dispatch => {
     }));
   }, 1000);
 };
+
+export const auditLogDataAsync = () => dispatch => {
+  const { actions } = purchaseSlice;
+  dispatch(actions.startCall({ callType: callTypes.action }));
+
+  setTimeout(() => {
+    dispatch(actions.auditLogs({
+      callType: callTypes.action,
+      entities: auditLogData
+    }));
+  }, 1000);
+};
+
+
 
 
 export const fetchProducts = () => dispatch => {

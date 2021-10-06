@@ -10,6 +10,7 @@ import * as actions from "../_redux/actions";
 import { Table } from './TableData';
 import { useUIContext } from "../context/UIContext";
 import { PurchaseOrderForm } from './forms/PurchaseOrderForm';
+import { AuditLogTable } from './tables/AuditLogTable';
 
 
 export const NewPurchaseOrder = ({id}) => {
@@ -35,7 +36,7 @@ export const NewPurchaseOrder = ({id}) => {
           >
             {UIContext.inventoryTabs.map(({key, title}) => 
             <Tab eventKey={key} title={title} className="mt-2 ml-1">
-              {key === "order" ? <Table /> : <h1>{title}</h1>}
+              {key === "order" ? <Table /> : <AuditLogTable />}
             </Tab>)}
           </Tabs>
         </CardBody>
