@@ -29,6 +29,12 @@ const InnerForm = ({
     const {toggleSupplierHandler, warehouseMockData} = UIContext;
     const [value, onChange] = useState(new Date());
 
+    const reactSelectStyles = {
+        control: () => ({
+            // none of react-select's styles are passed to <Control />
+            borderColor: "1px solid #757578",
+        }),
+    }
     useEffect(() => {
         setFieldValue("po_date", dateFormat(new Date(), "isoDateTime"));
     }, [])
@@ -57,7 +63,7 @@ const InnerForm = ({
             </Row>
             <Row>
                 <Col>
-                    <FormGroup>
+                    <FormGroup row>
                         <Label for="po_number">PO Number</Label>
                         <Input 
                             size="sm" 
@@ -144,7 +150,7 @@ const InnerForm = ({
                 <Col>
                     <FormGroup>
                         <Label for="supplier">Supplier</Label>
-                        <Select options={warehouseMockData} />
+                        <Select options={warehouseMockData} styles={reactSelectStyles} />
                         <Button className="btn btn-dark mt-2" onClick={toggleSupplierHandler}>+ Create</Button>
                     </FormGroup>
                 </Col>

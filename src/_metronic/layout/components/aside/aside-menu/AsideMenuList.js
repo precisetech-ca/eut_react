@@ -90,7 +90,7 @@ export function AsideMenuList({ layoutProps }) {
                   <i className="menu-bullet menu-bullet-dot">
                     <span />
                   </i>
-                  <span className="menu-text">Purchase Rec</span>
+                  <span className="menu-text">Purchase</span>
                 </NavLink>
               </li>
               {/*begin::2 Level*/}

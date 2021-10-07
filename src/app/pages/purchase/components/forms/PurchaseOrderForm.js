@@ -28,6 +28,14 @@ const InnerForm = ({
     const UIContext = useUIContext();
     const {toggleSupplierHandler, warehouseMockData} = UIContext;
     const [value, onChange] = useState(new Date());
+    const reactSelectStyles = {
+        control: base => ({
+            ...base,
+            borderColor: "#757578",
+            minHeight: '34px',
+            height: '34px',
+        })
+    };
 
     useEffect(() => {
         setFieldValue("po_date", dateFormat(new Date(), "isoDateTime"));
@@ -55,120 +63,94 @@ const InnerForm = ({
                     </FormGroup>
                 </Col>
             </Row>
-            <Row>
-                <Col>
-                    <FormGroup>
-                        <Label for="po_number">PO Number</Label>
-                        <Input 
-                            size="sm" 
-                            tag={Field} 
-                            name="po_number" 
-                            readOnly={true}
-                        />
-                        <ErrorMessage component={FormFeedback} name="po_number" />
-                    </FormGroup>
+    
+            <FormGroup row>
+                <Label for="po_number" sm={1}>PO Number</Label>
+                <Col sm={3}>
+                    <Input 
+                        size="sm" 
+                        tag={Field} 
+                        name="po_number" 
+                        readOnly={true}
+                    />
+                    <ErrorMessage component={FormFeedback} name="po_number" />
                 </Col>
-                
-                <Col>
-                    <FormGroup>
-                        <Label for="phone">Phone</Label>
-                        <InputMask
-                            mask="+1 (999)-999-9999"
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            value={values.phone}
-                        >
-                            {() => (
-                                <Input 
-                                    size="sm" 
-                                    tag={Field} 
-                                    name="phone" 
-                                    placeholder="phone" 
-                                />
-                            )}
-                        </InputMask>
-                        
-                    </FormGroup>
+                <Label for="phone" sm="1">Phone</Label>
+                <Col sm={3}>
+                    <InputMask
+                        mask="+1 (999)-999-9999"
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        value={values.phone}
+                    >
+                        {() => (
+                            <Input 
+                                size="sm" 
+                                tag={Field} 
+                                name="phone" 
+                                placeholder="phone" 
+                            />
+                        )}
+                    </InputMask>
                 </Col>
-                <Col>
-                    <FormGroup>
-                        <Label for="prepared_by">Prepared By</Label>
-                        <Select options={warehouseMockData} isDisabled="true" />
-                    </FormGroup>
+                <Label for="prepared_by" sm="1">Prepared By</Label>
+                <Col sm="3">
+                    <Select options={warehouseMockData} isDisabled="true" />
                 </Col>
-            </Row>
-            <Row>
-                <Col>
-                    <FormGroup>
-                        <Label for="po_date">PO Date/Lead Time</Label>
-                        <Row>
-                            <Col>
-                                <DateTimePicker
-                                    onChange={(e) => {
-                                        onChange(e);
-                                        setFieldValue("po_date", dateFormat(e, "isoDateTime"))
-                                    }}
-                                    value={value}
-                                    name="po_date"
-                                />
-                            </Col>
-                        </Row>
-                        {/* <Input size="sm" tag={Field} name="po_date" id="po_date" placeholder="po_date" /> */}
-                    </FormGroup>
+            </FormGroup>
+            
+            <FormGroup row>
+                <Label for="po_date" sm={1}>PO Date/Lead Time</Label>
+                <Col sm={3}>
+                    <DateTimePicker
+                        wrapperClassName="datepicker"
+                        onChange={(e) => {
+                            onChange(e);
+                            setFieldValue("po_date", dateFormat(e, "isoDateTime"))
+                        }}
+                        value={value}
+                        name="po_date"
+                    />
                 </Col>
-                
-                <Col>
-                    <FormGroup>
-                        <Label for="reference">Reference</Label>
-                        <Input size="sm" tag={Field} name="reference" id="reference" placeholder="reference" />
-                        <ErrorMessage component={FormFeedback} name="reference" />
-                    </FormGroup>
+                <Label for="fax" sm={1}>Fax</Label>
+                <Col sm={3}>
+                    <InputMask
+                        mask="+1 (999)-999-9999"
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        value={values.fax}
+                    >
+                        {() => (
+                            <Input size="sm" tag={Field} name="fax" id="fax" placeholder="fax" />
+                        )}
+                    </InputMask>
                 </Col>
-                <Col>
-                    <FormGroup>
-                        <Label for="fax">Fax</Label>
-                        <InputMask
-                            mask="+1 (999)-999-9999"
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            value={values.fax}
-                        >
-                            {() => (
-                                <Input size="sm" tag={Field} name="fax" id="fax" placeholder="fax" />
-                            )}
-                        </InputMask>
-                    </FormGroup>
+                <Label for="reference" sm={1}>Reference</Label>
+                <Col sm={3}>
+                    <Input size="sm" tag={Field} name="reference" id="reference" placeholder="reference" />
+                    <ErrorMessage component={FormFeedback} name="reference" />
                 </Col>
-            </Row>
-            <Row>
-                <Col>
-                    <FormGroup>
-                        <Label for="supplier">Supplier</Label>
-                        <Select options={warehouseMockData} />
-                        <Button className="btn btn-dark mt-2" onClick={toggleSupplierHandler}>+ Create</Button>
-                    </FormGroup>
+            </FormGroup>
+            <FormGroup row>
+                <Label for="supplier" sm={1}>Supplier</Label>
+                <Col sm={3}>
+                    <Select options={warehouseMockData} styles={reactSelectStyles} />
+                    <span className="btn btn-dark mt-2 btn-sm" onClick={toggleSupplierHandler}>+ Create</span>
                 </Col>
-                
-                <Col>
-                    <FormGroup>
-                        <Label for="email">Email</Label>
-                        <Input size="sm" tag={Field} name="email" id="email" placeholder="email" />
-                        <ErrorMessage component={FormFeedback} name="email" />
-                    </FormGroup>
+                <Label for="email" sm={1}>Email</Label>
+                <Col sm={3}>
+                    <Input size="sm" tag={Field} name="email" id="email" placeholder="email" />
+                    <ErrorMessage component={FormFeedback} name="email" />
                 </Col>
-            </Row>
-            <Row>
-                <Col>
-                    <FormGroup>
-                        <Label for="notes">Notes </Label>
-                        <Input type="textarea" name="notes" onChange={handleChange} onBlur={handleBlur} />
-                    </FormGroup>
+                <Label for="notes" sm={1}>Notes </Label>
+                <Col sm={3}>
+                    <Input size="sm" name="notes" onChange={handleChange} onBlur={handleBlur} placeholder="Notes" />
                 </Col>
-            </Row>
+            </FormGroup>
             <Row>
                 <Col className="text-right">
-                    <Button type="button" color="danger" onClick={backToHome}>Cancel</Button> {' '}
-                    <Button color="primary" disabled={isSubmitting}>{isSubmitting ? "Saving..." : "Save"} </Button>
+                    <Button type="button" size="sm" color="danger" onClick={backToHome}>Cancel</Button> {' '}
+                    <Button color="primary" size="sm" disabled={isSubmitting}>{isSubmitting ? "Saving..." : "Save"} </Button>
                 </Col>
             </Row>
         </Form>

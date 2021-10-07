@@ -5,8 +5,6 @@ import {
     CardBody,
     CardHeader,
 } from "_metronic/_partials/controls";
-import { useDispatch } from "react-redux";
-import * as actions from "../_redux/actions";
 import { Table } from './TableData';
 import { useUIContext } from "../context/UIContext";
 import { PurchaseOrderForm } from './forms/PurchaseOrderForm';
@@ -14,14 +12,9 @@ import { PurchaseOrderForm } from './forms/PurchaseOrderForm';
 
 export const EditPurchaseOrder = ({id}) => {
     const UIContext = useUIContext();
-    const dispatch = useDispatch();
     const [key, setKey] = useState('order');
 
-    useEffect(() => {
-      // server call for getting Customer by id
-      dispatch(actions.fetchCustomer(id));
-    }, [id, dispatch]);
-    
+   
     return (
       <Card>
         <CardHeader title="Purchase List"></CardHeader>
