@@ -94,16 +94,21 @@ export function HomePageTable() {
         Header: "Void",
         Footer: "Void",
         accessor: "void",
+        disableSortBy: true,
         disableFilters: true,
         Cell: ({value}) => <Input type="checkbox" checked={value} disabled={true} value={value}/>,
     },
     {
         Header: "Action",
-        Footer: "Sub Total",
         accessor: "action",
+        disableSortBy: true,
         disableFilters: true,
         Cell: () => {
-            return <Button color="danger">Delete</Button>
+            return (
+              <>
+                <i class="fas fa-pencil-alt text-primary"></i>
+                <i class="fas fa-trash text-danger ml-3"></i>
+            </>)
         }
     },
 ];
