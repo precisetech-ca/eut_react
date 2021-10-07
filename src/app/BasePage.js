@@ -18,6 +18,7 @@ const InventoryPage = lazy(() =>
 const PurchasePage = lazy(() =>
   import("./pages/purchase/Purchase")
 );
+
 const UserProfilepage = lazy(() =>
   import("./modules/UserProfile/UserProfilePage")
 );
@@ -42,6 +43,7 @@ export default function BasePage() {
         <Route path="/react-bootstrap" component={ReactBootstrapPage} />
         <Route path="/inventory" component={InventoryPage} />
         <Route path="/purchase" component={PurchasePage} />
+        <Route path="/receiving" component={ReceivingPage} />
         <Route path="/user-profile" component={UserProfilepage} />
         <Redirect to="error/error-v1" />
       </Switch>
