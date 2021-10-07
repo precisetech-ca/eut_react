@@ -18,7 +18,9 @@ const InventoryPage = lazy(() =>
 const PurchasePage = lazy(() =>
   import("./pages/purchase/Purchase")
 );
-
+const ReceivingPage= lazy(() => 
+  import('./pages/receiving/Receiving')
+)
 const UserProfilepage = lazy(() =>
   import("./modules/UserProfile/UserProfilePage")
 );
