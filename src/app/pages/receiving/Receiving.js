@@ -32,7 +32,7 @@ const Receiving = ({dispatch, history}) => {
   return (
     <UIProvider receivingUIEvents={receivingUIEvents}>
       <Switch>
-        <Route exact path="/receiving/new">
+        {/* <Route exact path="/receiving/new">
           {({ history, match }) => (
             <NewPurchaseOrder />
           )}
@@ -41,7 +41,7 @@ const Receiving = ({dispatch, history}) => {
           {({ history, match }) => (
             <EditPurchaseOrder />
           )}
-        </Route>
+        </Route> */}
         <Route exact path="/receiving">
           {({ history, match }) => (
             <HomePageCard />

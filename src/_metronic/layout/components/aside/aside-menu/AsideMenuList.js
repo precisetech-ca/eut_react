@@ -90,7 +90,22 @@ export function AsideMenuList({ layoutProps }) {
                   <i className="menu-bullet menu-bullet-dot">
                     <span />
                   </i>
-                  <span className="menu-text">Purchase Order</span>
+                  <span className="menu-text">Purchase Rec</span>
+                </NavLink>
+              </li>
+              {/*begin::2 Level*/}
+              {/*end::2 Level*/}
+              <li
+                className={`menu-item ${getMenuItemActive(
+                  "/e-commerce/customers"
+                )}`}
+                aria-haspopup="true"
+              >
+                <NavLink className="menu-link" to="/receiving">
+                  <i className="menu-bullet menu-bullet-dot">
+                    <span />
+                  </i>
+                  <span className="menu-text">Receiving </span>
                 </NavLink>
               </li>
               {/*begin::2 Level*/}
