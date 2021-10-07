@@ -52,12 +52,12 @@ export function Table() {
         disableFilters: true,
         Cell: ({value}) => {
             return (<div style={{width: "200px"}}>
-                <Input type="select" size="sm" className="d-inline-block" name="select" id="exampleSelect">
+                <Input type="select" className="d-inline-block" name="select" id="exampleSelect">
                     {value?.map(({id, value}) => 
                         <option value={id}>{value}</option>
                     )}
                 </Input>
-                <Button className="mt-2" color="dark" size="sm" >+ Create</Button>
+                <Button className="mt-2" color="dark" >+ Create</Button>
             </div>)
         }
     },
@@ -80,8 +80,8 @@ export function Table() {
       Header: "Lot #",
       disableFilters: true,
       disableSortBy: true,
-      accessor: "lot_no",
-      Cell: ({value}) => <Input type="text" size="sm" style={{width:"70px"}}/>,
+        accessor: "lot_no",
+        Cell: ({value}) => value,
     },
     {
       disableFilters: true,
@@ -89,15 +89,6 @@ export function Table() {
         Header: () => <div style={{width: "200px"}}>Expiry</div>,
         accessor: "expiry",
         Cell: () => <DateTimePicker onChange={onChange} value={value} />
-    },
-    {
-      Header: "Quarantine",
-      disableFilters: true,
-      disableSortBy: true,
-      accessor: "quarantine",
-      Cell: ({value}) => (<div className="align-items-center d-flex justify-content-center mt-5">
-        <Input type="checkbox" disabled={true} />
-      </div>),
     },
     {
       Header: "Oh Qty",
@@ -114,16 +105,17 @@ export function Table() {
         Cell: ({value}) => value,
     },
     {
-      Header: "Odr Qty",
+      Header: "Order Qty",
       disableFilters: true,
       disableSortBy: true,
+      Footer: "uom",
       accessor: "odr_qty",
       Cell: ({value}) => value,
     },
     {
       disableFilters: true,
       disableSortBy: true,
-      Header: "UoM",
+      Header: "uom",
       accessor: "uom",
       Cell: ({value}) => value,
     },
@@ -137,10 +129,10 @@ export function Table() {
     {
       disableFilters: true,
       disableSortBy: true,
-      Header: () => <div style={{width: "50px"}} className="text-center">Tax</div>,
+      Header: () => <div style={{width: "200px"}} className="text-center">Tax</div>,
       Footer: "Tax",
       accessor: "tax",
-      Cell: ({value}) => <Input type="select" size="sm" className="d-inline-block" name="select" id="exampleSelect">
+      Cell: ({value}) => <Input type="select" className="d-inline-block" name="select" id="exampleSelect">
           {value?.map(({id, title}) => 
               <option value={id}>{title}</option>
           )}
@@ -166,7 +158,7 @@ export function Table() {
       Header: "Action",
       accessor: "action",
       Cell: () => {
-          return <i class="fa fa-trash text-secondary" aria-hidden="true"></i>
+          return <i class="fa fa-trash text-danger" aria-hidden="true"></i>
       }
     },
 ];
@@ -186,7 +178,7 @@ export function Table() {
       
       <Row className="mt-4">
         <Col className="col-lg-6">
-          <Input type="textarea" placeholder="terms and conditions"/>
+          <Input type="textarea" />
         </Col>
         <Col className="col-lg-2"></Col>
         <Col className="col-lg-4">
