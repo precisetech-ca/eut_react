@@ -1,8 +1,8 @@
 import { callGenericGetterAsync } from "app/generic/actions";
 import * as requestFromServer from "./customersCrud";
 import {customersSlice, callTypes} from "./customersSlice";
-import { data, purchaseData, auditLogData } from "./mock/product.mock";
-import { purchaseSlice } from "./purchaseSlice";
+import { data, receivingData, auditLogData } from "./mock/product.mock";
+import { receivingSlice } from "./receivingSlice";
 
 const {actions} = customersSlice;
 
@@ -105,30 +105,30 @@ export const deleteCustomers = ids => dispatch => {
 };
 
 export const addProduct = () => dispatch => {
-  const { actions } = purchaseSlice;
+  const { actions } = receivingSlice;
   dispatch(actions.addProduct());
 }
 
 export const deleteProduct = (id) => dispatch => {
-  const { actions } = purchaseSlice;
+  const { actions } = receivingSlice;
   dispatch(actions.deleteProduct(id));
 }
 
 
-export const fetchPurchaseList = () => dispatch => {
-  const { actions } = purchaseSlice;
+export const fetchReceivingList = () => dispatch => {
+  const { actions } = receivingSlice;
   dispatch(actions.startCall({ callType: callTypes.action }));
 
   setTimeout(() => {
-    dispatch(actions.purchaseListFetched({
+    dispatch(actions.receivingListFetched({
       callType: callTypes.action,
-      entities: purchaseData
+      entities: receivingData
     }));
   }, 1000);
 };
 
 export const auditLogDataAsync = () => dispatch => {
-  const { actions } = purchaseSlice;
+  const { actions } = receivingSlice;
   dispatch(actions.startCall({ callType: callTypes.action }));
 
   setTimeout(() => {
@@ -143,7 +143,7 @@ export const auditLogDataAsync = () => dispatch => {
 
 
 export const fetchProducts = () => dispatch => {
-  const { actions } = purchaseSlice;
+  const { actions } = receivingSlice;
   dispatch(actions.startCall({ callType: callTypes.action }));
 
   setTimeout(() => {

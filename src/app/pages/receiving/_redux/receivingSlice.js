@@ -15,8 +15,8 @@ export const callTypes = {
 };
 
 
-export const purchaseSlice = createSlice({
-    name: "purchase",
+export const receivingSlice = createSlice({
+    name: "receiving",
     initialState,
     reducers: {
       catchError: (state, action) => {
@@ -41,11 +41,11 @@ export const purchaseSlice = createSlice({
         state.customerForEdit = action.payload.customerForEdit;
         state.error = null;
       },
-      purchaseListFetched: (state, action) => {
+      receivingListFetched: (state, action) => {
         const { totalCount, entities } = action.payload;
         state.listLoading = false;
         state.error = null;
-        state.purchaseList = entities;
+        state.receivingList = entities;
         state.totalCount = totalCount;
       },
       // findCustomers

@@ -27,13 +27,13 @@ export function HomePageTable() {
     (state) => ({ currentState: state.purchase }),
     shallowEqual
   );
-  const { purchaseList } = currentState;
+  const { receivingList } = currentState;
 
   // Customers Redux state
   const dispatch = useDispatch();
   useEffect(() => {
     // server call by queryParams
-    dispatch(actions.fetchPurchaseList());
+    dispatch(actions.fetchReceivingList());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [customersUIProps.queryParams, dispatch]);
 
@@ -124,7 +124,7 @@ export function HomePageTable() {
 
   return (
     <>
-      {purchaseList && <ReactTable tableColumns={columns} tableData={purchaseList} deleteProduct={deleteProduct}/>}
+      {receivingList && <ReactTable tableColumns={columns} tableData={receivingList} deleteProduct={deleteProduct}/>}
     </>
   );
 }
