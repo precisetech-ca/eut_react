@@ -1,17 +1,17 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
 import { UIProvider } from "./context/UIContext";
-import { EditPurchaseOrder } from "./components/EditPurchaseOrder";
+import { EditReceivingOrder } from "./components/EditReceivingOrder";
 import { HomePageCard } from "./components/HomePageCard";
-import { NewPurchaseOrder } from "./components/NewPurchaseOrder";
+import { NewReceivingOrder } from "./components/NewReceivingOrder";
 import { SupplierForm } from "./components/forms/SupplierForm";
 
 const Receiving = ({dispatch, history}) => {
     const receivingUIEvents = {
-        newPurchaseForm: () => {
+        newReceivingForm: () => {
           history.push("/receiving/new");
         },
-        editPurchaseForm: (id) => {
+        editReceivingForm: (id) => {
           history.push(`/receiving/${id}/edit`);
         },
         openDeleteCustomerDialog: (id) => {
@@ -32,23 +32,23 @@ const Receiving = ({dispatch, history}) => {
   return (
     <UIProvider receivingUIEvents={receivingUIEvents}>
       <Switch>
-        {/* <Route exact path="/receiving/new">
+        <Route exact path="/receiving/new">
           {({ history, match }) => (
-            <NewPurchaseOrder />
+            <NewReceivingOrder />
           )}
         </Route>
         <Route exact path="/receiving/:id/edit">
           {({ history, match }) => (
-            <EditPurchaseOrder />
+            <EditReceivingOrder />
           )}
-        </Route> */}
+        </Route>
         <Route exact path="/receiving">
           {({ history, match }) => (
             <HomePageCard />
           )}
         </Route>
       </Switch>
-      {/* <SupplierForm /> */}
+      <SupplierForm />
     </UIProvider>
   );
 }
