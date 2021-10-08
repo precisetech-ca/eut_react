@@ -29,7 +29,7 @@ export const auditLogData = [
     }
 ];
   
-export const receivingData = [{
+export const purchaseData = [{
     sku: "AKC-132123",
     barcode: "41231312",
     desc: "Lorem ipsum",
