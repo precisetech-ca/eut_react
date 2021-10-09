@@ -30,6 +30,7 @@ export const auditLogData = [
 ];
   
 export const purchaseData = [{
+    id: 1,
     sku: "AKC-132123",
     barcode: "41231312",
     desc: "Lorem ipsum",
@@ -49,6 +50,7 @@ export const purchaseData = [{
     void: false
 },
 {
+    id: 2,
     sku: "AKC-132123",
     barcode: "41231312",
     desc: "Lorem ipsum",
@@ -68,6 +70,7 @@ export const purchaseData = [{
     void: false
 },
 {
+    id: 3,
     sku: "AKC-132123",
     barcode: "41231312",
     desc: "Lorem ipsum",
@@ -87,6 +90,7 @@ export const purchaseData = [{
     void: false
 },
 {
+    id: 4,
     sku: "AKC-132123",
     barcode: "41231312",
     desc: "Lorem ipsum",
@@ -106,6 +110,7 @@ export const purchaseData = [{
     void: false
 },
 {
+    id: 5,
     sku: "AKC-132123",
     barcode: "41231312",
     desc: "Lorem ipsum",
@@ -125,6 +130,7 @@ export const purchaseData = [{
     void: false
 },
 {
+    id: 6,
     sku: "AKC-132123",
     barcode: "41231312",
     desc: "Lorem ipsum",

@@ -7,9 +7,9 @@ import {
     Button,
 } from 'reactstrap';
 
-export const AlertModal = ({headerTitle, modal, toggle, bodyDescription, expectedModalCloseHandler}) => {
+export const AlertModal = ({headerTitle, modal, toggle, bodyDescription, callbackHandler}) => {
     return (
-        <Modal isOpen={modal} toggle={toggle} size="lg" centered>
+        <Modal isOpen={modal} toggle={toggle} size="md" centered>
             <ModalHeader  toggle={toggle}>
                 {headerTitle}
             </ModalHeader>
@@ -17,14 +17,14 @@ export const AlertModal = ({headerTitle, modal, toggle, bodyDescription, expecte
                 {bodyDescription}
             </ModalBody>
             <ModalFooter>
-                <Button color="danger" onClick={expectedModalCloseHandler}>Yes</Button>
-                <Button color="primary" onClick={toggle}>No</Button>
+                <Button color="success" size="sm" onClick={callbackHandler}>Yes</Button>
+                <Button color="secondary" size="sm" onClick={toggle}>No</Button>
             </ModalFooter>
         </Modal>
     )
 }
 
 AlertModal.defaultProps = {
-    headerTitle: "Confirmation",
-    bodyDescription: "All unsaved changes will be lost. Are you sure you want to continue?",
+    headerTitle: "Are you sure? ",
+    bodyDescription: "You cannot revert your changes?",
 }

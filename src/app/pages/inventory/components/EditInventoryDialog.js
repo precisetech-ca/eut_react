@@ -51,7 +51,6 @@ export function InventoryEditDialog({ id, show, onHide }) {
 
   const renderTabs = ({items}) => {
     return items.map((item, index) => {
-      console.log(index);
       if (index === 0 && !customersUIContext.editState) {
         return <Tab eventKey={item.key} 
           title={item.title} 
@@ -97,7 +96,7 @@ export function InventoryEditDialog({ id, show, onHide }) {
         id="controlled-tab-example"
         activeKey={key}
         onSelect={(k) => setKey(k)}
-        className="mb-3 mt-3"
+        className="mb-3 mt-3 form-tab"
       >
         {renderTabs({items: customersUIContext?.inventoryTabs})}
       </Tabs>
