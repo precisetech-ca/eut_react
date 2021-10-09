@@ -25,7 +25,7 @@ export function Table() {
 
   // Getting curret state of customers list from store (Redux)
   const { currentState } = useSelector(
-    (state) => ({ currentState: state.purchase }),
+    (state) => ({ currentState: state.receiving }),
     shallowEqual
   );
   const {entities } = currentState;

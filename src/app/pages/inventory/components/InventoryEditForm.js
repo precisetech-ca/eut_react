@@ -14,7 +14,10 @@ import { FormLabel } from "react-bootstrap";
 import { FormSwitch } from "./FormSwitch";
 import { useCustomersUIContext } from "../context/InventoryUIContext";
 import FileUpload from '../../../utils/FileUpload';
-import Select from 'react-select'
+import Select from 'react-select';
+import DateTimePicker from 'react-datetime-picker';
+
+
 
 // Validation schema
 const InventoryEditSchema = Yup.object().shape({
@@ -68,11 +71,12 @@ export function InventoryEditForm({
                 <div className="form-group row">
                   {/* First Name */}
                   <div className="col-lg-6 col-sm-6">
+                  {/* <span className="text-danger">*</span> */}
                     <Field
                       name="details"
                       component={Input}
                       placeholder="Details"
-                      label="SKU"
+                      label="Details"
                       className="form-control form-control-sm"
                     />
                   </div>
@@ -80,12 +84,12 @@ export function InventoryEditForm({
                   
                   {/* Login */}
                   <div className="col-lg-3 col-sm-3">
-                    <FormLabel>Stock Item</FormLabel>
+                    <FormLabel>Manage Stock</FormLabel>
                     <FormSwitch />
                    
                   </div>
                   <div className="col-lg-3 col-sm-3">
-                    <FormLabel>Status</FormLabel>
+                    <FormLabel>Active</FormLabel>
                     <FormSwitch />
                   </div>
                 </div>
@@ -96,18 +100,18 @@ export function InventoryEditForm({
                       name="barcode"
                       component={Input}
                       placeholder="Barcode"
-                      label="Barcode"
+                      label="Barcode #"
                       className="form-control form-control-sm"
                     />
                   </div>
                   {/* Login */}
                   <div className="col-lg-3 col-sm-3">
-                    <FormLabel>Allow Negative OH</FormLabel>
+                    <FormLabel>Shop Supply</FormLabel>
                     <FormSwitch />
                    
                   </div>
                   <div className="col-lg-3 col-sm-3">
-                    <FormLabel>Texable</FormLabel>
+                    <FormLabel>Allow Fraction Qty</FormLabel>
                     <FormSwitch />
                   </div>
                 </div>
@@ -115,40 +119,46 @@ export function InventoryEditForm({
                   {/* Gender */}
                   <div className="col-lg-6">
                     <Field
-                      name="name"
+                      name="Sku "
                       component={Input}
-                      placeholder="Name"
-                      label="Name"
+                      placeholder="Sku "
+                      label="Sku ***"
                       className="form-control form-control-sm"
                     />
                   </div>
-                  {/* Type */}
-                  <div className="col-lg-6">
-                    <FormLabel>Warehouse</FormLabel>
-                    <Select options={warehouseMockData} />
+                  <div className="col-lg-3 col-sm-3">
+                    <FormLabel>Allow Negative ON FO</FormLabel>
+                    <FormSwitch />
+                   
+                  </div>
+                  <div className="col-lg-3 col-sm-3">
+                    <FormLabel>Allow Negative Oh Other</FormLabel>
+                    <FormSwitch />
                   </div>
                 </div>
                 <div className="form-group row">
-                  {/* Gender */}
-                  <div className="col-lg-6">
-                    <Field
-                      name="description"
-                      component={Input}
-                      placeholder="Description"
-                      label="Description"
-                      className="form-control form-control-sm"
-                    />
-                  </div>
                   {/* Type */}
                   <div className="col-lg-6">
-                    <FormLabel>Preferred Supply</FormLabel>
-                    <Select options={prefferedSupplier} />
-                  </div>
+                      <FormLabel>Warehouse</FormLabel>
+                      <Select options={warehouseMockData} />
+                    </div>
+                  {/* Type */}
+                  <div className="col-lg-6">
+                      <FormLabel>GL Account Cost</FormLabel>
+                      <Select options={warehouseMockData} />
+                    </div>
+                  
                 </div>
 
                 <div className="form-group row">
+
+                {/* Type */}
+                <div className="col-lg-6">
+                    <FormLabel>UOM</FormLabel>
+                    <Select options={prefferedSupplier} />
+                  </div>
                   {/* Gender */}
-                  <div className="col-lg-2">
+                  {/* <div className="col-lg-2">
                     <Field
                       name="length_dimensions"
                       component={Input}
@@ -174,90 +184,79 @@ export function InventoryEditForm({
                         label="Dimension (W)"
                         className="form-control form-control-sm"
                     />
-                  </div>
+                  </div> */}
                   <div className="col-lg-6">
-                    <FormLabel>UOM</FormLabel>
-                    <Select options={prefferedSupplier} />
+                    <Field
+                        name="width_dimensions"
+                        component={Input}
+                        placeholder="Price"
+                        label="Price"
+                        className="form-control form-control-sm"
+                    />
                   </div>
                   
+                </div>
+                <div className="form-group row">
+                    <div className="col-lg-6">
+                      <FormLabel>Re-Ordering UOM</FormLabel>
+                      <Select options={prefferedSupplier} />
+                    </div>
+                    <div className="col-lg-6">
+                        <FormLabel>Warranty</FormLabel>
+                        <DateTimePicker
+                            wrapperClassName="datepicker"
+                            name="Warranty"
+                        />
+                    </div>
                 </div>
                 
                 <div className="form-group row">
                   {/* Gender */}
-                  <div className="col-lg-2">
-                    <FormLabel>Weight</FormLabel>
-                    <Select options={weightMockProps} />
-                  </div>
-                  <div className="col-lg-2"></div>
-                  <div className="col-lg-2"></div>
                   <div className="col-lg-6">
-                    <FormLabel>Re-Ordering UOM</FormLabel>
-                    <Select options={prefferedSupplier} />
+                    <FormLabel>Unit Conversion</FormLabel>
+                      <Field
+                        name="unit_conversion"
+                        component={Input}
+                        placeholder="Unit Conversion"
+                        label="Unit Conversion"
+                        className="form-control form-control-sm"
+                      />
                   </div>
+                    <div className="col-lg-6">
+                      <FormLabel>System</FormLabel>
+                      <Select options={prefferedSupplier} />
+                    </div>
                 </div>
                 <div className="form-group row">
                   {/* Gender */}
                   <div className="col-lg-6">
                     <Field
-                      name="on_hand_quantity"
+                      name="stock_qty"
                       component={Input}
-                      placeholder="On Hand Quantity"
-                      label="On Hand Quantity"
+                      placeholder="Stock Qty"
+                      label="Stock Qty"
                       className="form-control form-control-sm"
                     />
                   </div>
                   {/* Type */}
-                  <div className="col-lg-6">
-                    <Field
-                      name="conversion_uom"
-                      component={Input}
-                      placeholder="Conversion to UOM"
-                      label="Conversion to UOM"
-                      className="form-control form-control-sm"
-                    />
-                  </div>
-                </div>
-
-                <div className="form-group row">
-                  {/* Gender */}
-                  <div className="col-lg-6">
-                    <Field
-                      name="available_quantity"
-                      component={Input}
-                      placeholder="Quantity Available"
-                      label="Quantity Available"
-                      className="form-control form-control-sm"
-                    />
-                  </div>
-                  {/* Type */}
-                  <div className="col-lg-6">
-                    <FileUpload
-                      name="inventoryFile"
-                      isSubmitting={false}
-                      filePath={thumbPath ? thumbPath : 'https://via.placeholder.com/1000x200'}
-                      endpoint={`${process.env.REACT_APP_API_BASE_URL}/inventory/uploads`}
-                      responseCallback={(res) => {
-                          setThumbPath(res.data.thumbnails);
-                          setFilePath(res.data.filePath);
-                      }}
-                      setFieldValue={(name, file) => console.log(name, '=>', file)}
-                    />
-                  </div>
+                    <div className="col-lg-6">
+                      <FormLabel>Assembly</FormLabel>
+                      <Select options={prefferedSupplier} />
+                    </div>
                 </div>
 
                 <div className="form-group row">
-                  {/* Gender */}
-                  <div className="col-lg-6">
-                    <Field
-                      name="cost_price"
-                      component={Input}
-                      placeholder="Cost Price"
-                      label="Cost Price"
-                      className="form-control form-control-sm"
-                    />
-                  </div>
                   {/* Type */}
-                  <div className="col-lg-6"></div>
+                  <div className="col-lg-6">
+                      <FormLabel>Preffered Supplier</FormLabel>
+                      <Select options={prefferedSupplier} />
+                    </div>
+                  {/* Type */}
+                    <div className="col-lg-6">
+                        <FormLabel>Component </FormLabel>
+                        <Select options={prefferedSupplier} />
+                      </div>
+                  {/* */}
                 </div>
 
                 <div className="form-group row">
@@ -273,14 +272,63 @@ export function InventoryEditForm({
                   </div>
                   {/* Type */}
                   <div className="col-lg-6">
-                    <Field
-                      name="standard_cost"
-                      component={Input}
-                      placeholder="Standard Cost"
-                      label="Standard Cost"
-                      className="form-control form-control-sm"
-                    />
+                        <FormLabel>Suspend By </FormLabel>
+                        <Select options={prefferedSupplier} />
                   </div>
+                </div>
+                <div className="form-group row">
+                    <div className="col-lg-6">
+                      <Field
+                        name="standard_cost"
+                        component={Input}
+                        placeholder="Standard Cost"
+                        label="Standard Cost"
+                        className="form-control form-control-sm"
+                      />
+                    </div>
+                  {/* Type */}
+                  <div className="col-lg-6">
+                        <FormLabel>GL Account</FormLabel>
+                        <Select options={prefferedSupplier} />
+                  </div>
+                </div>
+                <div className="form-group row">
+                  {/* Type */}
+                  <div className="col-lg-6">
+                          <FormLabel>GL Acconts Inventory</FormLabel>
+                          <Select options={prefferedSupplier} />
+                    </div>
+                  {/* Type */}
+                  <div className="col-lg-6">
+                        <FormLabel>GL Account Cost</FormLabel>
+                        <Select options={prefferedSupplier} />
+                  </div>
+                </div>
+                <div className='form-group row'>
+
+                  <div className="col-lg-6">
+                        <Field
+                          name="notes"
+                          component={Input}
+                          placeholder="Notes"
+                          label="Notes"
+                          className="form-control form-control-sm"
+                        />
+                      </div>
+                  
+                  <div className="col-lg-6">
+                      <FileUpload
+                        name="inventoryFile"
+                        isSubmitting={false}
+                        filePath={thumbPath ? thumbPath : 'https://via.placeholder.com/1000x200'}
+                        endpoint={`${process.env.REACT_APP_API_BASE_URL}/inventory/uploads`}
+                        responseCallback={(res) => {
+                            setThumbPath(res.data.thumbnails);
+                            setFilePath(res.data.filePath);
+                        }}
+                        setFieldValue={(name, file) => console.log(name, '=>', file)}
+                      />
+                    </div>
                 </div>
               </Form>
             </Modal.Body>
