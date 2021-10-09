@@ -5,11 +5,10 @@ import {
     CardBody,
     CardHeader,
 } from "_metronic/_partials/controls";
-import { Table } from './TableData';
-import { useUIContext } from "../context/UIContext";
-import { PurchaseOrderForm } from './forms/PurchaseOrderForm';
-import { AuditLogTable } from './tables/AuditLogTable';
-
+import { Table } from '../TableData';
+import { useUIContext } from "../../context/UIContext";
+import { PurchaseOrderForm } from '../forms/PurchaseOrderForm';
+import { AuditLogTable } from '../tables/AuditLogTable';
 
 export const NewPurchaseOrder = ({id}) => {
     const UIContext = useUIContext();

@@ -13,7 +13,7 @@ import { Summary } from "./supplier/Summary";
 import { ReactTable } from "../../custom_widgets/table/ReactTable";
 import DateTimePicker from 'react-datetime-picker';
 
-export function Table() {
+export function Table({isViewable}) {
   // Customers UI Context
   const UIContext = useUIContext();
   const [value, onChange] = useState(new Date());
@@ -51,14 +51,19 @@ export function Table() {
         accessor: "sku",
         disableFilters: true,
         Cell: ({value}) => {
-            return (<div style={{width: "200px"}}>
-                <Input type="select" size="sm" className="d-inline-block" name="select" id="exampleSelect">
-                    {value?.map(({id, value}) => 
-                        <option value={id}>{value}</option>
-                    )}
-                </Input>
-                <Button className="mt-2" color="dark" size="sm" >+ Create</Button>
-            </div>)
+            if (isViewable) {
+              return "SKU-12551"
+            } else {
+              return (<div style={{width: "200px"}}>
+                  <Input type="select" size="sm" className="d-inline-block" name="select" id="exampleSelect">
+                      {value?.map(({id, value}) => 
+                          <option value={id}>{value}</option>
+                      )}
+                  </Input>
+                  <Button className="mt-2" color="dark" size="sm" >+ Create</Button>
+              </div>)
+            }
+            
         }
     },
     {
@@ -81,14 +86,32 @@ export function Table() {
       disableFilters: true,
       disableSortBy: true,
       accessor: "lot_no",
-      Cell: ({value}) => <Input type="text" size="sm" style={{width:"70px"}}/>,
+      Cell: ({value}) => {
+        if (isViewable) {
+          return value
+        }else {
+          return <Input type="text" size="sm" style={{width:"70px"}}/>
+        }
+      }
     },
     {
       disableFilters: true,
       disableSortBy: true,
-        Header: () => <div style={{width: "200px"}}>Expiry</div>,
-        accessor: "expiry",
-        Cell: () => <DateTimePicker onChange={onChange} value={value} />
+      Header: () => <div style={{width: "200px"}}>Expiry</div>,
+      accessor: "expiry",
+      Cell: ({value}) => {
+        if (isViewable) {
+          return value
+        }else {
+          return <Input
+            type="date"
+            name="date"
+            id="expiry"
+            size="sm"
+            placeholder="expiry"
+          />
+        }
+      }
     },
     {
       Header: "Quarantine",
@@ -135,18 +158,6 @@ export function Table() {
       Cell: ({value}) => value,
     },
     {
-      disableFilters: true,
-      disableSortBy: true,
-      Header: () => <div style={{width: "50px"}} className="text-center">Tax</div>,
-      Footer: "Tax",
-      accessor: "tax",
-      Cell: ({value}) => <Input type="select" size="sm" className="d-inline-block" name="select" id="exampleSelect">
-          {value?.map(({id, title}) => 
-              <option value={id}>{title}</option>
-          )}
-      </Input>,
-    },
-    {
       Header: "Last Cost",
       disableFilters: true,
       disableSortBy: true,
@@ -166,7 +177,7 @@ export function Table() {
       Header: "Action",
       accessor: "action",
       Cell: () => {
-          return <i class="fa fa-trash text-secondary" aria-hidden="true"></i>
+          return <i class="fa fa-trash text-secondary enable-cursor" aria-hidden="true" disabled={isViewable}></i>
       }
     },
 ];
@@ -174,20 +185,21 @@ export function Table() {
   return (
     <>
       {entities && <ReactTable tableColumns={columns} tableData={entities} deleteProduct={deleteProduct}/>}
-
-      <Row className="mt-4">
+      {!isViewable && <Row className="mt-4">
         <Col className="col-lg-6">
           <a href="#addproduct" onClick={(e) => {
             e.preventDefault();
             dispatch(actions.addProduct())
           }}>Add a product</a>
         </Col>
-      </Row>
+      </Row>}
+      
       
       <Row className="mt-4">
-        <Col className="col-lg-6">
+        {!isViewable ?  <Col className="col-lg-6">
           <Input type="textarea" placeholder="terms and conditions"/>
-        </Col>
+        </Col> : <Col className="col-lg-6"></Col>}
+          
         <Col className="col-lg-2"></Col>
         <Col className="col-lg-4">
           <Summary />

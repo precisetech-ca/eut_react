@@ -24,6 +24,7 @@ const InnerForm = ({
     handleBlur,
     values,
     backToHome,
+    isViewable,
 }) => {
     const UIContext = useUIContext();
     const {toggleSupplierHandler, warehouseMockData} = UIContext;
@@ -57,7 +58,7 @@ const InnerForm = ({
                 <Col>
                     <FormGroup check>
                         <Label check>
-                            <Input type="checkbox" name="void" />{' '}
+                            <Input type="checkbox" name="void" disabled={isViewable}/>{' '}
                             Void
                         </Label>
                     </FormGroup>
@@ -72,6 +73,7 @@ const InnerForm = ({
                         tag={Field} 
                         name="po_number" 
                         readOnly={true}
+                        disabled={isViewable}
                     />
                     <ErrorMessage component={FormFeedback} name="po_number" />
                 </Col>
@@ -82,10 +84,12 @@ const InnerForm = ({
                         onChange={handleChange}
                         onBlur={handleBlur}
                         value={values.phone}
+                        disabled={isViewable}
                     >
                         {() => (
                             <Input 
                                 size="sm" 
+                                disabled={isViewable}
                                 tag={Field} 
                                 name="phone" 
                                 placeholder="phone" 
@@ -102,14 +106,13 @@ const InnerForm = ({
             <FormGroup row>
                 <Label for="po_date" sm={1}>PO Date/Lead Time</Label>
                 <Col sm={3}>
-                    <DateTimePicker
-                        wrapperClassName="datepicker"
-                        onChange={(e) => {
-                            onChange(e);
-                            setFieldValue("po_date", dateFormat(e, "isoDateTime"))
-                        }}
-                        value={value}
+                    <Input
+                        type="date"
                         name="po_date"
+                        id="po_date"
+                        size="sm"
+                        placeholder="PO Date"
+                        disabled={isViewable}
                     />
                 </Col>
                 <Label for="fax" sm={1}>Fax</Label>
@@ -119,15 +122,16 @@ const InnerForm = ({
                         onChange={handleChange}
                         onBlur={handleBlur}
                         value={values.fax}
+                        disabled={isViewable}
                     >
                         {() => (
-                            <Input size="sm" tag={Field} name="fax" id="fax" placeholder="fax" />
+                            <Input size="sm" disabled={isViewable} tag={Field} name="fax" id="fax" placeholder="fax" />
                         )}
                     </InputMask>
                 </Col>
                 <Label for="reference" sm={1}>Reference</Label>
                 <Col sm={3}>
-                    <Input size="sm" tag={Field} name="reference" id="reference" placeholder="reference" />
+                    <Input size="sm" disabled={isViewable} tag={Field} name="reference" id="reference" placeholder="reference" />
                     <ErrorMessage component={FormFeedback} name="reference" />
                 </Col>
             </FormGroup>
@@ -135,24 +139,32 @@ const InnerForm = ({
                 <Label for="supplier" sm={1}>Supplier</Label>
                 <Col sm={3}>
                     <Select options={warehouseMockData} styles={reactSelectStyles} />
-                    <span className="btn btn-dark mt-2 btn-sm" onClick={toggleSupplierHandler}>+ Create</span>
+                    {isViewable && <Button className="btn btn-dark mt-2 btn-sm" onClick={toggleSupplierHandler} disabled={isViewable}><i className="fa fa-plus"></i> Create Supplier</Button>}
+                    
                 </Col>
                 <Label for="email" sm={1}>Email</Label>
                 <Col sm={3}>
-                    <Input size="sm" tag={Field} name="email" id="email" placeholder="email" />
+                    <Input size="sm" tag={Field} disabled={isViewable} name="email" id="email" placeholder="email" />
                     <ErrorMessage component={FormFeedback} name="email" />
                 </Col>
                 <Label for="notes" sm={1}>Notes </Label>
                 <Col sm={3}>
-                    <Input size="sm" name="notes" onChange={handleChange} onBlur={handleBlur} placeholder="Notes" />
+                    <Input size="sm" name="notes" disabled={isViewable} onChange={handleChange} onBlur={handleBlur} placeholder="Notes" />
                 </Col>
             </FormGroup>
-            <Row>
+            {!isViewable && <Row>
                 <Col className="text-right">
                     <Button type="button" size="sm" color="danger" onClick={backToHome}>Cancel</Button> {' '}
                     <Button color="primary" size="sm" disabled={isSubmitting}>{isSubmitting ? "Saving..." : "Save"} </Button>
                 </Col>
-            </Row>
+            </Row>}
+
+            {isViewable && <Row>
+                <Col className="text-right">
+                    <Button type="button" size="sm" color="danger" onClick={backToHome}>Close</Button> {' '}
+                </Col>
+            </Row>}
+            
         </Form>
     );
 }
