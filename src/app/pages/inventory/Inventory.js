@@ -1,11 +1,11 @@
 import React from "react";
 import { Route } from "react-router-dom";
-import { CustomersUIProvider, useCustomersUIContext } from "./context/InventoryUIContext";
+import { InventoryUIConsumer, InventoryUIProvider, useIinventoryUIContext } from "./context/InventoryUIContext";
 import { InventoryCard } from "./components/InventoryCard";
 import { InventoryEditDialog } from "./components/EditInventoryDialog";
 
 const Inventory = ({dispatch, history}) => {
-    const customersUIContext = useCustomersUIContext();
+    const inventoryUIContext = useIinventoryUIContext();
 
     const customersUIEvents = {
         newCustomerButtonClick: () => {
@@ -30,7 +30,7 @@ const Inventory = ({dispatch, history}) => {
     
 
   return (
-    <CustomersUIProvider customersUIEvents={customersUIEvents}>
+    <InventoryUIProvider customersUIEvents={customersUIEvents}>
         <Route path="/inventory/new">
           {({ history, match }) => (
             <InventoryEditDialog
@@ -53,7 +53,7 @@ const Inventory = ({dispatch, history}) => {
         )}
       </Route>
       <InventoryCard />
-    </CustomersUIProvider>
+    </InventoryUIProvider>
   );
 }
 
