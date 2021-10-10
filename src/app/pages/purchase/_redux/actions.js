@@ -114,6 +114,11 @@ export const deleteProduct = (id) => dispatch => {
   dispatch(actions.deleteProduct(id));
 }
 
+export const deletePurchaseList = (id) => dispatch => {
+  const { actions } = purchaseSlice;
+  dispatch(actions.deletePurchaseListItem(id)); 
+}
+
 
 export const fetchPurchaseList = () => dispatch => {
   const { actions } = purchaseSlice;

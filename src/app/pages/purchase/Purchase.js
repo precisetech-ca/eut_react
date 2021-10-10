@@ -1,10 +1,11 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
 import { UIProvider } from "./context/UIContext";
-import { EditPurchaseOrder } from "./components/EditPurchaseOrder";
+import { EditPurchaseOrder } from "./components/module/EditPurchaseOrder";
 import { HomePageCard } from "./components/HomePageCard";
-import { NewPurchaseOrder } from "./components/NewPurchaseOrder";
+import { NewPurchaseOrder } from "./components/module/NewPurchaseOrder";
 import { SupplierForm } from "./components/forms/SupplierForm";
+import { ViewPurchaseOrder } from "./components/module/ViewPurchaseOrder";
 
 const Purchase = ({dispatch, history}) => {
     const purchaseUIEvents = {
@@ -40,6 +41,11 @@ const Purchase = ({dispatch, history}) => {
         <Route exact path="/purchase/:id/edit">
           {({ history, match }) => (
             <EditPurchaseOrder />
+          )}
+        </Route>
+        <Route exact path="/purchase/:id/view">
+          {({ history, match }) => (
+            <ViewPurchaseOrder />
           )}
         </Route>
         <Route exact path="/purchase">

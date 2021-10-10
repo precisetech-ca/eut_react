@@ -17,6 +17,8 @@ export function HomePageTable() {
   const customersUIProps = useMemo(() => {
     return {
       queryParams: UIContext.queryParams,
+      ids: UIContext.ids,
+      newReceivingForm: UIContext.newReceivingForm,
     };
   }, [UIContext]);
 
@@ -25,13 +27,13 @@ export function HomePageTable() {
     (state) => ({ currentState: state.purchase }),
     shallowEqual
   );
-  const { purchaseList } = currentState;
+  const { receivingList } = currentState;
 
   // Customers Redux state
   const dispatch = useDispatch();
   useEffect(() => {
     // server call by queryParams
-    dispatch(actions.fetchPurchaseList());
+    dispatch(actions.fetchReceivingList());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [customersUIProps.queryParams, dispatch]);
 
@@ -41,20 +43,34 @@ export function HomePageTable() {
 
   const columns = [
     {
-        Header: "Receiving #",
-        Footer: "Receiving #",
-        accessor: "receiving",
+        Header: "Barcode",
+        Footer: "Barcode",
+        accessor: "barcode",
         disableFilters: true,
         Cell: ({value}) => value,
     },
     {
-        Header: "Receiving Date",
-        Footer: "Receiving Date",
-        accessor: "receiving_date",
+        Header: "Desc",
+        Footer: "Desc",
+        accessor: "desc",
         disableFilters: true,
         Cell: ({value}) => value,
     },
     
+    {
+        Header: "Lot #",
+        Footer: "Lot #",
+        accessor: "lot_no",
+        disableFilters: true,
+        Cell: ({value}) => value,
+    },
+    {
+        Header: "Expiry",
+        Footer: "Expiry",
+        accessor: "expiry",
+        disableFilters: true,
+        Cell: ({value}) => value,
+    },
     {
         Header: "Supplier",
         Footer: "Supplier",
@@ -63,40 +79,19 @@ export function HomePageTable() {
         Cell: ({value}) => value,
     },
     {
-        Header: "Supplier Invoice",
-        Footer: "Supplier Invoice",
-        accessor: "supplier_invoice",
+        Header: "Notes",
+        Footer: "Notes",
+        accessor: "notes",
         disableFilters: true,
         Cell: ({value}) => value,
     },
     {
-        Header: "Complete",
-        Footer: "Complete",
-        accessor: "complete",
+        Header: "PO Finalized Date",
+        Footer: "PO Finalized Date",
+        accessor: "po_finalized_date",
         disableFilters: true,
         Cell: ({value}) => value,
     },
-    {
-        Header: "PO Number",
-        Footer: "PO Number",
-        accessor: "po_number",
-        disableFilters: true,
-        Cell: ({value}) => value,
-    },
-    {
-        Header: "Completed Date",
-        Footer: "Completed Date",
-        accessor: "completed_date",
-        disableFilters: true,
-        Cell: ({value}) => value,
-    },
-    {
-      Header: "RFP Date",
-      Footer: "RFP Date",
-      accessor: "rfp_date",
-      disableFilters: true,
-      Cell: ({value}) => value,
-  },
     {
         Header: "Void",
         Footer: "Void",
@@ -113,8 +108,15 @@ export function HomePageTable() {
         Cell: () => {
             return (
               <>
-                <i class="fas fa-pencil-alt text-primary"></i>
-                <i class="fas fa-trash text-danger ml-3"></i>
+                <i class="fas fa-pencil-alt text-primary"
+                style={{cursor:'pointer'}}
+                onClick={() => {
+                        customersUIProps.newReceivingForm();
+                    }}
+                />
+                <i 
+                style={{cursor:'pointer'}}
+                class="fas fa-trash text-danger ml-3" />
             </>)
         }
     },
@@ -122,7 +124,7 @@ export function HomePageTable() {
 
   return (
     <>
-      {purchaseList && <ReactTable tableColumns={columns} tableData={purchaseList} deleteProduct={deleteProduct}/>}
+      {receivingList && <ReactTable tableColumns={columns} tableData={receivingList} deleteProduct={deleteProduct}/>}
     </>
   );
 }

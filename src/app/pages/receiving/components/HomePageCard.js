@@ -19,23 +19,23 @@ export const HomePageCard = () => {
     const customersUIProps = useMemo(() => {
         return {
             ids: UIContext.ids,
-            newPurchaseForm: UIContext.newPurchaseForm,
+            newReceivingForm: UIContext.newReceivingForm,
         };
     }, [UIContext]);
 
 
     return (
         <Card>
-            <CardHeader title="Receiving Listing">
+            <CardHeader title="Receiving List">
                 <CardHeaderToolbar>
                 <button
                     type="button"
                     className="btn btn-primary"
                     onClick={() => {
-                        customersUIProps.newPurchaseForm();
+                        customersUIProps.newReceivingForm();
                     }}
                 >
-                    New PO
+                    New Receiving
                 </button>
                 </CardHeaderToolbar>
             </CardHeader>

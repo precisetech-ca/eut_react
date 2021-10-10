@@ -1,18 +1,14 @@
-import React, {createContext, useContext, useState, useCallback} from "react";
-import {isEqual, isFunction} from "lodash";
-import {initialFilter} from "../utils/InventoryUIHelpers";
-import { InventoryEditForm } from "../components/InventoryEditForm";
+import React, {createContext, useContext, useState} from "react";
 
-const CustomersUIContext = createContext();
+const InventoryUIContext = createContext();
 
-export function useCustomersUIContext() {
-  return useContext(CustomersUIContext);
+export function useIinventoryUIContext() {
+  return useContext(InventoryUIContext);
 }
 
-export const CustomersUIConsumer = CustomersUIContext.Consumer;
+export const InventoryUIConsumer = InventoryUIContext.Consumer;
 
-export function CustomersUIProvider({customersUIEvents, children}) {
-  const [queryParams, setQueryParamsBase] = useState(initialFilter);
+export function InventoryUIProvider({customersUIEvents, children}) {
   const [ids, setIds] = useState([]);
   const [edit, setEdit] = useState(false);
 
@@ -47,40 +43,9 @@ export function CustomersUIProvider({customersUIEvents, children}) {
     {key: "audit_log", title: "Audit Log"},
   ];
 
-  const setQueryParams = useCallback(nextQueryParams => {
-    setQueryParamsBase(prevQueryParams => {
-      if (isFunction(nextQueryParams)) {
-        nextQueryParams = nextQueryParams(prevQueryParams);
-      }
-
-      if (isEqual(prevQueryParams, nextQueryParams)) {
-        return prevQueryParams;
-      }
-
-      return nextQueryParams;
-    });
-  }, []);
-
-  const initCustomer = {
-    id: undefined,
-    firstName: "",
-    lastName: "",
-    email: "",
-    userName: "",
-    gender: "Female",
-    status: 0,
-    dateOfBbirth: "",
-    ipAddress: "",
-    type: 1
-  };
-
   const value = {
-    queryParams,
-    setQueryParamsBase,
     ids,
     setIds,
-    setQueryParams,
-    initCustomer,
     newCustomerButtonClick: customersUIEvents.newCustomerButtonClick,
     openEditCustomerDialog: customersUIEvents.openEditCustomerDialog,
     openDeleteCustomerDialog: customersUIEvents.openDeleteCustomerDialog,
@@ -95,5 +60,5 @@ export function CustomersUIProvider({customersUIEvents, children}) {
     editState: edit,
   };
 
-  return <CustomersUIContext.Provider value={value}>{children}</CustomersUIContext.Provider>;
+  return <InventoryUIContext.Provider value={value}>{children}</InventoryUIContext.Provider>;
 }

@@ -9,7 +9,7 @@ import {
     Button,
 } from 'reactstrap';
 import { Field, ErrorMessage, withFormik, Form } from 'formik';
-import { useUIContext } from "app/pages/purchase/context/UIContext";
+import { useUIContext } from "app/pages/receiving/context/UIContext";
 import * as Yup from "yup";
 import DateTimePicker from 'react-datetime-picker';
 import Select from 'react-select'
@@ -24,7 +24,6 @@ const InnerForm = ({
     handleBlur,
     values,
     backToHome,
-    isViewable,
 }) => {
     const UIContext = useUIContext();
     const {toggleSupplierHandler, warehouseMockData} = UIContext;
@@ -58,7 +57,7 @@ const InnerForm = ({
                 <Col>
                     <FormGroup check>
                         <Label check>
-                            <Input type="checkbox" name="void" disabled={isViewable}/>{' '}
+                            <Input type="checkbox" name="void" />{' '}
                             Void
                         </Label>
                     </FormGroup>
@@ -66,36 +65,20 @@ const InnerForm = ({
             </Row>
     
             <FormGroup row>
-                <Label for="po_number" sm={1}>PO Number</Label>
+                <Label for="Receiving_number" sm={1}>Receiving #</Label>
                 <Col sm={3}>
                     <Input 
                         size="sm" 
                         tag={Field} 
-                        name="po_number" 
+                        name="Receiving_number" 
                         readOnly={true}
-                        disabled={isViewable}
                     />
-                    <ErrorMessage component={FormFeedback} name="po_number" />
+                    <ErrorMessage component={FormFeedback} name="Receiving_number" />
                 </Col>
-                <Label for="phone" sm="1">Phone</Label>
+                <Label for="Supplier_Invoice" sm={1}>Supplier Invoice</Label>
                 <Col sm={3}>
-                    <InputMask
-                        mask="+1 (999)-999-9999"
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        value={values.phone}
-                        disabled={isViewable}
-                    >
-                        {() => (
-                            <Input 
-                                size="sm" 
-                                disabled={isViewable}
-                                tag={Field} 
-                                name="phone" 
-                                placeholder="phone" 
-                            />
-                        )}
-                    </InputMask>
+                    <Input size="sm" tag={Field} name="Supplier_Invoice" id="Supplier_Invoice" />
+                    <ErrorMessage component={FormFeedback} name="Supplier_Invoice" />
                 </Col>
                 <Label for="prepared_by" sm="1">Prepared By</Label>
                 <Col sm="3">
@@ -104,78 +87,76 @@ const InnerForm = ({
             </FormGroup>
             
             <FormGroup row>
-                <Label for="po_date" sm={1}>PO Date/Lead Time</Label>
+                <Label for="Receiving_date" sm={1}>Receiving Date</Label>
                 <Col sm={3}>
-                    <Input
-                        type="date"
-                        name="po_date"
-                        id="po_date"
-                        size="sm"
-                        placeholder="PO Date"
-                        disabled={isViewable}
+                    <DateTimePicker
+                        wrapperClassName="datepicker"
+                        onChange={(e) => {
+                            onChange(e);
+                            setFieldValue("Receiving_date", dateFormat(e, "isoDateTime"))
+                        }}
+                        value={value}
+                        name="Receiving_date"
                     />
                 </Col>
-                <Label for="fax" sm={1}>Fax</Label>
+                <Label for="Inv_Date" sm="1">Inv.Date<span className="text-danger">*</span></Label>
                 <Col sm={3}>
-                    <InputMask
-                        mask="+1 (999)-999-9999"
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        value={values.fax}
-                        disabled={isViewable}
-                    >
-                        {() => (
-                            <Input size="sm" disabled={isViewable} tag={Field} name="fax" id="fax" placeholder="fax" />
-                        )}
-                    </InputMask>
+                    <DateTimePicker
+                        wrapperClassName="datepicker"
+                        onChange={(e) => {
+                            onChange(e);
+                            setFieldValue("Inv_Date", dateFormat(e, "isoDateTime"))
+                        }}
+                        value={value}
+                        name="Inv_Date"
+                    />
                 </Col>
-                <Label for="reference" sm={1}>Reference</Label>
+                <Label for="reference_num" sm={1}>Reference #</Label>
                 <Col sm={3}>
-                    <Input size="sm" disabled={isViewable} tag={Field} name="reference" id="reference" placeholder="reference" />
-                    <ErrorMessage component={FormFeedback} name="reference" />
+                    <Input size="sm" tag={Field} name="reference_num" id="reference_num" placeholder="reference_num" />
+                    <ErrorMessage component={FormFeedback} name="reference_num" />
                 </Col>
             </FormGroup>
             <FormGroup row>
                 <Label for="supplier" sm={1}>Supplier</Label>
                 <Col sm={3}>
                     <Select options={warehouseMockData} styles={reactSelectStyles} />
-                    {isViewable && <Button className="btn btn-dark mt-2 btn-sm" onClick={toggleSupplierHandler} disabled={isViewable}><i className="fa fa-plus"></i> Create Supplier</Button>}
-                    
+                    <span className="btn btn-dark mt-2 btn-sm" onClick={toggleSupplierHandler}>+ Create</span>
                 </Col>
-                <Label for="email" sm={1}>Email</Label>
+                <Label for="Inv_Due_Date" sm="1">Inv.Due Date<span className="text-danger">*</span></Label>
                 <Col sm={3}>
-                    <Input size="sm" tag={Field} disabled={isViewable} name="email" id="email" placeholder="email" />
-                    <ErrorMessage component={FormFeedback} name="email" />
+                    <DateTimePicker
+                        wrapperClassName="datepicker"
+                        onChange={(e) => {
+                            onChange(e);
+                            setFieldValue("Inv_Due_Date", dateFormat(e, "isoDateTime"))
+                        }}
+                        value={value}
+                        name="Inv_Due_Date"
+                    />
                 </Col>
                 <Label for="notes" sm={1}>Notes </Label>
                 <Col sm={3}>
-                    <Input size="sm" name="notes" disabled={isViewable} onChange={handleChange} onBlur={handleBlur} placeholder="Notes" />
+                    <Input size="sm" name="notes" onChange={handleChange} onBlur={handleBlur} placeholder="Notes" />
                 </Col>
             </FormGroup>
-            {!isViewable && <Row>
+            <Row>
                 <Col className="text-right">
                     <Button type="button" size="sm" color="danger" onClick={backToHome}>Cancel</Button> {' '}
                     <Button color="primary" size="sm" disabled={isSubmitting}>{isSubmitting ? "Saving..." : "Save"} </Button>
                 </Col>
-            </Row>}
-
-            {isViewable && <Row>
-                <Col className="text-right">
-                    <Button type="button" size="sm" color="danger" onClick={backToHome}>Close</Button> {' '}
-                </Col>
-            </Row>}
-            
+            </Row>
         </Form>
     );
 }
 
 
-export const PurchaseOrderForm = withFormik({
+export const ReceivingOrderForm = withFormik({
     enableReinitialize: true,
     mapPropsToValues: ({ temporaryData }) => {
         return {
             notes: temporaryData && temporaryData.notes,
-            phone: temporaryData && temporaryData.phone,
+            // phone: temporaryData && temporaryData.phone,
         }
     },
     handleSubmit: (values, { props: { submitHandler }, setSubmitting }) => {

@@ -41,7 +41,7 @@ export const purchaseSlice = createSlice({
         state.customerForEdit = action.payload.customerForEdit;
         state.error = null;
       },
-      purchaseListFetched: (state, action) => {
+      purchaseListFetched : (state, action) => {
         const { totalCount, entities } = action.payload;
         state.listLoading = false;
         state.error = null;
@@ -90,7 +90,12 @@ export const purchaseSlice = createSlice({
         state.entities.splice(state.entities.findIndex((entity) => entity.id === action.payload), 1);
 
         return state;
-      }
+      },
+      deletePurchaseListItem: (state, action) => {
+        state.purchaseList.splice(state.purchaseList.findIndex((entity) => entity.id === action.payload), 1);
+
+        return state;
+      },
     }
   });
   
