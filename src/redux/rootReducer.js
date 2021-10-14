@@ -9,7 +9,7 @@ import {specificationsSlice} from "../app/modules/ECommerce/_redux/specification
 import {watcherGetterSaga, watcherSaga} from '../app/generic/sagas';
 import { purchaseSlice } from "app/pages/purchase/_redux/purchaseSlice";
 import { inventorySlice } from "app/pages/inventory/_redux/inventorySlice";
-
+import { receivingSlice } from "app/pages/receiving/_redux/receivingSlice";
 
 export const rootReducer = combineReducers({
   auth: auth.reducer,
@@ -17,6 +17,7 @@ export const rootReducer = combineReducers({
   products: productsSlice.reducer,
   purchase: purchaseSlice.reducer,
   inventory: inventorySlice.reducer,
+  receiving: receivingSlice.reducer,
   remarks: remarksSlice.reducer,
   specifications: specificationsSlice.reducer
 });

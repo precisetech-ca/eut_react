@@ -1,10 +1,11 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
 import { UIProvider } from "./context/UIContext";
-import { EditReceivingOrder } from "./components/EditReceivingOrder";
+import { EditReceivingOrder } from "./components/module/EditReceivingOrder";
 import { HomePageCard } from "./components/HomePageCard";
-import { NewReceivingOrder } from "./components/NewReceivingOrder";
+import { NewReceivingOrder } from "./components/module/NewReceivingOrder";
 import { SupplierForm } from "./components/forms/SupplierForm";
+import { ViewReceivingOrder } from "./components/module/ViewReceivingOrder";
 
 const Receiving = ({dispatch, history}) => {
     const receivingUIEvents = {
@@ -40,6 +41,11 @@ const Receiving = ({dispatch, history}) => {
         <Route exact path="/receiving/:id/edit">
           {({ history, match }) => (
             <EditReceivingOrder />
+          )}
+        </Route>
+        <Route exact path="/receiving/:id/view">
+          {({ history, match }) => (
+            <ViewReceivingOrder />
           )}
         </Route>
         <Route exact path="/receiving">
