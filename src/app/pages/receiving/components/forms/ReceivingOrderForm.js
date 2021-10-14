@@ -43,27 +43,6 @@ const InnerForm = ({
 
     return (
         <Form onSubmit={handleSubmit}>
-            <Row className="mb-3">
-                <Col className="col-lg-8">
-                </Col>
-                <Col>
-                    <FormGroup check>
-                        <Label check>
-                            <Input type="checkbox" name="completed" disabled={true} />{' '}
-                            Completed
-                        </Label>
-                    </FormGroup>
-                </Col>
-                <Col>
-                    <FormGroup check>
-                        <Label check>
-                            <Input type="checkbox" name="void" />{' '}
-                            Void
-                        </Label>
-                    </FormGroup>
-                </Col>
-            </Row>
-    
             <FormGroup row>
                 <Label for="Receiving_number" sm={1}>Receiving #</Label>
                 <Col sm={3}>
@@ -75,12 +54,12 @@ const InnerForm = ({
                     />
                     <ErrorMessage component={FormFeedback} name="Receiving_number" />
                 </Col>
-                <Label for="Supplier_Invoice" sm={1}>Supplier Invoice</Label>
+                <Label for="supplier" sm={1}>Supplier</Label>
                 <Col sm={3}>
-                    <Input size="sm" tag={Field} name="Supplier_Invoice" id="Supplier_Invoice" />
-                    <ErrorMessage component={FormFeedback} name="Supplier_Invoice" />
+                    <Input size="sm" tag={Field} name="supplier" id="supplier" />
+                    <ErrorMessage component={FormFeedback} name="supplier" />
                 </Col>
-                <Label for="prepared_by" sm="1">Prepared By</Label>
+                <Label for="received_by" sm="1">Received By</Label>
                 <Col sm="3">
                     <Select options={warehouseMockData} isDisabled="true" />
                 </Col>
@@ -89,15 +68,7 @@ const InnerForm = ({
             <FormGroup row>
                 <Label for="Receiving_date" sm={1}>Receiving Date</Label>
                 <Col sm={3}>
-                    <DateTimePicker
-                        wrapperClassName="datepicker"
-                        onChange={(e) => {
-                            onChange(e);
-                            setFieldValue("Receiving_date", dateFormat(e, "isoDateTime"))
-                        }}
-                        value={value}
-                        name="Receiving_date"
-                    />
+                    
                 </Col>
                 <Label for="Inv_Date" sm="1">Inv.Date<span className="text-danger">*</span></Label>
                 <Col sm={3}>

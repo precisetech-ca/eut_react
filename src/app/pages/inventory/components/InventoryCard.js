@@ -5,20 +5,18 @@ import {
     CardHeader,
     CardHeaderToolbar,
 } from "_metronic/_partials/controls";
-import { CustomersFilter } from "../filters/InventoryFilter";
-import { CustomersGrouping } from "../grouping/InventoryGrouping";
 import { InventoryTable } from '../components/InventoryTable';
-import { useCustomersUIContext } from "../context/InventoryUIContext";
+import { useIinventoryUIContext } from "../context/InventoryUIContext";
 
 
 export const InventoryCard = () => {
-    const customersUIContext = useCustomersUIContext();
-    const customersUIProps = useMemo(() => {
+    const inventoryUIContext = useIinventoryUIContext();
+    const inventoryUIProps = useMemo(() => {
         return {
-            ids: customersUIContext.ids,
-            newCustomerButtonClick: customersUIContext.newCustomerButtonClick,
+            ids: inventoryUIContext.ids,
+            newCustomerButtonClick: inventoryUIContext.newCustomerButtonClick,
         };
-    }, [customersUIContext]);
+    }, [inventoryUIContext]);
 
 
     return (
@@ -29,8 +27,8 @@ export const InventoryCard = () => {
                     type="button"
                     className="btn btn-primary"
                     onClick={() => {
-                        customersUIProps.newCustomerButtonClick();
-                        customersUIContext.setEditHandler(false);
+                        inventoryUIProps.newCustomerButtonClick();
+                        inventoryUIContext.setEditHandler(false);
                     }}
                 >
                     New Part
@@ -38,8 +36,6 @@ export const InventoryCard = () => {
                 </CardHeaderToolbar>
             </CardHeader>
             <CardBody>
-                <CustomersFilter />
-                {customersUIProps?.ids?.length > 0 && <CustomersGrouping />}
                 <InventoryTable />
             </CardBody>
         </Card>

@@ -12,7 +12,7 @@ import {
 } from 'reactstrap';
 import FileUpload from 'app/utils/FileUpload';
 import { Field, ErrorMessage, withFormik, Form } from 'formik';
-import { useCustomersUIContext } from "app/pages/inventory/context/InventoryUIContext";
+import { useIinventoryUIContext } from "app/pages/inventory/context/InventoryUIContext";
 import * as Yup from "yup";
 import DateTimePicker from 'react-datetime-picker';
 import Select from 'react-select'
@@ -32,10 +32,11 @@ const InnerForm = ({
     actionsLoading,
     errors,
     touched,
+    onHide,
 }) => {
     // const UIContext = useCustomersUIContext();
     // const {toggleSupplierHandler, warehouseMockData} = UIContext;
-    const { warehouseMockData, prefferedSupplier, weightMockProps } = useCustomersUIContext();
+    const { warehouseMockData, prefferedSupplier, weightMockProps } = useIinventoryUIContext();
     const [value, onChange] = useState(new Date());
     const [thumbPath, setThumbPath] = useState([]);
     const [filePath, setFilePath] = useState([]);
@@ -452,7 +453,7 @@ const InnerForm = ({
                       size="sm" 
                       tag={Field} 
                       placeholder="L"
-                      name="dimension" 
+                      name="length" 
                       disabled={isViewable}
                   />
               </Col>
@@ -461,7 +462,7 @@ const InnerForm = ({
                       size="sm" 
                       placeholder="H"
                       tag={Field} 
-                      name="dimension" 
+                      name="height" 
                       disabled={isViewable}
                   />
               </Col>
@@ -470,7 +471,7 @@ const InnerForm = ({
                       size="sm" 
                       placeholder="W"
                       tag={Field} 
-                      name="dimension" 
+                      name="width" 
                       disabled={isViewable}
                   />
               </Col>
@@ -625,14 +626,14 @@ const InnerForm = ({
             </FormGroup>
             {!isViewable && <Row>
                 <Col className="text-right">
-                    <Button type="button" size="sm" color="danger" onClick={backToHome}>Cancel</Button> {' '}
+                    <Button type="button" size="sm" color="danger" onClick={onHide}>Cancel</Button> {' '}
                     <Button type="submit" color="primary" size="sm" disabled={isSubmitting}>{isSubmitting ? "Saving..." : "Save"} </Button>
                 </Col>
             </Row>}
 
             {isViewable && <Row>
                 <Col className="text-right">
-                    <Button type="button" size="sm" color="danger" onClick={backToHome}>Close</Button> {' '}
+                    <Button type="button" size="sm" color="danger" onClick={onHide}>Close</Button> {' '}
                 </Col>
             </Row>}
             
@@ -662,272 +663,3 @@ export const InventoryEditForm = withFormik({
         // submitHandler({payload: values, closeModal, setSubmitting, resetForm});
     },
 })(InnerForm);
-
-
-// export function InventoryEditForm({
-//   saveCustomer,
-//   customer,
-  
-//   onHide,
-// }) {
-//   const { warehouseMockData, prefferedSupplier, weightMockProps } = useCustomersUIContext();
-//   const [thumbPath, setThumbPath] = useState([]);
-//   const [filePath, setFilePath] = useState([]);
-
-//   return (
-//     <>
-//       <Formik
-//         enableReinitialize={true}
-//         initialValues={customer}
-//         validationSchema={InventoryEditSchema}
-//         onSubmit={(values) => {
-//           saveCustomer(values);
-//         }}
-//       >
-//         {({ handleSubmit }) => (
-//           <>
-//             <Modal.Body className="overlay overlay-block cursor-default">
-             
-//               <Form className="form form-label-right">
-//                 <div className="form-group row">
-//                   {/* First Name */}
-//                   <div className="col-lg-6 col-sm-6">
-//                     <Field
-//                       name="details"
-//                       component={Input}
-//                       placeholder="Details"
-//                       label="SKU"
-//                       className="form-control form-control-sm"
-//                     />
-//                   </div>
-//                   {/* Last Name */}
-                  
-//                   {/* Login */}
-//                   <div className="col-lg-3 col-sm-3">
-//                     <FormLabel>Stock Item</FormLabel>
-//                     <FormSwitch />
-                   
-//                   </div>
-//                   <div className="col-lg-3 col-sm-3">
-//                     <FormLabel>Status</FormLabel>
-//                     <FormSwitch />
-//                   </div>
-//                 </div>
-//                 {/* Email */}
-//                 <div className="form-group row">
-//                   <div className="col-lg-6 col-sm-6">
-//                     <Field
-//                       name="barcode"
-//                       component={Input}
-//                       placeholder="Barcode"
-//                       label="Barcode"
-//                       className="form-control form-control-sm"
-//                     />
-//                   </div>
-//                   {/* Login */}
-//                   <div className="col-lg-3 col-sm-3">
-//                     <FormLabel>Allow Negative OH</FormLabel>
-//                     <FormSwitch />
-                   
-//                   </div>
-//                   <div className="col-lg-3 col-sm-3">
-//                     <FormLabel>Texable</FormLabel>
-//                     <FormSwitch />
-//                   </div>
-//                 </div>
-//                 <div className="form-group row">
-//                   {/* Gender */}
-//                   <div className="col-lg-6">
-//                     <Field
-//                       name="name"
-//                       component={Input}
-//                       placeholder="Name"
-//                       label="Name"
-//                       className="form-control form-control-sm"
-//                     />
-//                   </div>
-//                   {/* Type */}
-//                   <div className="col-lg-6">
-//                     <FormLabel>Warehouse</FormLabel>
-//                     <Select options={warehouseMockData} />
-//                   </div>
-//                 </div>
-//                 <div className="form-group row">
-//                   {/* Gender */}
-//                   <div className="col-lg-6">
-//                     <Field
-//                       name="description"
-//                       component={Input}
-//                       placeholder="Description"
-//                       label="Description"
-//                       className="form-control form-control-sm"
-//                     />
-//                   </div>
-//                   {/* Type */}
-//                   <div className="col-lg-6">
-//                     <FormLabel>Preferred Supply</FormLabel>
-//                     <Select options={prefferedSupplier} />
-//                   </div>
-//                 </div>
-
-//                 <div className="form-group row">
-//                   {/* Gender */}
-//                   <div className="col-lg-2">
-//                     <Field
-//                       name="length_dimensions"
-//                       component={Input}
-//                       placeholder="L"
-//                       label="Dimension (L)"
-//                       className="form-control form-control-sm"
-//                     />
-//                   </div>
-//                   <div className="col-lg-2">
-//                     <Field
-//                         name="height_dimensions"
-//                         component={Input}
-//                         placeholder="H"
-//                         label="Dimension (H)"
-//                         className="form-control form-control-sm"
-//                     />
-//                   </div>
-//                   <div className="col-lg-2">
-//                     <Field
-//                         name="width_dimensions"
-//                         component={Input}
-//                         placeholder="W"
-//                         label="Dimension (W)"
-//                         className="form-control form-control-sm"
-//                     />
-//                   </div>
-//                   <div className="col-lg-6">
-//                     <FormLabel>UOM</FormLabel>
-//                     <Select options={prefferedSupplier} />
-//                   </div>
-                  
-//                 </div>
-                
-//                 <div className="form-group row">
-//                   {/* Gender */}
-//                   <div className="col-lg-2">
-//                     <FormLabel>Weight</FormLabel>
-//                     <Select options={weightMockProps} />
-//                   </div>
-//                   <div className="col-lg-2"></div>
-//                   <div className="col-lg-2"></div>
-//                   <div className="col-lg-6">
-//                     <FormLabel>Re-Ordering UOM</FormLabel>
-//                     <Select options={prefferedSupplier} />
-//                   </div>
-//                 </div>
-//                 <div className="form-group row">
-//                   {/* Gender */}
-//                   <div className="col-lg-6">
-//                     <Field
-//                       name="on_hand_quantity"
-//                       component={Input}
-//                       placeholder="On Hand Quantity"
-//                       label="On Hand Quantity"
-//                       className="form-control form-control-sm"
-//                     />
-//                   </div>
-//                   {/* Type */}
-//                   <div className="col-lg-6">
-//                     <Field
-//                       name="conversion_uom"
-//                       component={Input}
-//                       placeholder="Conversion to UOM"
-//                       label="Conversion to UOM"
-//                       className="form-control form-control-sm"
-//                     />
-//                   </div>
-//                 </div>
-
-//                 <div className="form-group row">
-//                   {/* Gender */}
-//                   <div className="col-lg-6">
-//                     <Field
-//                       name="available_quantity"
-//                       component={Input}
-//                       placeholder="Quantity Available"
-//                       label="Quantity Available"
-//                       className="form-control form-control-sm"
-//                     />
-//                   </div>
-//                   {/* Type */}
-//                   <div className="col-lg-6">
-//                     <FileUpload
-//                       name="inventoryFile"
-//                       isSubmitting={false}
-//                       filePath={thumbPath ? thumbPath : 'https://via.placeholder.com/1000x200'}
-//                       endpoint={`${process.env.REACT_APP_API_BASE_URL}/inventory/uploads`}
-//                       responseCallback={(res) => {
-//                           setThumbPath(res.data.thumbnails);
-//                           setFilePath(res.data.filePath);
-//                       }}
-//                       setFieldValue={(name, file) => console.log(name, '=>', file)}
-//                     />
-//                   </div>
-//                 </div>
-
-//                 <div className="form-group row">
-//                   {/* Gender */}
-//                   <div className="col-lg-6">
-//                     <Field
-//                       name="cost_price"
-//                       component={Input}
-//                       placeholder="Cost Price"
-//                       label="Cost Price"
-//                       className="form-control form-control-sm"
-//                     />
-//                   </div>
-//                   {/* Type */}
-//                   <div className="col-lg-6"></div>
-//                 </div>
-
-//                 <div className="form-group row">
-//                   {/* Gender */}
-//                   <div className="col-lg-6">
-//                     <Field
-//                       name="average_cost"
-//                       component={Input}
-//                       placeholder="Average Cost"
-//                       label="Average Cost"
-//                       className="form-control form-control-sm"
-//                     />
-//                   </div>
-//                   {/* Type */}
-//                   <div className="col-lg-6">
-//                     <Field
-//                       name="standard_cost"
-//                       component={Input}
-//                       placeholder="Standard Cost"
-//                       label="Standard Cost"
-//                       className="form-control form-control-sm"
-//                     />
-//                   </div>
-//                 </div>
-//               </Form>
-//             </Modal.Body>
-//             <Modal.Footer>
-//               <button
-//                 type="button"
-//                 onClick={onHide}
-//                 className="btn btn-light btn-elevate"
-//               >
-//                 Cancel
-//               </button>
-//               <> </>
-//               <button
-//                 type="submit"
-//                 onClick={() => handleSubmit()}
-//                 className="btn btn-primary btn-elevate"
-//               >
-//                 Save
-//               </button>
-//             </Modal.Footer>
-//           </>
-//         )}
-//       </Formik>
-//     </>
-//   );
-// }

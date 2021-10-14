@@ -2,174 +2,110 @@
 // DOCS: https://react-bootstrap-table.github.io/react-bootstrap-table2/docs/
 // STORYBOOK: https://react-bootstrap-table.github.io/react-bootstrap-table2/storybook/index.html
 import React, { useEffect, useMemo } from "react";
-import BootstrapTable from "react-bootstrap-table-next";
-import paginationFactory, {
-  PaginationProvider,
-} from "react-bootstrap-table2-paginator";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import * as actions from "../_redux/actions";
-import {
-  getSelectRow,
-  getHandlerTableChange,
-  NoRecordsFoundMessage,
-  PleaseWaitMessage,
-  sortCaret,
-  headerSortingClasses,
-} from "../../../../_metronic/_helpers";
-import * as uiHelpers from "../utils/InventoryUIHelpers";
-import * as columnFormatters from "../column-formatter";
-import { Pagination } from "../../../../_metronic/_partials/controls";
-import { useCustomersUIContext } from "../context/InventoryUIContext";
-import {callGenericGetterAsync} from '../../../generic/actions';
+import { useIinventoryUIContext } from "../context/InventoryUIContext";
+import { ReactTable } from "../../custom_widgets/table/ReactTable";
+import {Input} from 'reactstrap';
+import { Link } from "react-router-dom";
 
 export function InventoryTable() {
   // Customers UI Context
-  const customersUIContext = useCustomersUIContext();
-  const customersUIProps = useMemo(() => {
-    return {
-      ids: customersUIContext.ids,
-      setIds: customersUIContext.setIds,
-      queryParams: customersUIContext.queryParams,
-      setQueryParams: customersUIContext.setQueryParams,
-      openEditCustomerDialog: customersUIContext.openEditCustomerDialog,
-      openDeleteCustomerDialog: customersUIContext.openDeleteCustomerDialog,
-      setEdit: customersUIContext.setEditHandler,
-    };
-  }, [customersUIContext]);
+ 
+  const inventoryUIContext = useIinventoryUIContext();
 
   // Getting curret state of customers list from store (Redux)
   const { currentState } = useSelector(
-    (state) => ({ currentState: state.customers }),
+    (state) => ({ currentState: state.inventory }),
     shallowEqual
   );
-  const { totalCount, entities, listLoading } = currentState;
+  const { inventoryItems } = currentState;
 
   // Customers Redux state
   const dispatch = useDispatch();
   useEffect(() => {
-    // clear selections list
-    customersUIProps.setIds([]);
     // server call by queryParams
-    dispatch(callGenericGetterAsync("/", (res) => {
-      dispatch(actions.fetchCustomers(customersUIProps.queryParams));
-      if (res) {
-      }
-    }))
+    dispatch(actions.inventoryItemsFetched());
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [customersUIProps.queryParams, dispatch]);
-  // Table columns
+  }, [dispatch]);
+
+
+  console.log(inventoryItems);
+  
   const columns = [
     {
-      dataField: "id",
-      text: "ID",
-      sort: true,
-      sortCaret: sortCaret,
-      headerSortingClasses,
+        Header: "po_number",
+        Footer: "po_number",
+        accessor: "po_number",
+        disableFilters: true,
+        Cell: ({value}) => value,
     },
     {
-      dataField: "firstName",
-      text: "Details",
-      sort: true,
-      sortCaret: sortCaret,
-      headerSortingClasses,
+        Header: "po_date",
+        Footer: "po_date",
+        accessor: "po_date",
+        disableFilters: true,
+        Cell: ({value}) => value,
+    },
+    
+    {
+        Header: "Lead Time",
+        Footer: "Lead Time",
+        accessor: "lead_time",
+        disableFilters: true,
+        Cell: ({value}) => value,
     },
     {
-      dataField: "lastName",
-      text: "SKU",
-      sort: true,
-      sortCaret: sortCaret,
-      headerSortingClasses,
+        Header: "supplier",
+        Footer: "supplier",
+        accessor: "supplier",
+        disableFilters: true,
+        Cell: ({value}) => value,
     },
     {
-      dataField: "email",
-      text: "Barcode #",
-      sort: true,
-      sortCaret: sortCaret,
-      headerSortingClasses,
+        Header: "warehouse",
+        Footer: "warehouse",
+        accessor: "warehouse",
+        disableFilters: true,
+        Cell: ({value}) => value,
     },
     {
-      dataField: "gender",
-      text: "Preferred Supplier",
-      sort: false,
-      sortCaret: sortCaret,
+        Header: "PO Finalized Date",
+        Footer: "PO Finalized Date",
+        accessor: "po_finalized_date",
+        disableFilters: true,
+        Cell: ({value}) => value,
     },
     {
-      dataField: "status",
-      text: "Stock Quantity",
-      sort: true,
-      sortCaret: sortCaret,
-      formatter: columnFormatters.StatusColumnFormatter,
-      headerSortingClasses,
+        Header: "Void",
+        Footer: "Void",
+        accessor: "void",
+        disableSortBy: true,
+        disableFilters: true,
+        Cell: ({value}) => value,
     },
     {
-      dataField: "type",
-      text: "Standard Cost",
-      sort: true,
-      sortCaret: sortCaret,
-      formatter: columnFormatters.TypeColumnFormatter,
-    },
-    {
-      dataField: "action",
-      text: "Actions",
-      formatter: columnFormatters.ActionsColumnFormatter,
-      formatExtraData: {
-        openEditCustomerDialog: () => {
-          customersUIProps.openEditCustomerDialog();
-          customersUIContext.setEditHandler(true);
-        },
-        openDeleteCustomerDialog: customersUIProps.openDeleteCustomerDialog,
-      },
-      classes: "text-right pr-0",
-      headerClasses: "text-right pr-3",
-      style: {
-        minWidth: "100px",
-      },
+        Header: "Action",
+        accessor: "id",
+        disableSortBy: true,
+        disableFilters: true,
+        Cell: ({value}) => {
+          return (
+            <>
+              <Link href="#inventory-edit" to={`/inventory/${value}/edit`} >
+                <i class="fas fa-pencil-alt text-success"></i>
+              </Link>
+              <Link href="#inventory-edit" to={`/inventory/${value}/view`} >
+                <i class="fas fa-eye text-primary ml-3"></i>
+              </Link>
+          </>)
+        }
     },
   ];
-  // Table pagination properties
-  const paginationOptions = {
-    custom: true,
-    totalSize: totalCount,
-    sizePerPageList: uiHelpers.sizePerPageList,
-    sizePerPage: customersUIProps.queryParams.pageSize,
-    page: customersUIProps.queryParams.pageNumber,
-  };
+  
   return (
     <>
-      <PaginationProvider pagination={paginationFactory(paginationOptions)}>
-        {({ paginationProps, paginationTableProps }) => {
-          return (
-            <Pagination
-              isLoading={listLoading}
-              paginationProps={paginationProps}
-            >
-              <BootstrapTable
-                wrapperClasses="table-responsive"
-                bordered={false}
-                classes="table table-head-custom table-vertical-center overflow-hidden"
-                bootstrap4
-                remote
-                keyField="id"
-                data={entities === null ? [] : entities}
-                columns={columns}
-                defaultSorted={uiHelpers.defaultSorted}
-                onTableChange={getHandlerTableChange(
-                  customersUIProps.setQueryParams
-                )}
-                selectRow={getSelectRow({
-                  entities,
-                  ids: customersUIProps.ids,
-                  setIds: customersUIProps.setIds,
-                })}
-                {...paginationTableProps}
-              >
-                <PleaseWaitMessage entities={entities} />
-                <NoRecordsFoundMessage entities={entities} />
-              </BootstrapTable>
-            </Pagination>
-          );
-        }}
-      </PaginationProvider>
+      {inventoryItems && <ReactTable tableColumns={columns} tableData={inventoryItems} /> }
     </>
   );
 }
