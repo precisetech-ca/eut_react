@@ -15,18 +15,6 @@ const SalesOrder = ({dispatch, history}) => {
         editSalesOrderForm: (id) => {
           history.push(`/salesorder/${id}/edit`);
         },
-        openDeleteCustomerDialog: (id) => {
-          history.push(`/e-commerce/customers/${id}/delete`);
-        },
-        openDeleteCustomersDialog: () => {
-          history.push(`/e-commerce/customers/deleteCustomers`);
-        },
-        openFetchCustomersDialog: () => {
-          history.push(`/e-commerce/customers/fetch`);
-        },
-        openUpdateCustomersStatusDialog: () => {
-          history.push("/e-commerce/customers/updateStatus");
-        }
     }
     
 

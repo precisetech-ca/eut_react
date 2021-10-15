@@ -87,21 +87,6 @@ export function Table() {
       sort: false,
       sortCaret: sortCaret,
     }
-    // ,
-    // {
-    //   dataField: "action",
-    //   text: "Actions",
-    //   formatter: columnFormatters.ActionsColumnFormatter,
-    //   formatExtraData: {
-    //     openEditCustomerDialog: customersUIProps.openEditCustomerDialog,
-    //     openDeleteCustomerDialog: customersUIProps.openDeleteCustomerDialog,
-    //   },
-    //   classes: "text-right pr-0",
-    //   headerClasses: "text-right pr-3",
-    //   style: {
-    //     minWidth: "100px",
-    //   },
-    // },
   ];
   // Table pagination properties
   const paginationOptions = {

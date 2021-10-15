@@ -1,37 +1,21 @@
-// React bootstrap table next =>
-// DOCS: https://react-bootstrap-table.github.io/react-bootstrap-table2/docs/
-// STORYBOOK: https://react-bootstrap-table.github.io/react-bootstrap-table2/storybook/index.html
 import React, { useEffect, useMemo, useState } from "react";
-import DataTable from "react-data-table-component";
-
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import * as actions from "../_redux/actions";
-import { useUIContext } from "../context/UIContext";
-import {Button, Input, Row, Col} from "reactstrap";
-
+import { Input, Row, Col} from "reactstrap";
 import { Summary } from "./supplier/Summary";
 import { ReactTable } from "../../custom_widgets/table/ReactTable";
-import DateTimePicker from 'react-datetime-picker';
 
 export function Table() {
-  // Customers UI Context
-  const UIContext = useUIContext();
-  const [value, onChange] = useState(new Date());
-  const customersUIProps = useMemo(() => {
-    return {
-      queryParams: UIContext.queryParams,
-    };
-  }, [UIContext]);
-
   // Getting curret state of customers list from store (Redux)
+  const dispatch = useDispatch();
+  
   const { currentState } = useSelector(
     (state) => ({ currentState: state.receiving }),
     shallowEqual
   );
+
   const {products, summary} = currentState;
 
-  // Customers Redux state
-  const dispatch = useDispatch();
   useEffect(() => {
     // server call by queryParams
     dispatch(actions.fetchProducts());
