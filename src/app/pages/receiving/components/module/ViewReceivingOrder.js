@@ -16,9 +16,12 @@ export const ViewReceivingOrder = ({id}) => {
 
     return (
       <Card>
-        <CardHeader title="View Purchase List"></CardHeader>
+        <CardHeader title="View Receiving List"></CardHeader>
         <CardBody>
-          <ReceivingOrderForm backToHome={UIContext.backToHome} isViewable={true} />
+          <ReceivingOrderForm 
+            backToHome={UIContext.backToHome} 
+            isViewable={true} 
+          />
           <Tabs
             id="controlled-tab-example"
             activeKey={key}

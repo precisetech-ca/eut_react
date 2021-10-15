@@ -28,7 +28,7 @@ export function Table() {
     (state) => ({ currentState: state.receiving }),
     shallowEqual
   );
-  const {entities } = currentState;
+  const {products, summary} = currentState;
 
   // Customers Redux state
   const dispatch = useDispatch();
@@ -36,10 +36,14 @@ export function Table() {
     // server call by queryParams
     dispatch(actions.fetchProducts());
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [customersUIProps.queryParams, dispatch]);
+  }, [dispatch]);
 
   const deleteProduct = (id) => {
     dispatch(actions.deleteProduct(id));
+  }
+
+  const changeRecQty = (qty, index) => {
+    dispatch(actions.changeRecQty({qty, index}));
   }
 
   const columns = [
@@ -51,14 +55,7 @@ export function Table() {
         accessor: "sku",
         disableFilters: true,
         Cell: ({value}) => {
-            return (<div style={{width: "200px"}}>
-                <Input type="select" size="sm" className="d-inline-block" name="select" id="exampleSelect">
-                    {value?.map(({id, value}) => 
-                        <option value={id}>{value}</option>
-                    )}
-                </Input>
-                <Button className="mt-2" color="dark" size="sm" >+ Create</Button>
-            </div>)
+            return value;
         }
     },
     {
@@ -69,10 +66,10 @@ export function Table() {
         Cell: ({value}) => value,
     },
     {
-      Header: "Desc",
+      Header: "Description",
       disableFilters: true,
       disableSortBy: true,
-        accessor: "desc",
+        accessor: "description",
         Cell: ({value}) => value,
     },
     
@@ -81,40 +78,17 @@ export function Table() {
       disableFilters: true,
       disableSortBy: true,
       accessor: "lot_no",
-      Cell: ({value}) => <Input type="text" size="sm" style={{width:"70px"}}/>,
+      Cell: ({value}) => value,
     },
     {
       disableFilters: true,
       disableSortBy: true,
-        Header: () => <div style={{width: "200px"}}>Expiry</div>,
-        accessor: "expiry",
-        Cell: () => <DateTimePicker onChange={onChange} value={value} />
+      Header: () => <div style={{width: "50px"}}>Expiry</div>,
+      accessor: "expiry",
+      Cell: ({value}) => value
     },
     {
-      Header: "Quarantine",
-      disableFilters: true,
-      disableSortBy: true,
-      accessor: "quarantine",
-      Cell: ({value}) => (<div className="align-items-center d-flex justify-content-center mt-5">
-        <Input type="checkbox" disabled={true} />
-      </div>),
-    },
-    {
-      Header: "Oh Qty",
-      disableFilters: true,
-      disableSortBy: true,
-        accessor: "oh_qty",
-        Cell: ({value}) => value,
-    },
-    {
-      Header: "Avl Qty",
-      disableFilters: true,
-      disableSortBy: true,
-        accessor: "available_qty",
-        Cell: ({value}) => value,
-    },
-    {
-      Header: "Odr Qty",
+      Header: "Order Qty",
       disableFilters: true,
       disableSortBy: true,
       accessor: "odr_qty",
@@ -125,6 +99,39 @@ export function Table() {
       disableSortBy: true,
       Header: "UoM",
       accessor: "uom",
+      Cell: ({value}) => {
+        return <select className="form-control form-control-sm">
+          {value?.map(v => <option value={v.id} >{v.title}</option>)}
+        </select>
+      },
+    },
+    {
+      Header: "Rec Qty",
+      disableFilters: true,
+      disableSortBy: true,
+      accessor: "rec_qty",
+      Cell: ({value, row}) => 
+        <Input  
+          type="number" 
+          min={1}
+          onChange={(e) => changeRecQty(e.target.value, row?.index)} 
+          size="sm" 
+          style={{width:"70px"}} 
+          value={value}
+        />,
+    },
+    {
+      Header: "Oh Qty",
+      disableFilters: true,
+      disableSortBy: true,
+        accessor: "oh_qty",
+        Cell: ({value}) => value,
+    },
+    {
+      disableFilters: true,
+      disableSortBy: true,
+      Header: "Rem Cost",
+      accessor: "rem_cost",
       Cell: ({value}) => value,
     },
     {
@@ -133,18 +140,6 @@ export function Table() {
       Header: "Cost",
       accessor: "cost",
       Cell: ({value}) => value,
-    },
-    {
-      disableFilters: true,
-      disableSortBy: true,
-      Header: () => <div style={{width: "50px"}} className="text-center">Tax</div>,
-      Footer: "Tax",
-      accessor: "tax",
-      Cell: ({value}) => <Input type="select" size="sm" className="d-inline-block" name="select" id="exampleSelect">
-          {value?.map(({id, title}) => 
-              <option value={id}>{title}</option>
-          )}
-      </Input>,
     },
     {
       Header: "Last Cost",
@@ -159,38 +154,19 @@ export function Table() {
       disableSortBy: true,
       accessor: "sub_total",
       Cell: ({value}) => value
-    },
-    {
-      disableFilters: true,
-      disableSortBy: true,
-      Header: "Action",
-      accessor: "action",
-      Cell: () => {
-          return <i class="fa fa-trash text-secondary" aria-hidden="true"></i>
-      }
-    },
+    }
 ];
 
   return (
     <>
-      {entities && <ReactTable tableColumns={columns} tableData={entities} deleteProduct={deleteProduct}/>}
-
-      <Row className="mt-4">
-        <Col className="col-lg-6">
-          <a href="#addproduct" onClick={(e) => {
-            e.preventDefault();
-            dispatch(actions.addProduct())
-          }}>Add a product</a>
-        </Col>
-      </Row>
-      
+      {products && <ReactTable tableColumns={columns} tableData={products} deleteProduct={deleteProduct}/>}
       <Row className="mt-4">
         <Col className="col-lg-6">
           <Input type="textarea" placeholder="terms and conditions"/>
         </Col>
         <Col className="col-lg-2"></Col>
         <Col className="col-lg-4">
-          <Summary />
+          <Summary {...summary}/>
         </Col>
       </Row>
       
