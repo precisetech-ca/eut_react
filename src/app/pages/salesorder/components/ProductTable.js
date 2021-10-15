@@ -4,7 +4,7 @@
 import React, { useEffect, useMemo } from "react";
 import BootstrapTable from "react-bootstrap-table-next";
 import paginationFactory, {
-  PaginationProvider,
+        PaginationProvider,
 } from "react-bootstrap-table2-paginator";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import * as actions from "../_redux/actions";

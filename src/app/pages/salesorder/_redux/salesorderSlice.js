@@ -56,11 +56,11 @@ export const salesorderSlice = createSlice({
         state.entities = entities;
         state.totalCount = totalCount;
       },
-      auditLogs: (state, action) => {
+      fullfilments: (state, action) => {
         const { totalCount, entities } = action.payload;
         state.listLoading = false;
         state.error = null;
-        state.auditLogs = entities;
+        state.fullfilments = entities;
         state.totalCount = totalCount;
       },
       addProduct: (state, action) => {

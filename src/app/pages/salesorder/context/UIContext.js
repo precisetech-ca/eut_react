@@ -38,7 +38,6 @@ export function UIProvider({salesorderUIEvents, children}) {
 
   const inventoryTabs = [
     {key: "order", title: "Product"},
-    {key: "audit", title: "Audit Log"},
     {key: "fullfilment", title: "Fullfilment"},
     {key: "dispatch", title: "Dispatch"},
     {key: "delivery", title: "Delivery"},

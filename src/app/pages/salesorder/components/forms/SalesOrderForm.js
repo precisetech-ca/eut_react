@@ -46,7 +46,7 @@ const InnerForm = ({
     return (
         <Form onSubmit={handleSubmit}>
                     <Row form>
-                        <Col md={4} id='col1'>
+                        <Col md={4} sm={12} id='col1'>
                                 <Label for="order_info" id='col1-heading'>Order Information</Label>
                         <FormGroup row>
                                 <Label for="sale_order_num" sm={3}>Sales Order #</Label>
@@ -108,8 +108,7 @@ const InnerForm = ({
                                 </Col>
                         </FormGroup>
                     </Col>
-
-                    <Col md={4} id='col2'>
+                    <Col md={4} sm={12} id='col2'>
                         <Label for="customer_info" id="col2-heading">Customer Information</Label>
                         <FormGroup row>
                                 <Label for="customer" sm={3}>Customer</Label>
@@ -169,8 +168,7 @@ const InnerForm = ({
                                 </Col>
                         </FormGroup>
                     </Col>
-
-                    <Col md={4} id='col3'>
+                    <Col md={4} sm={12} id='col3'>
                         <Label for="shipping" id="col3-heading">Shipping Information</Label>
                         <FormGroup row>
                                     <Label for="address" sm={3}>Address</Label>
@@ -233,19 +231,19 @@ const InnerForm = ({
                 </Row>
 
                 <Row form>
-                        <Col md={4} id='col1'>
+                        <Col sm={4} id='col1'>
                                 <Label for="dispatch_notes" id='col4-heading'>Dispatch Notes</Label>
                                 <FormGroup>
                                     <p>Read only notes available on the mobile Applications.Enter Information such as priority of work , location of the equipmet,etc..</p>
                                 </FormGroup>
                         </Col>
-                        <Col md={4} id='col2'>
+                        <Col sm={4} id='col2'>
                                 <Label for="intertnal_notes" id='col5-heading'>Internal Notes</Label>
                                 <FormGroup>
                                     <p>Read only notes available on the mobile Applications.Enter Information such as priority of work , location of the equipmet,etc..</p>
                                 </FormGroup>
                         </Col>
-                        <Col md={4} id='col3'>
+                        <Col sm={4} id='col3'>
                                 <Label for="customer-report" id='col6-heading'>Notes(Shown on customer report)</Label>
                                 <FormGroup>
                                     <p>Read only notes available on the mobile Applications.Enter Information such as priority of work , location of the equipmet,etc..</p>

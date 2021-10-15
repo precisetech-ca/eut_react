@@ -90,7 +90,7 @@ export function Table({isViewable}) {
         if (isViewable) {
           return value
         }else {
-          return <Input type="text" size="sm" style={{width:"70px"}}/>
+          return <Input type="select" size="sm" placeholder="Enter Batch #" style={{width:"70px"}}/>
         }
       }
     },
@@ -112,15 +112,6 @@ export function Table({isViewable}) {
           />
         }
       }
-    },
-    {
-      Header: "Quarantine",
-      disableFilters: true,
-      disableSortBy: true,
-      accessor: "quarantine",
-      Cell: ({value}) => (<div className="align-items-center d-flex justify-content-center mt-5">
-        <Input type="checkbox" disabled={true} />
-      </div>),
     },
     {
       Header: "Oh Qty",
@@ -146,23 +137,35 @@ export function Table({isViewable}) {
     {
       disableFilters: true,
       disableSortBy: true,
-      Header: "UoM",
-      accessor: "uom",
-      Cell: ({value}) => value,
-    },
-    {
-      disableFilters: true,
-      disableSortBy: true,
       Header: "Cost",
       accessor: "cost",
       Cell: ({value}) => value,
     },
     {
-      Header: "Last Cost",
+      Header: "Price",
       disableFilters: true,
       disableSortBy: true,
-      accessor: "last_cost",
+      accessor: "price",
       Cell: ({value}) => value,
+    },
+    {
+      Header: "Tax",
+      disableFilters: true,
+      disableSortBy: true,
+      accessor: "tax",
+      Cell: ({value}) => {
+        if (isViewable) {
+          return "tax"
+        } else {
+          return (<div style={{width: "70px"}}>
+              <Input type="select" size="sm" className="d-inline-block" name="select" id="exampleSelect">
+                  {value?.map(({id, title}) => 
+                      <option value={id}>{title}</option>
+                  )}
+              </Input>
+          </div>)
+          }
+        }
     },
     {
       Header: "Sub Total",
@@ -170,6 +173,13 @@ export function Table({isViewable}) {
       disableSortBy: true,
       accessor: "sub_total",
       Cell: ({value}) => value
+    },
+    {
+      Header: "PO #",
+      disableFilters: true,
+      disableSortBy: true,
+      accessor: "po_num",
+      Cell: ({value}) => value,
     },
     {
       disableFilters: true,
