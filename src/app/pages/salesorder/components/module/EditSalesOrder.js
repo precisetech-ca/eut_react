@@ -8,7 +8,7 @@ import {
 import { Table } from '../TableData';
 import { useUIContext } from "../../context/UIContext";
 import { SalesOrderForm } from '../forms/SalesOrderForm';
-import { AuditLogTable } from '../tables/AuditLogTable';
+import { FullfilmentTable } from '../tables/FullfilmentTable';
 
 export const EditSalesOrder = ({id}) => {
     const UIContext = useUIContext();
@@ -27,7 +27,7 @@ export const EditSalesOrder = ({id}) => {
           >
             {UIContext.inventoryTabs.map(({key, title}) => 
             <Tab eventKey={key} title={title} className="mt-2 ml-1">
-              {key === "order" ? <Table /> : <AuditLogTable />}
+              {key === "order" ? <Table /> : <FullfilmentTable />}
             </Tab>)}
           </Tabs>
         </CardBody>

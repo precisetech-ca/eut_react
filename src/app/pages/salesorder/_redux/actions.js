@@ -1,5 +1,5 @@
 import { callGenericGetterAsync } from "app/generic/actions";
-import { data, salesorderData, auditLogData } from "./mock/product.mock";
+import { data, salesorderData, fullfilmentData } from "./mock/product.mock";
 import { salesorderSlice, callTypes } from "./salesorderSlice";
 
 export const addProduct = () => dispatch => {
@@ -30,14 +30,14 @@ export const fetchSalesOrderList = () => dispatch => {
   }, 1000);
 };
 
-export const auditLogDataAsync = () => dispatch => {
+export const fullfilmentDataAsync = () => dispatch => {
   const { actions } = salesorderSlice;
   dispatch(actions.startCall({ callType: callTypes.action }));
 
   setTimeout(() => {
-    dispatch(actions.auditLogs({
+    dispatch(actions.fullfilments({
       callType: callTypes.action,
-      entities: auditLogData
+      entities: fullfilmentData
     }));
   }, 1000);
 };

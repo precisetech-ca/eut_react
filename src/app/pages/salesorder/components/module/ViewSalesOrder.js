@@ -7,7 +7,7 @@ import {
 } from "_metronic/_partials/controls";
 import { Table } from '../TableData';
 import { useUIContext } from "../../context/UIContext";
-import { AuditLogTable } from '../tables/AuditLogTable';
+import { FullfilmentTable } from '../tables/FullfilmentTable';
 import { SalesOrderForm } from '../forms/SalesOrderForm';
 
 export const ViewSalesOrder = ({id}) => {
@@ -27,7 +27,7 @@ export const ViewSalesOrder = ({id}) => {
           >
             {UIContext.inventoryTabs.map(({key, title}) => 
             <Tab eventKey={key} title={title} className="mt-2 ml-1">
-              {key === "order" ? <Table isViewable={true} /> : <AuditLogTable />}
+              {key === "order" ? <Table isViewable={true} /> : <FullfilmentTable />}
             </Tab>)}
           </Tabs>
         </CardBody>
