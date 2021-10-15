@@ -10,6 +10,8 @@ import {watcherGetterSaga, watcherSaga} from '../app/generic/sagas';
 import { purchaseSlice } from "app/pages/purchase/_redux/purchaseSlice";
 import { inventorySlice } from "app/pages/inventory/_redux/inventorySlice";
 import { receivingSlice } from "app/pages/receiving/_redux/receivingSlice";
+import { salesorderSlice } from "app/pages/salesorder/_redux/salesorderSlice";
+
 
 export const rootReducer = combineReducers({
   auth: auth.reducer,
@@ -18,6 +20,7 @@ export const rootReducer = combineReducers({
   purchase: purchaseSlice.reducer,
   inventory: inventorySlice.reducer,
   receiving: receivingSlice.reducer,
+  salesorder:salesorderSlice.reducer,
   remarks: remarksSlice.reducer,
   specifications: specificationsSlice.reducer
 });
