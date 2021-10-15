@@ -16,7 +16,7 @@ export const EditReceivingOrder = ({id}) => {
 
     return (
       <Card>
-        <CardHeader title="Receiving List"></CardHeader>
+        <CardHeader title="Update Receiving"></CardHeader>
         <CardBody>
           <ReceivingOrderForm backToHome={UIContext.backToHome} />
           <Tabs

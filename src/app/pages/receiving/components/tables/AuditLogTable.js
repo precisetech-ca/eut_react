@@ -20,8 +20,8 @@ export function AuditLogTable() {
   // Getting curret state of customers list from store (Redux)
   const { currentState } = useSelector(
     (state) => ({ 
-        currentState: state.purchase, 
-        auditLogs: state.purchase.auditLogs 
+        currentState: state.receiving, 
+        auditLogs: state.receiving.auditLogs 
     }),
     shallowEqual
   );
