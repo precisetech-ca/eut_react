@@ -142,7 +142,7 @@ const InnerForm = ({
                   />
                   <ErrorMessage component={FormFeedback} name="description" />
               </Col>
-              <Label for="preferred_supply" sm="1">Preffered Supply</Label>
+              <Label for="preferred_supply" sm="1">Supplier</Label>
               <Col sm={5}>
                 <Select 
                   getOptionLabel={option => option.SUPPLIER}
@@ -159,6 +159,7 @@ const InnerForm = ({
               <Col sm={1}>
                   <Input 
                       size="sm" 
+                      type="number"
                       tag={Field} 
                       placeholder="L"
                       name="length" 
@@ -168,6 +169,7 @@ const InnerForm = ({
               <Col sm={1}>
                   <Input 
                       size="sm" 
+                      type="number"
                       placeholder="H"
                       tag={Field} 
                       name="height" 
@@ -177,6 +179,7 @@ const InnerForm = ({
               <Col sm={1}>
                   <Input 
                       size="sm" 
+                      type="number"
                       placeholder="W"
                       tag={Field} 
                       name="width" 
@@ -199,9 +202,19 @@ const InnerForm = ({
 
             <FormGroup row>
               <Label for="weight" sm="1">Weight</Label>
-              <Col sm={5}>
+              <Col sm={2}>
+                <Input 
+                      size="sm" 
+                      type="number"
+                      placeholder="weight"
+                      tag={Field} 
+                      name="weight" 
+                      disabled={isViewable}
+                  />
+              </Col>
+              <Col sm={3}>
                 <Select options={weightMockProps} onChange={(e) => {
-                  setFieldValue("weight", e.value);
+                  setFieldValue("weight_symbol", e.value);
                 }}/>
               </Col>
               <Label for="re_ordering_uom" sm="1">Re-Ordering UoM</Label>

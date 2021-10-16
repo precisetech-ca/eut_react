@@ -24,7 +24,7 @@ export function InventoryUIProvider({customersUIEvents, children}) {
     (state) => ({ currentState: state.inventory }),
     shallowEqual
   );
-  const { inventoryItems, supplier, uom, warehouses } = currentState;
+  const {  supplier, uom, warehouses } = currentState;
   const warehouseMockData = warehouses;
 
   const prefferedSupplier = supplier;

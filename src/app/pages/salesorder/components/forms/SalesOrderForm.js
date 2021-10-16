@@ -45,190 +45,190 @@ const InnerForm = ({
 
     return (
         <Form onSubmit={handleSubmit}>
-                    <Row form>
-                        <Col md={4} sm={12} id='col1'>
-                                <Label for="order_info" id='col1-heading'>Order Information</Label>
-                        <FormGroup row>
-                                <Label for="sale_order_num" sm={3}>Sales Order #</Label>
-                                <Col sm={8}>
-                                    <Input 
-                                        size="sm" 
-                                        tag={Field} 
-                                        name="sale_order_num" 
-                                        readOnly={true}
-                                        disabled={isViewable}
-                                    />
-                                    <ErrorMessage component={FormFeedback} name="sale_order_num" />
-                                </Col>
-                        </FormGroup>
+            <Row form>
+                <Col md={3} sm={12} id='col1' >
+                    <Label for="order_info" id='col1-heading'>Order Information</Label>
+                    <FormGroup row>
+                        <Label for="sale_order_num" sm={3}>Sales Order #</Label>
+                        <Col sm={8}>
+                            <Input 
+                                size="sm" 
+                                tag={Field} 
+                                name="sale_order_num" 
+                                readOnly={true}
+                                disabled={isViewable}
+                            />
+                            <ErrorMessage component={FormFeedback} name="sale_order_num" />
+                        </Col>
+                    </FormGroup>
 
-                        <FormGroup row>
-                                <Label for="date_time" sm={3}>Date/Time </Label>
-                                <Col sm={8}>
-                                    <DateTimePicker
-                                    wrapperClassName="datepicker"
-                                    onChange={(e) => {
-                                        onChange(e);
-                                        setFieldValue("Date_Time", dateFormat(e, "isoDateTime"))
-                                    }}
-                                    value={value}
-                                    name="date_time"
-                                        />
-                                <ErrorMessage component={FormFeedback} name="date_time" />
-                                </Col>
-                        </FormGroup>
+                    <FormGroup row>
+                        <Label for="date_time" sm={3}>Date/Time </Label>
+                        <Col sm={8}>
+                            <DateTimePicker
+                            wrapperClassName="datepicker"
+                            onChange={(e) => {
+                                onChange(e);
+                                setFieldValue("Date_Time", dateFormat(e, "isoDateTime"))
+                            }}
+                            value={value}
+                            name="date_time"
+                                />
+                        <ErrorMessage component={FormFeedback} name="date_time" />
+                        </Col>
+                    </FormGroup>
 
-                        <FormGroup row>
-                                <Label for="assinged_to" sm={3}>Assinged To</Label>
-                                <Col sm={8}>
-                                    <Select options={warehouseMockData}  />
-                                    <ErrorMessage component={FormFeedback} name="assinged_to" />
-                                </Col>
-                        </FormGroup>
+                    <FormGroup row>
+                        <Label for="assinged_to" sm={3}>Assinged To</Label>
+                        <Col sm={8}>
+                            <Select options={warehouseMockData}  />
+                            <ErrorMessage component={FormFeedback} name="assinged_to" />
+                        </Col>
+                    </FormGroup>
 
-                        <FormGroup row>
-                                <Label for="channel" sm={3}>Channel</Label>
-                                <Col sm={8}>
-                                    <Select options={warehouseMockData}  />
-                                    <ErrorMessage component={FormFeedback} name="channel" />
-                                </Col>
-                        </FormGroup>
+                    <FormGroup row>
+                        <Label for="channel" sm={3}>Channel</Label>
+                        <Col sm={8}>
+                            <Select options={warehouseMockData}  />
+                            <ErrorMessage component={FormFeedback} name="channel" />
+                        </Col>
+                    </FormGroup>
 
-                        <FormGroup row>
-                                <Label for="ref_num" sm={3}>Ref #</Label>
-                                <Col sm={8}>
+                    <FormGroup row>
+                        <Label for="ref_num" sm={3}>Ref #</Label>
+                        <Col sm={8}>
+                            <Input 
+                                size="sm" 
+                                tag={Field} 
+                                name="ref_num" 
+                                readOnly={true}
+                                disabled={isViewable}
+                            />
+                            <ErrorMessage component={FormFeedback} name="ref_num" />
+                        </Col>
+                    </FormGroup>
+                </Col>
+                <Col md={3} sm={12} id='col2' className="offset-md-1 ml-auto">
+                    <Label for="customer_info" id="col2-heading">Customer Information</Label>
+                    <FormGroup row>
+                        <Label for="customer" sm={3}>Customer</Label>
+                        <Col sm={8}>
+                            <Select options={warehouseMockData}  /> 
+                            <span className="btn btn-dark mt-2 btn-sm" onClick={toggleSupplierHandler}>+ Create</span>
+                            <ErrorMessage component={FormFeedback} name="customer" />
+                        </Col>
+                    </FormGroup>
+
+                    <FormGroup row>
+                        <Label for="name" sm={3}>Name</Label>
+                        <Col sm={8}>
+                            <Input 
+                                size="sm" 
+                                tag={Field} 
+                                name="name" 
+                                readOnly={true}
+                                disabled={isViewable}
+                            />
+                            <ErrorMessage component={FormFeedback} name="name" />
+                        </Col>
+                    </FormGroup>
+
+                    <FormGroup row>
+                        <Label for="email" sm={3}>Email</Label>
+                        <Col sm={8}>
+                            <Input 
+                                size="sm" 
+                                tag={Field} 
+                                name="email" 
+                                readOnly={true}
+                                disabled={isViewable}
+                            />
+                            <ErrorMessage component={FormFeedback} name="email" />
+                        </Col>
+                    </FormGroup>
+                    <FormGroup row>
+                        <Label for="group" sm={3}>Group</Label>
+                            <Col sm={8}>
+                            <Input 
+                                size="sm" 
+                                tag={Field} 
+                                name="group" 
+                                readOnly={true}
+                                disabled={isViewable}
+                            />
+                            <ErrorMessage component={FormFeedback} name="group" />
+                        </Col>
+                    </FormGroup>
+
+                    <FormGroup row>
+                        <Label for="bill_to" sm={3}>Bill to</Label>
+                            <Col sm={8}>
+                                <Select options={warehouseMockData}  /> 
+                                <ErrorMessage component={FormFeedback} name="bill_to" />
+                            </Col>
+                    </FormGroup>
+                </Col>
+                <Col md={3} sm={12} id='col3' className="offset-md-1 ml-auto">
+                    <Label for="shipping" id="col3-heading">Shipping Information</Label>
+                    <FormGroup row>
+                        <Label for="address" sm={3}>Address</Label>
+                        <Col sm={8}>
+                            <Input 
+                                size="sm" 
+                                tag={Field} 
+                                name="address" 
+                                readOnly={true}
+                                disabled={isViewable}
+                            />
+                            <ErrorMessage component={FormFeedback} name="address" />
+                        </Col>
+                    </FormGroup>
+
+                    <FormGroup row>
+                        <Label for="country" sm={3}>Country</Label>
+                        <Col sm={8}>
+                            <Select options={warehouseMockData}  /> 
+                            <ErrorMessage component={FormFeedback} name="country" />
+                        </Col>
+                    </FormGroup>
+
+                    <FormGroup row>
+                        <Label for="province_state" sm={3}>Province/State</Label>
+                        <Col sm={8}>
+                            <Select options={warehouseMockData}  />
+                            <ErrorMessage component={FormFeedback} name="province_state" />
+                        </Col>
+                    </FormGroup>
+
+                    <FormGroup row>
+                        <Label for="city" sm={3}>City</Label>
+                        <Col sm={8}>
+                            <Input 
+                                size="sm" 
+                                tag={Field} 
+                                name="city" 
+                                readOnly={true}
+                                disabled={isViewable}
+                            />
+                            <ErrorMessage component={FormFeedback} name="city" />
+                        </Col>
+                    </FormGroup>
+
+                    <FormGroup row>
+                        <Label for="zip_code" sm={3}>Zip Code</Label>
+                            <Col sm={8}>
                                 <Input 
                                     size="sm" 
                                     tag={Field} 
-                                    name="ref_num" 
+                                    name="zip_code" 
                                     readOnly={true}
                                     disabled={isViewable}
                                 />
-                                <ErrorMessage component={FormFeedback} name="ref_num" />
-                                </Col>
-                        </FormGroup>
-                    </Col>
-                    <Col md={4} sm={12} id='col2'>
-                        <Label for="customer_info" id="col2-heading">Customer Information</Label>
-                        <FormGroup row>
-                                <Label for="customer" sm={3}>Customer</Label>
-                                <Col sm={8}>
-                                    <Select options={warehouseMockData}  /> 
-                                    <span className="btn btn-dark mt-2 btn-sm" onClick={toggleSupplierHandler}>+ Create</span>
-                                    <ErrorMessage component={FormFeedback} name="customer" />
-                                </Col>
-                        </FormGroup>
-
-                        <FormGroup row>
-                            <Label for="name" sm={3}>Name</Label>
-                                <Col sm={8}>
-                                    <Input 
-                                        size="sm" 
-                                        tag={Field} 
-                                        name="name" 
-                                        readOnly={true}
-                                        disabled={isViewable}
-                                    />
-                                    <ErrorMessage component={FormFeedback} name="name" />
-                                </Col>
-                        </FormGroup>
-
-                        <FormGroup row>
-                                <Label for="email" sm={3}>Email</Label>
-                                        <Col sm={8}>
-                                            <Input 
-                                                size="sm" 
-                                                tag={Field} 
-                                                name="email" 
-                                                readOnly={true}
-                                                disabled={isViewable}
-                                    />
-                                    <ErrorMessage component={FormFeedback} name="email" />
-                                </Col>
-                        </FormGroup>
-                        <FormGroup row>
-                                    <Label for="group" sm={3}>Group</Label>
-                                        <Col sm={8}>
-                                        <Input 
-                                                size="sm" 
-                                                tag={Field} 
-                                                name="group" 
-                                                readOnly={true}
-                                                disabled={isViewable}
-                                    />
-                                    <ErrorMessage component={FormFeedback} name="group" />
-                                </Col>
-                        </FormGroup>
-
-                        <FormGroup row>
-                            <Label for="bill_to" sm={3}>Bill to</Label>
-                                <Col sm={8}>
-                                    <Select options={warehouseMockData}  /> 
-                                    <ErrorMessage component={FormFeedback} name="bill_to" />
-                                </Col>
-                        </FormGroup>
-                    </Col>
-                    <Col md={4} sm={12} id='col3'>
-                        <Label for="shipping" id="col3-heading">Shipping Information</Label>
-                        <FormGroup row>
-                                    <Label for="address" sm={3}>Address</Label>
-                                        <Col sm={8}>
-                                        <Input 
-                                                size="sm" 
-                                                tag={Field} 
-                                                name="address" 
-                                                readOnly={true}
-                                                disabled={isViewable}
-                                    />
-                                    <ErrorMessage component={FormFeedback} name="address" />
-                                </Col>
-                        </FormGroup>
-
-                        <FormGroup row>
-                                <Label for="country" sm={3}>Country</Label>
-                                <Col sm={8}>
-                                    <Select options={warehouseMockData}  /> 
-                                    <ErrorMessage component={FormFeedback} name="country" />
-                                </Col>
-                        </FormGroup>
-
-                        <FormGroup row>
-                                <Label for="province_state" sm={3}>Province/State</Label>
-                                <Col sm={8}>
-                                    <Select options={warehouseMockData}  />
-                                    <ErrorMessage component={FormFeedback} name="province_state" />
-                                </Col>
-                        </FormGroup>
-
-                        <FormGroup row>
-                                    <Label for="city" sm={3}>City</Label>
-                                        <Col sm={8}>
-                                        <Input 
-                                                size="sm" 
-                                                tag={Field} 
-                                                name="city" 
-                                                readOnly={true}
-                                                disabled={isViewable}
-                                    />
-                                    <ErrorMessage component={FormFeedback} name="city" />
-                                </Col>
-                        </FormGroup>
-
-                        <FormGroup row>
-                                    <Label for="zip_code" sm={3}>Zip Code</Label>
-                                        <Col sm={8}>
-                                        <Input 
-                                                size="sm" 
-                                                tag={Field} 
-                                                name="zip_code" 
-                                                readOnly={true}
-                                                disabled={isViewable}
-                                    />
-                                    <ErrorMessage component={FormFeedback} name="zip_code" />
-                                </Col>
-                        </FormGroup>
-                    </Col>
-                </Row>
+                                <ErrorMessage component={FormFeedback} name="zip_code" />
+                            </Col>
+                    </FormGroup>
+                </Col>
+            </Row>
 
                 <Row form>
                         <Col sm={4} id='col1'>
@@ -237,13 +237,13 @@ const InnerForm = ({
                                     <p>Read only notes available on the mobile Applications.Enter Information such as priority of work , location of the equipmet,etc..</p>
                                 </FormGroup>
                         </Col>
-                        <Col sm={4} id='col2'>
+                        <Col sm={3} id='col2' className="offset-md-1 ml-auto">
                                 <Label for="intertnal_notes" id='col5-heading'>Internal Notes</Label>
                                 <FormGroup>
                                     <p>Read only notes available on the mobile Applications.Enter Information such as priority of work , location of the equipmet,etc..</p>
                                 </FormGroup>
                         </Col>
-                        <Col sm={4} id='col3'>
+                        <Col sm={3} id='col3' className="offset-md-1 ml-auto">
                                 <Label for="customer-report" id='col6-heading'>Notes(Shown on customer report)</Label>
                                 <FormGroup>
                                     <p>Read only notes available on the mobile Applications.Enter Information such as priority of work , location of the equipmet,etc..</p>
