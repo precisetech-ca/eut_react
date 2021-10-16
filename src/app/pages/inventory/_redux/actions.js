@@ -92,14 +92,14 @@ export const getSupplier = queryParams => dispatch => {
         "SEARCH" : ""
       }, 
       "action": "InventoryWeb",
-      "method": "GetWarehouse",
+      "method": "GetSupplierCode",
       "username": "admin",
       "password": "admin",
       "type": "rpc",
       "tid": "144"
   };
 
-  dispatch(callGenericAsync(payload, '/InventoryWeb/GetWarehouse', 'post', (res) => {
+  dispatch(callGenericAsync(payload, '/InventoryWeb/GetSupplierCode', 'post', (res) => {
     if ( res?.CODE === 'SUCCESS' ) {
       dispatch(actions.getSupplier({
         callType: callTypes.action,
