@@ -35,6 +35,52 @@ export function InventoryUIProvider({customersUIEvents, children}) {
   ];
 
   const submitFormHandler = ({payload}) => {
+    const testPayload = {
+      "PAR_ID"   : "1",
+        "CODE"   : "Test",
+        "BARCODE_NUMBER"   : "",
+        "DESCRIPTION"   : "",
+        "UOM_ID"   : "",
+        "PARWAR_ID"   : "",
+        "VEN_ID"   : "",
+        "PARGRO_ID"   : "",
+        "MARGRO_ID"   : "",
+        "MARKUP_BASED_ON"   : "",
+        "AVERAGE_COST"   : "",
+        "STANDARD_COST"   : "",
+        "LAST_PURCHASE_COST"   : "",
+        "ENABLE_ITEM_LEVEL_CHARGE"   : "",
+        "ITEM_LEVEL_CHARGE"   : "",
+        "NOTES"   : "",
+        "FUEL_FLAG"   : "",
+        "STOCK_ITEM_FLAG"   : "",
+        "GLACC_ID_ASSET"   : "",
+        "GLACC_ID_REVENUE"   : "",
+        "GLACC_ID_COGS"   : "",
+        "ACTIVE_FLAG"   : "",
+        "USE_ID"   : "",
+        "VMRSYS_ID"   : "",
+        "VMRASS_ID"   : "",
+        "VMRCOM_ID"   : "",
+        "CONVERSION_TO_STOCKING_UOM"   : "",
+        "WARRANTY"   : "",
+        "PAR_ID_SUPERCEDES"   : "",
+        "UOM_ID_REORDERING"   : "",
+        "ALLOW_NEGATIVE_FLAG"   : "",
+        "ITEM_LEVEL_CHRG_EXP_DATE"   : "",
+        "REFERENCE_NUMBER"   : "",
+        "SHOSUP_FLAG"   : "",
+        "ALLOW_FRACTION_QTY"   : "",
+        "ALLOW_NEG_RO_COMP_FLAG"   : "",
+        "SKU"   : "",
+        "LOT_NUMBER"   : "",
+        "BATCH_EXPIRY"   : "",
+        "QUARANTINE"   : "",
+        "DimensionL"   : "",
+        "DimensionH"   : "",
+        "DimensionW"   : "",
+        "Weight"   : ""
+    }
     const itemMasterPayload = {
       "PAR_ID"   : payload?.sku,
       "CODE"   : "abc",
@@ -81,7 +127,7 @@ export function InventoryUIProvider({customersUIEvents, children}) {
       "DimensionW"   : payload?.width,
       "Weight"   : payload?.weight,
     }
-    dispatch(callGenericAsync(itemMasterPayload, "/", 'post', (res) => {
+    dispatch(callGenericAsync(testPayload, "/ItemMaster/PostPartDetails", 'post', (res) => {
       if (res) {
         console.log(res);
         dispatch(actions.inventoryItemsFetched());
