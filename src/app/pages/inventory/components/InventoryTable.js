@@ -26,12 +26,12 @@ export function InventoryTable() {
   useEffect(() => {
     // server call by queryParams
     dispatch(actions.inventoryItemsFetched());
+    dispatch(actions.getPartsUom());
+    dispatch(actions.getSupplier());
+    dispatch(actions.getWarehouses());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch]);
 
-
-  console.log(inventoryItems);
-  
   const columns = [
     {
         Header: "po_number",

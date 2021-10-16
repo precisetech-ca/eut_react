@@ -360,6 +360,7 @@ export const InventoryEditForm = withFormik({
         setTimeout(() => {
             setSubmitting(false);
         }, 1000);
+
         submitFormHandler({ payload: values, setSubmitting, resetForm });
     },
 })(InnerForm);
