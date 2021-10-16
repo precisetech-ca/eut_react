@@ -4,7 +4,7 @@
 import React, { useEffect, useMemo } from "react";
 import BootstrapTable from "react-bootstrap-table-next";
 import paginationFactory, {
-  PaginationProvider,
+        PaginationProvider,
 } from "react-bootstrap-table2-paginator";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import * as actions from "../_redux/actions";
@@ -62,31 +62,94 @@ export function Table() {
     },
     {
       dataField: "firstName",
-      text: "Receving #",
+      text: "SKU",
       sort: true,
       sortCaret: sortCaret,
       headerSortingClasses,
     },
     {
       dataField: "lastName",
-      text: "Ready for payable",
+      text: "Barcode",
       sort: true,
       sortCaret: sortCaret,
       headerSortingClasses,
     },
     {
       dataField: "email",
-      text: "Invoice #",
+      text: "Desc",
       sort: true,
       sortCaret: sortCaret,
       headerSortingClasses,
     },
     {
       dataField: "gender",
-      text: "Void",
+      text: "Lot #",
       sort: false,
       sortCaret: sortCaret,
-    }
+    },
+    {
+      dataField: "status",
+      text: "Expirey",
+      sort: true,
+      sortCaret: sortCaret,
+      headerSortingClasses,
+    },
+    {
+      dataField: "type",
+      text: "OH qty",
+      sort: true,
+      sortCaret: sortCaret,
+      headerSortingClasses,
+    },
+    {
+      dataField: "type",
+      text: "AVT qty",
+      sort: true,
+      sortCaret: sortCaret,
+      headerSortingClasses,
+    },
+    {
+        dataField: "type",
+        text: "Order qty",
+        sort: true,
+        sortCaret: sortCaret,
+        headerSortingClasses,
+      },
+      {
+        dataField: "type",
+        text: "UoM",
+        sort: true,
+        sortCaret: sortCaret,
+        headerSortingClasses,
+      },
+      {
+        dataField: "type",
+        text: "Cost",
+        sort: true,
+        sortCaret: sortCaret,
+        headerSortingClasses,
+      },
+      {
+        dataField: "type",
+        text: "Tax",
+        sort: true,
+        sortCaret: sortCaret,
+        headerSortingClasses,
+      },
+      {
+        dataField: "type",
+        text: "Last Cost",
+        sort: true,
+        sortCaret: sortCaret,
+        headerSortingClasses,
+      },
+      {
+        dataField: "type",
+        text: "Sub Total",
+        sort: true,
+        sortCaret: sortCaret,
+        headerSortingClasses,
+      }
   ];
   // Table pagination properties
   const paginationOptions = {

@@ -20,6 +20,9 @@ const PurchasePage = lazy(() =>
 const ReceivingPage= lazy(() => 
   import('./pages/receiving/Receiving')
 )
+const Salesorder= lazy(() => 
+  import('./pages/salesorder/SalesOrder')
+)
 const UserProfilepage = lazy(() =>
   import("./modules/UserProfile/UserProfilePage")
 );
@@ -45,6 +48,7 @@ export default function BasePage() {
         <Route path="/inventory" component={InventoryPage} />
         <Route path="/purchase" component={PurchasePage} />
         <Route path="/receiving" component={ReceivingPage} />
+        <Route path="/salesorder" component={Salesorder} />
         <Route path="/user-profile" component={UserProfilepage} />
         <Redirect to="error/error-v1" />
       </Switch>

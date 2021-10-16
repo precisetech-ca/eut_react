@@ -119,7 +119,9 @@ const InnerForm = ({
               </Col>
               <Label for="warehouse" sm="1">Warehouse</Label>
               <Col sm={5}>
-                <Select options={warehouseMockData} />
+                <Select options={warehouseMockData} onChange={(e) => {
+                  setFieldValue("warehouse", e.value);
+                }}/>
               </Col>
             </FormGroup>
 
@@ -137,7 +139,9 @@ const InnerForm = ({
               </Col>
               <Label for="preferred_supply" sm="1">Preffered Supply</Label>
               <Col sm={5}>
-                <Select options={prefferedSupplier} />
+                <Select options={prefferedSupplier} onChange={(e) => {
+                  setFieldValue("preffered_supplier", e.value);
+                }}/>
               </Col>
             </FormGroup>
 
@@ -186,7 +190,9 @@ const InnerForm = ({
             <FormGroup row>
               <Label for="weight" sm="1">Weight</Label>
               <Col sm={5}>
-                <Select options={weightMockProps} />
+                <Select options={weightMockProps} onChange={(e) => {
+                  setFieldValue("weight", e.value);
+                }}/>
               </Col>
               <Label for="re_ordering_uom" sm="1">Re-Ordering UoM</Label>
               <Col sm={5}>
@@ -348,13 +354,12 @@ export const InventoryEditForm = withFormik({
       price: Yup.string().required("Price is required"),
       cost: Yup.string().required("Cost is required"),
     }),
-    handleSubmit: (values, { props: { submitHandler }, setSubmitting }) => {
+    handleSubmit: (values, { props: { submitFormHandler }, setSubmitting, resetForm }) => {
         setSubmitting(true);
 
         setTimeout(() => {
             setSubmitting(false);
         }, 1000);
-        console.log(values);
-        // submitHandler({payload: values, closeModal, setSubmitting, resetForm});
+        submitFormHandler({ payload: values, setSubmitting, resetForm });
     },
 })(InnerForm);

@@ -11,7 +11,7 @@ export function useUIContext() {
 
 export const CustomersUIConsumer = UIContext.Consumer;
 
-export function UIProvider({receivingUIEvents, children}) {
+export function UIProvider({salesorderUIEvents, children}) {
   const history = useHistory();
   const [queryParams, setQueryParamsBase] = useState(initialFilter);
   const [ids, setIds] = useState([]);
@@ -38,9 +38,10 @@ export function UIProvider({receivingUIEvents, children}) {
 
   const inventoryTabs = [
     {key: "order", title: "Product"},
-    {key: "storage", title: "Storage"},
-    
-    {key: "audit", title: "Audit Log"},
+    {key: "fullfilment", title: "Fullfilment"},
+    {key: "dispatch", title: "Dispatch"},
+    {key: "delivery", title: "Delivery"},
+
   ];
 
   const setQueryParams = useCallback(nextQueryParams => {
@@ -59,7 +60,7 @@ export function UIProvider({receivingUIEvents, children}) {
 
 
   const backToHome = () => {
-    history.push('/receiving');
+    history.push('/salesorder');
   }
 
   const value = {
@@ -75,12 +76,12 @@ export function UIProvider({receivingUIEvents, children}) {
     backToHome,
     showSupplierModal,
     toggleSupplierHandler,
-    newReceivingForm: receivingUIEvents.newReceivingForm,
-    editReceivingForm: receivingUIEvents.editReceivingForm,
-    openDeleteCustomerDialog: receivingUIEvents.openDeleteCustomerDialog,
-    openDeleteCustomersDialog: receivingUIEvents.openDeleteCustomersDialog,
-    openFetchCustomersDialog: receivingUIEvents.openFetchCustomersDialog,
-    openUpdateCustomersStatusDialog: receivingUIEvents.openUpdateCustomersStatusDialog,
+    newSalesOrderForm: salesorderUIEvents.newSalesOrderForm,
+    editSalesOrderForm: salesorderUIEvents.editSalesOrderForm,
+    openDeleteCustomerDialog: salesorderUIEvents.openDeleteCustomerDialog,
+    openDeleteCustomersDialog: salesorderUIEvents.openDeleteCustomersDialog,
+    openFetchCustomersDialog: salesorderUIEvents.openFetchCustomersDialog,
+    openUpdateCustomersStatusDialog: salesorderUIEvents.openUpdateCustomersStatusDialog,
   };
 
   return <UIContext.Provider value={value}>{children}</UIContext.Provider>;

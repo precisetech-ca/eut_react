@@ -18,6 +18,7 @@ export function InventoryEditDialog({ id, show, onHide }) {
           title={item.title} 
           className="mt-2 ml-1">
           <InventoryEditForm
+            submitFormHandler={inventoryUIContext.submitFormHandler}
             onHide={onHide}
           />
         </Tab>
@@ -26,6 +27,7 @@ export function InventoryEditDialog({ id, show, onHide }) {
           title={item.title} 
           className="mt-2 ml-1">
           <InventoryEditForm
+            submitFormHandler={inventoryUIContext.submitFormHandler}
             onHide={onHide}
           />
         </Tab>;

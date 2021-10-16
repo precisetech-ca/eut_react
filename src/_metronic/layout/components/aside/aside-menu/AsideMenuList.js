@@ -94,7 +94,7 @@ export function AsideMenuList({ layoutProps }) {
                 </NavLink>
               </li>
               {/*begin::2 Level*/}
-              {/*end::2 Level*/}
+              {/*begin::3 Level*/}
               <li
                 className={`menu-item ${getMenuItemActive(
                   "/e-commerce/customers"
@@ -108,7 +108,23 @@ export function AsideMenuList({ layoutProps }) {
                   <span className="menu-text">Receiving </span>
                 </NavLink>
               </li>
-              {/*begin::2 Level*/}
+              {/*end::3 Level*/}
+
+              {/*begin::4 Level*/}
+              <li
+                className={`menu-item ${getMenuItemActive(
+                  "/e-commerce/customers"
+                )}`}
+                aria-haspopup="true"
+              >
+                <NavLink className="menu-link" to="/salesorder">
+                  <i className="menu-bullet menu-bullet-dot">
+                    <span />
+                  </i>
+                  <span className="menu-text">Sales order </span>
+                </NavLink>
+              </li>
+              {/*end::4 Level*/}
              
             </ul>
           </div>
