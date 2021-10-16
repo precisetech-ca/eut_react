@@ -82,8 +82,7 @@ export function InventoryUIProvider({customersUIEvents, children}) {
       "Weight"   : payload?.weight,
     }
     dispatch(callGenericAsync(itemMasterPayload, "/", 'post', (res) => {
-      if (res) {
-        console.log(res);
+      if (res?.CODE === 'SUCCESS') {
         dispatch(actions.inventoryItemsFetched());
       }
     }))
