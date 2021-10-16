@@ -1,4 +1,7 @@
+import { callGenericAsync } from "app/generic/actions";
 import React, {createContext, useContext, useState} from "react";
+import { useDispatch } from "react-redux";
+import * as actions from "../_redux/actions";
 
 const InventoryUIContext = createContext();
 
@@ -9,6 +12,7 @@ export function useIinventoryUIContext() {
 export const InventoryUIConsumer = InventoryUIContext.Consumer;
 
 export function InventoryUIProvider({customersUIEvents, children}) {
+  const dispatch = useDispatch()
   const [ids, setIds] = useState([]);
   const [edit, setEdit] = useState(false);
 
@@ -77,8 +81,12 @@ export function InventoryUIProvider({customersUIEvents, children}) {
       "DimensionW"   : payload?.width,
       "Weight"   : payload?.weight,
     }
-    console.log(itemMasterPayload);
-
+    dispatch(callGenericAsync(itemMasterPayload, "/", 'post', (res) => {
+      if (res) {
+        console.log(res);
+        dispatch(actions.inventoryItemsFetched());
+      }
+    }))
   }
 
   const inventoryTabs = [
