@@ -65,15 +65,13 @@ const InnerForm = ({
                     <FormGroup row>
                         <Label for="date_time" sm={3}>Date/Time </Label>
                         <Col sm={8}>
-                            <DateTimePicker
-                            wrapperClassName="datepicker"
-                            onChange={(e) => {
-                                onChange(e);
-                                setFieldValue("Date_Time", dateFormat(e, "isoDateTime"))
-                            }}
-                            value={value}
-                            name="date_time"
-                                />
+                            <Input 
+                                type="date"
+                                size="sm" 
+                                tag={Field} 
+                                name="date" 
+                                disabled={isViewable}
+                            />
                         <ErrorMessage component={FormFeedback} name="date_time" />
                         </Col>
                     </FormGroup>
