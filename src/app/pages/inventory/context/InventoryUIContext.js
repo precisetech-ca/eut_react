@@ -1,6 +1,6 @@
 import { callGenericAsync } from "app/generic/actions";
 import React, {createContext, useContext, useState} from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector, shallowEqual } from "react-redux";
 import * as actions from "../_redux/actions";
 
 const InventoryUIContext = createContext();
@@ -19,14 +19,15 @@ export function InventoryUIProvider({customersUIEvents, children}) {
   const setEditHandler = (value) => {
     setEdit(value);
   }
-  const warehouseMockData = [
-    {value: "1", label: "King PIN 5th Wheel"},
-    {value: "2", label: "Alloy Rims"}
-  ];
 
-  const prefferedSupplier = [
-    {value: "1", label: "Vancouver Fire Prevention"},
-  ];
+  const { currentState } = useSelector(
+    (state) => ({ currentState: state.inventory }),
+    shallowEqual
+  );
+  const { inventoryItems, supplier, uom, warehouses } = currentState;
+  const warehouseMockData = warehouses;
+
+  const prefferedSupplier = supplier;
 
   const weightMockProps = [
     {value: "ml", label: "ml"},
@@ -117,6 +118,7 @@ export function InventoryUIProvider({customersUIEvents, children}) {
     weightMockProps,
     inventoryTabs,
     setEditHandler,
+    uom,
     editState: edit,
   };
 

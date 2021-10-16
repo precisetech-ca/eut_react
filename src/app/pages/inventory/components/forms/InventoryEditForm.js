@@ -36,7 +36,7 @@ const InnerForm = ({
 }) => {
     // const UIContext = useCustomersUIContext();
     // const {toggleSupplierHandler, warehouseMockData} = UIContext;
-    const { warehouseMockData, prefferedSupplier, weightMockProps } = useIinventoryUIContext();
+    const { warehouseMockData, prefferedSupplier, weightMockProps, uom } = useIinventoryUIContext();
     const [value, onChange] = useState(new Date());
     const [thumbPath, setThumbPath] = useState([]);
     const [filePath, setFilePath] = useState([]);
@@ -119,9 +119,14 @@ const InnerForm = ({
               </Col>
               <Label for="warehouse" sm="1">Warehouse</Label>
               <Col sm={5}>
-                <Select options={warehouseMockData} onChange={(e) => {
-                  setFieldValue("warehouse", e.value);
-                }}/>
+                <Select 
+                  getOptionLabel={option => option.WAREHOUSE}
+                  getOptionValue={option => option.WAR_ID}
+                  options={warehouseMockData} 
+                  onChange={(e) => {
+                    setFieldValue("warehouse", e.value);
+                  }}
+                />
               </Col>
             </FormGroup>
 
@@ -139,7 +144,11 @@ const InnerForm = ({
               </Col>
               <Label for="preferred_supply" sm="1">Preffered Supply</Label>
               <Col sm={5}>
-                <Select options={prefferedSupplier} onChange={(e) => {
+                <Select 
+                  getOptionLabel={option => option.SUPPLIER}
+                  getOptionValue={option => option.VEN_ID} 
+                  options={prefferedSupplier} 
+                  onChange={(e) => {
                   setFieldValue("preffered_supplier", e.value);
                 }}/>
               </Col>
@@ -177,13 +186,14 @@ const InnerForm = ({
               {/* <Col sm={1}></Col> */}
               <Label for="uom" sm="1">UoM</Label>
               <Col sm={5}>
-                <Input 
-                  size="sm" 
-                  tag={Field} 
-                  name="uom" 
-                  placeholder="UoM"
-                  disabled={isViewable}
-                />
+                <Select 
+                    getOptionLabel={option => option.DESCRIPTION}
+                    getOptionValue={option => option.UOM_ID}
+                    options={uom} 
+                    onChange={(e) => {
+                      setFieldValue("uom", e.value);
+                    }}
+                  />
               </Col>
             </FormGroup>
 
@@ -196,12 +206,13 @@ const InnerForm = ({
               </Col>
               <Label for="re_ordering_uom" sm="1">Re-Ordering UoM</Label>
               <Col sm={5}>
-                <Input 
-                  size="sm" 
-                  tag={Field} 
-                  name="re_ordering_uom" 
-                  placeholder="Re-Ordering UoM"
-                  disabled={isViewable}
+                <Select 
+                  getOptionLabel={option => option.DESCRIPTION}
+                  getOptionValue={option => option.UOM_ID}
+                  options={uom} 
+                  onChange={(e) => {
+                    setFieldValue("re_ordering_uom", e.value);
+                  }}
                 />
               </Col>
             </FormGroup>
