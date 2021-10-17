@@ -28,7 +28,7 @@ export function Table({isViewable}) {
     (state) => ({ currentState: state.salesorder }),
     shallowEqual
   );
-  const {entities } = currentState;
+  const {entities , summary } = currentState;
 
   // Customers Redux state
   const dispatch = useDispatch();
@@ -41,6 +41,7 @@ export function Table({isViewable}) {
   const deleteProduct = (id) => {
     dispatch(actions.deleteProduct(id));
   }
+
 
   const columns = [
     {
@@ -146,26 +147,7 @@ export function Table({isViewable}) {
       disableFilters: true,
       disableSortBy: true,
       accessor: "price",
-      Cell: ({value}) => value,
-    },
-    {
-      Header: "Tax",
-      disableFilters: true,
-      disableSortBy: true,
-      accessor: "tax",
-      Cell: ({value}) => {
-        if (isViewable) {
-          return "tax"
-        } else {
-          return (<div style={{width: "70px"}}>
-              <Input type="select" size="sm" className="d-inline-block" name="select" id="exampleSelect">
-                  {value?.map(({id, title}) => 
-                      <option value={id}>{title}</option>
-                  )}
-              </Input>
-          </div>)
-          }
-        }
+      Cell: ({value}) => value, 
     },
     {
       Header: "Sub Total",
@@ -200,7 +182,7 @@ export function Table({isViewable}) {
           <a href="#addproduct" onClick={(e) => {
             e.preventDefault();
             dispatch(actions.addProduct())
-          }}>Add a product</a>
+          }}>Add a product</a> 
         </Col>
       </Row>}
       
@@ -212,7 +194,7 @@ export function Table({isViewable}) {
           
         <Col className="col-lg-2"></Col>
         <Col className="col-lg-4">
-          <Summary />
+          <Summary  {...summary}/>
         </Col>
       </Row>
       

@@ -17,6 +17,7 @@ import { Field, ErrorMessage, withFormik, Form } from 'formik';
 import { useUIContext } from "app/pages/salesorder/context/UIContext";
 import * as Yup from "yup";
 import { FormSwitch } from 'app/pages/utils/FormSwitch';
+import Select from 'react-select'
 
 const InnerForm = ({
     errors,
@@ -29,10 +30,12 @@ const InnerForm = ({
     values,
 }) => {
     const UIContext = useUIContext();
+    const { warehouseMockData} = UIContext;
+
     return (
         <Modal isOpen={UIContext.showSupplierModal} toggle={UIContext.toggleSupplierHandler} size="lg" centered>
             <ModalHeader  toggle={toggle}>
-                Create Supplier
+                Create Sales Order
             </ModalHeader>
             <Form onSubmit={handleSubmit}>
                 <ModalBody>
@@ -44,70 +47,10 @@ const InnerForm = ({
                                 <ErrorMessage component={FormFeedback} name="code" />
                             </FormGroup>
                         </Col>
-                        
-                        <Col>
-                            <FormGroup>
-                                <Label for="preferred_vendor">Preferred Vendor</Label>
-                                <FormSwitch setFieldValue={setFieldValue} name="preferred_vendor"/>
-                            </FormGroup>
-                        </Col>
-                        <Col>
-                            <FormGroup>
-                                <Label for="supplier">Supplier</Label>
-                                <FormSwitch setFieldValue={setFieldValue} name="supplier"/>
-                            </FormGroup>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col className="col-lg-6">
-                            <FormGroup>
-                                <Label for="description">Description <span className="text-danger">*</span></Label>
-                                <Input size="sm" tag={Field} name="description" id="description" placeholder="description" className={touched && touched.description ? (errors && errors.description ? 'is-invalid' : 'is-valid') : ''} />
-                                <ErrorMessage component={FormFeedback} name="description" />
-                            </FormGroup>
-                        </Col>
-                        <Col>
-                            <FormGroup>
-                                <Label for="active">Active</Label>
-                                <FormSwitch setFieldValue={setFieldValue} name="active"/>
-                            </FormGroup>
-                        </Col>
-                        <Col>
-                            <FormGroup>
-                                <Label for="vendor">Vendor</Label>
-                                <FormSwitch setFieldValue={setFieldValue} name="vendor"/>
-                            </FormGroup>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col>
-                            <FormGroup>
-                                <Label for="address_1">Address 1 <span className="text-danger">*</span></Label>
-                                <Input size="sm" tag={Field} name="address_1" id="address_1" placeholder="address_1" className={touched && touched.address_1 ? (errors && errors.address_1 ? 'is-invalid' : 'is-valid') : ''} />
-                                <ErrorMessage component={FormFeedback} name="address_1" />
-                            </FormGroup>
-                        </Col>
 
-                        <Col>
+                        <Col className="col-lg-3">
                             <FormGroup>
-                                <Label for="pay_term">Pay Term (days) </Label>
-                                <Input size="sm" tag={Field} name="pay_term" id="pay_term" placeholder="pay_term" className={touched && touched.pay_term ? (errors && errors.pay_term ? 'is-invalid' : 'is-valid') : ''} />
-                                <ErrorMessage component={FormFeedback} name="pay_term" />
-                            </FormGroup>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col>
-                            <FormGroup>
-                                <Label for="address_2">Address 2</Label>
-                                <Input size="sm" tag={Field} name="address_2" id="address_2" placeholder="address_2" className={touched && touched.address_2 ? (errors && errors.address_2 ? 'is-invalid' : 'is-valid') : ''} />
-                                <ErrorMessage component={FormFeedback} name="address_2" />
-                            </FormGroup>
-                        </Col>
-
-                        <Col>
-                            <FormGroup>
-                                <Label for="phone">Phone <span className="text-danger">*</span></Label>
+                                <Label for="phone">Phone<span className="text-danger">*</span></Label>
                                 <InputMask
                                     mask="+1 (999)-999-9999"
                                     onChange={handleChange}
@@ -121,19 +64,25 @@ const InnerForm = ({
                                 <ErrorMessage component={FormFeedback} name="phone" />
                             </FormGroup>
                         </Col>
-                    </Row>
-                    <Row>
+                    
                         <Col>
                             <FormGroup>
-                                <Label for="zipcode">Zipcode</Label>
-                                <Input size="sm" tag={Field} name="zipcode" id="zipcode" placeholder="zipcode" className={touched && touched.zipcode ? (errors && errors.zipcode ? 'is-invalid' : 'is-valid') : ''} />
-                                <ErrorMessage component={FormFeedback} name="zipcode" />
+                                <Label for="active">Active</Label>
+                                <FormSwitch setFieldValue={setFieldValue} name="active"/>
                             </FormGroup>
                         </Col>
-
-                        <Col>
+                    </Row>
+                    <Row>
+                        <Col className="col-lg-6">
                             <FormGroup>
-                                <Label for="phone_2">Phone 2 </Label>
+                                <Label for="name">Name <span className="text-danger">*</span></Label>
+                                <Input size="sm" tag={Field} name="name" id="name" placeholder="name" className={touched && touched.name ? (errors && errors.name ? 'is-invalid' : 'is-valid') : ''} />
+                                <ErrorMessage component={FormFeedback} name="name" />
+                            </FormGroup>
+                        </Col>
+                        <Col className="col-lg-6">
+                            <FormGroup>
+                                <Label for="phone_2">Phone 2</Label>
                                 <InputMask
                                     mask="+1 (999)-999-9999"
                                     onChange={handleChange}
@@ -144,55 +93,106 @@ const InnerForm = ({
                                         <Input size="sm" tag={Field} name="phone_2" id="phone_2" placeholder="phone_2" className={touched && touched.phone_2 ? (errors && errors.phone_2 ? 'is-invalid' : 'is-valid') : ''} />
                                     )}
                                 </InputMask>
-                                <ErrorMessage component={FormFeedback} name="phone_2" />
+                            </FormGroup>
+                        </Col>
+                        
+                    </Row>
+                    <Row>
+                        <Col>
+                            <FormGroup>
+                                <Label for="address">Address<span className="text-danger">*</span></Label>
+                                <Input size="sm" tag={Field} name="address" id="address" placeholder="address" className={touched && touched.address ? (errors && errors.address ? 'is-invalid' : 'is-valid') : ''} />
+                                <ErrorMessage component={FormFeedback} name="address" />
+                            </FormGroup>
+                        </Col>
+
+                        <Col>
+                            <FormGroup>
+                                <Label for="postal_zip_code">Postal/ Zip Code </Label>
+                                <Input size="sm" tag={Field} name="postal_zip_code" id="postal_zip_code" placeholder="postal_zip_code" className={touched && touched.postal_zip_code ? (errors && errors.postal_zip_code ? 'is-invalid' : 'is-valid') : ''} />
                             </FormGroup>
                         </Col>
                     </Row>
                     <Row>
                         <Col>
                             <FormGroup>
-                                <Label for="city">City</Label>
+                                <Label for="address_2">Address 2</Label>
+                                <Input size="sm" tag={Field} name="address_2" id="address_2" placeholder="address_2" className={touched && touched.address_2 ? (errors && errors.address_2 ? 'is-invalid' : 'is-valid') : ''} />
+                            </FormGroup>
+                        </Col>
+
+                        <Col>
+                            <FormGroup>
+                                <Label for="city">City/ Town <span className="text-danger">*</span></Label>
                                 <Input size="sm" tag={Field} name="city" id="city" placeholder="city" className={touched && touched.city ? (errors && errors.city ? 'is-invalid' : 'is-valid') : ''} />
                                 <ErrorMessage component={FormFeedback} name="city" />
                             </FormGroup>
                         </Col>
+                    </Row>
+                    <Row>
                         <Col>
                             <FormGroup>
-                                <Label for="fax">Fax</Label>
-                                <Input size="sm" tag={Field} name="fax" id="fax" placeholder="fax" className={touched && touched.fax ? (errors && errors.fax ? 'is-invalid' : 'is-valid') : ''} />
-                                <ErrorMessage component={FormFeedback} name="fax" />
+                                <Label for="fax_num">Fax</Label>
+                                <InputMask
+                                    mask="+1 (999)-999-9999"
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
+                                    value={values.fax_num}
+                                >
+                                    {() => (
+                                        <Input size="sm" tag={Field} name="fax_num" id="fax_num" placeholder="fax_num" className={touched && touched.fax_num ? (errors && errors.fax_num ? 'is-invalid' : 'is-valid') : ''} />
+                                    )}
+                                </InputMask>
+                            </FormGroup>
+                        </Col>
+
+                        <Col>
+                            <FormGroup>
+                                    <Label for="state">Province/ State <span className="text-danger">*</span></Label>
+                                    <Select options={warehouseMockData} isDisabled="true" /> 
+                                    <ErrorMessage component={FormFeedback} name="state" />
                             </FormGroup>
                         </Col>
                     </Row>
                     <Row>
                         <Col>
                             <FormGroup>
-                                <Label for="state">State/Province</Label>
-                                <Input size="sm" tag={Field} name="state" id="state" placeholder="state" className={touched && touched.state ? (errors && errors.state ? 'is-invalid' : 'is-valid') : ''} />
-                                <ErrorMessage component={FormFeedback} name="state" />
+                                <Label for="email">Email</Label>
+                                <Input size="sm" tag={Field} name="email" id="email" placeholder="email" className={touched && touched.email ? (errors && errors.email ? 'is-invalid' : 'is-valid') : ''} />
                             </FormGroup>
                         </Col>
-                        <Col>
-                            <FormGroup>
-                                <Label for="latitude">Latitude</Label>
-                                <Input size="sm" tag={Field} name="latitude" id="latitude" placeholder="latitude" className={touched && touched.latitude ? (errors && errors.latitude ? 'is-invalid' : 'is-valid') : ''} />
-                                <ErrorMessage component={FormFeedback} name="latitude" />
-                            </FormGroup>
-                        </Col>
-                    </Row>
-                    <Row>
                         <Col>
                             <FormGroup>
                                 <Label for="country">Country</Label>
                                 <Input size="sm" tag={Field} name="country" id="country" placeholder="country" className={touched && touched.country ? (errors && errors.country ? 'is-invalid' : 'is-valid') : ''} />
-                                <ErrorMessage component={FormFeedback} name="country" />
+                            </FormGroup>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col>
+                            <FormGroup>
+                                <Label for="payment">Payment Term</Label>
+                                <Select options={warehouseMockData}  />                                
                             </FormGroup>
                         </Col>
                         <Col>
                             <FormGroup>
-                                <Label for="longitude">Longitude </Label>
-                                <Input size="sm" tag={Field} name="longitude" id="longitude" placeholder="longitude" className={touched && touched.longitude ? (errors && errors.longitude ? 'is-invalid' : 'is-valid') : ''} />
-                                <ErrorMessage component={FormFeedback} name="longitude" />
+                                <Label for="approval_date">Approval Date</Label>
+                                <Input size="sm" tag={Field} name="approval_date" id="approval_date" placeholder="approval_date" className={touched && touched.approval_date ? (errors && errors.approval_date ? 'is-invalid' : 'is-valid') : ''} />
+                            </FormGroup>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col>
+                            <FormGroup>
+                                <Label for="credits_limits">Credit Limits</Label>
+                                <Input size="sm" tag={Field} name="credits_limits" id="credits_limits" placeholder="credits_limits" className={touched && touched.credits_limits ? (errors && errors.credits_limits ? 'is-invalid' : 'is-valid') : ''} />
+                            </FormGroup>
+                        </Col>
+                        <Col>
+                            <FormGroup>
+                                <Label for="customer_group">Customer Group </Label>
+                                <Select options={warehouseMockData}  /> 
                             </FormGroup>
                         </Col>
                     </Row>
@@ -201,6 +201,12 @@ const InnerForm = ({
                             <FormGroup>
                                 <Label for="notes">Notes </Label>
                                 <Input type="textarea" name="notes" onChange={handleChange} onBlur={handleBlur} />
+                            </FormGroup>
+                        </Col>
+                        <Col>
+                            <FormGroup>
+                                <Label for="purchase_group">Purchase Group </Label>
+                                <Select options={warehouseMockData}  /> 
                             </FormGroup>
                         </Col>
                     </Row>
@@ -220,16 +226,18 @@ export const SupplierForm = withFormik({
     mapPropsToValues: ({ temporaryData, locCoordinates, pickCoordinates }) => {
         return {
             code: temporaryData && temporaryData.code,
-            description: temporaryData && temporaryData.description,
-            address_1: temporaryData && temporaryData.address_1,
+            name: temporaryData && temporaryData.name,
+            address: temporaryData && temporaryData.address,
             phone: temporaryData && temporaryData.phone,
             city: temporaryData && temporaryData.city,
+            state: temporaryData && temporaryData.state,
+
         }
     },
     validationSchema: Yup.object().shape({
         code: Yup.string().required("Code is required"),
         description: Yup.string().required("Description is required"),
-        address_1: Yup.string().required("Address 1 is required"),
+        address: Yup.string().required("Address 1 is required"),
         phone: Yup.string().required("Phone is required"),
         city: Yup.string().required("City is required"),
     }),

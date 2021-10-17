@@ -85,7 +85,7 @@ export function FullfilmentTable(isViewable) {
       disableSortBy: true,
       disableFilters: true,
       accessor: "batch_num",
-      Cell: ({value}) => <Input type="select" checked={value} value={value}/>
+      Cell: ({value}) => <Input type="select" checked={value} value={value}></Input>
     },
     {
       Header: "Expiry",

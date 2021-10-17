@@ -1,6 +1,7 @@
 import { callGenericGetterAsync } from "app/generic/actions";
 import { data, salesorderData, fullfilmentData } from "./mock/product.mock";
 import { salesorderSlice, callTypes } from "./salesorderSlice";
+const { actions } = salesorderSlice;
 
 export const addProduct = () => dispatch => {
   const { actions } = salesorderSlice;
@@ -17,6 +18,9 @@ export const deleteSalesOrderList = (id) => dispatch => {
   dispatch(actions.deleteSalesOrderistItem(id)); 
 }
 
+export const changeRecQty = ({qty, index}) => dispatch => {
+  dispatch(actions.changeRecQty({qty , index}));
+}
 
 export const fetchSalesOrderList = () => dispatch => {
   const { actions } = salesorderSlice;

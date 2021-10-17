@@ -1,24 +1,23 @@
 import React from 'react'
 import {Row, Col} from 'reactstrap'
 
-export const Summary = ({price, taxes}) => {
-    const total = Number(price) + Number(taxes);
+export const Summary = ({amount, total, tax_amount, tax_perc}) => {
     return (
         <div className="summary">
             <Row>
                 <Col>
-                    <h5>Amount: </h5>
+                    <h5>Amount:  </h5>
                 </Col>
                 <Col>
-                    <span>${price}</span>
+                    <span>${amount}</span>
                 </Col>
             </Row>
             <Row>
                 <Col>
-                    <h5>Taxes: </h5>
+                    <h5>Tax ({tax_perc}%): </h5>
                 </Col>
                 <Col>
-                    <span>${taxes}</span>
+                    <span>${tax_amount}</span>
                 </Col>
             </Row>
             <hr />
@@ -36,6 +35,9 @@ export const Summary = ({price, taxes}) => {
 }
 
 Summary.defaultProps = {
-    price: "6735.60",
-    taxes: "1010.34"
+    amount: '0.00',
+    currency_symbol: '$',
+    tax_amount: '0.00',
+    tax_perc: 13,
+    total: 0
 }

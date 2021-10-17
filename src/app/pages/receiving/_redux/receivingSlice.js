@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 const initialState = {
   listLoading: false,
   actionsLoading: false,
-  totalCount: 0,
+  totalCount: 0, 
   customerForEdit: undefined,
   lastError: null,
   summary: {
@@ -27,7 +27,7 @@ const calculateSummary = (products) => {
   }, 0)
 }
 
-
+ 
 export const receivingSlice = createSlice({
     name: "receiving",
     initialState,

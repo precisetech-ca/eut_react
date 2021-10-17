@@ -29,7 +29,7 @@ export const auditLogData = [
         message: "Hello",
         user: "Salman"
     }
-];
+]; 
   
 export const receivingData = [{
     id: 1,

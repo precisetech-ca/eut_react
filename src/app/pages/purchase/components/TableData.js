@@ -192,7 +192,7 @@ export function Table({isViewable}) {
             dispatch(actions.addProduct())
           }}>Add a product</a>
         </Col>
-      </Row>}
+      </Row>}  
       
       
       <Row className="mt-4">

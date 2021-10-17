@@ -6,7 +6,7 @@ export const Summary = ({amount, total, tax_amount, tax_perc}) => {
         <div className="summary">
             <Row>
                 <Col>
-                    <h5>Amount: </h5>
+                    <h5>Amount:  </h5>
                 </Col>
                 <Col>
                     <span>${amount}</span>
