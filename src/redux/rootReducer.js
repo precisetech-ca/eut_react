@@ -17,14 +17,14 @@ import { salesReturnSlice } from "app/pages/salesreturn/_redux/salesReturnSlice"
 export const rootReducer = combineReducers({
   auth: auth.reducer,
   customers: customersSlice.reducer,
-  products: productsSlice.reducer,
-  purchase: purchaseSlice.reducer,
   inventory: inventorySlice.reducer,
   receiving: receivingSlice.reducer,
+  remarks: remarksSlice.reducer,
   salesorder:salesorderSlice.reducer,
   salesReturn: salesReturnSlice.reducer,
-  remarks: remarksSlice.reducer,
-  specifications: specificationsSlice.reducer
+  specifications: specificationsSlice.reducer,
+  products: productsSlice.reducer,
+  purchase: purchaseSlice.reducer,
 });
 
 export function* rootSaga() {
