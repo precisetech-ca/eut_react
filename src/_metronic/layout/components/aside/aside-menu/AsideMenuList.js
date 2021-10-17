@@ -124,6 +124,17 @@ export function AsideMenuList({ layoutProps }) {
                   <span className="menu-text">Sales order </span>
                 </NavLink>
               </li>
+              <li
+                className={`menu-item`}
+                aria-haspopup="true"
+              >
+                <NavLink className="menu-link" to="/salesreturn">
+                  <i className="menu-bullet menu-bullet-dot">
+                    <span />
+                  </i>
+                  <span className="menu-text">Sales Return</span>
+                </NavLink>
+              </li>
               {/*end::4 Level*/}
              
             </ul>

@@ -4,6 +4,7 @@ import { LayoutSplashScreen, ContentRoute } from "../_metronic/layout";
 import { BuilderPage } from "./pages/BuilderPage";
 import { MyPage } from "./pages/MyPage";
 import { DashboardPage } from "./pages/dashboard/DashboardPage";
+import SalesReturn from "./pages/salesreturn/SalesReturn";
 
 const GoogleMaterialPage = lazy(() =>
   import("./modules/GoogleMaterialExamples/GoogleMaterialPage")
@@ -49,6 +50,7 @@ export default function BasePage() {
         <Route path="/purchase" component={PurchasePage} />
         <Route path="/receiving" component={ReceivingPage} />
         <Route path="/salesorder" component={Salesorder} />
+        <Route path="/salesreturn" component={SalesReturn} />
         <Route path="/user-profile" component={UserProfilepage} />
         <Redirect to="error/error-v1" />
       </Switch>
