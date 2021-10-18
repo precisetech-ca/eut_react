@@ -46,7 +46,7 @@ const InnerForm = ({
     return (
         <Form onSubmit={handleSubmit}>
             <Row form>
-                <Col md={12} sm={12} lg={12} xl={3} id='col1' >
+                <Col md={3} sm={12} id='col1' >
                     <Label for="order_info" id='col1-heading'>Order Information</Label>
                     <FormGroup row>
                         <Label for="sale_order_num" sm={3}>Sales Order #</Label>
@@ -106,7 +106,7 @@ const InnerForm = ({
                         </Col>
                     </FormGroup>
                 </Col>
-                <Col md={12} sm={12} id='col2' lg={12} xl={3} className="offset-lg-1 ml-auto">
+                <Col md={3} sm={12} id='col2' className="offset-md-1 ml-auto">
                     <Label for="customer_info" id="col2-heading">Customer Information</Label>
                     <FormGroup row>
                         <Label for="customer" sm={3}>Customer</Label>
@@ -166,7 +166,7 @@ const InnerForm = ({
                             </Col>
                     </FormGroup>
                 </Col>
-                <Col md={12} sm={12} id='col3' lg={12} xl={3} className="offset-lg-1 ml-auto">
+                <Col md={3} sm={12} id='col3' className="offset-md-1 ml-auto">
                     <Label for="shipping" id="col3-heading">Shipping Information</Label>
                     <FormGroup row>
                         <Label for="address" sm={3}>Address</Label>
