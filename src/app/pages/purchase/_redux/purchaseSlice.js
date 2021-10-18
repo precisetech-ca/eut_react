@@ -54,6 +54,7 @@ export const purchaseSlice = createSlice({
         state.listLoading = false;
         state.error = null;
         state.entities = entities;
+        state.entitiesLength = state.entities.length;
         state.totalCount = totalCount;
       },
       auditLogs: (state, action) => {
@@ -84,6 +85,7 @@ export const purchaseSlice = createSlice({
             sub_total: "$00.00"
         });
 
+        state.entitiesLength = state.entities.length;
         return state;
       },
       deleteProduct: (state, action) => {

@@ -1,8 +1,11 @@
+import { v4 as uuidv4 } from 'uuid';
+
 export const data = [
     {
+        id: uuidv4(),
         sku: [
-            {id: "AKC-132123", value: "AKC-132123"},
-            {id: "AKUC-4121", value: "AKUC-4121"},
+            {id: uuidv4(), value: "AKC-132123"},
+            {id: uuidv4(), value: "AKUC-4121"},
         ],
         barcode: "41231312",
         desc: "Lorem ipsum",
@@ -14,7 +17,7 @@ export const data = [
         uom: "Each",
         cost: 12.99,
         tax: [
-            {id: 1, title: "13%"}
+            {id: uuidv4(), title: "13%"}
         ],
         last_cost: 12.99,
         sub_total: "$1,299.00"
@@ -30,7 +33,7 @@ export const auditLogData = [
 ];
   
 export const purchaseData = [{
-    id: 1,
+    id: uuidv4(),
     sku: "AKC-132123",
     barcode: "41231312",
     desc: "Lorem ipsum",
@@ -50,7 +53,7 @@ export const purchaseData = [{
     void: false
 },
 {
-    id: 2,
+    id: uuidv4(),
     sku: "AKC-132123",
     barcode: "41231312",
     desc: "Lorem ipsum",
@@ -70,7 +73,7 @@ export const purchaseData = [{
     void: false
 },
 {
-    id: 3,
+    id: uuidv4(),
     sku: "AKC-132123",
     barcode: "41231312",
     desc: "Lorem ipsum",
@@ -90,7 +93,7 @@ export const purchaseData = [{
     void: false
 },
 {
-    id: 4,
+    id: uuidv4(),
     sku: "AKC-132123",
     barcode: "41231312",
     desc: "Lorem ipsum",
@@ -110,7 +113,7 @@ export const purchaseData = [{
     void: false
 },
 {
-    id: 5,
+    id: uuidv4(),
     sku: "AKC-132123",
     barcode: "41231312",
     desc: "Lorem ipsum",
@@ -130,7 +133,7 @@ export const purchaseData = [{
     void: false
 },
 {
-    id: 6,
+    id: uuidv4(),
     sku: "AKC-132123",
     barcode: "41231312",
     desc: "Lorem ipsum",

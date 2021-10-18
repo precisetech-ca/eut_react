@@ -1,42 +1,22 @@
-// React bootstrap table next =>
-// DOCS: https://react-bootstrap-table.github.io/react-bootstrap-table2/docs/
-// STORYBOOK: https://react-bootstrap-table.github.io/react-bootstrap-table2/storybook/index.html
-import React, { useEffect, useMemo, useState } from "react";
-import DataTable from "react-data-table-component";
-
+import React, { useEffect, useState } from "react";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import * as actions from "../_redux/actions";
-import { useUIContext } from "../context/UIContext";
 import {Button, Input, Row, Col} from "reactstrap";
 
 import { Summary } from "./supplier/Summary";
 import { ReactTable } from "../../custom_widgets/table/ReactTable";
-import DateTimePicker from 'react-datetime-picker';
 
 export function Table({isViewable}) {
-  // Customers UI Context
-  const UIContext = useUIContext();
-  const [value, onChange] = useState(new Date());
-  const customersUIProps = useMemo(() => {
-    return {
-      queryParams: UIContext.queryParams,
-    };
-  }, [UIContext]);
-
-  // Getting curret state of customers list from store (Redux)
   const { currentState } = useSelector(
     (state) => ({ currentState: state.purchase }),
     shallowEqual
   );
-  const {entities } = currentState;
+  const { entities, entitiesLength } = currentState;
 
-  // Customers Redux state
   const dispatch = useDispatch();
   useEffect(() => {
-    // server call by queryParams
     dispatch(actions.fetchProducts());
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [customersUIProps.queryParams, dispatch]);
+  }, [dispatch]);
 
   const deleteProduct = (id) => {
     dispatch(actions.deleteProduct(id));
@@ -50,17 +30,19 @@ export function Table({isViewable}) {
         disableSortBy: true,
         accessor: "sku",
         disableFilters: true,
-        Cell: ({value}) => {
+        Cell: ({value, row }) => {
+          console.log(entitiesLength);
             if (isViewable) {
               return "SKU-12551"
             } else {
               return (<div style={{width: "200px"}}>
-                  <Input type="select" size="sm" className="d-inline-block" name="select" id="exampleSelect">
-                      {value?.map(({id, value}) => 
-                          <option value={id}>{value}</option>
-                      )}
-                  </Input>
-                  <Button className="mt-2" color="dark" size="sm" >+ Create</Button>
+                <Input type="select" size="sm" className="d-inline-block" name="select" id="exampleSelect">
+                    {value?.map(({id, value}) => 
+                        <option value={id}>{value}</option>
+                    )}
+                </Input>
+            
+                {entitiesLength - row?.index && <Button className="mt-2" color="dark" size="sm" >+ Create</Button>}
               </div>)
             }
             
@@ -175,9 +157,14 @@ export function Table({isViewable}) {
       disableFilters: true,
       disableSortBy: true,
       Header: "Action",
-      accessor: "action",
-      Cell: () => {
-          return <i class="fa fa-trash text-secondary enable-cursor" aria-hidden="true" disabled={isViewable}></i>
+      accessor: "id",
+      Cell: ({value}) => {
+          return <i 
+                  className="fa fa-trash text-secondary enable-cursor" 
+                  aria-hidden="true" 
+                  disabled={isViewable}
+                  onClick={() => deleteProduct(value)}
+                ></i>
       }
     },
 ];
