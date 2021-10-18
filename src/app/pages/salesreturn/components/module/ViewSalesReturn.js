@@ -7,27 +7,27 @@ import {
 } from "_metronic/_partials/controls";
 import { Table } from '../TableData';
 import { useUIContext } from "../../context/UIContext";
-import { SalesOrderForm } from '../forms/SalesOrderForm';
-import { FullfilmentTable } from '../tables/FullfilmentTable';
+import { AuditLogTable } from '../tables/AuditLogTable';
+import { SalesReturnForm } from '../forms/SalesReturnForm';
 
-export const NewSalesOrder = ({id}) => {
+export const ViewSalesReturn = ({id}) => {
     const UIContext = useUIContext();
     const [key, setKey] = useState('order');
 
     return (
       <Card>
-        <CardHeader title="Sales Order Infromation"></CardHeader>
+        <CardHeader title="View Sales List"></CardHeader>
         <CardBody>
-          <SalesOrderForm backToHome={UIContext.backToHome}/>
+          <SalesReturnForm backToHome={UIContext.backToHome} isViewable={true} />
           <Tabs
             id="controlled-tab-example"
             activeKey={key}
             onSelect={(k) => setKey(k)}
-            className="mb-3 mt-3 purchase_order_tabs"
+            className="mb-3 mt-3"
           >
             {UIContext.inventoryTabs.map(({key, title}) => 
             <Tab eventKey={key} title={title} className="mt-2 ml-1">
-              {key === "order" ? <Table /> : <FullfilmentTable />}
+              {key === "order" ? <Table isViewable={true} /> : <AuditLogTable />}
             </Tab>)}
           </Tabs>
         </CardBody>

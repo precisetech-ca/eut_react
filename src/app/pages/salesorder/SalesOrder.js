@@ -28,7 +28,7 @@ const SalesOrder = ({dispatch, history}) => {
         </Route>
         <Route exact path="/salesorder/:id/edit">
           {({ history, match }) => (
-            <EditSalesOrder />
+            <EditSalesOrder /> 
           )}
         </Route>
         <Route exact path="/salesorder/:id/view">

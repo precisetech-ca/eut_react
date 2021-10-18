@@ -25,11 +25,11 @@ export function Table({isViewable}) {
 
   // Getting curret state of customers list from store (Redux)
   const { currentState } = useSelector(
-    (state) => ({ currentState: state.salesorder }),
+    (state) => ({ currentState: state.salesReturn }),
     shallowEqual
   );
-  const {entities } = currentState;
-
+  const { entities } = currentState;
+ 
   // Customers Redux state
   const dispatch = useDispatch();
   useEffect(() => {
@@ -54,7 +54,7 @@ export function Table({isViewable}) {
             if (isViewable) {
               return "SKU-12551"
             } else {
-              return (<div style={{width: "200px"}}>
+              return (<div style={{width: "150px"}}>
                   <Input type="select" size="sm" className="d-inline-block" name="select" id="exampleSelect">
                       {value?.map(({id, value}) => 
                           <option value={id}>{value}</option>
@@ -90,7 +90,7 @@ export function Table({isViewable}) {
         if (isViewable) {
           return value
         }else {
-          return <Input type="select" size="sm" placeholder="Enter Batch #" style={{width:"70px"}}/>
+          return <Input type="text" size="sm" style={{width:"70px"}}/>
         }
       }
     },
@@ -121,65 +121,46 @@ export function Table({isViewable}) {
         Cell: ({value}) => value,
     },
     {
-      Header: "Avl Qty",
-      disableFilters: true,
-      disableSortBy: true,
-        accessor: "available_qty",
-        Cell: ({value}) => value,
+     Header: "Odr Qty",
+    disableFilters: true,
+    disableSortBy: true,
+    accessor: "odr_qty",
+    Cell: ({value}) => value,
     },
     {
-      Header: "Odr Qty",
-      disableFilters: true,
-      disableSortBy: true,
-      accessor: "odr_qty",
+    Header: "Return Qty",
+    disableFilters: true,
+    disableSortBy: true,
+      accessor: "return_qty",
       Cell: ({value}) => value,
     },
     {
       disableFilters: true,
       disableSortBy: true,
-      Header: "Cost",
-      accessor: "cost",
-      Cell: ({value}) => value,
-    },
-    {
       Header: "Price",
-      disableFilters: true,
-      disableSortBy: true,
       accessor: "price",
       Cell: ({value}) => value,
     },
     {
       Header: "Tax",
-      disableFilters: true,
       disableSortBy: true,
+      disableFilters: true,
       accessor: "tax",
       Cell: ({value}) => {
-        if (isViewable) {
-          return "tax"
-        } else {
-          return (<div style={{width: "70px"}}>
+                 return (<div style={{width: "80px"}}>
               <Input type="select" size="sm" className="d-inline-block" name="select" id="exampleSelect">
                   {value?.map(({id, title}) => 
                       <option value={id}>{title}</option>
                   )}
               </Input>
-          </div>)
-          }
-        }
-    },
+          </div>)  
+    }},
     {
       Header: "Sub Total",
       disableFilters: true,
       disableSortBy: true,
       accessor: "sub_total",
       Cell: ({value}) => value
-    },
-    {
-      Header: "PO #",
-      disableFilters: true,
-      disableSortBy: true,
-      accessor: "po_num",
-      Cell: ({value}) => value,
     },
     {
       disableFilters: true,
@@ -200,9 +181,9 @@ export function Table({isViewable}) {
           <a href="#addproduct" onClick={(e) => {
             e.preventDefault();
             dispatch(actions.addProduct())
-          }}>Add a product</a>
+          }}>Add a product</a> 
         </Col>
-      </Row>}
+      </Row>} 
       
       
       <Row className="mt-4">

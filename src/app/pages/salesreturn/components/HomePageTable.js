@@ -20,16 +20,16 @@ export function HomePageTable() {
 
   // Getting curret state of customers list from store (Redux)
   const { currentState } = useSelector(
-    (state) => ({ currentState: state.salesorder }),
+    (state) => ({ currentState: state.salesReturn }),
     shallowEqual
   );
-  const { salesorderList } = currentState;
+  const { salesReturnList } = currentState;
 
   // Customers Redux state
   const dispatch = useDispatch();
   useEffect(() => {
     // server call by queryParams
-    dispatch(actions.fetchSalesOrderList());
+    dispatch(actions.fetchSalesReturnList());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [customersUIProps.queryParams, dispatch]);
   
@@ -100,10 +100,10 @@ export function HomePageTable() {
         Cell: ({value}) => {
           return (
             <>
-              <Link href="#saledorder-edit" to={`/saledorder/${value}/edit`} >
+              <Link href="#saledreturn-edit" to={`/saledoreturn/${value}/edit`} >
                 <i class="fas fa-pencil-alt text-success"></i>
               </Link>
-              <Link href="#saledorder-edit" to={`/saledorder/${value}/view`} >
+              <Link href="#saledreturn-edit" to={`/saledoreturn/${value}/view`} >
                 <i class="fas fa-eye text-primary ml-3"></i>
               </Link>
           </>)
@@ -113,7 +113,7 @@ export function HomePageTable() {
 
   return (
     <>
-      {salesorderList && <ReactTable tableColumns={columns} tableData={salesorderList} />}
+      {salesReturnList && <ReactTable tableColumns={columns} tableData={salesReturnList} />}
     </>
   );
 }

@@ -11,7 +11,7 @@ export function useUIContext() {
 
 export const UIConsumer = UIContext.Consumer;
 
-export function UIProvider({UIContextEvents, children}) {
+export function UIProvider({salesreturnUIEvents, children}) {
   const history = useHistory();
   const [queryParams, setQueryParamsBase] = useState(initialFilter);
   const [ids, setIds] = useState([]);
@@ -38,9 +38,7 @@ export function UIProvider({UIContextEvents, children}) {
 
   const inventoryTabs = [
     {key: "order", title: "Product"},
-    {key: "fullfilment", title: "Fullfilment"},
-    {key: "dispatch", title: "Dispatch"},
-    {key: "delivery", title: "Delivery"},
+    {key: "auditlog", title: "AuditLog"},
 
   ];
 
@@ -60,7 +58,7 @@ export function UIProvider({UIContextEvents, children}) {
 
 
   const backToHome = () => {
-    history.push('/salesorder');
+    history.push('/salesreturn');
   }
 
   const value = {
@@ -76,6 +74,12 @@ export function UIProvider({UIContextEvents, children}) {
     backToHome,
     showSupplierModal,
     toggleSupplierHandler,
+    newSalesReturnForm: salesreturnUIEvents.newSalesReturnForm,
+    editSalesReturnForm: salesreturnUIEvents.editSalesReturnForm,
+    openDeleteCustomerDialog: salesreturnUIEvents.openDeleteCustomerDialog,
+    openDeleteCustomersDialog: salesreturnUIEvents.openDeleteCustomersDialog,
+    openFetchCustomersDialog: salesreturnUIEvents.openFetchCustomersDialog,
+    openUpdateCustomersStatusDialog: salesreturnUIEvents.openUpdateCustomersStatusDialog,
   };
 
   return <UIContext.Provider value={value}>{children}</UIContext.Provider>;

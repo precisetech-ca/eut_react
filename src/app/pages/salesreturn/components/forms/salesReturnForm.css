@@ -27,7 +27,18 @@
     outline: none;
 }
 
-#col4-heading ,#col5-heading , #col6-heading{
+#col4-heading 
+{
+    position: relative;
+    left: 5px; 
+    bottom: 25px;
+    background-color: #22b14c;
+    padding: 5px 5px;
+    color: white;
+    border: none;
+    outline: none;
+}
+#col5-heading , #col6-heading{
     position: relative;
     left: 5px; 
     bottom: 25px;
