@@ -177,7 +177,15 @@ export function Table({isViewable}) {
       Header: "Action",
       accessor: "action",
       Cell: () => {
-          return <i class="fa fa-trash text-secondary enable-cursor" aria-hidden="true" disabled={isViewable}></i>
+          return <i 
+          class="fa fa-trash text-secondary enable-cursor" 
+          aria-hidden="true" 
+          disabled={isViewable}
+          onClick={(e) => {
+            e.preventDefault();
+            dispatch(actions.deleteProduct())
+          }}
+          ></i>
       }
     },
 ];
