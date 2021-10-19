@@ -13,6 +13,7 @@ export const InventoryUIConsumer = InventoryUIContext.Consumer;
 
 export function InventoryUIProvider({customersUIEvents, children}) {
   const dispatch = useDispatch()
+  const [tempData, setTempData] = useState({});
   const [ids, setIds] = useState([]);
   const [edit, setEdit] = useState(false);
 
@@ -34,6 +35,28 @@ export function InventoryUIProvider({customersUIEvents, children}) {
     {value: "g", label: "g"},
     {value: "oz", label: "oz"},
   ];
+
+  const setEditData = (id) => {
+    console.log(id);
+    const editPayload = {
+      "data":
+      {  
+        "PAR_ID"   		: id,
+        "SEARCH"   		: ""
+      }, 
+      "action": "ITEMMASTER",
+      "method": "GetPartAttachments",
+      "username": "admin",
+      "password": "admin",
+      "type": "rpc",
+      "tid": "144"
+    };
+
+    dispatch(callGenericAsync(editPayload, "/itemmaster/GetPartDetails", "post", (res) => {
+      setTempData(res?.Result);
+    }))
+
+  }
 
   const submitFormHandler = ({payload}) => {
     console.log(payload);
@@ -129,6 +152,8 @@ export function InventoryUIProvider({customersUIEvents, children}) {
     setEditHandler,
     uom,
     editState: edit,
+    setEditData,
+    tempData,
   };
 
   return <InventoryUIContext.Provider value={value}>{children}</InventoryUIContext.Provider>;
