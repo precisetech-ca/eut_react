@@ -4,14 +4,14 @@ import { InventoryUIConsumer, InventoryUIProvider, useIinventoryUIContext } from
 import { InventoryCard } from "./components/InventoryCard";
 import { InventoryEditDialog } from "./components/EditInventoryDialog";
 
-const Inventory = ({dispatch, history}) => {
-    const inventoryUIContext = useIinventoryUIContext();
-
+const Inventory = ({history}) => {
+    const obj = useIinventoryUIContext();
     const customersUIEvents = {
         newCustomerButtonClick: () => {
           history.push("/inventory/new");
         },
         openEditCustomerDialog: (id) => {
+          
           history.push(`/inventory/${id}/edit`);
         },
         openDeleteCustomerDialog: (id) => {

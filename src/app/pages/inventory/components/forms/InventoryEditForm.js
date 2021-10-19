@@ -36,7 +36,8 @@ const InnerForm = ({
 }) => {
     // const UIContext = useCustomersUIContext();
     // const {toggleSupplierHandler, warehouseMockData} = UIContext;
-    const { warehouseMockData, prefferedSupplier, weightMockProps, uom } = useIinventoryUIContext();
+    const { warehouseMockData, prefferedSupplier, weightMockProps, uom, tempData } = useIinventoryUIContext();
+    console.log(tempData);
     const [value, onChange] = useState(new Date());
     const [thumbPath, setThumbPath] = useState([]);
     const [filePath, setFilePath] = useState([]);
@@ -68,6 +69,7 @@ const InnerForm = ({
                       size="sm" 
                       tag={Field} 
                       name="sku" 
+                      type="number"
                       placeholder="SKU"
                       disabled={isViewable}
                     />
@@ -89,6 +91,7 @@ const InnerForm = ({
                   <Input 
                       size="sm" 
                       tag={Field} 
+                      type="number"
                       name="barcode" 
                       placeholder="Barcode"
                       disabled={isViewable}
@@ -124,7 +127,7 @@ const InnerForm = ({
                   getOptionValue={option => option.WAR_ID}
                   options={warehouseMockData} 
                   onChange={(e) => {
-                    setFieldValue("warehouse", e.value);
+                    setFieldValue("warehouse", e.WAR_ID);
                   }}
                 />
               </Col>
@@ -149,7 +152,7 @@ const InnerForm = ({
                   getOptionValue={option => option.VEN_ID} 
                   options={prefferedSupplier} 
                   onChange={(e) => {
-                  setFieldValue("preffered_supplier", e.value);
+                  setFieldValue("preffered_supplier", e.VEN_ID);
                 }}/>
               </Col>
             </FormGroup>
@@ -194,7 +197,7 @@ const InnerForm = ({
                     getOptionValue={option => option.UOM_ID}
                     options={uom} 
                     onChange={(e) => {
-                      setFieldValue("uom", e.value);
+                      setFieldValue("uom", e.UOM_ID);
                     }}
                   />
               </Col>
@@ -204,13 +207,13 @@ const InnerForm = ({
               <Label for="weight" sm="1">Weight</Label>
               <Col sm={2}>
                 <Input 
-                      size="sm" 
-                      type="number"
-                      placeholder="weight"
-                      tag={Field} 
-                      name="weight" 
-                      disabled={isViewable}
-                  />
+                  size="sm" 
+                  type="number"
+                  placeholder="weight"
+                  tag={Field} 
+                  name="weight" 
+                  disabled={isViewable}
+                />
               </Col>
               <Col sm={3}>
                 <Select options={weightMockProps} onChange={(e) => {
@@ -224,7 +227,7 @@ const InnerForm = ({
                   getOptionValue={option => option.UOM_ID}
                   options={uom} 
                   onChange={(e) => {
-                    setFieldValue("re_ordering_uom", e.value);
+                    setFieldValue("re_ordering_uom", e.UOM_ID);
                   }}
                 />
               </Col>
@@ -235,6 +238,7 @@ const InnerForm = ({
               <Col sm={5}>
                 <Input 
                   size="sm" 
+                  type="number"
                   tag={Field} 
                   name="on_hand_qty" 
                   placeholder="On Hand Quantity"
@@ -246,6 +250,7 @@ const InnerForm = ({
                 <Input 
                   size="sm" 
                   tag={Field} 
+                  type="number"
                   name="conversion_uom" 
                   placeholder="Conversion to UoM"
                   disabled={isViewable}
@@ -261,6 +266,7 @@ const InnerForm = ({
                   tag={Field} 
                   name="qty_avl"
                   placeholder="Quantity Available" 
+                  type="number"
                   disabled={isViewable}
                 />
               </Col>
@@ -288,6 +294,7 @@ const InnerForm = ({
                       id="cost"
                       tag={Field} 
                       size="sm"
+                      type="number"
                       placeholder="Cost"
                       className={touched && touched.cost ? (errors && errors.cost ? 'is-invalid' : 'is-valid') : ''}
                       disabled={isViewable}
@@ -302,6 +309,7 @@ const InnerForm = ({
                       name="price"
                       size="sm"
                       tag={Field} 
+                      type="number"
                       placeholder="Price"
                       className={touched && touched.price ? (errors && errors.price ? 'is-invalid' : 'is-valid') : ''}
                       disabled={isViewable}
@@ -317,6 +325,7 @@ const InnerForm = ({
                       tag={Field} 
                       id="average_cost"
                       size="sm"
+                      type="number"
                       placeholder="Average Cost"
                       disabled={isViewable}
                     />
@@ -330,6 +339,7 @@ const InnerForm = ({
                       name="standard_cost"
                       id="standard_cost"
                       size="sm"
+                      type="number"
                       placeholder="Standard Cost"
                       disabled={isViewable}
                     />

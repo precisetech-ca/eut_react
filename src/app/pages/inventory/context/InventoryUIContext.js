@@ -13,6 +13,7 @@ export const InventoryUIConsumer = InventoryUIContext.Consumer;
 
 export function InventoryUIProvider({customersUIEvents, children}) {
   const dispatch = useDispatch()
+  const [tempData, setTempData] = useState({});
   const [ids, setIds] = useState([]);
   const [edit, setEdit] = useState(false);
 
@@ -35,53 +36,84 @@ export function InventoryUIProvider({customersUIEvents, children}) {
     {value: "oz", label: "oz"},
   ];
 
+  const setEditData = (id) => {
+    console.log(id);
+    const editPayload = {
+      "data":
+      {  
+        "PAR_ID"   		: id,
+        "SEARCH"   		: ""
+      }, 
+      "action": "ITEMMASTER",
+      "method": "GetPartAttachments",
+      "username": "admin",
+      "password": "admin",
+      "type": "rpc",
+      "tid": "144"
+    };
+
+    dispatch(callGenericAsync(editPayload, "/itemmaster/GetPartDetails", "post", (res) => {
+      setTempData(res?.Result);
+    }))
+
+  }
+
   const submitFormHandler = ({payload}) => {
     console.log(payload);
+    
     const itemMasterPayload = {
-      "PAR_ID"   : payload?.sku,
-      "CODE"   : "abc",
-      "BARCODE_NUMBER"   : payload?.barcode,
-      "DESCRIPTION"   : payload?.description,
-      "UOM_ID"   : payload?.uom,
-      "PARWAR_ID"   : "",
-      "VEN_ID"   : "",
-      "PARGRO_ID"   : "",
-      "MARGRO_ID"   : "",
-      "MARKUP_BASED_ON"   : "",
-      "AVERAGE_COST"   : payload?.average_cost,
-      "STANDARD_COST"   : payload?.standard_cost,
-      "LAST_PURCHASE_COST"   : "",
-      "ENABLE_ITEM_LEVEL_CHARGE"   : "",
-      "ITEM_LEVEL_CHARGE"   : "",
-      "NOTES"   : payload?.notes,
-      "FUEL_FLAG"   : "",
-      "STOCK_ITEM_FLAG"   : payload?.allow_negative_oh,
-      "GLACC_ID_ASSET"   : "",
-      "GLACC_ID_REVENUE"   : "",
-      "GLACC_ID_COGS"   : "",
-      "ACTIVE_FLAG"   : "",
-      "USE_ID"   : "",
-      "VMRSYS_ID"   : "",
-      "VMRASS_ID"   : "",
-      "VMRCOM_ID"   : "",
-      "CONVERSION_TO_STOCKING_UOM"   : "",
-      "WARRANTY"   : "",
-      "PAR_ID_SUPERCEDES"   : "",
-      "UOM_ID_REORDERING"   : "",
-      "ALLOW_NEGATIVE_FLAG"   : payload?.allow_negative_oh,
-      "ITEM_LEVEL_CHRG_EXP_DATE"   : "",
-      "REFERENCE_NUMBER"   : "",
-      "SHOSUP_FLAG"   : "",
-      "ALLOW_FRACTION_QTY"   : "",
-      "ALLOW_NEG_RO_COMP_FLAG"   : payload?.allow_negative_oh,
-      "SKU"   : payload?.sku,
-      "LOT_NUMBER"   : "",
-      "BATCH_EXPIRY"   : "",
-      "QUARANTINE"   : "",
-      "DimensionL"   : payload?.length,
-      "DimensionH"   : payload?.height,
-      "DimensionW"   : payload?.width,
-      "Weight"   : payload?.weight,
+      data: {
+        "PAR_ID"   : payload?.sku,
+        "CODE"   : "abc",
+        "BARCODE_NUMBER"   : payload?.barcode,
+        "DESCRIPTION"   : payload?.description,
+        "UOM_ID"   : payload?.uom,
+        "PARWAR_ID"   : payload?.warehouse,
+        "VEN_ID"   : payload?.preffered_supplier,
+        "PARGRO_ID"   : "",
+        "MARGRO_ID"   : "",
+        "MARKUP_BASED_ON"   : "",
+        "AVERAGE_COST"   : payload?.average_cost,
+        "STANDARD_COST"   : payload?.standard_cost,
+        "LAST_PURCHASE_COST"   : "",
+        "ENABLE_ITEM_LEVEL_CHARGE"   : "",
+        "ITEM_LEVEL_CHARGE"   : "",
+        "NOTES"   : payload?.notes,
+        "FUEL_FLAG"   : "",
+        "STOCK_ITEM_FLAG"   : payload?.allow_negative_oh,
+        "GLACC_ID_ASSET"   : "",
+        "GLACC_ID_REVENUE"   : "",
+        "GLACC_ID_COGS"   : "",
+        "ACTIVE_FLAG"   : "",
+        "USE_ID"   : "1",
+        "VMRSYS_ID"   : "",
+        "VMRASS_ID"   : "",
+        "VMRCOM_ID"   : "",
+        "CONVERSION_TO_STOCKING_UOM"   : payload?.conversion_uom,
+        "WARRANTY"   : "",
+        "PAR_ID_SUPERCEDES"   : "",
+        "UOM_ID_REORDERING"   : payload?.re_ordering_uom,
+        "ALLOW_NEGATIVE_FLAG"   : payload?.allow_negative_oh,
+        "ITEM_LEVEL_CHRG_EXP_DATE"   : "",
+        "REFERENCE_NUMBER"   : "",
+        "SHOSUP_FLAG"   : "",
+        "ALLOW_FRACTION_QTY"   : "",
+        "ALLOW_NEG_RO_COMP_FLAG"   : payload?.allow_negative_oh,
+        "SKU"   : payload?.sku,
+        "LOT_NUMBER"   : "",
+        "BATCH_EXPIRY"   : "",
+        "QUARANTINE"   : "",
+        "DimensionL"   : payload?.length,
+        "DimensionH"   : payload?.height,
+        "DimensionW"   : payload?.width,
+        "Weight"   : payload?.weight,
+      },
+      "action": "ItemMaster",
+      "method": "PostPartDetails",
+      "username": "admin",
+      "password": "admin",
+      "type": "rpc",
+      "tid": "144"
     }
     dispatch(callGenericAsync(itemMasterPayload, "/ItemMaster/PostPartDetails", 'post', (res) => {
       if (res?.CODE === 'SUCCESS') {
@@ -120,6 +152,8 @@ export function InventoryUIProvider({customersUIEvents, children}) {
     setEditHandler,
     uom,
     editState: edit,
+    setEditData,
+    tempData,
   };
 
   return <InventoryUIContext.Provider value={value}>{children}</InventoryUIContext.Provider>;
