@@ -15,10 +15,13 @@ const initialState = {
     total: 0,
   }
 };
+
+
 export const callTypes = {
   list: "list",
   action: "action"
 };
+
 
  
 export const salesReturnSlice = createSlice({
@@ -68,6 +71,39 @@ export const salesReturnSlice = createSlice({
         state.error = null;
         state.auditLogs = entities;
         state.totalCount = totalCount;
+      },
+      
+      addProduct: (state , action) => {
+        state.entities.push({
+            id: uuidv4(),
+            sku: [
+                {id: "AKC-132123", value: "AKC-132123"},
+                {id: "AKUC-4121", value: "AKUC-4121"},
+            ],
+            barcode: "",
+            desc: "",
+            lot_no: "",
+            expiry: "",
+            oh_qty: 0,
+            odr_qty: 0,
+            return_qty: 0,
+            price:0,
+            tax: [{id: 1, title: "13%"}],
+            sub_total: "$00.00",
+        });
+
+        return state;
+      },
+
+      deleteProduct: (state, action) => {
+        state.entities.splice(state.entities.findIndex((entity) => entity.id === action.payload), 1);
+        return state;
+      },
+
+      deleteSalesReturnListItem: (state, action) => {
+        state.salesReturnList.splice(state.salesReturnList.findIndex((entity) => entity.id === action.payload), 1);
+
+        return state;
       },
      
     }
