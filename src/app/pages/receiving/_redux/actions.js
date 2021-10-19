@@ -14,7 +14,7 @@ export const deleteProduct = (id) => dispatch => {
 export const changeRecQty = ({qty, index}) => dispatch => {
   dispatch(actions.changeRecQty({qty, index}));
 }
-
+ 
 export const fetchReceivingList = () => dispatch => {
   dispatch(actions.startCall({ callType: callTypes.action }));
 

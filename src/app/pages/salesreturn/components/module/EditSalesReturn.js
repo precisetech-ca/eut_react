@@ -7,10 +7,10 @@ import {
 } from "_metronic/_partials/controls";
 import { Table } from '../TableData';
 import { useUIContext } from "../../context/UIContext";
-import { SalesOrderForm } from '../forms/SalesOrderForm';
-import { FullfilmentTable } from '../tables/FullfilmentTable';
+import { SalesReturnForm } from '../forms/SalesReturnForm';
+import { AuditLogTable} from '../tables/AuditLogTable';
 
-export const EditSalesOrder = ({id}) => {
+export const EditSalesReturn = ({id}) => {
     const UIContext = useUIContext();
     const [key, setKey] = useState('order');
 
@@ -18,7 +18,7 @@ export const EditSalesOrder = ({id}) => {
       <Card>
         <CardHeader title="Sales Order"></CardHeader>
         <CardBody>
-          <SalesOrderForm backToHome={UIContext.backToHome} />
+          <SalesReturnForm backToHome={UIContext.backToHome} />
           <Tabs
             id="controlled-tab-example"
             activeKey={key}
@@ -27,7 +27,7 @@ export const EditSalesOrder = ({id}) => {
           >
             {UIContext.inventoryTabs.map(({key, title}) => 
             <Tab eventKey={key} title={title} className="mt-2 ml-1">
-              {key === "order" ? <Table /> : <FullfilmentTable />}
+              {key === "order" ? <Table /> : <AuditLogTable />}
             </Tab>)}
           </Tabs>
         </CardBody>

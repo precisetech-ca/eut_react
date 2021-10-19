@@ -9,13 +9,13 @@ import {
     Button,
 } from 'reactstrap';
 import { Field, ErrorMessage, withFormik, Form } from 'formik';
-import { useUIContext } from "app/pages/salesorder/context/UIContext";
+import { useUIContext } from "app/pages/salesreturn/context/UIContext";
 import * as Yup from "yup";
 import DateTimePicker from 'react-datetime-picker';
 import Select from 'react-select'
 import InputMask from 'react-input-mask';
 import dateFormat from 'dateformat';
-import './salesOrderForm.css'
+import './salesReturnForm.css'
 
 const InnerForm = ({
     isSubmitting,
@@ -77,7 +77,7 @@ const InnerForm = ({
                     </FormGroup>
 
                     <FormGroup row>
-                        <Label for="assinged_to" sm={3}>Assinged To</Label>
+                        <Label for="assinged_to" sm={3}>Returned By</Label>
                         <Col sm={8}>
                             <Select options={warehouseMockData}  />
                             <ErrorMessage component={FormFeedback} name="assinged_to" />
@@ -159,7 +159,7 @@ const InnerForm = ({
                     </FormGroup>
 
                     <FormGroup row>
-                        <Label for="bill_to" sm={3}>Bill to</Label>
+                        <Label for="bill_to" sm={3}>Bill to<span className="text-danger">*</span></Label>
                             <Col sm={8}>
                                 <Select options={warehouseMockData}  /> 
                                 <ErrorMessage component={FormFeedback} name="bill_to" />
@@ -251,8 +251,8 @@ const InnerForm = ({
                 
             {!isViewable && <Row>
                 <Col className="text-right">
-                    <Button type="button" size="sm" color="danger" onClick={backToHome}>Split Order</Button> {' '}
-                    <Button color="primary" size="sm" disabled={isSubmitting}>{isSubmitting ? "Saving..." : "Create PO"} </Button>
+                    <Button type="button" size="sm" color="danger" onClick={backToHome}>Close</Button> {' '}
+                    <Button color="primary" size="sm" disabled={isSubmitting}>{isSubmitting ? "Saving..." : "Save"} </Button>
                 </Col>
             </Row>}
 
@@ -267,7 +267,7 @@ const InnerForm = ({
 }
 
 
-export const SalesOrderForm = withFormik({
+export const SalesReturnForm = withFormik({
     enableReinitialize: true,
     mapPropsToValues: ({ temporaryData }) => {
         return {

@@ -18,7 +18,7 @@ export const NewSalesOrder = ({id}) => {
       <Card>
         <CardHeader title="Sales Order Infromation"></CardHeader>
         <CardBody>
-          <SalesOrderForm backToHome={UIContext.backToHome}/>
+          <SalesOrderForm backToHome={UIContext.backToHome}/> 
           <Tabs
             id="controlled-tab-example"
             activeKey={key}

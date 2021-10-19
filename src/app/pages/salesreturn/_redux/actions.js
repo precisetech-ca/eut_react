@@ -1,5 +1,5 @@
 import { callGenericGetterAsync } from "app/generic/actions";
-import { data, salesorderData, fullfilmentData } from "./mock/product.mock";
+import { data, salesreturnData, auditLogData } from "./mock/product.mock";
 import { salesReturnSlice, callTypes } from "./salesReturnSlice";
 
 const {actions} = salesReturnSlice;
@@ -12,34 +12,35 @@ export const deleteProduct = (id) => dispatch => {
   dispatch(actions.deleteProduct(id));
 }
 
-export const deleteSalesOrderList = (id) => dispatch => {
-  dispatch(actions.deleteSalesOrderistItem(id)); 
+export const deleteSalesReturnList = (id) => dispatch => {
+  dispatch(actions.deleteSalesReturnistItem(id)); 
 }
 
 
-export const fetchSalesOrderList = () => dispatch => {
+export const fetchSalesReturnList = () => dispatch => {
   dispatch(actions.startCall({ callType: callTypes.action }));
 
   setTimeout(() => {
-    dispatch(actions.salesorderListFetched({
+    dispatch(actions.salesreturnListFetched({
       callType: callTypes.action,
-      entities: salesorderData
-    }));
-  }, 1000);
-};
-
-export const fullfilmentDataAsync = () => dispatch => {
-  dispatch(actions.startCall({ callType: callTypes.action }));
-
-  setTimeout(() => {
-    dispatch(actions.fullfilments({
-      callType: callTypes.action,
-      entities: fullfilmentData
+      entities: salesreturnData
     }));
   }, 1000);
 };
 
 
+
+export const auditLogDataAsync = () => dispatch => {
+  const { actions } = salesReturnSlice;
+  dispatch(actions.startCall({ callType: callTypes.action }));
+
+  setTimeout(() => {
+    dispatch(actions.auditLogs({
+      callType: callTypes.action,
+      entities: auditLogData
+    }));
+  }, 1000);
+};
 
 
 export const fetchProducts = () => dispatch => {

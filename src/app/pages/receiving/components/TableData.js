@@ -117,7 +117,7 @@ export function Table() {
       Header: "Rem Cost",
       accessor: "rem_cost",
       Cell: ({value}) => value,
-    },
+    }, 
     {
       disableFilters: true,
       disableSortBy: true,
@@ -133,7 +133,7 @@ export function Table() {
       Cell: ({value}) => value,
     },
     {
-      Header: "Sub Total",
+      Header: "Sub Total", 
       disableFilters: true,
       disableSortBy: true,
       accessor: "sub_total",

@@ -26,7 +26,7 @@ export const HomePageCard = () => {
 
     return (
         <Card>
-            <CardHeader title="Sales Order List">
+            <CardHeader title="Sales Retunr List">
                 <CardHeaderToolbar>
                 <button
                     type="button"

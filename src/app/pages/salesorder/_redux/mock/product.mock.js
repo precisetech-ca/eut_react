@@ -17,7 +17,7 @@ export const data = [
             {id: 1, title: "13%"}
         ],
         price: 12.99,
-        sub_total: "$1,299.00",
+        sub_total: "1299.00",
         po_num : "9823646"
     }
 ]

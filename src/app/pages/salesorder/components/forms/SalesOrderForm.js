@@ -55,8 +55,7 @@ const InnerForm = ({
                                 size="sm" 
                                 tag={Field} 
                                 name="sale_order_num" 
-                                readOnly={true}
-                                disabled={isViewable}
+                                
                             />
                             <ErrorMessage component={FormFeedback} name="sale_order_num" />
                         </Col>
@@ -70,7 +69,6 @@ const InnerForm = ({
                                 size="sm" 
                                 tag={Field} 
                                 name="date" 
-                                disabled={isViewable}
                             />
                         <ErrorMessage component={FormFeedback} name="date_time" />
                         </Col>
@@ -99,8 +97,7 @@ const InnerForm = ({
                                 size="sm" 
                                 tag={Field} 
                                 name="ref_num" 
-                                readOnly={true}
-                                disabled={isViewable}
+                                
                             />
                             <ErrorMessage component={FormFeedback} name="ref_num" />
                         </Col>
@@ -175,8 +172,7 @@ const InnerForm = ({
                                 size="sm" 
                                 tag={Field} 
                                 name="address" 
-                                readOnly={true}
-                                disabled={isViewable}
+                               
                             />
                             <ErrorMessage component={FormFeedback} name="address" />
                         </Col>
@@ -205,8 +201,7 @@ const InnerForm = ({
                                 size="sm" 
                                 tag={Field} 
                                 name="city" 
-                                readOnly={true}
-                                disabled={isViewable}
+                               
                             />
                             <ErrorMessage component={FormFeedback} name="city" />
                         </Col>
@@ -219,8 +214,7 @@ const InnerForm = ({
                                     size="sm" 
                                     tag={Field} 
                                     name="zip_code" 
-                                    readOnly={true}
-                                    disabled={isViewable}
+                                   
                                 />
                                 <ErrorMessage component={FormFeedback} name="zip_code" />
                             </Col>
@@ -251,8 +245,8 @@ const InnerForm = ({
                 
             {!isViewable && <Row>
                 <Col className="text-right">
-                    <Button type="button" size="sm" color="danger" onClick={backToHome}>Split Order</Button> {' '}
-                    <Button color="primary" size="sm" disabled={isSubmitting}>{isSubmitting ? "Saving..." : "Create PO"} </Button>
+                    <Button type="button" size="sm" color="danger" onClick={backToHome}>Close</Button> {' '}
+                    <Button color="primary" size="sm" disabled={isSubmitting}>{isSubmitting ? "Saving..." : "Save"} </Button>
                 </Col>
             </Row>}
 

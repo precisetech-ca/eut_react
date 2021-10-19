@@ -7,12 +7,26 @@ const initialState = {
   totalCount: 0,
   entities: null,
   customerForEdit: undefined,
-  lastError: null
+  lastError: null,
+  summary: {
+    amount: "0.00",
+    currency_symbol: "$",
+    tax_amount: "0.00",
+    tax_perc: 13,
+    total: 0,
+  }
 };
 export const callTypes = {
   list: "list",
   action: "action"
 };
+
+const calculateSummary = (products) => {
+  return products.reduce((acc, current) => {
+    acc += Number(current.sub_total);
+    return acc;
+  }, 0)
+}
 
 
 export const salesorderSlice = createSlice({
@@ -53,8 +67,15 @@ export const salesorderSlice = createSlice({
         const { totalCount, entities } = action.payload;
         state.listLoading = false;
         state.error = null;
+        // entities.sub_total = Number(state.entities.odr_qty) * Number(state.entities.cost);
         state.entities = entities;
         state.totalCount = totalCount;
+        const totalPrice = calculateSummary(state.entities);
+        state.summary.amount = totalPrice;
+        state.summary.tax_amount = Number((totalPrice * (state.summary.tax_perc/100)).toFixed(2));
+        state.summary.total = state.summary.amount + state.summary.tax_amount;
+
+        return state;
       },
       fullfilments: (state, action) => {
         const { totalCount, entities } = action.payload;
@@ -77,11 +98,11 @@ export const salesorderSlice = createSlice({
             oh_qty: 0,
             available_qty: 0,
             odr_qty: 0,
-            uom: "Each",
             cost: 0,
+            price:0,
             tax: [{id: 1, title: "13%"}],
-            last_cost: 0,
-            sub_total: "$00.00"
+            sub_total: "$00.00",
+            po_num:" ",
         });
 
         return state;

@@ -1,42 +1,42 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
 import { UIProvider } from "./context/UIContext";
-import { EditSalesOrder } from "./components/module/EditSalesOrder";
+import { EditSalesReturn } from "./components/module/EditSalesReturn";
 import { HomePageCard } from "./components/HomePageCard";
-import { NewSalesOrder } from "./components/module/NewSalesOrder";
+import { NewSalesReturn } from "./components/module/NewSalesReturn";
 import { SupplierForm } from "./components/forms/SupplierForm";
-import { ViewSalesOrder } from "./components/module/ViewSalesOrder";
+import { ViewSalesReturn } from "./components/module/ViewSalesReturn";
 
 const SalesReturn = ({dispatch, history}) => {
-    const UIEvents = {
-        newSalesOrderForm: () => {
-          history.push("/salesorder/new");
+    const salesreturnUIEvents = {
+        newSalesReturnForm: () => {
+          history.push("/salesreturn/new");
         },
         editSalesOrderForm: (id) => {
-          history.push(`/salesorder/${id}/edit`);
+          history.push(`/salesreturn/${id}/edit`);
         },
     }
-    
+     
 
   return (
-    <UIProvider UIContextEvents={UIEvents}>
+    <UIProvider salesreturnUIEvents={salesreturnUIEvents}>
       <Switch>
-        <Route exact path="/salesorder/new">
+        <Route exact path="/salesreturn/new">
           {({ history, match }) => (
-            <NewSalesOrder />
+            <NewSalesReturn />
+          )}
+        </Route> 
+        <Route exact path="/salesreturn/:id/edit">
+          {({ history, match }) => (
+            <EditSalesReturn />
           )}
         </Route>
-        <Route exact path="/salesorder/:id/edit">
+        <Route exact path="/salesreturn/:id/view">
           {({ history, match }) => (
-            <EditSalesOrder />
+            <ViewSalesReturn />
           )}
         </Route>
-        <Route exact path="/salesorder/:id/view">
-          {({ history, match }) => (
-            <ViewSalesOrder />
-          )}
-        </Route>
-        <Route exact path="/salesorder">
+        <Route exact path="/salesreturn">
           {({ history, match }) => (
             <HomePageCard />
           )}
