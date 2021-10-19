@@ -92,7 +92,10 @@ export function InventoryTable() {
         Cell: ({value}) => {
           return (
             <>
-              <Link href="#inventory-edit" onClick={() => inventoryUIContext.openEditCustomerDialog(value)} >
+              <Link href="#inventory-edit" onClick={() => {
+                inventoryUIContext.openEditCustomerDialog(value); 
+                inventoryUIContext.setEditData(value);
+              }} >
                 <i class="fas fa-pencil-alt text-success"></i>
               </Link>
               <Link href="#inventory-edit" to={`/inventory/${value}/view`} >

@@ -37,7 +37,6 @@ export function InventoryUIProvider({customersUIEvents, children}) {
   ];
 
   const setEditData = (id) => {
-    console.log(id);
     const editPayload = {
       "data":
       {  
