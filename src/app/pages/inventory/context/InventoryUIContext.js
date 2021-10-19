@@ -21,6 +21,7 @@ export function InventoryUIProvider({customersUIEvents, children}) {
     setEdit(value);
   }
 
+  
   const { currentState } = useSelector(
     (state) => ({ currentState: state.inventory }),
     shallowEqual
@@ -52,10 +53,29 @@ export function InventoryUIProvider({customersUIEvents, children}) {
     };
 
     dispatch(callGenericAsync(editPayload, "/itemmaster/GetPartDetails", "post", (res) => {
-      setTempData(res?.Result);
+      if (res?.CODE === "SUCCESS") {
+        setTempData(res?.Result[0]);
+      }
     }))
 
   }
+
+  const defaultValuePicker = ({id, matchingObj = "VEN_ID", arr}) => {
+    const newvalue = arr?.filter(function(option) {
+      if ( option[matchingObj] === id ) {
+        return option;
+      }
+    })
+    if (newvalue?.length > 0) {
+      return newvalue[0];
+      // return {
+      //   SUPPLIER: newvalue[0].SUPPLIER,
+      //   VEN_ID: newvalue[0].VEN_ID,
+      // }
+    }
+  }
+
+  console.log(defaultValuePicker({id: 78619, arr: prefferedSupplier}))
 
   const submitFormHandler = ({payload}) => {
     console.log(payload);
@@ -153,6 +173,7 @@ export function InventoryUIProvider({customersUIEvents, children}) {
     editState: edit,
     setEditData,
     tempData,
+    defaultValuePicker
   };
 
   return <InventoryUIContext.Provider value={value}>{children}</InventoryUIContext.Provider>;
