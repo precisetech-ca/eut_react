@@ -1,7 +1,6 @@
 import { persistReducer } from "redux-persist";
 import { put, call, takeLatest } from 'redux-saga/effects';
 import storage from "redux-persist/lib/storage";
-import Api from "../../../utils/Api";
 import { getUserByToken } from "./authCrud";
 import * as endpoints from '../../../endpoints/endpoints';
 
