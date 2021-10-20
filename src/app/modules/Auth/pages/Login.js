@@ -5,7 +5,7 @@ import { connect, useDispatch } from "react-redux";
 import { FormattedMessage, injectIntl } from "react-intl";
 import * as auth from "../_redux/authRedux";
 import { login } from "../_redux/authCrud";
-import { callGenericAsync } from "@app/app/generic/actions";
+import { callGenericAsync } from "app/generic/actions";
 
 /*
   INTL (i18n) docs:
@@ -71,7 +71,12 @@ function Login(props) {
     validationSchema: LoginSchema,
     onSubmit: (values, { setStatus, setSubmitting }) => {
       enableLoading();
-      dispatch(callGenericAsync({grant_type: "password", username: "700", password: "mobile"}, '/oauth/token', 'post', res => {
+      const params = new URLSearchParams();
+      params.append('grant_type', 'password');
+      params.append('username', '700');
+      params.append('password', 'mobile');
+
+      dispatch(callGenericAsync(params, '/oauth/token', 'post', res => {
         if (res) {
           console.log(res);
         }
