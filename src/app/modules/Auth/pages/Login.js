@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { connect, useDispatch } from "react-redux";
+import { connect } from "react-redux";
 import { FormattedMessage, injectIntl } from "react-intl";
 import * as auth from "../_redux/authRedux";
 import { login } from "../_redux/authCrud";
-import { callGenericAsync } from "@app/app/generic/actions";
 
 /*
   INTL (i18n) docs:
@@ -25,7 +24,6 @@ const initialValues = {
 function Login(props) {
   const { intl } = props;
   const [loading, setLoading] = useState(false);
-  const dispatch = useDispatch();
   const LoginSchema = Yup.object().shape({
     email: Yup.string()
       .email("Wrong email format")
@@ -71,27 +69,22 @@ function Login(props) {
     validationSchema: LoginSchema,
     onSubmit: (values, { setStatus, setSubmitting }) => {
       enableLoading();
-      dispatch(callGenericAsync({grant_type: "password", username: "700", password: "mobile"}, '/oauth/token', 'post', res => {
-        if (res) {
-          console.log(res);
-        }
-      }));
-      // setTimeout(() => {
-      //   login(values.email, values.password)
-      //     .then(({ data: { accessToken } }) => {
-      //       disableLoading();
-      //       props.login(accessToken);
-      //     })
-      //     .catch(() => {
-      //       disableLoading();
-      //       setSubmitting(false);
-      //       setStatus(
-      //         intl.formatMessage({
-      //           id: "AUTH.VALIDATION.INVALID_LOGIN",
-      //         })
-      //       );
-      //     });
-      // }, 1000);
+      setTimeout(() => {
+        login(values.email, values.password)
+          .then(({ data: { accessToken } }) => {
+            disableLoading();
+            props.login(accessToken);
+          })
+          .catch(() => {
+            disableLoading();
+            setSubmitting(false);
+            setStatus(
+              intl.formatMessage({
+                id: "AUTH.VALIDATION.INVALID_LOGIN",
+              })
+            );
+          });
+      }, 1000);
     },
   });
 
