@@ -4,7 +4,7 @@ import { Table, Button } from 'react-bootstrap';
 import { ColumnFilter } from './ColumnFilter';
 
 export const  ReactTable = ({tableData, tableColumns}) => {
-    const columns = useMemo(() => tableColumns, []);
+    const columns = tableColumns;
     const data = tableData
 
     const defaultColumn = useMemo(() => {

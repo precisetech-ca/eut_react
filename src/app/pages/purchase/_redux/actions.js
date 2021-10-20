@@ -1,25 +1,22 @@
 import { callGenericGetterAsync } from "app/generic/actions";
 import { data, purchaseData, auditLogData } from "./mock/product.mock";
 import { purchaseSlice, callTypes } from "./purchaseSlice";
+const { actions } = purchaseSlice;
 
 export const addProduct = () => dispatch => {
-  const { actions } = purchaseSlice;
   dispatch(actions.addProduct());
 }
 
 export const deleteProduct = (id) => dispatch => {
-  const { actions } = purchaseSlice;
   dispatch(actions.deleteProduct(id));
 }
 
 export const deletePurchaseList = (id) => dispatch => {
-  const { actions } = purchaseSlice;
   dispatch(actions.deletePurchaseListItem(id)); 
 }
 
 
 export const fetchPurchaseList = () => dispatch => {
-  const { actions } = purchaseSlice;
   dispatch(actions.startCall({ callType: callTypes.action }));
 
   setTimeout(() => {
@@ -31,7 +28,6 @@ export const fetchPurchaseList = () => dispatch => {
 };
 
 export const auditLogDataAsync = () => dispatch => {
-  const { actions } = purchaseSlice;
   dispatch(actions.startCall({ callType: callTypes.action }));
 
   setTimeout(() => {
@@ -46,7 +42,6 @@ export const auditLogDataAsync = () => dispatch => {
 
 
 export const fetchProducts = () => dispatch => {
-  const { actions } = purchaseSlice;
   dispatch(actions.startCall({ callType: callTypes.action }));
 
   setTimeout(() => {

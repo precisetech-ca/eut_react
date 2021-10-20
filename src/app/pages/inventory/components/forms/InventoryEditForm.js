@@ -36,7 +36,7 @@ const InnerForm = ({
 }) => {
     // const UIContext = useCustomersUIContext();
     // const {toggleSupplierHandler, warehouseMockData} = UIContext;
-    const { warehouseMockData, prefferedSupplier, weightMockProps, uom } = useIinventoryUIContext();
+    const { warehouseMockData, prefferedSupplier, weightMockProps, uom, tempData } = useIinventoryUIContext();
     const [value, onChange] = useState(new Date());
     const [thumbPath, setThumbPath] = useState([]);
     const [filePath, setFilePath] = useState([]);
@@ -53,6 +53,7 @@ const InnerForm = ({
         setFieldValue("po_date", dateFormat(new Date(), "isoDateTime"));
     }, [])
 
+    console.log(prefferedSupplier);
     return (
       <ModalBody>
         {actionsLoading && (
@@ -68,6 +69,7 @@ const InnerForm = ({
                       size="sm" 
                       tag={Field} 
                       name="sku" 
+                      type="number"
                       placeholder="SKU"
                       disabled={isViewable}
                     />
@@ -123,8 +125,10 @@ const InnerForm = ({
                   getOptionLabel={option => option.WAREHOUSE}
                   getOptionValue={option => option.WAR_ID}
                   options={warehouseMockData} 
+                  defaultValue={values?.warehouse}
+                  styles={reactSelectStyles}
                   onChange={(e) => {
-                    setFieldValue("warehouse", e.value);
+                    setFieldValue("warehouse", e.WAR_ID);
                   }}
                 />
               </Col>
@@ -148,8 +152,13 @@ const InnerForm = ({
                   getOptionLabel={option => option.SUPPLIER}
                   getOptionValue={option => option.VEN_ID} 
                   options={prefferedSupplier} 
+                  // value={prefferedSupplier?.filter(function(option) {
+                  //   return option.VEN_ID === 78619;
+                  // })}
+                  defaultValue={values?.preferred_supply}
+                  styles={reactSelectStyles}
                   onChange={(e) => {
-                  setFieldValue("preffered_supplier", e.value);
+                  setFieldValue("preffered_supplier", e.VEN_ID);
                 }}/>
               </Col>
             </FormGroup>
@@ -193,8 +202,10 @@ const InnerForm = ({
                     getOptionLabel={option => option.DESCRIPTION}
                     getOptionValue={option => option.UOM_ID}
                     options={uom} 
+                    defaultValue={values?.uom}
+                    styles={reactSelectStyles}
                     onChange={(e) => {
-                      setFieldValue("uom", e.value);
+                      setFieldValue("uom", e.UOM_ID);
                     }}
                   />
               </Col>
@@ -204,13 +215,13 @@ const InnerForm = ({
               <Label for="weight" sm="1">Weight</Label>
               <Col sm={2}>
                 <Input 
-                      size="sm" 
-                      type="number"
-                      placeholder="weight"
-                      tag={Field} 
-                      name="weight" 
-                      disabled={isViewable}
-                  />
+                  size="sm" 
+                  type="number"
+                  placeholder="weight"
+                  tag={Field} 
+                  name="weight" 
+                  disabled={isViewable}
+                />
               </Col>
               <Col sm={3}>
                 <Select options={weightMockProps} onChange={(e) => {
@@ -222,9 +233,11 @@ const InnerForm = ({
                 <Select 
                   getOptionLabel={option => option.DESCRIPTION}
                   getOptionValue={option => option.UOM_ID}
+                  styles={reactSelectStyles}
+                  defaultValue={values?.re_ordering_uom}
                   options={uom} 
                   onChange={(e) => {
-                    setFieldValue("re_ordering_uom", e.value);
+                    setFieldValue("re_ordering_uom", e.UOM_ID);
                   }}
                 />
               </Col>
@@ -235,6 +248,7 @@ const InnerForm = ({
               <Col sm={5}>
                 <Input 
                   size="sm" 
+                  type="number"
                   tag={Field} 
                   name="on_hand_qty" 
                   placeholder="On Hand Quantity"
@@ -246,6 +260,7 @@ const InnerForm = ({
                 <Input 
                   size="sm" 
                   tag={Field} 
+                  type="number"
                   name="conversion_uom" 
                   placeholder="Conversion to UoM"
                   disabled={isViewable}
@@ -261,6 +276,7 @@ const InnerForm = ({
                   tag={Field} 
                   name="qty_avl"
                   placeholder="Quantity Available" 
+                  type="number"
                   disabled={isViewable}
                 />
               </Col>
@@ -288,6 +304,7 @@ const InnerForm = ({
                       id="cost"
                       tag={Field} 
                       size="sm"
+                      type="number"
                       placeholder="Cost"
                       className={touched && touched.cost ? (errors && errors.cost ? 'is-invalid' : 'is-valid') : ''}
                       disabled={isViewable}
@@ -302,6 +319,7 @@ const InnerForm = ({
                       name="price"
                       size="sm"
                       tag={Field} 
+                      type="number"
                       placeholder="Price"
                       className={touched && touched.price ? (errors && errors.price ? 'is-invalid' : 'is-valid') : ''}
                       disabled={isViewable}
@@ -317,6 +335,7 @@ const InnerForm = ({
                       tag={Field} 
                       id="average_cost"
                       size="sm"
+                      type="number"
                       placeholder="Average Cost"
                       disabled={isViewable}
                     />
@@ -330,6 +349,7 @@ const InnerForm = ({
                       name="standard_cost"
                       id="standard_cost"
                       size="sm"
+                      type="number"
                       placeholder="Standard Cost"
                       disabled={isViewable}
                     />
@@ -358,6 +378,7 @@ const InnerForm = ({
 
             {isViewable && <Row>
                 <Col className="text-right">
+                    <Input name="par_id" type="hidden" />
                     <Button type="button" size="sm" color="danger" onClick={onHide}>Close</Button> {' '}
                 </Col>
             </Row>}
@@ -370,10 +391,30 @@ const InnerForm = ({
 
 export const InventoryEditForm = withFormik({
     enableReinitialize: true,
-    mapPropsToValues: ({ temporaryData }) => ({
-      price: temporaryData && temporaryData.notes,
-      cost: temporaryData && temporaryData.phone,
-    }),
+    mapPropsToValues: ({ tempData, context }) => {
+      const {prefferedSupplier, defaultValuePicker, warehouseMockData, uom} = context;
+      return ({
+        par_id: tempData && tempData.PAR_ID, 
+        sku: tempData && tempData.SKU, 
+        par_id: tempData && tempData.PAR_ID, 
+        price: tempData && tempData.UOM_ID,
+        cost: tempData && tempData.UOM_ID_REORDERING,
+        standard_cost:  tempData && tempData.STANDARD_COST,
+        notes:  tempData && tempData.NOTES,
+        barcode:  tempData && tempData.BARCODE_NUMBER,
+        description:  tempData && tempData.VEN_DESCRIPTION,
+        name:  tempData && tempData.PAR_CODE,
+        conversion_uom:  tempData && tempData.CONVERSION_INTO_STOCKING_UOM,
+        preferred_supply:  prefferedSupplier && defaultValuePicker({id: tempData?.VEN_ID, arr: prefferedSupplier}),
+        warehouse:  warehouseMockData && defaultValuePicker({id: tempData?.PARWAR_ID, arr: warehouseMockData}),
+        uom:  uom && defaultValuePicker({id: tempData?.UOM, arr: uom}),
+        re_ordering_uom:  uom && defaultValuePicker({id: tempData?.UOM_ID_REORDERING, arr: uom}),
+        average_cost:  tempData && tempData.AVERAGE_COST,
+        height:  tempData && tempData.DimensionH,
+        length:  tempData && tempData.DimensionL,
+        weight:  tempData && tempData.DimensionW,
+      })
+    },
     validationSchema: Yup.object().shape({
       price: Yup.string().required("Price is required"),
       cost: Yup.string().required("Cost is required"),

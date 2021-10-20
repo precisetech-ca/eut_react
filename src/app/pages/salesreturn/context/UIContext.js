@@ -17,6 +17,7 @@ export function UIProvider({salesreturnUIEvents, children}) {
   const [ids, setIds] = useState([]);
 
   const [showSupplierModal, setShowSupplierModal] = useState(false);
+
   const toggleSupplierHandler = () => {
     setShowSupplierModal(!showSupplierModal)
   };
