@@ -76,7 +76,7 @@ function Login(props) {
       params.append('username', '700');
       params.append('password', 'mobile');
 
-      dispatch(callGenericAsync(params, '/oauth/token', 'post', res => {
+      dispatch(callGenericAsync(params, 'http://10.10.20.104:2021/oauth/token', 'post', res => {
         if (res) {
           console.log(res);
         }
