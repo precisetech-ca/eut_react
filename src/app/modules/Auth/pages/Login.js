@@ -27,13 +27,12 @@ function Login(props) {
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const LoginSchema = Yup.object().shape({
-    email: Yup.string()
-      .email("Wrong email format")
+    username: Yup.string()
       .min(3, "Minimum 3 symbols")
       .max(50, "Maximum 50 symbols")
       .required(
         intl.formatMessage({
-          id: "AUTH.VALIDATION.EMAIL_REQUIRED_FIELD",
+          id: "AUTH.VALIDATION.USERNAME_REQUIRED_FIELD",
         })
       ),
     password: Yup.string()
@@ -66,6 +65,24 @@ function Login(props) {
     return "";
   };
 
+  const getUserDetails = () => {
+    const userPayload = {
+      "data": {},
+      "action": "UserManagement",
+      "method": "getMobileUser",
+      "username": "admin",
+      "password": "admin",
+      "type": "rpc",
+      "tid": "144"
+    }
+   
+    dispatch(callGenericAsync(userPayload, 'UserManagement/getMobileUser', 'post', res => {
+      if (res) {
+        dispatch(auth.actions.fulfillUser(res?.Result?.results[0]));
+      }
+    }))
+  }
+
   const formik = useFormik({
     initialValues,
     validationSchema: LoginSchema,
@@ -73,12 +90,24 @@ function Login(props) {
       enableLoading();
       const params = new URLSearchParams();
       params.append('grant_type', 'password');
-      params.append('username', '700');
-      params.append('password', 'mobile');
+      params.append('username', values?.username);
+      params.append('password', values?.password);
 
       dispatch(callGenericAsync(params, 'http://10.10.20.104:2021/oauth/token', 'post', res => {
-        if (res) {
-          console.log(res);
+        if (res?.access_token) {
+          auth.actions.login(res?.access_token);
+          localStorage.setItem("token", res?.access_token);
+          getUserDetails();
+          disableLoading();
+          setSubmitting(false);
+        }else{
+          disableLoading();
+          setSubmitting(false);
+          setStatus(
+            intl.formatMessage({
+              id: "AUTH.VALIDATION.INVALID_LOGIN",
+            })
+          );
         }
       }));
       // setTimeout(() => {
@@ -126,17 +155,15 @@ function Login(props) {
 
         <div className="form-group fv-plugins-icon-container">
           <input
-            placeholder="Email"
-            type="email"
-            className={`form-control form-control-solid h-auto py-5 px-6 ${getInputClasses(
-              "email"
-            )}`}
-            name="email"
-            {...formik.getFieldProps("email")}
+            placeholder="Username"
+            type="text"
+            className={`form-control form-control-solid h-auto py-5 px-6`}
+            name="username"
+            {...formik.getFieldProps("username")}
           />
-          {formik.touched.email && formik.errors.email ? (
+            {formik.touched.username && formik.errors.username ? (
             <div className="fv-plugins-message-container">
-              <div className="fv-help-block">{formik.errors.email}</div>
+              <div className="fv-help-block">{formik.errors.username}</div>
             </div>
           ) : null}
         </div>

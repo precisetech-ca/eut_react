@@ -95,10 +95,15 @@ export function InventoryTable() {
               <Link href="#inventory-edit" onClick={() => {
                 inventoryUIContext.openEditCustomerDialog(value); 
                 inventoryUIContext.setEditData(value);
+                inventoryUIContext.setIsViewable(false);
               }} >
                 <i class="fas fa-pencil-alt text-success"></i>
               </Link>
-              <Link href="#inventory-edit" to={`/inventory/${value}/view`} >
+              <Link href="#inventory-edit" onClick={() => {
+                inventoryUIContext.openEditCustomerDialog(value); 
+                inventoryUIContext.setEditData(value);
+                inventoryUIContext.setIsViewable(true);
+              }} >
                 <i class="fas fa-eye text-primary ml-3"></i>
               </Link>
           </>)

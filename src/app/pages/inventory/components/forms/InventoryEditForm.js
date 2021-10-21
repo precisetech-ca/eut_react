@@ -28,7 +28,6 @@ const InnerForm = ({
     handleBlur,
     values,
     backToHome,
-    isViewable,
     actionsLoading,
     errors,
     touched,
@@ -36,7 +35,7 @@ const InnerForm = ({
 }) => {
     // const UIContext = useCustomersUIContext();
     // const {toggleSupplierHandler, warehouseMockData} = UIContext;
-    const { warehouseMockData, prefferedSupplier, weightMockProps, uom, tempData } = useIinventoryUIContext();
+    const { warehouseMockData, prefferedSupplier, weightMockProps, uom, tempData, isViewable } = useIinventoryUIContext();
     const [value, onChange] = useState(new Date());
     const [thumbPath, setThumbPath] = useState([]);
     const [filePath, setFilePath] = useState([]);

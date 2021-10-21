@@ -51,7 +51,7 @@ const httpClientConfig = {
 if (localStorage.getItem('token')) {
   httpClientConfig.headers = {
     Accept: 'application/json',
-    Authorization: 'bearer ' + localStorage.getItem('token')
+    Authorization: 'Bearer ' + localStorage.getItem('token')
   }
 }
 

@@ -2,7 +2,6 @@ import { persistReducer } from "redux-persist";
 import { put, call, takeLatest } from 'redux-saga/effects';
 import storage from "redux-persist/lib/storage";
 import { getUserByToken } from "./authCrud";
-import * as endpoints from '../../../endpoints/endpoints';
 
 export const actionTypes = {
   Login: "[Login] Action",
@@ -24,7 +23,7 @@ export const reducer = persistReducer(
     switch (action.type) {
       case actionTypes.Login: {
         const { authToken } = action.payload;
-
+        localStorage.setItem("token", authToken);
         return { authToken, user: undefined };
       }
 
@@ -35,6 +34,7 @@ export const reducer = persistReducer(
       }
 
       case actionTypes.Logout: {
+        localStorage.removeItem("token");
         // TODO: Change this code. Actions in reducer aren't allowed.
         return initialAuthState;
       }

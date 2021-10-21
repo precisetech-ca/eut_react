@@ -36,6 +36,7 @@
   "AUTH.VALIDATION.NOT_FOUND": "The requested {name} is not found",
   "AUTH.VALIDATION.INVALID_LOGIN": "The login detail is incorrect",
   "AUTH.VALIDATION.REQUIRED_FIELD": "Required field",
+  "AUTH.VALIDATION.USERNAME_REQUIRED_FIELD": "Username is required",
   "AUTH.VALIDATION.EMAIL_REQUIRED_FIELD": "Email is required",
   "AUTH.VALIDATION.PASSWORD_REQUIRED_FIELD": "Password is required",
   "AUTH.VALIDATION.MIN_LENGTH_FIELD": "Minimum field length:",

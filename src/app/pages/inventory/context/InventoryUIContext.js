@@ -16,14 +16,19 @@ export function InventoryUIProvider({customersUIEvents, children}) {
   const [tempData, setTempData] = useState({});
   const [ids, setIds] = useState([]);
   const [edit, setEdit] = useState(false);
+  const [isViewable, setIsViewable] = useState(false);
+  
 
   const setEditHandler = (value) => {
     setEdit(value);
   }
 
   
-  const { currentState } = useSelector(
-    (state) => ({ currentState: state.inventory }),
+  const { currentState, userData } = useSelector(
+    (state) => ({ 
+      currentState: state.inventory,
+      userData: state.auth.user,
+    }),
     shallowEqual
   );
   const {  supplier, uom, warehouses } = currentState;
@@ -75,19 +80,15 @@ export function InventoryUIProvider({customersUIEvents, children}) {
     }
   }
 
-  console.log(defaultValuePicker({id: 78619, arr: prefferedSupplier}))
-
   const submitFormHandler = ({payload}) => {
-    console.log(payload);
-    
     const itemMasterPayload = {
       data: {
         "PAR_ID"   : payload?.sku,
         "CODE"   : "abc",
         "BARCODE_NUMBER"   : payload?.barcode,
         "DESCRIPTION"   : payload?.description,
-        "UOM_ID"   : payload?.uom,
-        "PARWAR_ID"   : payload?.warehouse,
+        "UOM_ID"   : payload?.uom?.UOM_ID ? payload?.uom?.UOM_ID : payload?.uom,
+        "PARWAR_ID"   : payload?.warehouse?.WAR_ID ? payload?.warehouse?.WAR_ID : payload?.warehouse ,
         "VEN_ID"   : payload?.preffered_supplier,
         "PARGRO_ID"   : "",
         "MARGRO_ID"   : "",
@@ -104,14 +105,14 @@ export function InventoryUIProvider({customersUIEvents, children}) {
         "GLACC_ID_REVENUE"   : "",
         "GLACC_ID_COGS"   : "",
         "ACTIVE_FLAG"   : "",
-        "USE_ID"   : "1",
+        "USE_ID"   : userData?.USE_ID,
         "VMRSYS_ID"   : "",
         "VMRASS_ID"   : "",
         "VMRCOM_ID"   : "",
         "CONVERSION_TO_STOCKING_UOM"   : payload?.conversion_uom,
         "WARRANTY"   : "",
         "PAR_ID_SUPERCEDES"   : "",
-        "UOM_ID_REORDERING"   : payload?.re_ordering_uom,
+        "UOM_ID_REORDERING"   : payload?.re_ordering_uom ? payload?.re_ordering_uom : payload?.UOM_ID?.UOM_ID,
         "ALLOW_NEGATIVE_FLAG"   : payload?.allow_negative_oh,
         "ITEM_LEVEL_CHRG_EXP_DATE"   : "",
         "REFERENCE_NUMBER"   : "",
@@ -172,7 +173,10 @@ export function InventoryUIProvider({customersUIEvents, children}) {
     uom,
     editState: edit,
     setEditData,
+    isViewable,
+    setIsViewable,
     tempData,
+    setTempData,
     defaultValuePicker
   };
 

@@ -29,6 +29,7 @@ export const InventoryCard = () => {
                     onClick={() => {
                         inventoryUIProps.newCustomerButtonClick();
                         inventoryUIContext.setEditHandler(false);
+                        inventoryUIContext.setTempData({});
                     }}
                 >
                     New Part
