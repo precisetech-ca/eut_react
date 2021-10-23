@@ -18,6 +18,9 @@ const InventoryPage = lazy(() =>
 const PurchasePage = lazy(() =>
   import("./pages/purchase/Purchase")
 );
+const PartsReturnPage = lazy(() =>
+  import("./pages/partsreturn/PartsReturn")
+);
 const ReceivingPage= lazy(() => 
   import('./pages/receiving/Receiving')
 )
@@ -48,6 +51,7 @@ export default function BasePage() {
         <Route path="/react-bootstrap" component={ReactBootstrapPage} />
         <Route path="/inventory" component={InventoryPage} />
         <Route path="/purchase" component={PurchasePage} />
+        <Route path="/partsreturn" component={PartsReturnPage} />
         <Route path="/receiving" component={ReceivingPage} />
         <Route path="/salesorder" component={Salesorder} />
         <Route path="/salesreturn" component={SalesReturn} />

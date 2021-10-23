@@ -7,19 +7,19 @@ import {
 
 } from "_metronic/_partials/controls";
 import { Table } from '../TableData';
-import { useUIContext } from "../../context/UIContext";
-import { SalesOrderForm } from '../forms/SalesOrderForm';
+import { usePartsReturnUIContext } from "../../context/PartsReturnUIContext";
+import { PartsReturnForm } from '../forms/PartsReturnForm';
 import { FullfilmentTable } from '../tables/FullfilmentTable';
 
-export const NewSalesOrder = ({id}) => {
-    const UIContext = useUIContext();
+export const NewPartsReturn = ({id}) => {
+    const PartsReturnUIContext = usePartsReturnUIContext();
     const [key, setKey] = useState('order');
-   
+
     return (
       <Card>
-        <CardHeader title="Sales Order Infromation"></CardHeader>
+        <CardHeader title="Parts Return Infromation"></CardHeader>
         <CardBody>
-          <SalesOrderForm backToHome={UIContext.backToHome}/> 
+          <PartsReturnForm backToHome={PartsReturnUIContext.backToHome}/> 
           <Tabs
             id="controlled-tab-example"
             activeKey={key}
@@ -27,7 +27,7 @@ export const NewSalesOrder = ({id}) => {
             className="mb-3 mt-3 purchase_order_tabs"
           >
            {
-             UIContext.salesorderTabs.map(({key, title}) => 
+            PartsReturnUIContext.partsreturnTabs.map(({key, title}) => 
             <Tab eventKey={key} title={title} className="mt-2 ml-1">
               { key === "order" ? <Table /> : <FullfilmentTable /> }
             </Tab>)} 

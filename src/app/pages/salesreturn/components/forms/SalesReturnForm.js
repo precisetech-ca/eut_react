@@ -15,7 +15,7 @@ import DateTimePicker from 'react-datetime-picker';
 import Select from 'react-select'
 import InputMask from 'react-input-mask';
 import dateFormat from 'dateformat';
-import './salesReturnForm.css'
+import './salesReturnForm.scss'
 
 const InnerForm = ({
     isSubmitting,
