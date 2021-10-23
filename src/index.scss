@@ -311,10 +311,10 @@
   border: 1px solid #757578;
 }
 
-.purchase_order_tabs {
-  background: #eee;
-  border-bottom: 1px solid #E4E6EF;
-  a {
+.purchase_order_tabs { 
+    background: #eee;
+    border-bottom: 1px solid #E4E6EF;
+    a {
     background: inherit !important;
     border: 0 !important;
     color: #363940 !important;
@@ -323,6 +323,7 @@
     border-bottom: 3px solid #3799ff !important;
   }
 }
+
 
 .enable-cursor {
   cursor: pointer;

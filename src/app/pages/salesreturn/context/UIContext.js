@@ -37,7 +37,7 @@ export function UIProvider({salesreturnUIEvents, children}) {
     {value: 3, label: "oz"},
   ];
 
-  const inventoryTabs = [
+  const salesreturnTabs = [
     {key: "order", title: "Product"},
     {key: "auditlog", title: "AuditLog"},
 
@@ -71,7 +71,7 @@ export function UIProvider({salesreturnUIEvents, children}) {
     warehouseMockData,
     prefferedSupplier,
     weightMockProps,
-    inventoryTabs,
+    salesreturnTabs,
     backToHome,
     showSupplierModal,
     toggleSupplierHandler,

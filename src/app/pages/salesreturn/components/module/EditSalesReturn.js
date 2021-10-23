@@ -25,7 +25,7 @@ export const EditSalesReturn = ({id}) => {
             onSelect={(k) => setKey(k)}
             className="mb-3 mt-3"
           >
-            {UIContext.inventoryTabs.map(({key, title}) => 
+            {UIContext.salesreturnTabs.map(({key, title}) => 
             <Tab eventKey={key} title={title} className="mt-2 ml-1">
               {key === "order" ? <Table /> : <AuditLogTable />}
             </Tab>)}

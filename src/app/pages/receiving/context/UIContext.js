@@ -36,7 +36,7 @@ export function UIProvider({receivingUIEvents, children}) {
     {value: 3, label: "oz"},
   ];
 
-  const inventoryTabs = [
+  const receivingTabs = [
     {key: "order", title: "Product"},
     {key: "storage", title: "Storage"},
     
@@ -71,7 +71,7 @@ export function UIProvider({receivingUIEvents, children}) {
     warehouseMockData,
     prefferedSupplier,
     weightMockProps,
-    inventoryTabs,
+    receivingTabs,
     backToHome,
     showSupplierModal,
     toggleSupplierHandler,
