@@ -1,7 +1,5 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useState } from "react";
 import { Modal, Tabs, Tab } from "react-bootstrap";
-import { shallowEqual, useDispatch, useSelector } from "react-redux";
-import * as actions from "../_redux/actions";
 import { CustomerEditDialogHeader } from "./CustomerEditDialogHeader";
 import { InventoryEditForm } from "./forms/InventoryEditForm";
 import { useIinventoryUIContext } from "../context/InventoryUIContext";

@@ -93,7 +93,7 @@ function Login(props) {
       params.append('username', values?.username);
       params.append('password', values?.password);
 
-      dispatch(callGenericAsync(params, 'http://10.10.20.104:2021/oauth/token', 'post', res => {
+      dispatch(callGenericAsync(params, `${process.env.REACT_APP_CDN_PATH}oauth/token`, 'post', res => {
         if (res?.access_token) {
           auth.actions.login(res?.access_token);
           localStorage.setItem("token", res?.access_token);

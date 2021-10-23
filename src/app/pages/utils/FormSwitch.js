@@ -1,8 +1,8 @@
 import React, {useState} from 'react'
 import Switch from "react-switch";
 
-export const FormSwitch = ({setFieldValue, name}) => {
-    const [checked, setChecked] = useState(false);
+export const FormSwitch = ({setFieldValue, name, value = false}) => {
+    const [checked, setChecked] = useState(value);
     const handleChange = () => {
         setChecked(!checked);
         setFieldValue(name, !checked);

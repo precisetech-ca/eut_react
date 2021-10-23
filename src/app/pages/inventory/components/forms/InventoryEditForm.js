@@ -98,7 +98,7 @@ const InnerForm = ({
               </Col>
               <Label for="allow_negative_oh" sm="2">Allow Negative OH</Label>
               <Col sm="1">
-                <FormSwitch setFieldValue={setFieldValue} name="allow_negative_oh" />
+                <FormSwitch setFieldValue={setFieldValue} name="allow_negative_oh" value={values?.allow_negative_oh} />
               </Col>
               <Label for="taxable" sm="2">Taxable</Label>
               <Col sm="1">
@@ -394,6 +394,7 @@ export const InventoryEditForm = withFormik({
       const {prefferedSupplier, defaultValuePicker, warehouseMockData, uom} = context;
       return ({
         par_id: tempData && tempData.PAR_ID, 
+        allow_negative_oh: tempData && tempData.ALLOW_NEGATIVE_FLAG == 'N' ? false : true, 
         sku: tempData && tempData.SKU, 
         par_id: tempData && tempData.PAR_ID, 
         price: tempData && tempData.UOM_ID,
