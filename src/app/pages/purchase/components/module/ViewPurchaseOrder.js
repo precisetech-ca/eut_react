@@ -18,7 +18,7 @@ export const ViewPurchaseOrder = ({id}) => {
       <Card>
         <CardHeader title="View Purchase List"></CardHeader>
         <CardBody>
-          <PurchaseOrderForm backToHome={UIContext.backToHome} isViewable={true} />
+          <PurchaseOrderForm backToHome={UIContext.backToHome} isViewable={true} context={UIContext} />
           <Tabs
             id="controlled-tab-example"
             activeKey={key}

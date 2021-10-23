@@ -39,66 +39,38 @@ export function HomePageTable() {
   
   const columns = [
     {
-        Header: "Barcode",
-        Footer: "Barcode",
-        accessor: "barcode",
-        disableFilters: true,
-        Cell: ({value}) => value,
-    },
-    {
-        Header: "Desc",
-        Footer: "Desc",
-        accessor: "desc",
-        disableFilters: true,
-        Cell: ({value}) => value,
-    },
-    
-    {
-        Header: "Lot #",
-        Footer: "Lot #",
-        accessor: "lot_no",
-        disableFilters: true,
-        Cell: ({value}) => value,
-    },
-    {
-        Header: "Expiry",
-        Footer: "Expiry",
-        accessor: "expiry",
+        Header: "PO Number",
+        Footer: "PO Number",
+        accessor: "PO_NUMBER",
         disableFilters: true,
         Cell: ({value}) => value,
     },
     {
         Header: "Supplier",
         Footer: "Supplier",
-        accessor: "supplier",
+        accessor: "SUPPLIER",
         disableFilters: true,
         Cell: ({value}) => value,
     },
+    
     {
-        Header: "Notes",
-        Footer: "Notes",
-        accessor: "notes",
-        disableFilters: true,
-        Cell: ({value}) => value,
-    },
-    {
-        Header: "PO Finalized Date",
-        Footer: "PO Finalized Date",
-        accessor: "po_finalized_date",
+        Header: "Inventory",
+        Footer: "Inventory",
+        accessor: "INVENTORY",
         disableFilters: true,
         Cell: ({value}) => value,
     },
     {
         Header: "Void",
         Footer: "Void",
-        accessor: "void",
+        accessor: "VOID",
         disableSortBy: true,
         disableFilters: true,
-        Cell: ({value}) => <Input type="checkbox" checked={value} disabled={true} value={value}/>,
+        Cell: ({value}) => <Input type="checkbox" checked={value === 'Y' ? true: false} disabled={true} value={value}/>,
     },
     {
         Header: "Action",
-        accessor: "id",
+        accessor: "PURORD_ID",
         disableSortBy: true,
         disableFilters: true,
         Cell: ({value}) => {

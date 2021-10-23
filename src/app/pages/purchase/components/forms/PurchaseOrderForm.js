@@ -12,7 +12,6 @@ import { Field, ErrorMessage, withFormik, Form } from 'formik';
 import { useUIContext } from "app/pages/purchase/context/UIContext";
 import * as Yup from "yup";
 import DateTimePicker from 'react-datetime-picker';
-import Select from 'react-select'
 import InputMask from 'react-input-mask';
 import dateFormat from 'dateformat';
 
@@ -25,18 +24,10 @@ const InnerForm = ({
     values,
     backToHome,
     isViewable,
+    changeHandler,
 }) => {
     const UIContext = useUIContext();
-    const {toggleSupplierHandler, warehouseMockData} = UIContext;
-    const [value, onChange] = useState(new Date());
-    const reactSelectStyles = {
-        control: base => ({
-            ...base,
-            borderColor: "#757578",
-            minHeight: '34px',
-            height: '34px',
-        })
-    };
+    const {toggleSupplierHandler, warehouseMockData, prefferedSupplier} = UIContext;
 
     useEffect(() => {
         setFieldValue("po_date", dateFormat(new Date(), "isoDateTime"));
@@ -99,7 +90,10 @@ const InnerForm = ({
                 </Col>
                 <Label for="prepared_by" sm="1">Prepared By</Label>
                 <Col sm="3">
-                    <Select options={warehouseMockData} isDisabled="true" />
+                    <Input type="select" name="prepared_by">
+                        <option value="">Please select prepared by</option>
+                        
+                    </Input>
                 </Col>
             </FormGroup>
             
@@ -138,7 +132,12 @@ const InnerForm = ({
             <FormGroup row>
                 <Label for="supplier" sm={1}>Supplier</Label>
                 <Col sm={3}>
-                    <Select options={warehouseMockData} styles={reactSelectStyles} />
+                    <Input type="select" name="supplier" size="sm" onChange={(e) =>{
+                        setFieldValue('supplier', e.target.value);
+                    }}>
+                        <option value="">Please select supplier</option>
+                        {prefferedSupplier?.map(({VEN_ID, SUPPLIER}) => <option value={VEN_ID}>{SUPPLIER}</option>)}
+                    </Input>
                     {isViewable && <Button className="btn btn-dark mt-2 btn-sm" onClick={toggleSupplierHandler} disabled={isViewable}><i className="fa fa-plus"></i> Create Supplier</Button>}
                     
                 </Col>
@@ -178,13 +177,12 @@ export const PurchaseOrderForm = withFormik({
             phone: temporaryData && temporaryData.phone,
         }
     },
-    handleSubmit: (values, { props: { submitHandler }, setSubmitting }) => {
+    handleSubmit: (values, { props: { context }, setSubmitting, resetForm }) => {
+        const {submitFormHandler} = context
         setSubmitting(true);
+        // setSubmitting(false);
 
-        setTimeout(() => {
-            setSubmitting(false);
-        }, 1000);
-        console.log(values);
-        // submitHandler({payload: values, closeModal, setSubmitting, resetForm});
+        // console.log(values);
+        submitFormHandler({payload: values, setSubmitting, resetForm});
     },
 })(InnerForm);

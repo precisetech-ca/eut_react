@@ -1,4 +1,4 @@
-import { callGenericGetterAsync } from "app/generic/actions";
+import { callGenericAsync, callGenericGetterAsync } from "app/generic/actions";
 import { data, purchaseData, auditLogData } from "./mock/product.mock";
 import { purchaseSlice, callTypes } from "./purchaseSlice";
 const { actions } = purchaseSlice;
@@ -19,12 +19,32 @@ export const deletePurchaseList = (id) => dispatch => {
 export const fetchPurchaseList = () => dispatch => {
   dispatch(actions.startCall({ callType: callTypes.action }));
 
-  setTimeout(() => {
-    dispatch(actions.purchaseListFetched({
-      callType: callTypes.action,
-      entities: purchaseData
-    }));
-  }, 1000);
+
+  const callPayload = {
+    "data": {
+      "SEARCH"     	: "",
+      "VOID_FLAG" 	: "",
+      "ORDER"     	: "",
+      "LOC_ID"     	: "",
+      "OFFSET"        : "",
+      "RNUM_FROM"     : "",
+      "RNUM_TO"       : "",
+      "FINZ_FLAG"     : ""
+    },
+    "action": "InventoryWeb",
+    "method": "GetPurchaseOrderList",
+    "type": "rpc",
+    "tid": "144"
+  };
+
+  dispatch(callGenericAsync(callPayload, '/InventoryWeb/GetPurchaseOrderList', 'post', (res => {
+    if (res?.CODE === 'SUCCESS') {
+      dispatch(actions.purchaseListFetched({
+        callType: callTypes.action,
+        entities: res?.Result
+      }));
+    }
+  })));
 };
 
 export const auditLogDataAsync = () => dispatch => {

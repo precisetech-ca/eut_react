@@ -18,7 +18,7 @@ export const EditPurchaseOrder = ({id}) => {
       <Card>
         <CardHeader title="Purchase List"></CardHeader>
         <CardBody>
-          <PurchaseOrderForm backToHome={UIContext.backToHome} />
+          <PurchaseOrderForm backToHome={UIContext.backToHome} context={UIContext} />
           <Tabs
             id="controlled-tab-example"
             activeKey={key}
