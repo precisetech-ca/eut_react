@@ -157,14 +157,17 @@ export function Table({isViewable}) {
       disableFilters: true,
       disableSortBy: true,
       Header: "Action",
-      accessor: "id",
-      Cell: ({value}) => {
+      accessor: "action",
+      Cell: () => {
           return <i 
-                  className="fa fa-trash text-secondary enable-cursor" 
-                  aria-hidden="true" 
-                  disabled={isViewable}
-                  onClick={() => deleteProduct(value)}
-                ></i>
+          class="fa fa-trash text-secondary enable-cursor" 
+          aria-hidden="true" 
+          disabled={isViewable}
+          onClick={(e) => {
+            e.preventDefault();
+            dispatch(actions.deleteProduct())
+          }}
+          ></i>
       }
     },
 ];

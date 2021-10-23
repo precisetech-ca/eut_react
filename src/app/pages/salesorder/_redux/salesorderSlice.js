@@ -109,7 +109,6 @@ export const salesorderSlice = createSlice({
       },
       deleteProduct: (state, action) => {
         state.entities.splice(state.entities.findIndex((entity) => entity.id === action.payload), 1);
-
         return state;
       },
       deleteSalesOrderListItem: (state, action) => {

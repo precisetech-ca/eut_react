@@ -1,5 +1,5 @@
 import React, {useMemo, useEffect, useState} from 'react'
-import { Tabs, Tab } from "react-bootstrap";
+import { Tabs, Tab , Button , Col } from "react-bootstrap";
 import {
     Card,
     CardBody,
@@ -13,7 +13,12 @@ import { SalesOrderForm } from '../forms/SalesOrderForm';
 export const ViewSalesOrder = ({id}) => {
     const UIContext = useUIContext();
     const [key, setKey] = useState('order');
-
+    const tabButtonsStyle = {
+      width : "15%" ,
+      position: "absolute",
+      left :  "84.4%",
+      top  :  '62.5%',
+  }
     return (
       <Card>
         <CardHeader title="View Sales List"></CardHeader>
@@ -25,9 +30,13 @@ export const ViewSalesOrder = ({id}) => {
             onSelect={(k) => setKey(k)}
             className="mb-3 mt-3"
           >
-            {UIContext.inventoryTabs.map(({key, title}) => 
+            {UIContext.salesorderTabs.map(({key, title}) => 
             <Tab eventKey={key} title={title} className="mt-2 ml-1">
-              {key === "order" ? <Table isViewable={true} /> : <FullfilmentTable />}
+              
+              {key === "order" ? 
+              <Table isViewable={true} /> : 
+              <FullfilmentTable />
+              }
             </Tab>)}
           </Tabs>
         </CardBody>
