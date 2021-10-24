@@ -21,13 +21,19 @@ export function UIProvider({purchaseUIEvents, children}) {
   const [queryParams, setQueryParamsBase] = useState(initialFilter);
   const [ids, setIds] = useState([]);
   const [showSupplierModal, setShowSupplierModal] = useState(false);
+  const [voidModal, setVoidModal] = useState(false);
+  const [tempData, setTempData] = useState({});
 
   useEffect(() => {
     dispatch(inventoryActions.getWarehouses());
     dispatch(inventoryActions.getSupplier());
-  }, [])
+  }, []);
   const toggleSupplierHandler = () => {
     setShowSupplierModal(!showSupplierModal)
+  };
+
+  const toggleVoidHandler = () => {
+    setVoidModal(!voidModal)
   };
 
   const { inventoryState, userData } = useSelector(
@@ -55,19 +61,70 @@ export function UIProvider({purchaseUIEvents, children}) {
     {key: "audit", title: "Audit Log"},
   ];
 
-  const setQueryParams = useCallback(nextQueryParams => {
-    setQueryParamsBase(prevQueryParams => {
-      if (isFunction(nextQueryParams)) {
-        nextQueryParams = nextQueryParams(prevQueryParams);
-      }
+  const editOrView = (id, route = 'edit') => {
+    setEditData(id);
+    history.push(`/purchase/${id}/${route}`);
+  }
+  
+  const setEditData = (id) => {
+    const editMockPayload = {
+      "PURORD_ID" : "",
+      "WAR_ID" : 78767,
+      "VEN_ID" : 78618,
+      "PO_DATE" : "2021-11-03T23:56",
+      "REFERENCE_NUMBER" : "Test - 12345",
+      "NOTES" : "Testing comments",
+      "USE_ID_PREPARED_BY" : USE_ID,
+      "PREPARED_DATE" : "2021-11-03T23:56",
+      "VOID_FLAG" : "Y",
+      "VOID_NOTES" : "Notes test",
+      "ETA_DATE" : "",
+      "FNZ_FLAG" : "",
+      "FNZ_USE_ID" : ""
+    };
+    // const editPayload = {
+    //   "data":
+    //   {  
+    //     "PAR_ID"   		: id,
+    //     "SEARCH"   		: ""
+    //   }, 
+    //   "action": "ITEMMASTER",
+    //   "method": "GetPartAttachments",
+    //   "username": "admin",
+    //   "password": "admin",
+    //   "type": "rpc",
+    //   "tid": "144"
+    // };
 
-      if (isEqual(prevQueryParams, nextQueryParams)) {
-        return prevQueryParams;
-      }
+    // dispatch(callGenericAsync(editPayload, "/itemmaster/GetPartDetails", "post", (res) => {
+    //   if (res?.CODE === "SUCCESS") {
+    //     setTempData(res?.Result[0]);
+    //   }
+    // }))
+    setTimeout(() => {
+      setTempData(editMockPayload);
+    }, 1000);
+  }
 
-      return nextQueryParams;
-    });
-  }, []);
+  const currentDate = () => {
+    var now = new Date();
+    var month = (now.getMonth() + 1);               
+    var day = now.getDate();
+    if (month < 10) 
+    month = "0" + month;
+    if (day < 10) 
+    day = "0" + day;
+    var today = now.getFullYear() + '-' + month + '-' + day;
+    return today;
+  }
+
+  const currentDateTime = () => {
+    var today = new Date();
+    var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+    var time = today.getHours() + ":" + today.getMinutes();
+    var dateTime = date+'T'+time;
+    return dateTime;
+  }
 
   const submitFormHandler = ({payload, resetForm, setSubmitting}) => {
     console.log(payload);
@@ -111,7 +168,6 @@ export function UIProvider({purchaseUIEvents, children}) {
     setQueryParamsBase,
     ids,
     setIds,
-    setQueryParams,
     warehouseMockData,
     prefferedSupplier,
     weightMockProps,
@@ -120,6 +176,14 @@ export function UIProvider({purchaseUIEvents, children}) {
     showSupplierModal,
     toggleSupplierHandler,
     submitFormHandler,
+    currentDate,
+    currentDateTime,
+    setEditData,
+    tempData,
+    setTempData,
+    editOrView,
+    toggleVoidHandler,
+    voidModal,
     newPurchaseForm: purchaseUIEvents.newPurchaseForm,
     editPurchaseForm: purchaseUIEvents.editPurchaseForm,
     openDeleteCustomerDialog: purchaseUIEvents.openDeleteCustomerDialog,

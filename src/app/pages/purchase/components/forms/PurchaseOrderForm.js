@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, { useState} from 'react'
 import {
     Label,
     FormGroup,
@@ -10,10 +10,7 @@ import {
 } from 'reactstrap';
 import { Field, ErrorMessage, withFormik, Form } from 'formik';
 import { useUIContext } from "app/pages/purchase/context/UIContext";
-import * as Yup from "yup";
-import DateTimePicker from 'react-datetime-picker';
 import InputMask from 'react-input-mask';
-import dateFormat from 'dateformat';
 
 const InnerForm = ({
     isSubmitting,
@@ -24,15 +21,20 @@ const InnerForm = ({
     values,
     backToHome,
     isViewable,
-    changeHandler,
 }) => {
     const UIContext = useUIContext();
-    const {toggleSupplierHandler, warehouseMockData, prefferedSupplier} = UIContext;
-
-    useEffect(() => {
-        setFieldValue("po_date", dateFormat(new Date(), "isoDateTime"));
-    }, [])
-
+    const {
+        toggleSupplierHandler, 
+        currentDateTime, 
+        prefferedSupplier, 
+        toggleVoidHandler,
+        voidModal,
+    } = UIContext;
+    const [date, setDate] = useState(currentDateTime());
+    const setPoDate = (value) => {
+        setDate(value)
+        setFieldValue("po_date", value);
+    }
     return (
         <Form onSubmit={handleSubmit}>
             <Row className="mb-3">
@@ -41,7 +43,11 @@ const InnerForm = ({
                 <Col>
                     <FormGroup check>
                         <Label check>
-                            <Input type="checkbox" name="completed" disabled={true} />{' '}
+                            <Input 
+                                type="checkbox" 
+                                name="completed" 
+                                disabled={true} 
+                            />{' '}
                             Completed
                         </Label>
                     </FormGroup>
@@ -49,7 +55,13 @@ const InnerForm = ({
                 <Col>
                     <FormGroup check>
                         <Label check>
-                            <Input type="checkbox" name="void" disabled={isViewable}/>{' '}
+                            <Input 
+                                type="checkbox" 
+                                name="void" 
+                                checked={voidModal}
+                                disabled={isViewable} 
+                                onChange={toggleVoidHandler}
+                            />{' '}
                             Void
                         </Label>
                     </FormGroup>
@@ -101,10 +113,12 @@ const InnerForm = ({
                 <Label for="po_date" sm={1}>PO Date/Lead Time</Label>
                 <Col sm={3}>
                     <Input
-                        type="date"
+                        type="datetime-local"
                         name="po_date"
                         id="po_date"
                         size="sm"
+                        value={values?.po_date ? values?.po_date : date}
+                        onChange={(e) => setPoDate(e.target.value)}
                         placeholder="PO Date"
                         disabled={isViewable}
                     />
@@ -136,7 +150,7 @@ const InnerForm = ({
                         setFieldValue('supplier', e.target.value);
                     }}>
                         <option value="">Please select supplier</option>
-                        {prefferedSupplier?.map(({VEN_ID, SUPPLIER}) => <option value={VEN_ID}>{SUPPLIER}</option>)}
+                        {prefferedSupplier?.map(({VEN_ID, SUPPLIER}) => <option value={VEN_ID} selected={values?.supplier === VEN_ID}>{SUPPLIER}</option>)}
                     </Input>
                     {isViewable && <Button className="btn btn-dark mt-2 btn-sm" onClick={toggleSupplierHandler} disabled={isViewable}><i className="fa fa-plus"></i> Create Supplier</Button>}
                     
@@ -148,7 +162,7 @@ const InnerForm = ({
                 </Col>
                 <Label for="notes" sm={1}>Notes </Label>
                 <Col sm={3}>
-                    <Input size="sm" name="notes" disabled={isViewable} onChange={handleChange} onBlur={handleBlur} placeholder="Notes" />
+                    <Input size="sm" name="notes" value={values?.notes} disabled={isViewable} onChange={handleChange} onBlur={handleBlur} placeholder="Notes" />
                 </Col>
             </FormGroup>
             {!isViewable && <Row>
@@ -171,18 +185,20 @@ const InnerForm = ({
 
 export const PurchaseOrderForm = withFormik({
     enableReinitialize: true,
-    mapPropsToValues: ({ temporaryData }) => {
+    mapPropsToValues: ({ context }) => {
+        const {tempData} = context;
         return {
-            notes: temporaryData && temporaryData.notes,
-            phone: temporaryData && temporaryData.phone,
+            notes: tempData && tempData.NOTES,
+            reference: tempData && tempData.REFERENCE_NUMBER,
+            po_date: tempData && tempData.PO_DATE,
+            phone: tempData && tempData.phone,
+            supplier: tempData && tempData.VEN_ID,
         }
     },
     handleSubmit: (values, { props: { context }, setSubmitting, resetForm }) => {
-        const {submitFormHandler} = context
-        setSubmitting(true);
-        // setSubmitting(false);
+        const {submitFormHandler} = context;
 
-        // console.log(values);
+        setSubmitting(true);
         submitFormHandler({payload: values, setSubmitting, resetForm});
     },
 })(InnerForm);

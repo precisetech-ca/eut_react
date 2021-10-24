@@ -27,6 +27,7 @@ export const HomePageCard = () => {
                     className="btn btn-primary"
                     onClick={() => {
                         customersUIProps.newPurchaseForm();
+                        UIContext.setTempData({});
                     }}
                 >
                     New PO

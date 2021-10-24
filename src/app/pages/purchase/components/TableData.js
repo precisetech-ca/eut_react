@@ -31,7 +31,6 @@ export function Table({isViewable}) {
         accessor: "sku",
         disableFilters: true,
         Cell: ({value, row }) => {
-          console.log(entitiesLength);
             if (isViewable) {
               return "SKU-12551"
             } else {

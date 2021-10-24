@@ -6,6 +6,7 @@ import { HomePageCard } from "./components/HomePageCard";
 import { NewPurchaseOrder } from "./components/module/NewPurchaseOrder";
 import { SupplierForm } from "./components/forms/SupplierForm";
 import { ViewPurchaseOrder } from "./components/module/ViewPurchaseOrder";
+import { VoidForm } from "./components/forms/VoidForm";
 
 const Purchase = ({dispatch, history}) => {
     const purchaseUIEvents = {
@@ -55,6 +56,7 @@ const Purchase = ({dispatch, history}) => {
         </Route>
       </Switch>
       <SupplierForm />
+      <VoidForm />
     </UIProvider>
   );
 }

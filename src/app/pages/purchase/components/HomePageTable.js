@@ -76,10 +76,10 @@ export function HomePageTable() {
         Cell: ({value}) => {
           return (
             <>
-              <Link href="#purchase-edit" to={`/purchase/${value}/edit`} >
+              <Link href="#purchase-edit" onClick={() => UIContext?.editOrView(value)} >
                 <i class="fas fa-pencil-alt text-success"></i>
               </Link>
-              <Link href="#purchase-edit" to={`/purchase/${value}/view`} >
+              <Link href="#purchase-view" onClick={() => UIContext?.editOrView(value, 'view')} >
                 <i class="fas fa-eye text-primary ml-3"></i>
               </Link>
           </>)
