@@ -1,48 +1,44 @@
-import React, {useState} from 'react'
+import React,{useState} from 'react'
 import {
-    Label,
-    FormGroup,
-    Input,
-    FormFeedback,
     ModalBody,
     Modal,
-    Row, 
-    Col,
-    ModalFooter,
     ModalHeader, 
     Button,
+    ModalFooter
+    
 } from 'reactstrap';
 import { usePartsReturnUIContext } from "app/pages/partsreturn/context/PartsReturnUIContext";
-import * as Yup from "yup";
+import { withFormik } from 'formik';
 
 
 const InnerForm = ({
-    toggle
+    toggle,
+    onHide
 }) => {
     const PartsReturnUIContext = usePartsReturnUIContext();
-    const { warehouseMockData} = PartsReturnUIContext;
 
     return (
-        <Modal isOpen={PartsReturnUIContext.showSupplierModal} toggle={PartsReturnUIContext.toggleSupplierHandler} size="lg" centered>
+        <Modal isOpen={PartsReturnUIContext.showAddPartModal} toggle={PartsReturnUIContext.toggleAddPartHandler} size="lg" centered>
             <ModalHeader  toggle={toggle}>
                 Information
             </ModalHeader>
             <ModalBody>
                 	Please select supplier and inventory first.
             </ModalBody>
+            <ModalFooter>
+                <Button color="primary" onClick={onHide}>OK</Button>{' '}
+            </ModalFooter>
 
         </Modal>
     );
 }
 
 
-export const SupplierForm = withFormik({
+export const AddPartForm = withFormik({
     enableReinitialize: true,
     mapPropsToValues: ({ temporaryData }) => {
         return {
             code: temporaryData && temporaryData.code,
-           
-
         }
     },
 })(InnerForm);

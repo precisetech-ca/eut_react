@@ -5,7 +5,9 @@ import { EditPartsReturn } from "./components/module/EditPartsReturn";
 import { HomePageCard } from "./components/HomePageCard";
 import { NewPartsReturn } from "./components/module/NewPartsReturn";
 import { SupplierForm } from "./components/forms/SupplierForm";
+import { AddPartForm } from "./components/forms/AddPartModal";
 import { ViewPartsReturn } from "./components/module/ViewPartsReturn";
+import {  NewPartForm } from "./components/forms/NewPartForm";
 
 const PartsReturn = ({dispatch, history}) => {
     const partsreturnUIEvents = {
@@ -43,6 +45,8 @@ const PartsReturn = ({dispatch, history}) => {
         </Route>
       </Switch>
       <SupplierForm />
+      <AddPartForm />
+      <NewPartForm />
     </PartsReturnUIProvider>
   );
 }

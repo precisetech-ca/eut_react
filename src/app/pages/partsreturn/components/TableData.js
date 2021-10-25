@@ -16,7 +16,7 @@ import DateTimePicker from 'react-datetime-picker';
 export function Table({isViewable}) {
   // Customers UI Context
   const PartsReturnUIContext = usePartsReturnUIContext();
-  const {toggleSupplierHandler} = PartsReturnUIContext;
+  const { toggleNewPartHandler ,toggleAddPartHandler   } = PartsReturnUIContext;
   const [value, onChange] = useState(new Date());
   const customersUIProps = useMemo(() => {
     return {
@@ -118,7 +118,7 @@ export function Table({isViewable}) {
                             type="button"
                             className="mt-2" 
                             disabled={isViewable}
-                            onClick={toggleSupplierHandler}>
+                            onClick={toggleAddPartHandler}>
                             Add Part
                     </Button>{'  '}
                     <Button color="dark" 
@@ -126,7 +126,7 @@ export function Table({isViewable}) {
                             type="button"
                             className="mt-2" 
                             disabled={isViewable}
-                            onClick={toggleSupplierHandler}>
+                            onClick={toggleNewPartHandler}>
                             New Part
                     </Button>
           </Col>

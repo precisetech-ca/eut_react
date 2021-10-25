@@ -15,10 +15,22 @@ export function PartsReturnUIProvider({partsreturnUIEvents, children}) {
   const history = useHistory();
   const [queryParams, setQueryParamsBase] = useState(initialFilter);
   const [ids, setIds] = useState([]);
+  const [isViewable, setIsViewable] = useState(false);
+
 
   const [showSupplierModal, setShowSupplierModal] = useState(false);
   const toggleSupplierHandler = () => {
     setShowSupplierModal(!showSupplierModal)
+  };
+
+  const [showAddPartModal, setShowAddPartModal] = useState(false);
+  const toggleAddPartHandler = () => {
+    setShowAddPartModal(!showAddPartModal)
+  };
+
+  const [showNewPartModal, setShowNewPartModal] = useState(false);
+  const toggleNewPartHandler = () => {
+    setShowNewPartModal(!showNewPartModal)
   };
 
   const warehouseMockData = [
@@ -73,6 +85,12 @@ export function PartsReturnUIProvider({partsreturnUIEvents, children}) {
     backToHome,
     showSupplierModal,
     toggleSupplierHandler,
+    showAddPartModal,
+    toggleAddPartHandler,
+    showNewPartModal,
+    toggleNewPartHandler,
+    isViewable,
+    setIsViewable,
     newPartsReturnForm: partsreturnUIEvents.newPartsReturnForm,
     editPartsReturnForm: partsreturnUIEvents.editPartsReturnForm,
     openDeleteCustomerDialog: partsreturnUIEvents.openDeleteCustomerDialog,
