@@ -21,18 +21,18 @@ export function AuditLogTable() {
   const { currentState } = useSelector(
     (state) => ({ 
         currentState: state.purchase, 
+        userData: state.auth?.user,
         auditLogs: state.purchase.auditLogs 
     }),
     shallowEqual
   );
-  const { auditLogs } = currentState;
+  const { auditLogs, userData } = currentState;
 
   // Customers Redux state
   const dispatch = useDispatch();
   useEffect(() => {
-    // server call by queryParams
-    dispatch(actions.auditLogDataAsync());
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    const id = window.location.pathname.split('/')[2];
+    dispatch(actions.auditLogDataAsync(id, userData?.USE_ID, userData?.USERNAME));
   }, [customersUIProps.queryParams, dispatch]);
 
   const deleteProduct = (id) => {
@@ -44,21 +44,21 @@ export function AuditLogTable() {
         Header: "Date Time",
         disableSortBy: true,
         disableFilters: true,
-        accessor: "date_time",
+        accessor: "DATES",
         Cell: ({value}) => value
     },
     {
         Header: "Message",
         disableSortBy: true,
         disableFilters: true,
-        accessor: "message",
+        accessor: "MESSAGE",
         Cell: ({value}) => value
     },
     {
         Header: "User",
         disableSortBy: true,
         disableFilters: true,
-        accessor: "user",
+        accessor: "USERNAME",
         Cell: ({value}) => value
     },
 ];

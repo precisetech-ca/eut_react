@@ -8,6 +8,7 @@ import {
     Col,
     Button,
 } from 'reactstrap';
+import dateFormat, { masks } from "dateformat";
 import { Field, ErrorMessage, withFormik, Form } from 'formik';
 import { useUIContext } from "app/pages/purchase/context/UIContext";
 import InputMask from 'react-input-mask';
@@ -25,16 +26,17 @@ const InnerForm = ({
     const UIContext = useUIContext();
     const {
         toggleSupplierHandler, 
-        currentDateTime, 
+        editMode,
         prefferedSupplier, 
         toggleVoidHandler,
         voidModal,
+        currentDate,
     } = UIContext;
-    const [date, setDate] = useState(currentDateTime());
+    const [date, setDate] = useState(currentDate());
     const setPoDate = (value) => {
         setDate(value)
         setFieldValue("po_date", value);
-    }
+    };
     return (
         <Form onSubmit={handleSubmit}>
             <Row className="mb-3">
@@ -113,11 +115,11 @@ const InnerForm = ({
                 <Label for="po_date" sm={1}>PO Date/Lead Time</Label>
                 <Col sm={3}>
                     <Input
-                        type="datetime-local"
+                        type="date"
                         name="po_date"
                         id="po_date"
                         size="sm"
-                        value={values?.po_date ? values?.po_date : date}
+                        value={values?.po_date ? dateFormat( values?.po_date, "yyyy-mm-dd") : date}
                         onChange={(e) => setPoDate(e.target.value)}
                         placeholder="PO Date"
                         disabled={isViewable}
@@ -168,7 +170,8 @@ const InnerForm = ({
             {!isViewable && <Row>
                 <Col className="text-right">
                     <Button type="button" size="sm" color="danger" onClick={backToHome}>Cancel</Button> {' '}
-                    <Button color="primary" size="sm" disabled={isSubmitting}>{isSubmitting ? "Saving..." : "Save"} </Button>
+                    {!editMode && <Button color="primary" size="sm" disabled={isSubmitting}>{isSubmitting ? "Saving..." : "Save"} </Button>}
+                    {editMode && <Button color="primary" size="sm" disabled={isSubmitting}>{isSubmitting ? "Editing..." : "Edit"} </Button>}
                 </Col>
             </Row>}
 
@@ -188,6 +191,7 @@ export const PurchaseOrderForm = withFormik({
     mapPropsToValues: ({ context }) => {
         const {tempData} = context;
         return {
+            po_number: tempData && tempData.PO_NUMBER,
             notes: tempData && tempData.NOTES,
             reference: tempData && tempData.REFERENCE_NUMBER,
             po_date: tempData && tempData.PO_DATE,

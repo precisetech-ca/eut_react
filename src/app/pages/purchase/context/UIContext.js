@@ -20,14 +20,12 @@ export function UIProvider({purchaseUIEvents, children}) {
   const dispatch = useDispatch()
   const [queryParams, setQueryParamsBase] = useState(initialFilter);
   const [ids, setIds] = useState([]);
+  const [editMode, setEditMode] = useState(false);
   const [showSupplierModal, setShowSupplierModal] = useState(false);
   const [voidModal, setVoidModal] = useState(false);
   const [tempData, setTempData] = useState({});
 
-  useEffect(() => {
-    dispatch(inventoryActions.getWarehouses());
-    dispatch(inventoryActions.getSupplier());
-  }, []);
+ 
   const toggleSupplierHandler = () => {
     setShowSupplierModal(!showSupplierModal)
   };
@@ -44,11 +42,16 @@ export function UIProvider({purchaseUIEvents, children}) {
     shallowEqual
   );
   const {  supplier, uom, warehouses } = inventoryState;
-  const {USE_ID} = userData;
+  const {USE_ID, USERNAME} = userData;
 
   const warehouseMockData = warehouses;
 
   const prefferedSupplier = supplier;
+
+  useEffect(() => {
+    dispatch(inventoryActions.getWarehouses());
+    dispatch(inventoryActions.getSupplier());
+  }, []);
 
   const weightMockProps = [
     {value: 1, label: "ml"},
@@ -63,47 +66,27 @@ export function UIProvider({purchaseUIEvents, children}) {
 
   const editOrView = (id, route = 'edit') => {
     setEditData(id);
+    setEditMode(true);
     history.push(`/purchase/${id}/${route}`);
   }
   
-  const setEditData = (id) => {
-    const editMockPayload = {
-      "PURORD_ID" : "",
-      "WAR_ID" : 78767,
-      "VEN_ID" : 78618,
-      "PO_DATE" : "2021-11-03T23:56",
-      "REFERENCE_NUMBER" : "Test - 12345",
-      "NOTES" : "Testing comments",
-      "USE_ID_PREPARED_BY" : USE_ID,
-      "PREPARED_DATE" : "2021-11-03T23:56",
-      "VOID_FLAG" : "Y",
-      "VOID_NOTES" : "Notes test",
-      "ETA_DATE" : "",
-      "FNZ_FLAG" : "",
-      "FNZ_USE_ID" : ""
-    };
-    // const editPayload = {
-    //   "data":
-    //   {  
-    //     "PAR_ID"   		: id,
-    //     "SEARCH"   		: ""
-    //   }, 
-    //   "action": "ITEMMASTER",
-    //   "method": "GetPartAttachments",
-    //   "username": "admin",
-    //   "password": "admin",
-    //   "type": "rpc",
-    //   "tid": "144"
-    // };
 
-    // dispatch(callGenericAsync(editPayload, "/itemmaster/GetPartDetails", "post", (res) => {
-    //   if (res?.CODE === "SUCCESS") {
-    //     setTempData(res?.Result[0]);
-    //   }
-    // }))
-    setTimeout(() => {
-      setTempData(editMockPayload);
-    }, 1000);
+  const setEditData = (id) => {
+    const getDataPayload = {
+      "data": {
+          "PURORD_ID" : id
+      },
+      "action": "InventoryWeb",
+      "method": "GetPurchaseOrder",
+      "type": "rpc",
+      "tid": "144"
+    };
+
+    dispatch(callGenericAsync(getDataPayload, "/InventoryWeb/GetPurchaseOrder", "post", (res) => {
+      if (res?.CODE === "SUCCESS") {
+        setTempData(res?.Result?.INV_PURCHASE_ORDERS_WV[0]);
+      }
+    }))
   }
 
   const currentDate = () => {
@@ -127,7 +110,6 @@ export function UIProvider({purchaseUIEvents, children}) {
   }
 
   const submitFormHandler = ({payload, resetForm, setSubmitting}) => {
-    console.log(payload);
     const formPayload = {
       data: {
         "PURORD_ID" : "",
@@ -184,6 +166,8 @@ export function UIProvider({purchaseUIEvents, children}) {
     editOrView,
     toggleVoidHandler,
     voidModal,
+    editMode,
+    setEditMode,
     newPurchaseForm: purchaseUIEvents.newPurchaseForm,
     editPurchaseForm: purchaseUIEvents.editPurchaseForm,
     openDeleteCustomerDialog: purchaseUIEvents.openDeleteCustomerDialog,

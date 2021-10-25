@@ -47,15 +47,34 @@ export const fetchPurchaseList = () => dispatch => {
   })));
 };
 
-export const auditLogDataAsync = () => dispatch => {
+export const auditLogDataAsync = (id, useId, username) => dispatch => {
   dispatch(actions.startCall({ callType: callTypes.action }));
+  const getDataPayload = {
+    "data":
+      {    
+        "SOURCEORASEQ"	: id,     
+        "USE_ID"        : useId,
+        "USER_NAME"     : username,
+        "OFFSET" 			  : "+04:00",
+        "RNUM_FROM"     : "1",
+        "RNUM_TO" 			: "100"
+      },
+    "action": "FieldOrderWeb",
+    "method": "GetAuditLog",
+    "type": "rpc",
+    "tid": "144"
+  };
 
-  setTimeout(() => {
-    dispatch(actions.auditLogs({
-      callType: callTypes.action,
-      entities: auditLogData
-    }));
-  }, 1000);
+  console.log(getDataPayload);
+
+  dispatch(callGenericAsync(getDataPayload, "/InventoryWeb/GetAuditLog", "post", (res) => {
+    if (res?.CODE === "SUCCESS") {
+      dispatch(actions.auditLogs({
+        callType: callTypes.action,
+        entities: res?.Result
+      }));
+    }
+  }))
 };
 
 

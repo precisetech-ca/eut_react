@@ -28,6 +28,7 @@ export const HomePageCard = () => {
                     onClick={() => {
                         customersUIProps.newPurchaseForm();
                         UIContext.setTempData({});
+                        UIContext.setEditMode(false);
                     }}
                 >
                     New PO
