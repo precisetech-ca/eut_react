@@ -60,6 +60,7 @@ const Purchase = ({ history}) => {
         </Route>
         <Route exact path="/purchase">
           {({ history, match }) => {
+            // for emptying the auditlog
             dispatch( actions.auditLogDataAsync(1, 1, 'admin'));
             return (
               <HomePageCard />

@@ -6,6 +6,7 @@ import { useDispatch, useSelector, shallowEqual } from "react-redux";
 import { callGenericAsync } from "app/generic/actions";
 import * as actions from '../_redux/actions';
 import * as inventoryActions from 'app/pages/inventory/_redux/actions';
+import dateFormat from "dateformat";
 
 const UIContext = createContext();
 
@@ -112,14 +113,14 @@ export function UIProvider({purchaseUIEvents, children}) {
   const submitFormHandler = ({payload, resetForm, setSubmitting}) => {
     const formPayload = {
       data: {
-        "PURORD_ID" : "",
+        
         "WAR_ID" : "78767",
         "VEN_ID" : payload?.supplier,
         "PO_DATE" : payload?.po_date,
         "REFERENCE_NUMBER" : payload?.reference,
         "NOTES" : payload?.notes,
         "USE_ID_PREPARED_BY" : USE_ID,
-        "PREPARED_DATE" : new Date(),
+        "PREPARED_DATE" : dateFormat( new Date(), "yyyy-mm-dd"),
         "VOID_FLAG" : "",
         "VOID_NOTES" : "",
         "ETA_DATE" : "",
@@ -131,6 +132,10 @@ export function UIProvider({purchaseUIEvents, children}) {
       "type": "rpc",
       "tid": "144"
     };
+
+    if (payload?.pOrderId) {
+      formPayload.data.PURORD_ID = payload?.pOrderId;
+    }
 
     dispatch(callGenericAsync(formPayload, '/InventoryWeb/PostPurchaseOrder', 'post', (res) => {
       setSubmitting(false);

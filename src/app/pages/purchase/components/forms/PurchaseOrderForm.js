@@ -30,12 +30,12 @@ const InnerForm = ({
         prefferedSupplier, 
         toggleVoidHandler,
         voidModal,
-        currentDate,
     } = UIContext;
-    const [date, setDate] = useState(currentDate());
+    const [date, setDate] = useState(dateFormat(new Date(), "yyyy-mm-dd"));
     const setPoDate = (value) => {
-        setDate(value)
-        setFieldValue("po_date", value);
+        const formattedDate = dateFormat(value, "yyyy-mm-dd");
+        setDate(formattedDate)
+        setFieldValue("po_date", formattedDate);
     };
     return (
         <Form onSubmit={handleSubmit}>
@@ -170,6 +170,7 @@ const InnerForm = ({
             {!isViewable && <Row>
                 <Col className="text-right">
                     <Button type="button" size="sm" color="danger" onClick={backToHome}>Cancel</Button> {' '}
+                    <Input type="hidden" name="pOrderId" />
                     {!editMode && <Button color="primary" size="sm" disabled={isSubmitting}>{isSubmitting ? "Saving..." : "Save"} </Button>}
                     {editMode && <Button color="primary" size="sm" disabled={isSubmitting}>{isSubmitting ? "Editing..." : "Edit"} </Button>}
                 </Col>
@@ -191,6 +192,7 @@ export const PurchaseOrderForm = withFormik({
     mapPropsToValues: ({ context }) => {
         const {tempData} = context;
         return {
+            pOrderId: tempData && tempData.PURORD_ID,
             po_number: tempData && tempData.PO_NUMBER,
             notes: tempData && tempData.NOTES,
             reference: tempData && tempData.REFERENCE_NUMBER,
