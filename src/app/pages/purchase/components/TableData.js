@@ -11,11 +11,13 @@ export function Table({isViewable}) {
     (state) => ({ currentState: state.purchase }),
     shallowEqual
   );
-  const { entities, entitiesLength } = currentState;
+
+  const id = window?.location?.pathname?.split('/')[2];
+  const { entities } = currentState;
 
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(actions.fetchProducts());
+    dispatch(actions.fetchProducts(id));
   }, [dispatch]);
 
   const deleteProduct = (id) => {
@@ -25,133 +27,172 @@ export function Table({isViewable}) {
   const columns = [
     {
         Header: () => {
-            return <div className="d-flex justify-content-center">SKU</div>
+            return <div className="d-flex justify-content-center">PART_NUMBER</div>
         },
         disableSortBy: true,
-        accessor: "sku",
+        accessor: "PART_NUMBER",
         disableFilters: true,
         Cell: ({value, row }) => {
-            if (isViewable) {
-              return "SKU-12551"
-            } else {
-              return (<div style={{width: "200px"}}>
-                <Input type="select" size="sm" className="d-inline-block" name="select" id="exampleSelect">
-                    {value?.map(({id, value}) => 
-                        <option value={id}>{value}</option>
-                    )}
-                </Input>
+          return value
+            // if (isViewable) {
+            //   return "SKU-12551"
+            // } else {
+            //   return (<div style={{width: "200px"}}>
+            //     <Input type="select" size="sm" className="d-inline-block" name="select" id="exampleSelect">
+            //         {value?.map(({id, value}) => 
+            //             <option value={id}>{value}</option>
+            //         )}
+            //     </Input>
             
-                {entitiesLength - row?.index && <Button className="mt-2" color="dark" size="sm" >+ Create</Button>}
-              </div>)
-            }
+            //     {entitiesLength - row?.index && <Button className="mt-2" color="dark" size="sm" >+ Create</Button>}
+            //   </div>)
+            // }
             
         }
     },
     {
-      Header: "Barcode",
+      Header: "PART DESCRIPTION",
       disableFilters: true,
       disableSortBy: true,
-        accessor: "barcode",
-        Cell: ({value}) => value,
+      accessor: "PART_DESCRIPTION",
+      Cell: ({value}) => value,
     },
     {
-      Header: "Desc",
+      Header: "COST",
       disableFilters: true,
       disableSortBy: true,
-        accessor: "desc",
-        Cell: ({value}) => value,
+      accessor: "COST",
+      Cell: ({value}) => value,
+    },
+
+    {
+      Header: "LAST COST",
+      disableFilters: true,
+      disableSortBy: true,
+      accessor: "LAST_COST",
+      Cell: ({value}) => value,
+    },
+    {
+      Header: "STANDARD COST",
+      disableFilters: true,
+      disableSortBy: true,
+      accessor: "STANDARD_COST",
+      Cell: ({value}) => value,
+    },
+    {
+      Header: "QUANTITY",
+      disableFilters: true,
+      disableSortBy: true,
+      accessor: "QUANTITY",
+      Cell: ({value}) => value,
     },
     
+    // {
+    //   Header: "Barcode",
+    //   disableFilters: true,
+    //   disableSortBy: true,
+    //     accessor: "barcode",
+    //     Cell: ({value}) => value,
+    // },
+    // {
+    //   Header: "Desc",
+    //   disableFilters: true,
+    //   disableSortBy: true,
+    //     accessor: "desc",
+    //     Cell: ({value}) => value,
+    // },
+    
     {
-      Header: "Lot #",
+      Header: "REORDERING UOM",
       disableFilters: true,
       disableSortBy: true,
-      accessor: "lot_no",
+      accessor: "REORDERING_UOM",
       Cell: ({value}) => {
-        if (isViewable) {
-          return value
-        }else {
-          return <Input type="text" size="sm" style={{width:"70px"}}/>
-        }
+        return value;
+        // if (isViewable) {
+        //   return value
+        // }else {
+        //   return <Input type="text" size="sm" style={{width:"70px"}}/>
+        // }
       }
     },
-    {
-      disableFilters: true,
-      disableSortBy: true,
-      Header: () => <div style={{width: "200px"}}>Expiry</div>,
-      accessor: "expiry",
-      Cell: ({value}) => {
-        if (isViewable) {
-          return value
-        }else {
-          return <Input
-            type="date"
-            name="date"
-            id="expiry"
-            size="sm"
-            placeholder="expiry"
-          />
-        }
-      }
-    },
-    {
-      Header: "Quarantine",
-      disableFilters: true,
-      disableSortBy: true,
-      accessor: "quarantine",
-      Cell: ({value}) => (<div className="align-items-center d-flex justify-content-center mt-5">
-        <Input type="checkbox" disabled={true} />
-      </div>),
-    },
-    {
-      Header: "Oh Qty",
-      disableFilters: true,
-      disableSortBy: true,
-        accessor: "oh_qty",
-        Cell: ({value}) => value,
-    },
-    {
-      Header: "Avl Qty",
-      disableFilters: true,
-      disableSortBy: true,
-        accessor: "available_qty",
-        Cell: ({value}) => value,
-    },
-    {
-      Header: "Odr Qty",
-      disableFilters: true,
-      disableSortBy: true,
-      accessor: "odr_qty",
-      Cell: ({value}) => value,
-    },
-    {
-      disableFilters: true,
-      disableSortBy: true,
-      Header: "UoM",
-      accessor: "uom",
-      Cell: ({value}) => value,
-    },
-    {
-      disableFilters: true,
-      disableSortBy: true,
-      Header: "Cost",
-      accessor: "cost",
-      Cell: ({value}) => value,
-    },
-    {
-      Header: "Last Cost",
-      disableFilters: true,
-      disableSortBy: true,
-      accessor: "last_cost",
-      Cell: ({value}) => value,
-    },
-    {
-      Header: "Sub Total",
-      disableFilters: true,
-      disableSortBy: true,
-      accessor: "sub_total",
-      Cell: ({value}) => value
-    },
+    // {
+    //   disableFilters: true,
+    //   disableSortBy: true,
+    //   Header: () => <div style={{width: "200px"}}>Expiry</div>,
+    //   accessor: "expiry",
+    //   Cell: ({value}) => {
+    //     if (isViewable) {
+    //       return value
+    //     }else {
+    //       return <Input
+    //         type="date"
+    //         name="date"
+    //         id="expiry"
+    //         size="sm"
+    //         placeholder="expiry"
+    //       />
+    //     }
+    //   }
+    // },
+    // {
+    //   Header: "Quarantine",
+    //   disableFilters: true,
+    //   disableSortBy: true,
+    //   accessor: "quarantine",
+    //   Cell: ({value}) => (<div className="align-items-center d-flex justify-content-center mt-5">
+    //     <Input type="checkbox" disabled={true} />
+    //   </div>),
+    // },
+    // {
+    //   Header: "Oh Qty",
+    //   disableFilters: true,
+    //   disableSortBy: true,
+    //     accessor: "oh_qty",
+    //     Cell: ({value}) => value,
+    // },
+    // {
+    //   Header: "Avl Qty",
+    //   disableFilters: true,
+    //   disableSortBy: true,
+    //     accessor: "available_qty",
+    //     Cell: ({value}) => value,
+    // },
+    // {
+    //   Header: "Odr Qty",
+    //   disableFilters: true,
+    //   disableSortBy: true,
+    //   accessor: "odr_qty",
+    //   Cell: ({value}) => value,
+    // },
+    // {
+    //   disableFilters: true,
+    //   disableSortBy: true,
+    //   Header: "UoM",
+    //   accessor: "uom",
+    //   Cell: ({value}) => value,
+    // },
+    // {
+    //   disableFilters: true,
+    //   disableSortBy: true,
+    //   Header: "Cost",
+    //   accessor: "cost",
+    //   Cell: ({value}) => value,
+    // },
+    // {
+    //   Header: "Last Cost",
+    //   disableFilters: true,
+    //   disableSortBy: true,
+    //   accessor: "last_cost",
+    //   Cell: ({value}) => value,
+    // },
+    // {
+    //   Header: "Sub Total",
+    //   disableFilters: true,
+    //   disableSortBy: true,
+    //   accessor: "sub_total",
+    //   Cell: ({value}) => value
+    // },
     {
       disableFilters: true,
       disableSortBy: true,

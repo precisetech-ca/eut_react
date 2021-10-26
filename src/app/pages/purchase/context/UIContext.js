@@ -140,7 +140,10 @@ export function UIProvider({purchaseUIEvents, children}) {
     dispatch(callGenericAsync(formPayload, '/InventoryWeb/PostPurchaseOrder', 'post', (res) => {
       setSubmitting(false);
       if (res?.CODE === 'SUCCESS') { 
-        actions.deletePurchaseList();
+        actions.fetchPurchaseList();
+        actions.auditLogDataAsync(payload?.pOrderId, USE_ID, USERNAME);
+        
+        history.push("/purchase");
       }
     }))
   }

@@ -11,13 +11,6 @@ import { VoidForm } from "./components/forms/VoidForm";
 import * as actions from 'app/pages/purchase/_redux/actions';
 const Purchase = ({ history}) => {
     const dispatch = useDispatch();
-
-    useEffect(() => {
-      if (window.location.pathname === "/purchase") {
-        
-      }
-    }, [])
-
     const purchaseUIEvents = {
         newPurchaseForm: () => {
           history.push("/purchase/new");

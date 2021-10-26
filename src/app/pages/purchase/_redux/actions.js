@@ -77,21 +77,22 @@ export const auditLogDataAsync = (id, useId, username) => dispatch => {
   }))
 };
 
-
-
-
-export const fetchProducts = () => dispatch => {
+export const fetchProducts = (id) => dispatch => {
   dispatch(actions.startCall({ callType: callTypes.action }));
-
-  setTimeout(() => {
-    dispatch(actions.productsFetched({
-      callType: callTypes.action,
-      entities: data
-    }));
-  }, 1000);
-  // dispatch(callGenericGetterAsync('/purchase', (res => {
-    
-  //   // if (res) {
-  //   // }
-  // })));
+  dispatch(callGenericAsync({
+      "data": {
+          "PURORD_ID" : id
+      },
+      "action": "InventoryWeb",
+      "method": "GetPurchaseOrder",
+      "type": "rpc",
+      "tid": "144"
+  }, '/InventoryWeb/GetPurchaseOrder', "post", (res => {
+    if (res) {
+      dispatch(actions.productsFetched({
+        callType: callTypes.action,
+        entities: res?.Result?.INV_PURCHASE_ORDER_DETAILS_WV
+      }));
+    }
+  })));
 };

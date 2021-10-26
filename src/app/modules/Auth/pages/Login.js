@@ -97,7 +97,8 @@ function Login(props) {
         if (res?.access_token) {
           auth.actions.login(res?.access_token);
           localStorage.setItem("token", res?.access_token);
-          getUserDetails();
+          dispatch(auth.actions.fulfillUser(res));
+          // getUserDetails();
           disableLoading();
           setSubmitting(false);
         }else{
@@ -110,22 +111,6 @@ function Login(props) {
           );
         }
       }));
-      // setTimeout(() => {
-      //   login(values.email, values.password)
-      //     .then(({ data: { accessToken } }) => {
-      //       disableLoading();
-      //       props.login(accessToken);
-      //     })
-      //     .catch(() => {
-      //       disableLoading();
-      //       setSubmitting(false);
-      //       setStatus(
-      //         intl.formatMessage({
-      //           id: "AUTH.VALIDATION.INVALID_LOGIN",
-      //         })
-      //       );
-      //     });
-      // }, 1000);
     },
   });
 
