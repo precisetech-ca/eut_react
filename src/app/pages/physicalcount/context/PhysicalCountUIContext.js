@@ -11,7 +11,7 @@ export function usePhysicalCountUIContext() {
 
 export const PhysicalCountUIConsumer = PhysicalCountUIContext.Consumer;
 
-export function PhysicalCountUIProvider({physicalcountUIEvents, children}) {
+export function PhysicalCountUIProvider({physicalscountUIEvents, children}) {
   const history = useHistory();
   const [queryParams, setQueryParamsBase] = useState(initialFilter);
   const [ids, setIds] = useState([]);
@@ -91,12 +91,12 @@ export function PhysicalCountUIProvider({physicalcountUIEvents, children}) {
     toggleNewPartHandler,
     isViewable,
     setIsViewable,
-    newPhysicalCountForm: physicalcountUIEvents.newPhysicalCountForm,
-    editPhysicalCountForm: physicalcountUIEvents.editPhysicalCountForm,
-    openDeleteCustomerDialog: physicalcountUIEvents.openDeleteCustomerDialog,
-    openDeleteCustomersDialog: physicalcountUIEvents.openDeleteCustomersDialog,
-    openFetchCustomersDialog: physicalcountUIEvents.openFetchCustomersDialog,
-    openUpdateCustomersStatusDialog: physicalcountUIEvents.openUpdateCustomersStatusDialog,
+    newPhysicalCountForm: physicalscountUIEvents.newPhysicalCountForm,
+    editPhysicalCountForm: physicalscountUIEvents.editPhysicalCountForm,
+    openDeleteCustomerDialog: physicalscountUIEvents.openDeleteCustomerDialog,
+    openDeleteCustomersDialog: physicalscountUIEvents.openDeleteCustomersDialog,
+    openFetchCustomersDialog: physicalscountUIEvents.openFetchCustomersDialog,
+    openUpdateCustomersStatusDialog: physicalscountUIEvents.openUpdateCustomersStatusDialog,
   };
 
   return <PhysicalCountUIContext.Provider value={value}>{children}</PhysicalCountUIContext.Provider>;

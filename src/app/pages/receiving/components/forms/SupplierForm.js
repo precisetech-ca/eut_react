@@ -14,7 +14,7 @@ import {
 } from 'reactstrap';
 import InputMask from 'react-input-mask';
 import { Field, ErrorMessage, withFormik, Form } from 'formik';
-import { useUIContext } from "app/pages/receiving/context/UIContext";
+import { useUIContext } from "../../context/UIContext";
 import * as Yup from "yup";
 import { FormSwitch } from 'app/pages/utils/FormSwitch';
 

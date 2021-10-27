@@ -161,7 +161,7 @@ const InnerForm = ({
             </FormGroup>
             {!isViewable && <Row>
                 <Col className="text-right">
-                    <Button type="button" size="sm" color="danger" onClick={PartsReturnUIContext.toggleSupplierHandler}>Cancel</Button> {' '}
+                    <Button type="button" size="sm" color="danger" onClick={backToHome}>Cancel</Button> {' '}
                     <Button color="primary" size="sm" disabled={isSubmitting}>{isSubmitting ? "Saving..." : "Save"} </Button>
                 </Col>
             </Row>}

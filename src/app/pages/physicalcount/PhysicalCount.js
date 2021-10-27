@@ -2,28 +2,25 @@ import React from "react";
 import { Route, Switch } from "react-router-dom";
 import { PhysicalCountUIProvider } from "./context/PhysicalCountUIContext";
 import { HomePageCard } from "./components/HomePageCard";
-
 import { NewPhysicalCount } from "./components/module/NewPhysicalCount";
 import { ViewPhysicalCount } from "./components/module/ViewPhysicalCount";
 import { EditPhysicalCount } from "./components/module/EditPhysicalCount";
-
-import { SupplierForm } from "./components/forms/SupplierForm";
 import { AddPartForm } from "./components/forms/AddPartModal";
 import {  NewPartForm } from "./components/forms/NewPartForm";
 
 const PhysicalCount = ({dispatch, history}) => {
-    const physicalcountUIEvents = {
-        newPartsReturnForm: () => {
+    const physicalscountUIEvents = {
+        newPhysicalCountForm: () => {
           history.push("/physicalcount/new");
         },
-        editPartsReturnForm: (id) => {
+        editPhysicalCountForm: (id) => {
           history.push(`/physicalcount/${id}/edit`);
         },
     }
     
 
   return (
-    <PhysicalCountUIProvider physicalcountUIEvents={physicalcountUIEvents}>
+    <PhysicalCountUIProvider physicalscountUIEvents={physicalscountUIEvents}>
       <Switch>
         <Route exact path="/physicalcount/new">
           {({ history, match }) => (
@@ -46,7 +43,6 @@ const PhysicalCount = ({dispatch, history}) => {
           )}
         </Route>
       </Switch>
-        <SupplierForm />
         <AddPartForm />
         <NewPartForm />
     </PhysicalCountUIProvider>

@@ -17,13 +17,11 @@ const InnerForm = ({
     isSubmitting,
     handleSubmit,
     setFieldValue,
-    handleChange,
-    handleBlur,
     backToHome,
     isViewable,
 }) => {
     const PhysicalCountUIContext = usePhysicalCountUIContext();
-    const {toggleSupplierHandler, warehouseMockData} = usePhysicalCountUIContext();
+    const { warehouseMockData} = PhysicalCountUIContext;
     const reactSelectStyles = {
         control: base => ({
             ...base,
@@ -39,124 +37,69 @@ const InnerForm = ({
 
     return (
         <Form onSubmit={handleSubmit}>
-            <Row className="mb-3">
-                <Col className="col-lg-8">
-                </Col>
-                {/* <Col>
-                    <FormGroup check>
-                        <Label check>
-                            <Input type="checkbox" name="completed" disabled={true} />{' '}
-                            Completed
-                        </Label>
-                    </FormGroup>
-                </Col>
-                <Col>
-                    <FormGroup check>
-                        <Label check>
-                            <Input type="checkbox" name="void" disabled={isViewable}/>{' '}
-                            Void
-                        </Label>
-                    </FormGroup>
-                </Col> */}
-            </Row>
-    
+
             <FormGroup row>
-                <Label for="return_part_no" sm={1}>Return Part #</Label>
-                <Col sm={3}>
+                <Label for="pc_num" sm={1}>PC #</Label>
+                <Col sm={5}>
                     <Input 
                         size="sm" 
                         tag={Field} 
-                        name="return_part_no" 
+                        name="pc_num" 
                         readOnly={true}
                         disabled={isViewable}
                     />
-                    <ErrorMessage component={FormFeedback} name="return_part_no" />
+                    <ErrorMessage component={FormFeedback} name="pc_num" />
                 </Col>
-                <Label for="credit_no" sm="1">Credit # <span className="text-danger">*</span></Label>
-                <Col sm={3}>
-                        <Input
-                            type="text"
-                            name="credit_no"
-                            id="credit_no"
-                            size="sm"
-                            placeholder="credit no"
-                            disabled={isViewable}
-                        />
+                <Label for="credit_no" sm="1">Inventory<span className="text-danger">*</span></Label>
+                <Col sm={5}>
+                    <Select options={warehouseMockData} styles={reactSelectStyles} />
                     <ErrorMessage component={FormFeedback} name="Date" />
-                </Col>
-                <Label for="notes" sm="1">Notes</Label>
-                <Col sm="3">
-                    <Input
-                            type="text"
-                            name="notes"
-                            id="notes"
-                            size="sm"
-                            placeholder="Notes"
-                            disabled={isViewable}
-                        />
                 </Col>
             </FormGroup>
             
             <FormGroup row>
-                <Label for="parts_return_listing" sm={1}>Parts Return Listing</Label>
-                <Col sm={3}>
+                <Label for="pc_date" sm={1}>PC Date<span className="text-danger">*</span></Label>
+                <Col sm={5}>
                     <Input
-                        type="text"
-                        name="parts_return_listing"
-                        id="parts_return_listing"
+                        type="date"
+                        name="pc_date"
+                        id="pc_date"
                         size="sm"
                         placeholder="10/24/2021 01:14:04 AM"
                         disabled={isViewable}
                     />
                 </Col>
-                <Label for="date" sm={1}>Credit Note<span className="text-danger">*</span></Label>
-                <Col sm={3}>
+                <Label for="notes" sm={1}>Notes<span className="text-danger">*</span></Label>
+                <Col sm={5}>
                     <Input
-                            type="date"
-                            name="parts_return_listing"
-                            id="parts_return_listing"
+                            type="textarea"
+                            name="notes"
+                            id="notes"
                             size="sm"
                             placeholder=""
                             disabled={isViewable}
                         />
-                        <ErrorMessage component={FormFeedback} name="Date" />
+                        <ErrorMessage component={FormFeedback} name="Notes" />
                 </Col>
                
             </FormGroup>
             <FormGroup row>
-                <Label for="supplier" sm={1}>Supplier</Label>
-                <Col sm={3}>
-                    <Select options={warehouseMockData} styles={reactSelectStyles} />
-                    {isViewable && <Button className="btn btn-dark mt-2 btn-sm" onClick={toggleSupplierHandler} disabled={isViewable}><i className="fa fa-plus"></i> Create Supplier</Button>}
-                    <Button color="dark" 
-                            size="sm" 
-                            type="button"
-                            className="mt-2" 
-                            disabled={isViewable}
-                            onClick={toggleSupplierHandler}>
-                        <i className="fa fa-plus"></i> Create
-                    </Button>
-                </Col>
-                <Label for="due_date" sm={1}>Credit Note Due Date<span className="text-danger">*</span></Label>
-                <Col sm={3}>
+                <Label for="finalized" sm={1}>Finalized</Label>
+                <Col sm={5}>
                         <Input
-                            type="date"
-                            name="due_date"
-                            id="due_date"
+                            type="text"
+                            name="notes"
+                            id="notes"
                             size="sm"
                             placeholder=""
                             disabled={isViewable}
                         />
-                        <ErrorMessage component={FormFeedback} name="Due Data" />
                 </Col>
-                <Label for="reference" sm={1}>Reference </Label>
-                <Col sm={3}>
-                    <Input size="sm" name="reference" disabled={isViewable} onChange={handleChange} onBlur={handleBlur} placeholder="reference" />
-                </Col>
+
             </FormGroup>
             {!isViewable && <Row>
                 <Col className="text-right">
-                    <Button type="button" size="sm" color="danger" onClick={PhysicalCountUIContext.toggleSupplierHandler}>Cancel</Button> {' '}
+                    <Button type="button" size="sm" color="danger" onClick={backToHome}>Cancel</Button> {' '}
                     <Button color="primary" size="sm" disabled={isSubmitting}>{isSubmitting ? "Saving..." : "Save"} </Button>
                 </Col>
             </Row>}

@@ -48,7 +48,7 @@ export function Table({isViewable}) {
     
        
     {
-      Header: "Items",
+      Header: "#",
       disableFilters: true,
       disableSortBy: true,
         accessor: "barcode",
@@ -61,7 +61,6 @@ export function Table({isViewable}) {
         accessor: "desc",
         Cell: ({value}) => value,
     },
-    
     {
       Header: "Qty",
       disableFilters: true,
