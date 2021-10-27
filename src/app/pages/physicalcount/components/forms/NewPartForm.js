@@ -10,8 +10,6 @@ import {
   Modal,
   ModalBody,
   ModalHeader,
-  
-
 } from 'reactstrap';
 import FileUpload from 'app/utils/FileUpload';
 import { Field, ErrorMessage, withFormik, Form } from 'formik';
