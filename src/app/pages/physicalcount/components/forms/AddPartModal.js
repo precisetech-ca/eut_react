@@ -7,17 +7,17 @@ import {
     ModalFooter
     
 } from 'reactstrap';
-import { usePartsReturnUIContext } from "app/pages/partsreturn/context/PartsReturnUIContext";
+import { usePhysicalCountUIContext } from "app/pages/physicalcount/context/PhysicalCountUIContext";
 import { withFormik } from 'formik';
 
 
 const InnerForm = ({
     toggle,
 }) => {
-    const PartsReturnUIContext = usePartsReturnUIContext();
+    const PhysicalCountUIContext = usePhysicalCountUIContext();
 
     return (
-        <Modal isOpen={PartsReturnUIContext.showAddPartModal} toggle={PartsReturnUIContext.toggleAddPartHandler} size="lg" centered>
+        <Modal isOpen={PhysicalCountUIContext.showAddPartModal} toggle={PhysicalCountUIContext.toggleAddPartHandler} size="lg" centered>
             <ModalHeader  toggle={toggle}>
                 Information
             </ModalHeader>
@@ -25,7 +25,7 @@ const InnerForm = ({
                 	Please select supplier and inventory first.
             </ModalBody>
             <ModalFooter>
-                <Button color="primary" onClick={PartsReturnUIContext.toggleAddPartHandler}>OK</Button>{' '}
+                <Button color="primary" onClick={PhysicalCountUIContext.toggleAddPartHandler}>OK</Button>{' '}
             </ModalFooter>
 
         </Modal>

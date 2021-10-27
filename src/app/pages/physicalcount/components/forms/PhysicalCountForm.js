@@ -9,11 +9,8 @@ import {
     Button,
 } from 'reactstrap';
 import { Field, ErrorMessage, withFormik, Form } from 'formik';
-import { usePartsReturnUIContext } from "app/pages/partsreturn/context/PartsReturnUIContext";
-import * as Yup from "yup";
-import DateTimePicker from 'react-datetime-picker';
+import { usePhysicalCountUIContext } from "../../context/PhysicalCountUIContext";
 import Select from 'react-select'
-import InputMask from 'react-input-mask';
 import dateFormat from 'dateformat';
 
 const InnerForm = ({
@@ -22,13 +19,11 @@ const InnerForm = ({
     setFieldValue,
     handleChange,
     handleBlur,
-    values,
     backToHome,
     isViewable,
 }) => {
-    const PartsReturnUIContext = usePartsReturnUIContext();
-    const {toggleSupplierHandler, warehouseMockData} = PartsReturnUIContext;
-    const [value, onChange] = useState(new Date());
+    const PhysicalCountUIContext = usePhysicalCountUIContext();
+    const {toggleSupplierHandler, warehouseMockData} = usePhysicalCountUIContext();
     const reactSelectStyles = {
         control: base => ({
             ...base,
@@ -161,7 +156,7 @@ const InnerForm = ({
             </FormGroup>
             {!isViewable && <Row>
                 <Col className="text-right">
-                    <Button type="button" size="sm" color="danger" onClick={PartsReturnUIContext.toggleSupplierHandler}>Cancel</Button> {' '}
+                    <Button type="button" size="sm" color="danger" onClick={PhysicalCountUIContext.toggleSupplierHandler}>Cancel</Button> {' '}
                     <Button color="primary" size="sm" disabled={isSubmitting}>{isSubmitting ? "Saving..." : "Save"} </Button>
                 </Col>
             </Row>}
@@ -177,7 +172,7 @@ const InnerForm = ({
 }
 
 
-export const PartsReturnForm = withFormik({
+export const PhysicalCountForm = withFormik({
     enableReinitialize: true,
     mapPropsToValues: ({ temporaryData }) => {
         return {

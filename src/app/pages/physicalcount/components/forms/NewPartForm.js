@@ -15,7 +15,7 @@ import {
 } from 'reactstrap';
 import FileUpload from 'app/utils/FileUpload';
 import { Field, ErrorMessage, withFormik, Form } from 'formik';
-import { usePartsReturnUIContext } from "app/pages/partsreturn/context/PartsReturnUIContext";
+import { usePhysicalCountUIContext } from "app/pages/physicalcount/context/PhysicalCountUIContext";
 import * as Yup from "yup";
 import DateTimePicker from 'react-datetime-picker';
 import Select from 'react-select'
@@ -34,9 +34,9 @@ const InnerForm = ({
     onHide,
     toggle
 }) => {
-    const PartsReturnUIContext = usePartsReturnUIContext();
+    const PhysicalCountUIContext = usePhysicalCountUIContext();
     // const {toggleNewPartHandler} = PartsReturnUIContext;
-    const {  prefferedSupplier, weightMockProps, isViewable } = usePartsReturnUIContext();
+    const {  prefferedSupplier, weightMockProps, isViewable } = PhysicalCountUIContext;
     const [value, onChange] = useState(new Date());
     const [thumbPath, setThumbPath] = useState([]);
     const [filePath, setFilePath] = useState([]);
@@ -54,7 +54,7 @@ const InnerForm = ({
     }, [])
 
     return (
-    <Modal isOpen={PartsReturnUIContext.showNewPartModal} toggle={PartsReturnUIContext.toggleNewPartHandler} size="xl" centered>
+    <Modal isOpen={PhysicalCountUIContext.showNewPartModal} toggle={PhysicalCountUIContext.toggleNewPartHandler} size="xl" centered>
       <ModalHeader toggle={toggle}>Add Part</ModalHeader>
       <ModalBody >
         {actionsLoading && (
@@ -340,7 +340,7 @@ const InnerForm = ({
             </FormGroup>
             {!isViewable && <Row>
                 <Col className="text-right">
-                    <Button type="button" size="sm" color="danger" onClick={PartsReturnUIContext.toggleNewPartHandler}>Cancel</Button> {' '}
+                    <Button type="button" size="sm" color="danger" onClick={PhysicalCountUIContext.toggleNewPartHandler}>Cancel</Button> {' '}
                     <Button type="submit" color="primary" size="sm" disabled={isSubmitting}>{isSubmitting ? "Saving..." : "Save"} </Button>
                 </Col>
             </Row>}
