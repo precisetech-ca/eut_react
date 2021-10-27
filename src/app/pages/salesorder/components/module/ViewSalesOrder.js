@@ -28,7 +28,7 @@ export const ViewSalesOrder = ({id}) => {
             id="controlled-tab-example"
             activeKey={key}
             onSelect={(k) => setKey(k)}
-            className="mb-3 mt-3"
+            className="mb-3 mt-3 purchase_order_tabs"
           >
             {UIContext.salesorderTabs.map(({key, title}) => 
             <Tab eventKey={key} title={title} className="mt-2 ml-1">

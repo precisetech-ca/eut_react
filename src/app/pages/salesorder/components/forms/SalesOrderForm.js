@@ -55,7 +55,7 @@ const InnerForm = ({
                                 size="sm" 
                                 tag={Field} 
                                 name="sale_order_num" 
-                                
+
                             />
                             <ErrorMessage component={FormFeedback} name="sale_order_num" />
                         </Col>
@@ -69,6 +69,7 @@ const InnerForm = ({
                                 size="sm" 
                                 tag={Field} 
                                 name="date" 
+
                             />
                         <ErrorMessage component={FormFeedback} name="date_time" />
                         </Col>
@@ -77,7 +78,7 @@ const InnerForm = ({
                     <FormGroup row>
                         <Label for="assinged_to" sm={3}>Assinged To</Label>
                         <Col sm={8}>
-                            <Select options={warehouseMockData}  />
+                            <Select options={warehouseMockData}  disabled={isViewable} />
                             <ErrorMessage component={FormFeedback} name="assinged_to" />
                         </Col>
                     </FormGroup>

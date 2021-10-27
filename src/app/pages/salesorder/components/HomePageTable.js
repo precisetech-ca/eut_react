@@ -5,12 +5,9 @@ import React, { useEffect, useMemo, useState } from "react";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import * as actions from "../_redux/actions";
 import { useUIContext } from "../context/UIContext";
-import {Button, Input, Row, Col} from "reactstrap";
-import { Summary } from "./supplier/Summary";
+import { Input} from "reactstrap";
 import { ReactTable } from "../../custom_widgets/table/ReactTable";
-import DateTimePicker from 'react-datetime-picker';
 import { Link } from "react-router-dom";
-import { AlertModal } from "../../utils/AlertModal";
 
 export function HomePageTable() {
   // Customers UI Context
@@ -104,10 +101,10 @@ export function HomePageTable() {
         Cell: ({value}) => {
           return (
             <>
-              <Link href="#saledorder-edit" to={`/saledorder/${value}/edit`} >
+              <Link href="#salesorder-edit" to={`/salesorder/${value}/edit`} >
                 <i class="fas fa-pencil-alt text-success"></i>
               </Link>
-              <Link href="#saledorder-edit" to={`/saledorder/${value}/view`} >
+              <Link href="#salesorder-edit" to={`/salesorder/${value}/view`} >
                 <i class="fas fa-eye text-primary ml-3"></i>
               </Link>
           </>)
