@@ -35,7 +35,7 @@ export function HomePageTable() {
     {
         Header: "Receiving #",
         Footer: "Receiving #",
-        accessor: "receiving_no",
+        accessor: "RECEIVING_NUMBER",
         disableFilters: true,
         Cell: (props) => {
           return props.value
@@ -44,7 +44,7 @@ export function HomePageTable() {
     {
         Header: "Receiving Date",
         Footer: "Receiving Date",
-        accessor: "receiving_date",
+        accessor: "REC_DATE",
         disableFilters: true,
         Cell: (props) => {
           return props.value
@@ -54,7 +54,7 @@ export function HomePageTable() {
     {
         Header: "Supplier",
         Footer: "Supplier",
-        accessor: "supplier",
+        accessor: "SUPPLIER",
         disableFilters: true,
         Cell: (props) => {
           return props.value
@@ -63,25 +63,17 @@ export function HomePageTable() {
     {
         Header: "Supplier Invoice",
         Footer: "Supplier Invoice",
-        accessor: "supplier_invoice",
+        accessor: "SUPPLIER_INVOICE_NUMBER",
         disableFilters: true,
         Cell: (props) => {
           return props.value
         },
     },
-    {
-        Header: "Complete",
-        Footer: "Complete",
-        accessor: "complete",
-        disableFilters: true,
-        Cell: (props) => {
-          return props.value
-        },
-    },
+    
     {
         Header: "PO Number",
         Footer: "PO Number",
-        accessor: "po_number",
+        accessor: "PO_NUMBER",
         disableFilters: true,
         Cell: (props) => {
           return props.value
@@ -90,7 +82,7 @@ export function HomePageTable() {
     {
         Header: "Completed Date",
         Footer: "Completed Date",
-        accessor: "completed_date",
+        accessor: "RECEIVING_COMPLETE_DATE",
         disableFilters: true,
         Cell: (props) => {
           return props.value
@@ -99,7 +91,7 @@ export function HomePageTable() {
     {
         Header: "RFP Date",
         Footer: "RFP Date",
-        accessor: "rfp_date",
+        accessor: "RFP_DATE",
         disableSortBy: true,
         disableFilters: true,
         Cell: (props) => {
@@ -109,14 +101,14 @@ export function HomePageTable() {
     {
       Header: "Void",
       Footer: "Void",
-      accessor: "void",
+      accessor: "VOID",
       disableSortBy: true,
       disableFilters: true,
-      Cell: (props) => <Input type="checkbox" checked={props?.value} disabled={true} value={props?.value}/>,
+      Cell: (props) => <Input type="checkbox" checked={props?.value === "Y" ? true : false} disabled={true} value={props?.value}/>,
   },
     {
         Header: "Action",
-        accessor: "id",
+        accessor: "INVREC_ID",
         disableSortBy: true,
         disableFilters: true,
         Cell: ({value}) => {

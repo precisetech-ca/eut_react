@@ -60,7 +60,10 @@ const InnerForm = ({
                 </Col>
                 <Label for="supplier" sm={1}>Supplier</Label>
                 <Col sm={3}>
-                    <Select options={warehouseMockData} isDisabled={isViewable} />
+                    <Input type="select" name="supplier" size="sm">
+                        <option value="">Please select supplier</option>
+                        {/* {warehouseMockData?.map(({}) => <option value=""></option>) */}
+                    </Input>
                     <Button color="dark" 
                             size="sm" 
                             type="button"

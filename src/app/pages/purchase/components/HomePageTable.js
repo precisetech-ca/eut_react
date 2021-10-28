@@ -19,7 +19,6 @@ export function HomePageTable() {
   );
 
   const {purchaseList} = currentState;
-  const { USE_ID, USERNAME } = userData;
 
   useEffect(() => {
     dispatch(actions.fetchPurchaseList());

@@ -192,19 +192,23 @@ export const PurchaseOrderForm = withFormik({
     mapPropsToValues: ({ context }) => {
         const {tempData} = context;
         return {
-            pOrderId: tempData && tempData.PURORD_ID,
-            po_number: tempData && tempData.PO_NUMBER,
-            notes: tempData && tempData.NOTES,
-            reference: tempData && tempData.REFERENCE_NUMBER,
-            po_date: tempData && tempData.PO_DATE,
-            phone: tempData && tempData.phone,
-            supplier: tempData && tempData.VEN_ID,
+            pOrderId: tempData && tempData?.PURORD_ID,
+            po_number: tempData && tempData?.PO_NUMBER,
+            notes: tempData && tempData?.NOTES,
+            reference: tempData && tempData?.REFERENCE_NUMBER,
+            po_date: tempData && tempData?.PO_DATE,
+            phone: tempData && tempData?.phone,
+            supplier: tempData && tempData?.VEN_ID,
         }
     },
     handleSubmit: (values, { props: { context }, setSubmitting, resetForm }) => {
         const {submitFormHandler} = context;
 
         setSubmitting(true);
-        submitFormHandler({payload: values, setSubmitting, resetForm});
+        submitFormHandler({
+            payload: values, 
+            setSubmitting, 
+            resetForm
+        });
     },
 })(InnerForm);

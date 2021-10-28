@@ -10,7 +10,6 @@ const Inventory = ({history}) => {
           history.push("/inventory/new");
         },
         openEditCustomerDialog: (id) => {
-          
           history.push(`/inventory/${id}/edit`);
         },
         openDeleteCustomerDialog: (id) => {

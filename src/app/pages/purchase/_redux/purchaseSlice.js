@@ -66,23 +66,24 @@ export const purchaseSlice = createSlice({
       },
       addProduct: (state, action) => {
         state.entities.push({
-            id: uuidv4(),
-            sku: [
-                {id: "AKC-132123", value: "AKC-132123"},
-                {id: "AKUC-4121", value: "AKUC-4121"},
-            ],
-            barcode: "",
-            desc: "",
-            lot_no: "",
-            expiry: "",
-            oh_qty: 0,
-            available_qty: 0,
-            odr_qty: 0,
-            uom: "Each",
-            cost: 0,
-            tax: [{id: 1, title: "13%"}],
-            last_cost: 0,
-            sub_total: "$00.00"
+          "PURORDDET_ID": "",
+          "PURORD_ID": "",
+          "PAR_ID": "",
+          "SEQ_NUMBER": 1,
+          "PART_NUMBER": "",
+          "PART_DESCRIPTION": "",
+          "QUANTITY": 1,
+          "UOM_ID_REORDERING": "",
+          "REORDERING_UOM": "",
+          "COST": "",
+          "LAST_COST": "",
+          "QTY_RECEIVED": "",
+          "COLOR": null,
+          "CATALOGUE_NUMBER": null,
+          "STANDARD_COST": "",
+          "QUARANTINE_FLAG": "Y",
+          "LOT_NUMBER": null,
+          "EXPIRY_DATE": null
         });
 
         state.entitiesLength = state.entities.length;

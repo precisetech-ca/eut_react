@@ -1,4 +1,4 @@
-import { callGenericGetterAsync } from "app/generic/actions";
+import { callGenericGetterAsync, callGenericAsync } from "app/generic/actions";
 import { data, receivingData, auditLogData } from "./mock/table.mock";
 import { receivingSlice, callTypes } from "./receivingSlice";
 const { actions } = receivingSlice;
@@ -18,12 +18,29 @@ export const changeRecQty = ({qty, index}) => dispatch => {
 export const fetchReceivingList = () => dispatch => {
   dispatch(actions.startCall({ callType: callTypes.action }));
 
-  setTimeout(() => {
-    dispatch(actions.receivingListFetched({
-      callType: callTypes.action,
-      entities: receivingData
-    }));
-  }, 1000);
+  dispatch(callGenericAsync({
+    "data": {
+        "SEARCH"     	: "",
+        "VOID_FLAG" 	: "",
+        "ORDER"     	: "",
+        "LOC_ID"     	: "",
+        "OFFSET"        : "",
+        "RNUM_FROM"     : "",
+        "RNUM_TO"       : "",
+        "FINZ_FLAG"      : ""
+        },
+    "action": "InventoryWeb",
+    "method": "GetRecievingList",
+    "type": "rpc",
+    "tid": "144"
+  }, '/InventoryWeb/GetRecievingList', "post", (res) => {
+    if (res?.CODE === 'SUCCESS') {
+      dispatch(actions.receivingListFetched({
+        callType: callTypes.action,
+        entities: res?.Result
+      }));
+    }
+  }))
 };
 
 export const auditLogDataAsync = () => dispatch => {

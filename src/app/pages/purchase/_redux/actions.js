@@ -19,7 +19,6 @@ export const deletePurchaseList = (id) => dispatch => {
 export const fetchPurchaseList = () => dispatch => {
   dispatch(actions.startCall({ callType: callTypes.action }));
 
-
   const callPayload = {
     "data": {
       "SEARCH"     	: "",
@@ -64,8 +63,6 @@ export const auditLogDataAsync = (id, useId, username) => dispatch => {
     "type": "rpc",
     "tid": "144"
   };
-
-  console.log(getDataPayload);
 
   dispatch(callGenericAsync(getDataPayload, "/InventoryWeb/GetAuditLog", "post", (res) => {
     if (res?.CODE === "SUCCESS") {

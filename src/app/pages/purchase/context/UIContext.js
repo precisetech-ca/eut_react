@@ -26,7 +26,6 @@ export function UIProvider({purchaseUIEvents, children}) {
   const [voidModal, setVoidModal] = useState(false);
   const [tempData, setTempData] = useState({});
 
- 
   const toggleSupplierHandler = () => {
     setShowSupplierModal(!showSupplierModal)
   };
@@ -42,7 +41,8 @@ export function UIProvider({purchaseUIEvents, children}) {
     }),
     shallowEqual
   );
-  const {  supplier, uom, warehouses } = inventoryState;
+  
+  const { supplier, uom, warehouses } = inventoryState;
   const {USE_ID, USERNAME} = userData;
 
   const warehouseMockData = warehouses;
@@ -66,13 +66,13 @@ export function UIProvider({purchaseUIEvents, children}) {
   ];
 
   const editOrView = (id, route = 'edit') => {
-    setEditData(id);
+    setEditDataAsync(id);
     setEditMode(true);
     history.push(`/purchase/${id}/${route}`);
   }
   
 
-  const setEditData = (id) => {
+  const setEditDataAsync = (id) => {
     const getDataPayload = {
       "data": {
           "PURORD_ID" : id
@@ -113,7 +113,6 @@ export function UIProvider({purchaseUIEvents, children}) {
   const submitFormHandler = ({payload, resetForm, setSubmitting}) => {
     const formPayload = {
       data: {
-        
         "WAR_ID" : "78767",
         "VEN_ID" : payload?.supplier,
         "PO_DATE" : payload?.po_date,
@@ -142,7 +141,6 @@ export function UIProvider({purchaseUIEvents, children}) {
       if (res?.CODE === 'SUCCESS') { 
         actions.fetchPurchaseList();
         actions.auditLogDataAsync(payload?.pOrderId, USE_ID, USERNAME);
-        
         history.push("/purchase");
       }
     }))
@@ -168,7 +166,7 @@ export function UIProvider({purchaseUIEvents, children}) {
     submitFormHandler,
     currentDate,
     currentDateTime,
-    setEditData,
+    setEditDataAsync,
     tempData,
     setTempData,
     editOrView,
