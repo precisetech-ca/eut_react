@@ -19,7 +19,7 @@ import {
 import * as uiHelpers from "../utils/UIHelpers";
 import * as columnFormatters from "../column-formatter";
 import { Pagination } from "../../../../_metronic/_partials/controls";
-import { useUIContext } from "../context/UIContext";
+import { useUIContext } from "../context/ReceivingUIContext";
 
 export function Table() {
   // Customers UI Context

@@ -18,8 +18,14 @@ const InventoryPage = lazy(() =>
 const PurchasePage = lazy(() =>
   import("./pages/purchase/Purchase")
 );
+const PartsReturnPage = lazy(() =>
+  import("./pages/partsreturn/PartsReturn")
+);
+const PhysicalCountPage = lazy(() =>
+  import("./pages/physicalcount/PhysicalCount")
+);
 const ReceivingPage= lazy(() => 
-  import('./pages/receiving/Receiving')
+  import("./pages/receiving/Receiving")
 )
 const Salesorder= lazy(() => 
   import('./pages/salesorder/SalesOrder')
@@ -42,16 +48,18 @@ export default function BasePage() {
           <Redirect exact from="/" to="/dashboard" />
         }
         <ContentRoute path="/dashboard" component={DashboardPage} />
-        <ContentRoute path="/builder" component={BuilderPage} />
-        <ContentRoute path="/my-page" component={MyPage} />
-        <Route path="/google-material" component={GoogleMaterialPage} />
-        <Route path="/react-bootstrap" component={ReactBootstrapPage} />
-        <Route path="/inventory" component={InventoryPage} />
-        <Route path="/purchase" component={PurchasePage} />
-        <Route path="/receiving" component={ReceivingPage} />
-        <Route path="/salesorder" component={Salesorder} />
-        <Route path="/salesreturn" component={SalesReturn} />
-        <Route path="/user-profile" component={UserProfilepage} />
+        <ContentRoute path="/builder"   component={BuilderPage} />
+        <ContentRoute path="/my-page"   component={MyPage} />
+        <Route path="/google-material"  component={GoogleMaterialPage} />
+        <Route path="/react-bootstrap"  component={ReactBootstrapPage} />
+        <Route path="/inventory"        component={InventoryPage} />
+        <Route path="/purchase"         component={PurchasePage} />
+        <Route path="/partsreturn"      component={PartsReturnPage} />
+        <Route path='/physicalcount'    component={PhysicalCountPage} />
+        <Route path="/receiving"        component={ReceivingPage} />
+        <Route path="/salesorder"       component={Salesorder} />
+        <Route path="/salesreturn"      component={SalesReturn} />
+        <Route path="/user-profile"     component={UserProfilepage} />
         <Redirect to="error/error-v1" />
       </Switch>
     </Suspense>

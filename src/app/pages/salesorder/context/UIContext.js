@@ -36,12 +36,11 @@ export function UIProvider({salesorderUIEvents, children}) {
     {value: 3, label: "oz"},
   ];
 
-  const inventoryTabs = [
+  const salesorderTabs = [
     {key: "order", title: "Product"},
     {key: "fullfilment", title: "Fullfilment"},
     {key: "dispatch", title: "Dispatch"},
     {key: "delivery", title: "Delivery"},
-
   ];
 
   const setQueryParams = useCallback(nextQueryParams => {
@@ -72,7 +71,7 @@ export function UIProvider({salesorderUIEvents, children}) {
     warehouseMockData,
     prefferedSupplier,
     weightMockProps,
-    inventoryTabs,
+    salesorderTabs,
     backToHome,
     showSupplierModal,
     toggleSupplierHandler,

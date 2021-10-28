@@ -25,7 +25,7 @@ export const NewPurchaseOrder = ({id}) => {
             onSelect={(k) => setKey(k)}
             className="mb-3 mt-3 purchase_order_tabs"
           >
-            {UIContext.inventoryTabs.map(({key, title}) => 
+            {UIContext.purchaseTabs.map(({key, title}) => 
             <Tab eventKey={key} title={title} className="mt-2 ml-1">
               {key === "order" ? <Table /> : <AuditLogTable />}
             </Tab>)}

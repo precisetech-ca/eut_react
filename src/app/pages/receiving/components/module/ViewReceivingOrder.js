@@ -6,7 +6,7 @@ import {
     CardHeader,
 } from "_metronic/_partials/controls";
 import { Table } from 'app/pages/receiving/components/TableData';
-import { useUIContext } from "app/pages/receiving/context/UIContext";
+import { useUIContext } from "../../context/UIContext";
 import { ReceivingOrderForm } from 'app/pages/receiving/components/forms/ReceivingOrderForm';
 import { AuditLogTable } from 'app/pages/receiving/components/tables/AuditLogTable';
 
@@ -28,7 +28,7 @@ export const ViewReceivingOrder = ({id}) => {
             onSelect={(k) => setKey(k)}
             className="mb-3 mt-3"
           >
-            {UIContext.inventoryTabs.map(({key, title}) => 
+            {UIContext.receivingTabs.map(({key, title}) => 
             <Tab eventKey={key} title={title} className="mt-2 ml-1">
               {key === "order" ? <Table isViewable={true} /> : <AuditLogTable />}
             </Tab>)}

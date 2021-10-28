@@ -5,10 +5,11 @@ import { salesReturnSlice, callTypes } from "./salesReturnSlice";
 const {actions} = salesReturnSlice;
 
 export const addProduct = () => dispatch => {
+  const { actions } = salesReturnSlice;
   dispatch(actions.addProduct());
 }
-
 export const deleteProduct = (id) => dispatch => {
+  const { actions } = salesReturnSlice;
   dispatch(actions.deleteProduct(id));
 }
 
