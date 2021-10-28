@@ -8,18 +8,20 @@ import {
     FormGroup,
     Input,
     Col,
-    FormFeedback
+    FormFeedback,
+    Label
     
 } from 'reactstrap';
 import { usePhysicalCountUIContext } from "app/pages/physicalcount/context/PhysicalCountUIContext";
 import { withFormik, Form , ErrorMessage , Field} from 'formik';
+import { AddPartTable } from '../tables/AddPartTable';
 
 
 const InnerForm = ({
     toggle,
     handleSubmit,
     isSubmitting,
-    backToHome
+    
 }) => {
     const PhysicalCountUIContext = usePhysicalCountUIContext();
 
@@ -60,7 +62,51 @@ const InnerForm = ({
                             <Button type="button" size="sm" block color="danger">Clear</Button>
                         </Col>
                     </FormGroup>
+                
+
+                    <AddPartTable />
+
+                    <FormGroup row className='mt-2'>
+                        <Label for="notes" sm={1} className='text-center'>Notes</Label>
+                        <Col sm={7}>
+                            <Input 
+                            size="sm" 
+                            tag={Field} 
+                            name="notes" 
+                            type="textarea"
+                            placeholder="notes"
+                            />
+                            <ErrorMessage component={FormFeedback} name="notes" />
+                        </Col>
+                        <Label for="count" sm={1} className='text-center'>Count</Label>
+                        <Col sm={3}>
+                            <Input 
+                            size="sm" 
+                            tag={Field} 
+                            name="count" 
+                            type="text"
+                            placeholder=""
+                            />
+                            <ErrorMessage component={FormFeedback} name="count" />
+                        </Col>
+                    </FormGroup>
+                    <FormGroup row className='mt-2'>
+                        <Col sm={8}>
+                        </Col>
+                        <Label for="uom" sm={1} className='text-center'>UOM</Label>
+                        <Col sm={3}>
+                            <Input 
+                            size="sm" 
+                            tag={Field} 
+                            name="uom" 
+                            type="text"
+                            placeholder=""
+                            />
+                            <ErrorMessage component={FormFeedback} name="uom" />
+                        </Col>
+                    </FormGroup>     
                 </Form>
+
             </ModalBody>
             <ModalFooter>
                 <Col className="text-right">

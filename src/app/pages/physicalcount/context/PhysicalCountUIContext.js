@@ -49,7 +49,7 @@ export function PhysicalCountUIProvider({physicalscountUIEvents, children}) {
   ];
 
   const physicalcountTabs = [
-    {key: "order", title: "Items"},
+    {key: "order", title: "Physical Count Item"},
    
   ];
 
