@@ -26,51 +26,50 @@ export function HomePageTable() {
   
   const columns = [
     {
-        Header: "PO Number",
-        Footer: "PO Number",
-        accessor: "PO_NUMBER",
-        disableFilters: true,
-        Cell: ({value}) => value,
+      Header: "PO Number",
+      Footer: "PO Number",
+      accessor: "PO_NUMBER",
+      disableFilters: true,
+      Cell: ({value}) => value,
     },
     {
-        Header: "Supplier",
-        Footer: "Supplier",
-        accessor: "SUPPLIER",
-        disableFilters: true,
-        Cell: ({value}) => value,
-    },
-    
-    {
-        Header: "Inventory",
-        Footer: "Inventory",
-        accessor: "INVENTORY",
-        disableFilters: true,
-        Cell: ({value}) => value,
+      Header: "Supplier",
+      Footer: "Supplier",
+      accessor: "SUPPLIER",
+      disableFilters: true,
+      Cell: ({value}) => value,
     },
     {
-        Header: "Void",
-        Footer: "Void",
-        accessor: "VOID",
-        disableSortBy: true,
-        disableFilters: true,
-        Cell: ({value}) => <Input type="checkbox" checked={value === 'Y' ? true: false} disabled={true} value={value}/>,
+      Header: "Inventory",
+      Footer: "Inventory",
+      accessor: "INVENTORY",
+      disableFilters: true,
+      Cell: ({value}) => value,
     },
     {
-        Header: "Action",
-        accessor: "PURORD_ID",
-        disableSortBy: true,
-        disableFilters: true,
-        Cell: ({value}) => {
-          return (
-            <>
-              <Link href="#purchase-edit" onClick={() => UIContext?.editOrView(value)} >
-                <i class="fas fa-pencil-alt text-success"></i>
-              </Link>
-              <Link href="#purchase-view" onClick={() => UIContext?.editOrView(value, 'view')} >
-                <i class="fas fa-eye text-primary ml-3"></i>
-              </Link>
-          </>)
-        }
+      Header: "Void",
+      Footer: "Void",
+      accessor: "VOID",
+      disableSortBy: true,
+      disableFilters: true,
+      Cell: ({value}) => <Input type="checkbox" checked={value === 'Y' ? true: false} disabled={true} value={value}/>,
+    },
+    {
+      Header: "Action",
+      accessor: "PURORD_ID",
+      disableSortBy: true,
+      disableFilters: true,
+      Cell: ({value}) => {
+        return (
+          <>
+            <Link href="#purchase-edit" onClick={() => UIContext?.editOrView(value)} >
+              <i class="fas fa-pencil-alt text-success"></i>
+            </Link>
+            <Link href="#purchase-view" onClick={() => UIContext?.editOrView(value, 'view')} >
+              <i class="fas fa-eye text-primary ml-3"></i>
+            </Link>
+        </>)
+      }
     },
 ];
 
