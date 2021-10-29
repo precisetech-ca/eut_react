@@ -18,6 +18,7 @@ export const InventoryCard = () => {
         };
     }, [inventoryUIContext]);
 
+    const {setEditHandler, setTempData, setIsViewable} = inventoryUIContext;
 
     return (
         <Card>
@@ -28,8 +29,9 @@ export const InventoryCard = () => {
                     className="btn btn-primary"
                     onClick={() => {
                         inventoryUIProps.newCustomerButtonClick();
-                        inventoryUIContext.setEditHandler(false);
-                        inventoryUIContext.setTempData({});
+                        setEditHandler(false);
+                        setTempData({});
+                        setIsViewable(false);
                     }}
                 >
                     New Part
