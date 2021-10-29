@@ -83,7 +83,7 @@ export function InventoryUIProvider({customersUIEvents, children}) {
   const submitFormHandler = ({payload}) => {
     const itemMasterPayload = {
       data: {
-        "PAR_ID"   : payload?.sku,
+        "PAR_ID"   : "",
         "CODE"   : "abc",
         "BARCODE_NUMBER"   : payload?.barcode,
         "DESCRIPTION"   : payload?.description,

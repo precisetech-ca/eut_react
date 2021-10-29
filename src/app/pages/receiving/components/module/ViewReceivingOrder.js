@@ -21,6 +21,7 @@ export const ViewReceivingOrder = ({id}) => {
           <ReceivingOrderForm 
             backToHome={UIContext.backToHome} 
             isViewable={true} 
+            context={UIContext}
           />
           <Tabs
             id="controlled-tab-example"

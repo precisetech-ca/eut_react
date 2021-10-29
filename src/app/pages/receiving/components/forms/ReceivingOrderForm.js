@@ -22,10 +22,10 @@ const InnerForm = ({
     handleBlur,
     values,
     backToHome,
-    isViewable
+    isViewable,
 }) => {
     const UIContext = useUIContext();
-    const {toggleSupplierHandler, warehouseMockData} = UIContext;
+    const {toggleSupplierHandler, warehouseMockData, prefferedSupplier} = UIContext;
     
     useEffect(() => {
         setFieldValue("po_date", dateFormat(new Date(), "isoDateTime"));
@@ -39,7 +39,8 @@ const InnerForm = ({
                     <Input 
                         size="sm" 
                         tag={Field} 
-                        name="Receiving_number" 
+                        name="receiving_number" 
+                        id="receiving_number" 
                         readOnly={true}
                     />
                     <ErrorMessage component={FormFeedback} name="Receiving_number" />
@@ -51,6 +52,7 @@ const InnerForm = ({
                 <Col sm={3}>
                     <Input
                         type="date"
+                        tag={Field} 
                         name="receiving_date"
                         placeholder="Receiving Date"
                         disabled={isViewable}
@@ -58,9 +60,11 @@ const InnerForm = ({
                 </Col>
                 <Label for="supplier" sm={1}>Supplier</Label>
                 <Col sm={3}>
-                    <Input type="select" name="supplier" size="sm">
+                    <Input type="select" name="supplier" size="sm" onChange={handleChange}>
                         <option value="">Please select supplier</option>
-                        {/* {warehouseMockData?.map(({}) => <option value=""></option>) */}
+                        {prefferedSupplier?.map(({VEN_ID, SUPPLIER}) => 
+                            <option value={VEN_ID} selected={values?.supplier === VEN_ID ? true : false}>{SUPPLIER}</option>
+                        )}
                     </Input>
                     <Button color="dark" 
                             size="sm" 
@@ -124,7 +128,10 @@ const InnerForm = ({
             <FormGroup row>
                 <Label for="inventory" sm="1">Inventory</Label>
                 <Col sm="3">
-                    <Select options={warehouseMockData} isDisabled={isViewable} />
+                    <Input type="select" name="warehouse" size="sm" onChange={handleChange}>
+                        <option value="">Please select supplier</option>
+                        {warehouseMockData?.map(({WAR_ID, WAREHOUSE}) => <option value={WAR_ID} selected={values?.warehouse === WAR_ID ? true : false}>{WAREHOUSE}</option>)}
+                    </Input>
                 </Col>
                 <Label for="Inv_Due_Date" sm="1">Fax</Label>
                 <Col sm={3}>
@@ -182,6 +189,7 @@ const InnerForm = ({
             </FormGroup>
             {!isViewable && <Row>
                 <Col className="text-right">
+                    <Input type="hidden" name="pOrderId" />
                     <Button type="button" size="sm" color="danger" onClick={backToHome}>Cancel</Button> {' '}
                     <Button color="primary" size="sm" disabled={isSubmitting}>{isSubmitting ? "Saving..." : "Save"} </Button>
                 </Col>
@@ -203,16 +211,11 @@ export const ReceivingOrderForm = withFormik({
     mapPropsToValues: ({ temporaryData }) => {
         return {
             notes: temporaryData && temporaryData.notes,
-            // phone: temporaryData && temporaryData.phone,
         }
     },
-    handleSubmit: (values, { props: { submitHandler }, setSubmitting }) => {
+    handleSubmit: (values, { props: { context }, setSubmitting, resetForm }) => {
+        const {submitFormHandler} = context;
         setSubmitting(true);
-
-        setTimeout(() => {
-            setSubmitting(false);
-        }, 1000);
-        console.log(values);
-        // submitHandler({payload: values, closeModal, setSubmitting, resetForm});
+        submitFormHandler({payload: values, setSubmitting, resetForm});
     },
 })(InnerForm);

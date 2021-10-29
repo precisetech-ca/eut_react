@@ -19,7 +19,7 @@ export const NewReceivingOrder = ({id}) => {
       <Card>
         <CardHeader title="New Receiving"></CardHeader>
         <CardBody>
-          <ReceivingOrderForm backToHome={UIContext.backToHome}/>
+          <ReceivingOrderForm backToHome={UIContext.backToHome} context={UIContext}/>
           <Tabs
             id="controlled-tab-example"
             activeKey={key}

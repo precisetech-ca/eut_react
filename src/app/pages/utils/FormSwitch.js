@@ -1,17 +1,17 @@
 import React, {useState} from 'react'
 import Switch from "react-switch";
 
-export const FormSwitch = ({setFieldValue, name, value = false}) => {
-    const [checked, setChecked] = useState(value);
+export const FormSwitch = ({setFieldValue, name, value}) => {
+    const [checked, setChecked] = useState(false);
     const handleChange = () => {
         setChecked(!checked);
         setFieldValue(name, !checked);
     }
-    
+
     return (
         <div>
             <Switch
-                checked={checked}
+                checked={value}
                 onChange={handleChange}
                 onColor="#86d3ff"
                 onHandleColor="#2693e6"
@@ -23,7 +23,7 @@ export const FormSwitch = ({setFieldValue, name, value = false}) => {
                 height={20}
                 width={48}
                 className="react-switch"
-                id="material-switch"
+                id={name}
             />
         </div>
     )

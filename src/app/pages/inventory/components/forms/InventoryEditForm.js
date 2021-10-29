@@ -24,35 +24,15 @@ const InnerForm = ({
     isSubmitting,
     handleSubmit,
     setFieldValue,
-    handleChange,
-    handleBlur,
     values,
-    backToHome,
     actionsLoading,
     errors,
     touched,
     onHide,
 }) => {
-    // const UIContext = useCustomersUIContext();
-    // const {toggleSupplierHandler, warehouseMockData} = UIContext;
-    const { warehouseMockData, prefferedSupplier, weightMockProps, uom, tempData, isViewable } = useIinventoryUIContext();
-    const [value, onChange] = useState(new Date());
+    const { warehouseMockData, prefferedSupplier, weightMockProps, uom, isViewable } = useIinventoryUIContext();
     const [thumbPath, setThumbPath] = useState([]);
     const [filePath, setFilePath] = useState([]);
-    const reactSelectStyles = {
-        control: base => ({
-            ...base,
-            borderColor: "#757578",
-            minHeight: '34px',
-            height: '34px',
-        })
-    };
-
-    useEffect(() => {
-        setFieldValue("po_date", dateFormat(new Date(), "isoDateTime"));
-    }, [])
-
-    console.log(prefferedSupplier);
     return (
       <ModalBody>
         {actionsLoading && (
@@ -77,11 +57,11 @@ const InnerForm = ({
                 
                 <Label for="stock_item" sm="2">Stock Item</Label>
                 <Col sm="1">
-                  <FormSwitch setFieldValue={setFieldValue} name="stock_item"/>
+                  <FormSwitch setFieldValue={setFieldValue} name="stock_item" value={values?.stock_item}/>
                 </Col>
                 <Label for="status" sm="2">Status</Label>
                 <Col sm="1">
-                  <FormSwitch setFieldValue={setFieldValue} name="status"/>
+                  <FormSwitch setFieldValue={setFieldValue} name="status" value={values?.status}/>
                 </Col>
             </FormGroup>
             <FormGroup row>
@@ -102,7 +82,7 @@ const InnerForm = ({
               </Col>
               <Label for="taxable" sm="2">Taxable</Label>
               <Col sm="1">
-                <FormSwitch setFieldValue={setFieldValue} name="taxable" />
+                <FormSwitch setFieldValue={setFieldValue} name="taxable" value={values?.taxable} />
               </Col>
             </FormGroup>
 
@@ -120,16 +100,17 @@ const InnerForm = ({
               </Col>
               <Label for="warehouse" sm="1">Warehouse</Label>
               <Col sm={5}>
-                <Select 
-                  getOptionLabel={option => option.WAREHOUSE}
-                  getOptionValue={option => option.WAR_ID}
-                  options={warehouseMockData} 
-                  defaultValue={values?.warehouse}
-                  styles={reactSelectStyles}
-                  onChange={(e) => {
-                    setFieldValue("warehouse", e.WAR_ID);
-                  }}
-                />
+                <Input type="select" name="warehouse" size="sm" disabled={isViewable} onChange={(e) => {
+                  setFieldValue("warehouse", e.target.value);
+                }}>
+                  <option>Please Select</option>
+                  {warehouseMockData?.map(({WAR_ID, WAREHOUSE}) => 
+                    <option 
+                      value={WAR_ID} 
+                      selected={WAR_ID === values?.warehouse ? true: false}>
+                        {WAREHOUSE}
+                    </option>)}
+                </Input>
               </Col>
             </FormGroup>
 
@@ -147,18 +128,17 @@ const InnerForm = ({
               </Col>
               <Label for="preferred_supply" sm="1">Supplier</Label>
               <Col sm={5}>
-                <Select 
-                  getOptionLabel={option => option.SUPPLIER}
-                  getOptionValue={option => option.VEN_ID} 
-                  options={prefferedSupplier} 
-                  // value={prefferedSupplier?.filter(function(option) {
-                  //   return option.VEN_ID === 78619;
-                  // })}
-                  defaultValue={values?.preferred_supply}
-                  styles={reactSelectStyles}
-                  onChange={(e) => {
-                  setFieldValue("preffered_supplier", e.VEN_ID);
-                }}/>
+                <Input type="select" name="preferred_supply" size="sm" disabled={isViewable} onChange={(e) => {
+                  setFieldValue("preferred_supply", e.target.value);
+                }}>
+                  <option>Please Select</option>
+                  {prefferedSupplier?.map(({VEN_ID, SUPPLIER}) => 
+                    <option 
+                      value={VEN_ID} 
+                      selected={VEN_ID === values?.preferred_supply ? true: false}>
+                        {SUPPLIER}
+                    </option>)}
+                </Input>
               </Col>
             </FormGroup>
 
@@ -197,16 +177,17 @@ const InnerForm = ({
               {/* <Col sm={1}></Col> */}
               <Label for="uom" sm="1">UoM</Label>
               <Col sm={5}>
-                <Select 
-                    getOptionLabel={option => option.DESCRIPTION}
-                    getOptionValue={option => option.UOM_ID}
-                    options={uom} 
-                    defaultValue={values?.uom}
-                    styles={reactSelectStyles}
-                    onChange={(e) => {
-                      setFieldValue("uom", e.UOM_ID);
-                    }}
-                  />
+                <Input type="select" name="uom" size="sm" disabled={isViewable} onChange={(e) => {
+                  setFieldValue("uom", e.target.value);
+                }}>
+                  <option>Please Select</option>
+                  {uom?.map(({UOM_ID, DESCRIPTION}) => 
+                    <option 
+                      value={UOM_ID} 
+                      selected={UOM_ID === values?.uom ? true: false}>
+                        {DESCRIPTION}
+                    </option>)}
+                </Input>
               </Col>
             </FormGroup>
 
@@ -223,22 +204,31 @@ const InnerForm = ({
                 />
               </Col>
               <Col sm={3}>
-                <Select options={weightMockProps} onChange={(e) => {
-                  setFieldValue("weight_symbol", e.value);
-                }}/>
+                <Input type="select" name="uom" size="sm" disabled={isViewable} onChange={(e) => {
+                  setFieldValue("uom", e.target.value);
+                }}>
+                  <option>Please Select</option>
+                  {weightMockProps?.map(({value, label}) => 
+                    <option 
+                      value={value} 
+                      selected={value === values?.uom ? true: false}>
+                        {label}
+                    </option>)}
+                </Input>
               </Col>
               <Label for="re_ordering_uom" sm="1">Re-Ordering UoM</Label>
               <Col sm={5}>
-                <Select 
-                  getOptionLabel={option => option.DESCRIPTION}
-                  getOptionValue={option => option.UOM_ID}
-                  styles={reactSelectStyles}
-                  defaultValue={values?.re_ordering_uom}
-                  options={uom} 
-                  onChange={(e) => {
-                    setFieldValue("re_ordering_uom", e.UOM_ID);
-                  }}
-                />
+                <Input type="select" name="re_ordering_uom" disabled={isViewable} size="sm" onChange={(e) => {
+                  setFieldValue("re_ordering_uom", e.target.value);
+                }}>
+                  <option>Please Select</option>
+                  {uom?.map(({UOM_ID, DESCRIPTION}) => 
+                    <option 
+                      value={UOM_ID} 
+                      selected={UOM_ID === values?.re_ordering_uom ? true: false}>
+                        {DESCRIPTION}
+                    </option>)}
+                </Input>
               </Col>
             </FormGroup>
 
@@ -394,9 +384,11 @@ export const InventoryEditForm = withFormik({
       const {prefferedSupplier, defaultValuePicker, warehouseMockData, uom} = context;
       return ({
         par_id: tempData && tempData.PAR_ID, 
-        allow_negative_oh: tempData && tempData.ALLOW_NEGATIVE_FLAG == 'N' ? false : true, 
+        allow_negative_oh: tempData && tempData.ALLOW_NEGATIVE_FLAG === 'Y' ? true : false, 
+        taxable: tempData && tempData.ALLOW_TAX_FLAG === 'Y' ? true : false, 
+        stock_item: tempData && tempData.STOCK_ITEM_FLAG === 'Y' ? true : false, 
+        status: tempData && tempData.ACTIVE_FLAG === 'Y' ? true : false, 
         sku: tempData && tempData.SKU, 
-        par_id: tempData && tempData.PAR_ID, 
         price: tempData && tempData.UOM_ID,
         cost: tempData && tempData.UOM_ID_REORDERING,
         standard_cost:  tempData && tempData.STANDARD_COST,
@@ -405,10 +397,10 @@ export const InventoryEditForm = withFormik({
         description:  tempData && tempData.VEN_DESCRIPTION,
         name:  tempData && tempData.PAR_CODE,
         conversion_uom:  tempData && tempData.CONVERSION_INTO_STOCKING_UOM,
-        preferred_supply:  prefferedSupplier && defaultValuePicker({id: tempData?.VEN_ID, arr: prefferedSupplier}),
-        warehouse:  warehouseMockData && defaultValuePicker({id: tempData?.PARWAR_ID, arr: warehouseMockData}),
-        uom:  uom && defaultValuePicker({id: tempData?.UOM, arr: uom}),
-        re_ordering_uom:  uom && defaultValuePicker({id: tempData?.UOM_ID_REORDERING, arr: uom}),
+        preferred_supply:  prefferedSupplier && tempData?.VEN_ID,
+        warehouse:  warehouseMockData && tempData?.PARWAR_ID,
+        uom:  uom && tempData?.UOM,
+        re_ordering_uom:  uom && tempData?.UOM_ID_REORDERING,
         average_cost:  tempData && tempData.AVERAGE_COST,
         height:  tempData && tempData.DimensionH,
         length:  tempData && tempData.DimensionL,

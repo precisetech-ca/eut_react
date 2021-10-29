@@ -43,8 +43,8 @@ const PhysicalCount = ({dispatch, history}) => {
           )}
         </Route>
       </Switch>
-        <AddPartForm />
-        <NewPartForm />
+      <AddPartForm />
+      <NewPartForm />
     </PhysicalCountUIProvider>
   );
 }
