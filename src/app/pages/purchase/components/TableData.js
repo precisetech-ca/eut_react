@@ -12,13 +12,15 @@ export function Table({isViewable}) {
     shallowEqual
   );
 
-  const id = window?.location?.pathname?.split('/')[2];
   const { entities } = currentState;
+
+  console.log(entities);
 
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(actions.fetchProducts(id));
-  }, [dispatch]);
+      // const id = window?.location?.pathname?.split('/')[2];
+      dispatch(actions.fetchProducts());
+  }, []);
 
   const deleteProduct = (id) => {
     dispatch(actions.deleteProduct(id));

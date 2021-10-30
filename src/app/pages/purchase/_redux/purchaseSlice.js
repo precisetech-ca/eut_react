@@ -5,7 +5,7 @@ const initialState = {
   listLoading: false,
   actionsLoading: false,
   totalCount: 0,
-  entities: null,
+  entities: [],
   customerForEdit: undefined,
   lastError: null
 };
@@ -85,8 +85,6 @@ export const purchaseSlice = createSlice({
           "LOT_NUMBER": null,
           "EXPIRY_DATE": null
         });
-
-        state.entitiesLength = state.entities.length;
         return state;
       },
       deleteProduct: (state, action) => {

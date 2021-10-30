@@ -238,6 +238,7 @@ const InnerForm = ({
                 <Input 
                   size="sm" 
                   type="number"
+                  readOnly={true}
                   tag={Field} 
                   name="on_hand_qty" 
                   placeholder="On Hand Quantity"
@@ -264,6 +265,7 @@ const InnerForm = ({
                   size="sm" 
                   tag={Field} 
                   name="qty_avl"
+                  readOnly={true}
                   placeholder="Quantity Available" 
                   type="number"
                   disabled={isViewable}
@@ -384,17 +386,17 @@ export const InventoryEditForm = withFormik({
       const {prefferedSupplier, defaultValuePicker, warehouseMockData, uom} = context;
       return ({
         par_id: tempData && tempData.PAR_ID, 
-        allow_negative_oh: tempData && tempData.ALLOW_NEGATIVE_FLAG === 'Y' ? true : false, 
-        taxable: tempData && tempData.ALLOW_TAX_FLAG === 'Y' ? true : false, 
-        stock_item: tempData && tempData.STOCK_ITEM_FLAG === 'Y' ? true : false, 
-        status: tempData && tempData.ACTIVE_FLAG === 'Y' ? true : false, 
+        allow_negative_oh: tempData && tempData.ALLOW_NEGATIVE_FLAG, 
+        taxable: tempData && tempData.ALLOW_TAX_FLAG, 
+        stock_item: tempData && tempData.STOCK_ITEM_FLAG, 
+        status: tempData && tempData.ACTIVE_FLAG, 
         sku: tempData && tempData.SKU, 
         price: tempData && tempData.UOM_ID,
         cost: tempData && tempData.UOM_ID_REORDERING,
         standard_cost:  tempData && tempData.STANDARD_COST,
         notes:  tempData && tempData.NOTES,
         barcode:  tempData && tempData.BARCODE_NUMBER,
-        description:  tempData && tempData.VEN_DESCRIPTION,
+        description:  tempData && tempData.PART_DESCRIPTION,
         name:  tempData && tempData.PAR_CODE,
         conversion_uom:  tempData && tempData.CONVERSION_INTO_STOCKING_UOM,
         preferred_supply:  prefferedSupplier && tempData?.VEN_ID,
@@ -404,7 +406,8 @@ export const InventoryEditForm = withFormik({
         average_cost:  tempData && tempData.AVERAGE_COST,
         height:  tempData && tempData.DimensionH,
         length:  tempData && tempData.DimensionL,
-        weight:  tempData && tempData.DimensionW,
+        width: tempData && tempData.DimensionW,
+        weight:  tempData && tempData.Weight,
       })
     },
     validationSchema: Yup.object().shape({

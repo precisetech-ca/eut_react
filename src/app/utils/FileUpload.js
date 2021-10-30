@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Button } from 'reactstrap';
 
 const Image = ({ src }) => (
-    <img src={src} className="img-circle elevation-2 mb-4" width="100" height="100" alt="Broken" className="mr-2 mb-2" />
+    <img src={src} className="img-circle elevation-2 mb-4 mr-2 mb-2" width="100" height="100" alt="Broken" />
 );
 
 const FileUpload = ({ name, filePath, setFieldValue, responseCallback, endpoint, isSubmitting }) => {
