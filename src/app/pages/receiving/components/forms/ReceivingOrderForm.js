@@ -128,7 +128,7 @@ const InnerForm = ({
             <FormGroup row>
                 <Label for="inventory" sm="1">Inventory</Label>
                 <Col sm="3">
-                    <Input type="select" name="warehouse" size="sm" onChange={handleChange}>
+                    <Input type="select" name="inventory" size="sm" onChange={handleChange}>
                         <option value="">Please select supplier</option>
                         {warehouseMockData?.map(({WAR_ID, WAREHOUSE}) => <option value={WAR_ID} selected={values?.warehouse === WAR_ID ? true : false}>{WAREHOUSE}</option>)}
                     </Input>
@@ -189,7 +189,7 @@ const InnerForm = ({
             </FormGroup>
             {!isViewable && <Row>
                 <Col className="text-right">
-                    <Input type="hidden" name="pOrderId" />
+                    <Input type="hidden" name="recID" />
                     <Button type="button" size="sm" color="danger" onClick={backToHome}>Cancel</Button> {' '}
                     <Button color="primary" size="sm" disabled={isSubmitting}>{isSubmitting ? "Saving..." : "Save"} </Button>
                 </Col>
@@ -208,10 +208,19 @@ const InnerForm = ({
 
 export const ReceivingOrderForm = withFormik({
     enableReinitialize: true,
-    mapPropsToValues: ({ temporaryData }) => {
+    mapPropsToValues: ({ context }) => {
+        const {temporaryData} = context;
         return {
-            notes: temporaryData && temporaryData.notes,
-        }
+            recId: temporaryData && temporaryData?.INVREC_ID,
+            receiving_number: temporaryData && temporaryData?.RECEIVING_NUMBER,
+            receiving_date: temporaryData && temporaryData?.REC_DATE,
+            supplier : temporaryData && temporaryData?.SUPPLIER,
+            po_number: temporaryData && temporaryData?.PO_NUMBER,
+            inventory: temporaryData && temporaryData?.INVENTORY,
+            notes: temporaryData && temporaryData?.NOTES,
+            reference: temporaryData && temporaryData?.REFERENCE_NUMBER,
+            phone: temporaryData && temporaryData?.PHONE,
+        } 
     },
     handleSubmit: (values, { props: { context }, setSubmitting, resetForm }) => {
         const {submitFormHandler} = context;

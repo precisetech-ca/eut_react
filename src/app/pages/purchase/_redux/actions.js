@@ -30,10 +30,10 @@ export const fetchPurchaseList = () => dispatch => {
       "RNUM_TO"       : "",
       "FINZ_FLAG"     : ""
     },
-    "action": "InventoryWeb",
+    "action": "InventoryWeb", 
     "method": "GetPurchaseOrderList",
     "type": "rpc",
-    "tid": "144"
+    "tid": "144" 
   };
 
   dispatch(callGenericAsync(callPayload, '/InventoryWeb/GetPurchaseOrderList', 'post', (res => {

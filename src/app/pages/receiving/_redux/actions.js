@@ -55,13 +55,22 @@ export const auditLogDataAsync = () => dispatch => {
 };
 
 
-export const fetchProducts = () => dispatch => {
+export const fetchProducts = (id) => dispatch => {
   dispatch(actions.startCall({ callType: callTypes.action }));
-
-  setTimeout(() => {
-    dispatch(actions.productsFetched({
-      callType: callTypes.action,
-      entities: data
-    }));
-  }, 1000);
-};
+  dispatch(callGenericAsync({
+      "data": {
+        "INVREC_ID" : id,
+    },
+    "action": "InventoryWeb",
+    "method": "GetRecieving",
+    "type": "rpc",
+    "tid": "144"
+  }, '/InventoryWeb/GetRecieving', "post", (res => {
+    if (res) {
+      dispatch(actions.productsFetched({
+        callType: callTypes.action,
+        entities: res?.Result[0]
+      }));
+    }
+  })));
+}; 

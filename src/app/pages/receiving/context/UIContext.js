@@ -21,6 +21,9 @@ export function UIProvider({receivingUIEvents, children}) {
   const dispatch = useDispatch();
   const [queryParams, setQueryParamsBase] = useState(initialFilter);
   const [ids, setIds] = useState([]);
+  const [tempData, setTempData] = useState({});
+  const [editMode, setEditMode] = useState(false);
+
 
   const [showSupplierModal, setShowSupplierModal] = useState(false);
   const toggleSupplierHandler = () => {
@@ -73,33 +76,80 @@ export function UIProvider({receivingUIEvents, children}) {
     });
   }, []);
 
+  const editOrView = (id, route = 'edit') => {
+    setEditDataAsync(id);
+    setEditMode(true);
+    history.push(`/receiving/${id}/${route}`);
+  }
+  
+
+  const setEditDataAsync = (id) => {
+    const getDataPayload = {
+      "data": {
+          "INVREC_ID" : id,
+      },
+      "action": "InventoryWeb",
+      "method": "GetRecievingList",
+      "type": "rpc",
+      "tid": "144"
+    };
+
+    dispatch(callGenericAsync(getDataPayload, "/InventoryWeb/GetRecievingList", "post", (res) => {
+      if (res?.CODE === "SUCCESS") {
+        setTempData(res?.Result?.INV_RECIEVING_WV[0]);
+      }
+    }))
+  }
+
+  
+  const currentDate = () => {
+    var now = new Date();
+    var month = (now.getMonth() + 1);               
+    var day = now.getDate();
+    if (month < 10) 
+    month = "0" + month;
+    if (day < 10) 
+    day = "0" + day;
+    var today = now.getFullYear() + '-' + month + '-' + day;
+    return today;
+  }
+
+  const currentDateTime = () => {
+    var today = new Date();
+    var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+    var time = today.getHours() + ":" + today.getMinutes();
+    var dateTime = date+'T'+time;
+    return dateTime;
+  }
+
+
 
   const submitFormHandler = ({payload, resetForm, setSubmitting}) => {
-    console.log(payload);
+    console.log(payload)
     const formPayload = {
       data: {
-        "INVREC_ID"     			: "",
-        "WAR_ID" 					: payload?.warehouse,
-        "VEN_ID"     				: payload?.supplier,
-        "RECEIVING_NUMBER"     		: payload?.receiving_number,
-        "RECEIVING_DATE"        	: payload?.receiving_date,
-        "REFERENCE_NUMBER"     		: payload?.reference,
-        "PURORD_ID"       			: payload?.po_number,
-        "NOTES"      				: payload?.notes,
+        "INVREC_ID"     			: "" ,
+        "WAR_ID" 					:           payload?.warehouse,
+        "VEN_ID"     				:         payload?.supplier,
+        "RECEIVING_NUMBER"     		:   payload?.receiving_number,
+        "RECEIVING_DATE"        	:   payload?.receiving_date,
+        "REFERENCE_NUMBER"     		:   payload?.reference,
+        "PURORD_ID"       			:     payload?.po_number,
+        "NOTES"      				:         payload?.notes,
         "SUPPLIER_INVOICE_NUMBER"   : payload?.invoice_no,
         "USE_ID_PREPARED_BY"       	: USE_ID,
-        "PREPARED_DATE"       		: dateFormat( new Date(), "yyyy-mm-dd"),
-        "VOID_FLAG"       			: "N",
-        "FINZ_FLAG"       			: "N",
-        "VOID_NOTES"       			: "",
-        "FINZ_USE_ID"       		: USE_ID,
-        "FINAL_DATE"       			: "",
-        "SUP_INVOICE_DATE"       	: payload?.invoice_date,
+        "PREPARED_DATE"       		:   dateFormat( new Date(), "yyyy-mm-dd"),
+        "VOID_FLAG"       			:     "N",
+        "FINZ_FLAG"       			:     "N",
+        "VOID_NOTES"       			:     "",
+        "FINZ_USE_ID"       		:     USE_ID,
+        "FINAL_DATE"       			:     "",
+        "SUP_INVOICE_DATE"       	:   payload?.invoice_date,
         "SUP_INVOICE_DUE_DATE"      : "",
         "TERMS_CONDITION"           : "",
-        "RACK"           			: payload?.rack,
-        "SHELF"           			: payload?.shelf,
-        "BIN"           			: payload?.bin
+        "RACK"           			:       payload?.rack,
+        "SHELF"           			:     payload?.shelf,
+        "BIN"           			:       payload?.bin
       },
       "action": "InventoryWeb",
       "method": "PostRecieving",
@@ -107,11 +157,11 @@ export function UIProvider({receivingUIEvents, children}) {
       "tid": "144"
     };
 
-    if (payload?.pOrderId) {
-      formPayload.data.INVREC_ID = payload?.pOrderId;
+    if (payload?.recID) {
+      formPayload.data.INVREC_ID = payload?.recID;
     }
 
-    dispatch(callGenericAsync(formPayload, '/InventoryWeb/PostRecieving', 'post', (res) => {
+    dispatch(callGenericAsync(formPayload, 'InventoryWeb\PostRecieving', 'post', (res) => {
       setSubmitting(false);
       if (res?.CODE === 'SUCCESS') { 
         actions.fetchReceivingList();
@@ -136,6 +186,9 @@ export function UIProvider({receivingUIEvents, children}) {
     weightMockProps,
     receivingTabs,
     backToHome,
+    currentDate,
+    currentDateTime,
+    editOrView,
     showSupplierModal,
     toggleSupplierHandler,
     submitFormHandler,
