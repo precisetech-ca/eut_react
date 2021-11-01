@@ -17,12 +17,12 @@ export const ViewPartsReturn = ({id}) => {
       <Card>
         <CardHeader title="View Parts Return List"></CardHeader>
         <CardBody>
-          <PartsReturnForm backToHome={PartsReturnUIContext.backToHome} isViewable={true} />
+          <PartsReturnForm backToHome={PartsReturnUIContext.backToHome} isViewable={true}  context={PartsReturnUIContext}/>
           <Tabs
             id="controlled-tab-example"
             activeKey={key}
             onSelect={(k) => setKey(k)}
-            className="mb-3 mt-3"
+            className="mb-3 mt-3 purchase_order_tabs"
           >
             {PartsReturnUIContext.partsreturnTabs.map(({key, title}) => 
             <Tab eventKey={key} title={title} className="mt-2 ml-1">

@@ -19,7 +19,7 @@ export const NewPartsReturn = ({id}) => {
       <Card>
         <CardHeader title="Parts Return Infromation"></CardHeader>
         <CardBody>
-          <PartsReturnForm backToHome={PartsReturnUIContext.backToHome}/> 
+          <PartsReturnForm backToHome={PartsReturnUIContext.backToHome} context={PartsReturnUIContext}/> 
           <Tabs
             id="controlled-tab-example"
             activeKey={key}
