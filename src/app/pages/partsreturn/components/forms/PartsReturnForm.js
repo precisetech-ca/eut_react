@@ -27,44 +27,15 @@ const InnerForm = ({
     isViewable,
 }) => {
     const PartsReturnUIContext = usePartsReturnUIContext();
-    const {toggleSupplierHandler, warehouseMockData} = PartsReturnUIContext;
-    const [value, onChange] = useState(new Date());
-    const reactSelectStyles = {
-        control: base => ({
-            ...base,
-            borderColor: "#757578",
-            minHeight: '34px',
-            height: '34px',
-        })
-    };
-
+    const {toggleSupplierHandler, warehouseMockData , prefferedSupplier } = PartsReturnUIContext;
+    
     useEffect(() => {
         setFieldValue("po_date", dateFormat(new Date(), "isoDateTime"));
     }, [])
 
     return (
         <Form onSubmit={handleSubmit}>
-            <Row className="mb-3">
-                <Col className="col-lg-8">
-                </Col>
-                {/* <Col>
-                    <FormGroup check>
-                        <Label check>
-                            <Input type="checkbox" name="completed" disabled={true} />{' '}
-                            Completed
-                        </Label>
-                    </FormGroup>
-                </Col>
-                <Col>
-                    <FormGroup check>
-                        <Label check>
-                            <Input type="checkbox" name="void" disabled={isViewable}/>{' '}
-                            Void
-                        </Label>
-                    </FormGroup>
-                </Col> */}
-            </Row>
-    
+      
             <FormGroup row>
                 <Label for="return_part_no" sm={1}>Return Part #</Label>
                 <Col sm={3}>
@@ -131,7 +102,17 @@ const InnerForm = ({
             <FormGroup row>
                 <Label for="supplier" sm={1}>Supplier</Label>
                 <Col sm={3}>
-                    <Select options={warehouseMockData} styles={reactSelectStyles} />
+                        <Input type="select" name="supplier" size="sm" disabled={isViewable} onChange={(e) => {
+                            setFieldValue("supplier", e.target.value);
+                            }}>
+                            <option>Please Select</option>
+                            {prefferedSupplier?.map(({VEN_ID, SUPPLIER}) => 
+                                <option 
+                                value={VEN_ID} 
+                                selected={VEN_ID === values?.preferred_supply ? true: false}>
+                                    {SUPPLIER}
+                                </option>)}
+                        </Input>
                     {isViewable && <Button className="btn btn-dark mt-2 btn-sm" onClick={toggleSupplierHandler} disabled={isViewable}><i className="fa fa-plus"></i> Create Supplier</Button>}
                     <Button color="dark" 
                             size="sm" 
@@ -161,6 +142,7 @@ const InnerForm = ({
             </FormGroup>
             {!isViewable && <Row>
                 <Col className="text-right">
+                    <Input type="hidden" name="salesorder_ID" />
                     <Button type="button" size="sm" color="danger" onClick={backToHome}>Cancel</Button> {' '}
                     <Button color="primary" size="sm" disabled={isSubmitting}>{isSubmitting ? "Saving..." : "Save"} </Button>
                 </Col>
@@ -179,19 +161,20 @@ const InnerForm = ({
 
 export const PartsReturnForm = withFormik({
     enableReinitialize: true,
-    mapPropsToValues: ({ temporaryData }) => {
+    mapPropsToValues: ({ context }) => {
+        const {tempData} = context;
         return {
-            notes: temporaryData && temporaryData.notes,
-            phone: temporaryData && temporaryData.phone,
+            salesorder_ID : tempData && tempData?.SALEORD_ID,
+            return_part_no: tempData && tempData?.USE_ID_ASSIGNED_TO,
+            notes :       tempData && tempData?.ADDRESS,
+            due_date :          tempData && tempData?.CITY_NAME,
+            parts_return_listing:       tempData && tempData?.ZIP_CODE,
+            supplier : tempData && tempData?.REFERENCE_NUMBER
         }
     },
-    handleSubmit: (values, { props: { submitHandler }, setSubmitting }) => {
+    handleSubmit: (values, { props: { context }, setSubmitting, resetForm }) => {
+        const {submitFormHandler} = context;
         setSubmitting(true);
-
-        setTimeout(() => {
-            setSubmitting(false);
-        }, 1000);
-        console.log(values);
-        // submitHandler({payload: values, closeModal, setSubmitting, resetForm});
+        submitFormHandler({payload: values, setSubmitting, resetForm});
     },
 })(InnerForm);
