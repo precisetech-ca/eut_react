@@ -1,4 +1,4 @@
-import { callGenericGetterAsync } from "app/generic/actions";
+import { callGenericAsync } from "app/generic/actions";
 import { data, partsreturnData, fullfilmentData } from "./mock/product.mock";
 import { partsreturnSlice, callTypes } from "./partsreturnSlice";
 const { actions } = partsreturnSlice;
@@ -23,15 +23,34 @@ export const changeRecQty = ({qty, index}) => dispatch => {
 }
 
 export const fetchPartsReturnList = () => dispatch => {
-  const { actions } = partsreturnSlice;
   dispatch(actions.startCall({ callType: callTypes.action }));
 
-  setTimeout(() => {
+    const callPayload = {
+      data: {
+        "SEARCH"     	: "",
+        "VOID_FLAG" 	: "",
+        "ORDER"     	: "",
+        "OFFSET"        : "",
+        "RNUM_FROM"     : "",
+        "RNUM_TO"       : "",
+        "FINZ_FLAG"      : ""
+        },
+    "action": "InventoryWeb",
+    "method": "GetSalesOrderList",
+    "type": "rpc",
+    "tid": "144" 
+  };
+
+  dispatch(callGenericAsync(callPayload, '/InventoryWeb/GetSaleOrderList', 'post', (res => {
+  if (res?.CODE === 'SUCCESS') {
     dispatch(actions.partsreturnListFetched({
       callType: callTypes.action,
-      entities: partsreturnData
+      entities: res?.Result
     }));
-  }, 1000);
+  }
+})));
+
+
 };
 
 export const fullfilmentDataAsync = () => dispatch => {

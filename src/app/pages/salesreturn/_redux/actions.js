@@ -1,4 +1,4 @@
-import { callGenericGetterAsync } from "app/generic/actions";
+import { callGenericAsync } from "app/generic/actions";
 import { data, salesreturnData, auditLogData } from "./mock/product.mock";
 import { salesReturnSlice, callTypes } from "./salesReturnSlice";
 
@@ -21,12 +21,32 @@ export const deleteSalesReturnList = (id) => dispatch => {
 export const fetchSalesReturnList = () => dispatch => {
   dispatch(actions.startCall({ callType: callTypes.action }));
 
-  setTimeout(() => {
-    dispatch(actions.salesreturnListFetched({
-      callType: callTypes.action,
-      entities: salesreturnData
-    }));
-  }, 1000);
+  const callPayload = {
+        data: {
+          "SEARCH"     	: "",
+          "VOID_FLAG" 	: "",
+          "ORDER"     	: "",
+          "OFFSET"        : "",
+          "RNUM_FROM"     : "",
+          "RNUM_TO"       : "",
+          "FINZ_FLAG"      : ""
+          },
+      "action": "InventoryWeb",
+      "method": "GetSalesOrderList",
+      "type": "rpc",
+      "tid": "144" 
+    };
+
+    dispatch(callGenericAsync(callPayload, '/InventoryWeb/GetSaleOrderList', 'post', (res => {
+    if (res?.CODE === 'SUCCESS') {
+      dispatch(actions.salesreturnListFetched({
+        callType: callTypes.action,
+        entities: res?.Result
+      }));
+    }
+    })));
+
+
 };
 
 

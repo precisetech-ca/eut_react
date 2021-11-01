@@ -24,15 +24,6 @@ const InnerForm = ({
 }) => {
     const UIContext = useUIContext();
     const {  billTo , country} = UIContext;
-    const [value, onChange] = useState(new Date());
-    const reactSelectStyles = {
-        control: base => ({
-            ...base,
-            borderColor: "#757578",
-            minHeight: '34px',
-            height: '34px',
-        })
-    };
 
     useEffect(() => {
         setFieldValue("po_date", dateFormat(new Date(), "isoDateTime"));
@@ -292,7 +283,6 @@ export const SalesOrderForm = withFormik({
             address :       tempData && tempData?.ADDRESS,
             city :          tempData && tempData?.CITY_NAME,
             zip_code:       tempData && tempData?.ZIP_CODE,
-
         }
     },
     handleSubmit: (values, { props: { context }, setSubmitting, resetForm }) => {

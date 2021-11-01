@@ -18,7 +18,7 @@ export const ViewSalesReturn = ({id}) => {
       <Card>
         <CardHeader title="View Sales List"></CardHeader>
         <CardBody>
-          <SalesReturnForm backToHome={UIContext.backToHome} isViewable={true} />
+          <SalesReturnForm backToHome={UIContext.backToHome} isViewable={true} context={UIContext}/>
           <Tabs
             id="controlled-tab-example"
             activeKey={key}

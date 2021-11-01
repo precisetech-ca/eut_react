@@ -38,7 +38,7 @@ export const fetchSalesOrderList = () => dispatch => {
       "action": "InventoryWeb",
       "method": "GetSalesOrderList",
       "type": "rpc",
-      "tid": "144"
+      "tid": "144" 
   };
   
   dispatch(callGenericAsync(callPayload, '/InventoryWeb/GetSaleOrderList', 'post', (res => {
