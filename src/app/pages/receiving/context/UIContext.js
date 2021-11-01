@@ -38,9 +38,7 @@ export function UIProvider({receivingUIEvents, children}) {
   );
   const {  supplier, uom, warehouses } = inventoryState;
   const {USE_ID, USERNAME} = userData;
-
   const warehouseMockData = warehouses;
-
   const prefferedSupplier = supplier;
 
   useEffect(() => {
@@ -89,14 +87,14 @@ export function UIProvider({receivingUIEvents, children}) {
           "INVREC_ID" : id,
       },
       "action": "InventoryWeb",
-      "method": "GetRecievingList",
+      "method": "GetRecieving",
       "type": "rpc",
       "tid": "144"
     };
 
-    dispatch(callGenericAsync(getDataPayload, "/InventoryWeb/GetRecievingList", "post", (res) => {
+    dispatch(callGenericAsync(getDataPayload, "/InventoryWeb/GetRecieving", "post", (res) => {
       if (res?.CODE === "SUCCESS") {
-        setTempData(res?.Result?.INV_RECIEVING_WV[0]);
+        setTempData(res?.Result[0]);
       }
     }))
   }
@@ -125,10 +123,9 @@ export function UIProvider({receivingUIEvents, children}) {
 
 
   const submitFormHandler = ({payload, resetForm, setSubmitting}) => {
-    console.log(payload)
     const formPayload = {
       data: {
-        "INVREC_ID"     			: "" ,
+        // "INVREC_ID"     			: "" ,
         "WAR_ID" 					:           payload?.warehouse,
         "VEN_ID"     				:         payload?.supplier,
         "RECEIVING_NUMBER"     		:   payload?.receiving_number,
@@ -161,7 +158,7 @@ export function UIProvider({receivingUIEvents, children}) {
       formPayload.data.INVREC_ID = payload?.recID;
     }
 
-    dispatch(callGenericAsync(formPayload, 'InventoryWeb\PostRecieving', 'post', (res) => {
+    dispatch(callGenericAsync(formPayload, '/InventoryWeb/PostRecieving', 'post', (res) => {
       setSubmitting(false);
       if (res?.CODE === 'SUCCESS') { 
         actions.fetchReceivingList();
@@ -189,6 +186,9 @@ export function UIProvider({receivingUIEvents, children}) {
     currentDate,
     currentDateTime,
     editOrView,
+    tempData,
+    setTempData,
+    editMode,
     showSupplierModal,
     toggleSupplierHandler,
     submitFormHandler,

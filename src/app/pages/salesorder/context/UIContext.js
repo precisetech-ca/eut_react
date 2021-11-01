@@ -2,6 +2,11 @@ import React, {createContext, useContext, useState, useCallback} from "react";
 import {isEqual, isFunction} from "lodash";
 import {initialFilter} from "../utils/UIHelpers";
 import { useHistory } from "react-router-dom";
+import { shallowEqual, useDispatch, useSelector } from "react-redux";
+import { callGenericAsync } from "app/generic/actions";
+import * as actions from '../_redux/actions';
+
+
 
 const UIContext = createContext();
 
@@ -13,22 +18,43 @@ export const CustomersUIConsumer = UIContext.Consumer;
 
 export function UIProvider({salesorderUIEvents, children}) {
   const history = useHistory();
+  const dispatch = useDispatch()
   const [queryParams, setQueryParamsBase] = useState(initialFilter);
   const [ids, setIds] = useState([]);
-
+  const [editMode, setEditMode] = useState(false);
+  const [tempData, setTempData] = useState({});
   const [showSupplierModal, setShowSupplierModal] = useState(false);
+  
   const toggleSupplierHandler = () => {
     setShowSupplierModal(!showSupplierModal)
   };
 
-  const warehouseMockData = [
-    {value: "1", label: "King PIN 5th Wheel"},
-    {value: "2", label: "Alloy Rims"}
-  ];
+  const { inventoryState, userData } = useSelector(
+    (state) => ({ 
+      inventoryState: state.inventory,
+      userData: state.auth.user,
+    }),
+    shallowEqual 
+  );
 
-  const prefferedSupplier = [
-    {value: "1", label: "Vancouver Fire Prevention"},
-  ];
+  const { supplier, uom, warehouses } = inventoryState;
+  const {USE_ID, USERNAME} = userData;
+  const billTo = [
+    {
+      ID : '1',
+      TITLE : 'Salman',
+    }
+  ] 
+
+  const country = [
+    {
+      ID : '1',
+      TITLE : 'Pakistan',
+    }
+  ] 
+  const warehouseMockData = warehouses;
+  const prefferedSupplier = supplier;
+
 
   const weightMockProps = [
     {value: 1, label: "ml"},
@@ -57,6 +83,97 @@ export function UIProvider({salesorderUIEvents, children}) {
     });
   }, []);
 
+  const editOrView = (id, route = 'edit') => {
+    setEditDataAsync(id);
+    setEditMode(true);
+    history.push(`/salesorder/${id}/${route}`);
+  }
+  
+
+  const setEditDataAsync = (id) => {
+    const getDataPayload = {
+      "data": {
+          "SALEORD_ID" : id,
+      },
+      "action": "InventoryWeb",
+      "method": "GetSalesOrder",
+      "type": "rpc",
+      "tid": "144"
+    };
+
+    dispatch(callGenericAsync(getDataPayload, "/InventoryWeb/GetSaleOrder", "post", (res) => {
+      if (res?.CODE === "SUCCESS") {
+        setTempData(res?.Result[0]);
+      }
+    }))
+  }
+
+  const currentDate = () => {
+    var now = new Date();
+    var month = (now.getMonth() + 1);               
+    var day = now.getDate();
+    if (month < 10) 
+    month = "0" + month;
+    if (day < 10) 
+    day = "0" + day;
+    var today = now.getFullYear() + '-' + month + '-' + day;
+    return today;
+  }
+
+  const currentDateTime = () => {
+    var today = new Date();
+    var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+    var time = today.getHours() + ":" + today.getMinutes();
+    var dateTime = date+'T'+time;
+    return dateTime;
+  }
+
+
+  const submitFormHandler = ({payload, resetForm, setSubmitting}) => {
+    const formPayload = {
+      data: {
+          "SALEORD_ID" : "", 
+          "SALEORD_DATE" : payload?.date,
+          "USE_ID_ASSIGNED_TO" : payload?.assinged_to,
+          "CHANNEL_ID" : payload?.channel,
+          "REFERENCE_NUMBER" : payload?.ref_num ,
+          "CUS_ID" : "",
+          "BILL_TO_ID" : payload?.billTo,
+          "ADDRESS" :payload?.address ,
+          "COU_ID" : "",
+          "PROSTA_ID" : "",
+          "CITY_NAME" : payload?.city ,
+          "ZIP_CODE" : payload?.zip_code ,
+          "DISPATCH_NOTES " : "",
+          "INTERNAL_NOTES " : "",
+          "CUSTOMER_REPORT_NOTES" : "",
+          "TERMS_CONDITION" : "",
+          "USE_ID_FINALIZED_BY" : "",
+          "FINALIZED_FLAG " : "N",
+          "VOID_FLAG" : "N",
+          "VOID_NOTES" : ""
+    },
+        "action": "InventoryWeb",
+        "method": "PostSaleOrder",
+        "type": "rpc",
+        "tid": "144"
+    };
+
+    if (payload?.salesorder_ID) {
+      formPayload.data.SALEORD_ID = payload?.salesorder_ID;
+    }
+
+    dispatch(callGenericAsync(formPayload, '/InventoryWeb/PostSaleOrder', 'post', (res) => {
+      setSubmitting(false);
+      if (res?.CODE === 'SUCCESS') { 
+        actions.fetchSalesOrderList();
+        // actions.auditLogDataAsync(payload?.pOrderId, USE_ID, USERNAME);
+        history.push("/salesorder");
+      }
+    }))
+  }
+
+
 
   const backToHome = () => {
     history.push('/salesorder');
@@ -72,9 +189,18 @@ export function UIProvider({salesorderUIEvents, children}) {
     prefferedSupplier,
     weightMockProps,
     salesorderTabs,
+    editOrView,
+    editMode,
+    tempData,
+    billTo,
+    country,
+    setTempData,
+    currentDate,
+    currentDateTime,
     backToHome,
     showSupplierModal,
     toggleSupplierHandler,
+    submitFormHandler,
     newSalesOrderForm: salesorderUIEvents.newSalesOrderForm,
     editSalesOrderForm: salesorderUIEvents.editSalesOrderForm,
     openDeleteCustomerDialog: salesorderUIEvents.openDeleteCustomerDialog,

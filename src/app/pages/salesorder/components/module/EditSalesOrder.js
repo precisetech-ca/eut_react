@@ -18,14 +18,14 @@ export const EditSalesOrder = ({id}) => {
       <Card>
         <CardHeader title="Sales Order"></CardHeader>
         <CardBody>
-          <SalesOrderForm backToHome={UIContext.backToHome} />
+          <SalesOrderForm backToHome={UIContext.backToHome} context={UIContext}/>
           <Tabs
             id="controlled-tab-example"
             activeKey={key}
             onSelect={(k) => setKey(k)}
             className="mb-3 mt-3 purchase_order_tabs"
           >
-            {UIContext.slaesorderTabs.map(({key, title}) => 
+            {UIContext.salesorderTabs.map(({key, title}) => 
             <Tab eventKey={key} title={title} className="mt-2 ml-1">
               {key === "order" ? <Table /> : <FullfilmentTable />}
             </Tab>)}

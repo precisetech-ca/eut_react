@@ -19,7 +19,7 @@ export const fetchReceivingList = () => dispatch => {
   dispatch(actions.startCall({ callType: callTypes.action }));
 
   dispatch(callGenericAsync({
-    "data": {
+    data: {
         "SEARCH"     	: "",
         "VOID_FLAG" 	: "",
         "ORDER"     	: "",

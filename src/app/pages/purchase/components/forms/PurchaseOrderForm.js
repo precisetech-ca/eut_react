@@ -106,7 +106,6 @@ const InnerForm = ({
                 <Col sm="3">
                     <Input type="select" name="prepared_by">
                         <option value="">Please select prepared by</option>
-                        
                     </Input>
                 </Col>
             </FormGroup>
@@ -203,7 +202,6 @@ export const PurchaseOrderForm = withFormik({
     },
     handleSubmit: (values, { props: { context }, setSubmitting, resetForm }) => {
         const {submitFormHandler} = context;
-
         setSubmitting(true);
         submitFormHandler({
             payload: values, 

@@ -13,6 +13,7 @@ export function HomePageTable() {
   // Customers UI Context
   const UIContext = useUIContext();
   const [value, onChange] = useState(new Date());
+  const dispatch = useDispatch();
   const customersUIProps = useMemo(() => {
     return {
       queryParams: UIContext.queryParams,
@@ -26,85 +27,67 @@ export function HomePageTable() {
   );
   const { salesorderList } = currentState;
 
-  // Customers Redux state
-  const dispatch = useDispatch();
   useEffect(() => {
-    // server call by queryParams
     dispatch(actions.fetchSalesOrderList());
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [customersUIProps.queryParams, dispatch]);
+  }, [dispatch]);
   
   const columns = [
     {
-        Header: "Barcode",
-        Footer: "Barcode",
-        accessor: "barcode",
+        Header: "SaleOrder Num",
+        Footer: "SaleOrder Num",
+        accessor: "SALEORD_NUMBER",
         disableFilters: true,
-        Cell: ({value}) => value,
+        Cell: (props) => {
+          return props.value
+        },
     },
     {
-        Header: "Desc",
-        Footer: "Desc",
-        accessor: "desc",
+        Header: "SaleOrder Date",
+        Footer: "SaleOrder Date",
+        accessor: "SALEORD_DATE",
         disableFilters: true,
-        Cell: ({value}) => value,
-    },
-    
-    {
-        Header: "Lot #",
-        Footer: "Lot #",
-        accessor: "lot_no",
-        disableFilters: true,
-        Cell: ({value}) => value,
+        Cell: (props) => {
+          return props.value
+        },
     },
     {
-        Header: "Expiry",
-        Footer: "Expiry",
-        accessor: "expiry",
+        Header: "Finalized Date",
+        Footer: "Finalized Date",
+        accessor: "FINALIZED_DATE",
         disableFilters: true,
-        Cell: ({value}) => value,
+        Cell: (props) => {
+          return props.value
+        },
     },
     {
-        Header: "Supplier",
-        Footer: "Supplier",
-        accessor: "supplier",
+        Header: "SaleOrder Date ",
+        Footer: "SaleOrder Date",
+        accessor: "SALE_ORDER_DATE",
         disableFilters: true,
-        Cell: ({value}) => value,
-    },
-    {
-        Header: "Notes",
-        Footer: "Notes",
-        accessor: "notes",
-        disableFilters: true,
-        Cell: ({value}) => value,
-    },
-    {
-        Header: "PO Finalized Date",
-        Footer: "PO Finalized Date",
-        accessor: "po_finalized_date",
-        disableFilters: true,
-        Cell: ({value}) => value,
+        Cell: (props) => {
+          return props.value
+        },
     },
     {
         Header: "Void",
         Footer: "Void",
-        accessor: "void",
+        accessor: "VOID_DATE",
         disableSortBy: true,
         disableFilters: true,
-        Cell: ({value}) => <Input type="checkbox" checked={value} disabled={true} value={value}/>,
+        Cell: (props) => <Input type="checkbox" checked={props?.value === "Y" ? true : false} disabled={true} value={props?.value}/>,
     },
     {
         Header: "Action",
-        accessor: "id",
+        accessor: "SALEORD_ID",
         disableSortBy: true,
         disableFilters: true,
         Cell: ({value}) => {
           return (
             <>
-              <Link href="#salesorder-edit" to={`/salesorder/${value}/edit`} >
+              <Link href="#salesorder-edit" to={`/salesorder/${value}/edit`} onClick={() => UIContext?.editOrView(value)} >
                 <i class="fas fa-pencil-alt text-success"></i>
               </Link>
-              <Link href="#salesorder-edit" to={`/salesorder/${value}/view`} >
+              <Link href="#salesorder-edit" to={`/salesorder/${value}/view`}  onClick={() => UIContext?.editOrView(value , "view")}>
                 <i class="fas fa-eye text-primary ml-3"></i>
               </Link>
           </>)

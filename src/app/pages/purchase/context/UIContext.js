@@ -44,9 +44,7 @@ export function UIProvider({purchaseUIEvents, children}) {
   
   const { supplier, uom, warehouses } = inventoryState;
   const {USE_ID, USERNAME} = userData;
-
   const warehouseMockData = warehouses;
-
   const prefferedSupplier = supplier;
 
   useEffect(() => {
@@ -76,7 +74,7 @@ export function UIProvider({purchaseUIEvents, children}) {
     const getDataPayload = {
       "data": {
           "PURORD_ID" : id
-      },
+      }, 
       "action": "InventoryWeb",
       "method": "GetPurchaseOrder",
       "type": "rpc",

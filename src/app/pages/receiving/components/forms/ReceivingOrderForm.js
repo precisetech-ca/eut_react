@@ -209,17 +209,17 @@ const InnerForm = ({
 export const ReceivingOrderForm = withFormik({
     enableReinitialize: true,
     mapPropsToValues: ({ context }) => {
-        const {temporaryData} = context;
+        const {tempData} = context;
         return {
-            recId: temporaryData && temporaryData?.INVREC_ID,
-            receiving_number: temporaryData && temporaryData?.RECEIVING_NUMBER,
-            receiving_date: temporaryData && temporaryData?.REC_DATE,
-            supplier : temporaryData && temporaryData?.SUPPLIER,
-            po_number: temporaryData && temporaryData?.PO_NUMBER,
-            inventory: temporaryData && temporaryData?.INVENTORY,
-            notes: temporaryData && temporaryData?.NOTES,
-            reference: temporaryData && temporaryData?.REFERENCE_NUMBER,
-            phone: temporaryData && temporaryData?.PHONE,
+            recId: tempData && tempData?.INVREC_ID,
+            receiving_number: tempData && tempData?.RECEIVING_NUMBER,
+            receiving_date: tempData && tempData?.REC_DATE,
+            supplier : tempData && tempData?.SUPPLIER,
+            po_number: tempData && tempData?.PO_NUMBER,
+            inventory: tempData && tempData?.INVENTORY,
+            notes: tempData && tempData?.NOTES,
+            reference: tempData && tempData?.REFERENCE_NUMBER,
+            phone: tempData && tempData?.PHONE,
         } 
     },
     handleSubmit: (values, { props: { context }, setSubmitting, resetForm }) => {

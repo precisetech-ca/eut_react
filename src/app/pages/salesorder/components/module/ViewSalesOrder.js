@@ -23,7 +23,7 @@ export const ViewSalesOrder = ({id}) => {
       <Card>
         <CardHeader title="View Sales List"></CardHeader>
         <CardBody>
-          <SalesOrderForm backToHome={UIContext.backToHome} isViewable={true} />
+          <SalesOrderForm backToHome={UIContext.backToHome} isViewable={true} context={UIContext} />
           <Tabs
             id="controlled-tab-example"
             activeKey={key}

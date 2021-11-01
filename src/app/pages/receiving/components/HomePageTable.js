@@ -114,10 +114,10 @@ export function HomePageTable() {
         Cell: ({value}) => {
             return (
               <>
-              <Link href="#receiving-edit" to={`/receiving/${value}/edit`} >
+              <Link href="#receiving-edit" to={`/receiving/${value}/edit`} onClick={() => UIContext?.editOrView(value)}>
                 <i class="fas fa-pencil-alt text-success"></i>
               </Link>
-              <Link href="#receiving-edit" to={`/receiving/${value}/view`} >
+              <Link href="#receiving-edit" to={`/receiving/${value}/view`} onClick={() => UIContext?.editOrView(value , "view")}>
                 <i class="fas fa-eye text-primary ml-3"></i>
               </Link>
           </>)
