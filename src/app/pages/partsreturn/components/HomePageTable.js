@@ -5,17 +5,14 @@ import React, { useEffect, useMemo, useState } from "react";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import * as actions from "../_redux/actions";
 import { usePartsReturnUIContext } from "../context/PartsReturnUIContext";
-import {Button, Input, Row, Col} from "reactstrap";
-import { Summary } from "./supplier/Summary";
+import { Input, Row, Col} from "reactstrap";
 import { ReactTable } from "../../custom_widgets/table/ReactTable";
-import DateTimePicker from 'react-datetime-picker';
 import { Link } from "react-router-dom";
-import { AlertModal } from "../../utils/AlertModal";
 
 export function HomePageTable() {
   // Customers UI Context
   const PartsReturnUIContext = usePartsReturnUIContext();
-  const [value, onChange] = useState(new Date());
+  const dispatch = useDispatch();
   const customersUIProps = useMemo(() => {
     return {
       queryParams: PartsReturnUIContext.queryParams,
@@ -29,78 +26,94 @@ export function HomePageTable() {
   );
   const { partsreturnList } = currentState;
 
-  // Customers Redux state
-  const dispatch = useDispatch();
   useEffect(() => {
-    // server call by queryParams
     dispatch(actions.fetchPartsReturnList());
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [customersUIProps.queryParams, dispatch]);
+  }, [dispatch]);
   
   const columns = [
     {
-        Header: "Retrun Part #",
-        Footer: "Retrun Part #",
-        accessor: "barcode",
+        Header: "Barcode",
+        Footer: "Barcode",
+        accessor: "SALEORD_NUMBER",
         disableFilters: true,
-        Cell: ({value}) => value,
+        Cell: (props) => {
+          return props.value
+        },
     },
     {
-        Header: "Parts Return Listing",
-        Footer: "Parts Return Listing",
-        accessor: "desc",
+        Header: "Desc",
+        Footer: "Desc",
+        accessor: "SALEORD_DATE",
         disableFilters: true,
-        Cell: ({value}) => value,
-    },
-    
-    {
-        Header: "Supplier",
-        Footer: "Supplier",
-        accessor: "lot_no",
-        disableFilters: true,
-        Cell: ({value}) => value,
+        Cell: (props) => {
+          return props.value
+        },
     },
     {
-        Header: "Inventory",
-        Footer: "Inventory",
-        accessor: "expiry",
+        Header: "Finalized Date",
+        Footer: "Finalized Date",
+        accessor: "FINALIZED_DATE",
         disableFilters: true,
-        Cell: ({value}) => value,
+        Cell: (props) => {
+          return props.value
+        },
     },
     {
-        Header: "Return Complete",
-        Footer: "Return Complete",
-        accessor: "supplier",
+        Header: "Lot # ",
+        Footer: "Lot #",
+        accessor: "SALE_ORDER_DATE",
         disableFilters: true,
-        Cell: ({value}) => value,
+        Cell: (props) => {
+          return props.value
+        },
     },
     {
-        Header: "Credit Note",
-        Footer: "Credit Note",
-        accessor: "notes",
-        disableFilters: true,
-        Cell: ({value}) => value,
+      Header: "Expiry",
+      Footer: "Expiry",
+      accessor: "ASSIGNED_TO",
+      disableFilters: true,
+      Cell: (props) => {
+        return props.value
+      },
+    },
+    {
+      Header: "Supplier",
+      Footer: "Supplier",
+      accessor: "CUSTOMER_BILL_TO",
+      disableFilters: true,
+      Cell: (props) => {
+        return props.value
+      },
+    },
+    {
+      Header: "Notes ",
+      Footer: "Notes",
+      accessor: "COUNTRY_NAME",
+      disableFilters: true,
+      Cell: (props) => {
+        return props.value
+      },
     },
     {
         Header: "Void",
         Footer: "Void",
-        accessor: "void",
+        accessor: "VOID_DATE",
         disableSortBy: true,
         disableFilters: true,
-        Cell: ({value}) => <Input type="checkbox" checked={value} disabled={true} value={value}/>,
+        Cell: (props) => <Input type="checkbox" checked={props?.value === "Y" ? true : false} disabled={true} value={props?.value}/>,
     },
     {
         Header: "Action",
-        accessor: "id",
+        accessor: "SALEORD_ID",
         disableSortBy: true,
         disableFilters: true,
         Cell: ({value}) => {
           return (
             <>
-              <Link href="#partsreturn-edit" to={`/partsreturn/${value}/edit`} >
+              <Link href="#salesorder-edit" to={`/salesorder/${value}/edit`} onClick={() => PartsReturnUIContext?.editOrView(value)} >
                 <i class="fas fa-pencil-alt text-success"></i>
               </Link>
-              <Link href="#partsreturn-edit" to={`/partsreturn/${value}/view`} >
+              <Link href="#salesorder-edit" to={`/salesorder/${value}/view`}  onClick={() => PartsReturnUIContext?.editOrView(value , "view")}>
                 <i class="fas fa-eye text-primary ml-3"></i>
               </Link>
           </>)

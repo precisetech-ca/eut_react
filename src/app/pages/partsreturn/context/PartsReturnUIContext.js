@@ -14,7 +14,7 @@ export const PartsReturnUIConsumer = PartsReturnUIContext.Consumer;
 export function PartsReturnUIProvider({partsreturnUIEvents, children}) {
   const history = useHistory();
   const [queryParams, setQueryParamsBase] = useState(initialFilter);
-  const [ids, setIds] = useState([]);
+  const [ids, setIds] = useState([]); 
   const [isViewable, setIsViewable] = useState(false);
 
 

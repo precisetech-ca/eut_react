@@ -18,7 +18,7 @@ export const EditSalesReturn = ({id}) => {
       <Card>
         <CardHeader title="Sales Order"></CardHeader>
         <CardBody>
-          <SalesReturnForm backToHome={UIContext.backToHome} />
+          <SalesReturnForm backToHome={UIContext.backToHome} context={UIContext} />
           <Tabs
             id="controlled-tab-example"
             activeKey={key}

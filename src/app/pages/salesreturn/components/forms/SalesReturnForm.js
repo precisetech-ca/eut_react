@@ -28,16 +28,7 @@ const InnerForm = ({
     isViewable,
 }) => {
     const UIContext = useUIContext();
-    const {toggleSupplierHandler, warehouseMockData} = UIContext;
-    const [value, onChange] = useState(new Date());
-    const reactSelectStyles = {
-        control: base => ({
-            ...base,
-            borderColor: "#757578",
-            minHeight: '34px',
-            height: '34px',
-        })
-    };
+    const {toggleSupplierHandler, country , billTo} = UIContext;
 
     useEffect(() => {
         setFieldValue("po_date", dateFormat(new Date(), "isoDateTime"));
@@ -72,23 +63,30 @@ const InnerForm = ({
                                 name="date" 
                                 disabled={isViewable}
                             />
-                        <ErrorMessage component={FormFeedback} name="date_time" />
                         </Col>
                     </FormGroup>
 
                     <FormGroup row>
-                        <Label for="assinged_to" sm={3}>Returned By</Label>
+                        <Label for="returned_by" sm={3}>Returned By</Label>
                         <Col sm={8}>
-                            <Select options={warehouseMockData}  />
-                            <ErrorMessage component={FormFeedback} name="assinged_to" />
+                                <Input type="select" name="returned_by" size="sm" onChange={(e) =>{
+                                    setFieldValue('returned_by', e.target.value);
+                                }}>
+                                    <option value="">Please select Assinged To</option>
+                                    {billTo?.map(({ID, TITLE}) => <option value={ID} selected={values?.TITLE === ID}>{TITLE}</option>)}
+                                </Input>
                         </Col>
                     </FormGroup>
 
                     <FormGroup row>
                         <Label for="channel" sm={3}>Channel</Label>
                         <Col sm={8}>
-                            <Select options={warehouseMockData}  />
-                            <ErrorMessage component={FormFeedback} name="channel" />
+                                <Input type="select" name="channel" size="sm" onChange={(e) =>{
+                                    setFieldValue('channel', e.target.value);
+                                }}>
+                                    <option value="">Please select Channel</option>
+                                    {country?.map(({ID, TITLE}) => <option value={ID} selected={values?.TITLE === ID}>{TITLE}</option>)}
+                                </Input>
                         </Col>
                     </FormGroup>
 
@@ -111,9 +109,13 @@ const InnerForm = ({
                     <FormGroup row>
                         <Label for="customer" sm={3}>Customer</Label>
                         <Col sm={8}>
-                            <Select options={warehouseMockData}  /> 
+                                <Input type="select" name="channel" size="sm" onChange={(e) =>{
+                                    setFieldValue('channel', e.target.value);
+                                }}>
+                                    <option value="">Please select Channel</option>
+                                    {country?.map(({ID, TITLE}) => <option value={ID} selected={values?.TITLE === ID}>{TITLE}</option>)}
+                                </Input>
                             <span className="btn btn-dark mt-2 btn-sm" onClick={toggleSupplierHandler}>+ Create</span>
-                            <ErrorMessage component={FormFeedback} name="customer" />
                         </Col>
                     </FormGroup>
 
@@ -161,8 +163,12 @@ const InnerForm = ({
                     <FormGroup row>
                         <Label for="bill_to" sm={3}>Bill to<span className="text-danger">*</span></Label>
                             <Col sm={8}>
-                                <Select options={warehouseMockData}  /> 
-                                <ErrorMessage component={FormFeedback} name="bill_to" />
+                                <Input type="select" name="channel" size="sm" onChange={(e) =>{
+                                    setFieldValue('channel', e.target.value);
+                                }}>
+                                    <option value="">Please select Channel</option>
+                                    {country?.map(({ID, TITLE}) => <option value={ID} selected={values?.TITLE === ID}>{TITLE}</option>)}
+                                </Input>                                
                             </Col>
                     </FormGroup>
                 </Col>
@@ -185,16 +191,24 @@ const InnerForm = ({
                     <FormGroup row>
                         <Label for="country" sm={3}>Country</Label>
                         <Col sm={8}>
-                            <Select options={warehouseMockData}  /> 
-                            <ErrorMessage component={FormFeedback} name="country" />
+                                <Input type="select" name="channel" size="sm" onChange={(e) =>{
+                                    setFieldValue('channel', e.target.value);
+                                }}>
+                                    <option value="">Please select Channel</option>
+                                    {country?.map(({ID, TITLE}) => <option value={ID} selected={values?.TITLE === ID}>{TITLE}</option>)}
+                                </Input>
                         </Col>
                     </FormGroup>
 
                     <FormGroup row>
                         <Label for="province_state" sm={3}>Province/State</Label>
                         <Col sm={8}>
-                            <Select options={warehouseMockData}  />
-                            <ErrorMessage component={FormFeedback} name="province_state" />
+                                <Input type="select" name="channel" size="sm" onChange={(e) =>{
+                                    setFieldValue('channel', e.target.value);
+                                }}>
+                                    <option value="">Please select Channel</option>
+                                    {country?.map(({ID, TITLE}) => <option value={ID} selected={values?.TITLE === ID}>{TITLE}</option>)}
+                                </Input>
                         </Col>
                     </FormGroup>
 
@@ -251,6 +265,7 @@ const InnerForm = ({
                 
             {!isViewable && <Row>
                 <Col className="text-right">
+                    <Input type="hidden" name="salesorder_ID" />
                     <Button type="button" size="sm" color="danger" onClick={backToHome}>Close</Button> {' '}
                     <Button color="primary" size="sm" disabled={isSubmitting}>{isSubmitting ? "Saving..." : "Save"} </Button>
                 </Col>
@@ -269,19 +284,18 @@ const InnerForm = ({
 
 export const SalesReturnForm = withFormik({
     enableReinitialize: true,
-    mapPropsToValues: ({ temporaryData }) => {
+    mapPropsToValues: ({ context }) => {
+        const {tempData} = context;
         return {
-            notes: temporaryData && temporaryData.notes,
-            phone: temporaryData && temporaryData.phone,
+            salesorder_ID : tempData && tempData?.SALEORD_ID,
+            sale_order_num: tempData && tempData?.SALEORD_NUMBER,
+            address :       tempData && tempData?.ADDRESS,
+            city :          tempData && tempData?.CITY_NAME,
         }
     },
-    handleSubmit: (values, { props: { submitHandler }, setSubmitting }) => {
+    handleSubmit: (values, { props: { context }, setSubmitting, resetForm }) => {
+        const {submitFormHandler} = context;
         setSubmitting(true);
-
-        setTimeout(() => {
-            setSubmitting(false);
-        }, 1000);
-        console.log(values);
-        // submitHandler({payload: values, closeModal, setSubmitting, resetForm});
+        submitFormHandler({payload: values, setSubmitting, resetForm});
     },
 })(InnerForm);
