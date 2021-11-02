@@ -24,6 +24,7 @@ export function UIProvider({salesorderUIEvents, children}) {
   const [queryParams, setQueryParamsBase] = useState(initialFilter);
   const [ids, setIds] = useState([]);
   const [editMode, setEditMode] = useState(false);
+  const [termsAndConditions, setTermsAndConditions] = useState("");
   const [tempData, setTempData] = useState({});
   const [showSupplierModal, setShowSupplierModal] = useState(false);
   
@@ -40,27 +41,24 @@ export function UIProvider({salesorderUIEvents, children}) {
     shallowEqual 
   );
 
-  const { channels , province , country , customer} = defaultData;
+  const { channels , state , country , customers} = defaultData;
   const { supplier, uom, warehouses } = inventoryState;
   const {USE_ID, USERNAME} = userData;
-  const billTo = [
-    {
-      ID : '1',
-      TITLE : 'Salman',
-    }
-  ] 
+  const billTo = customers;
 
   const warehouseMockData = warehouses;
   const prefferedSupplier = supplier;
   const channelsData = channels ;
-  const provinceSates = province ;
+  const provinceSates = state ;
   const countryNames = country ;
-  const customerGroup = customer ; 
+  const customerGroup = customers ; 
 
   useEffect(() => {
+      dispatch(defaultActions.getChannels());
       dispatch(defaultActions.getCountry());
-      dispatch(defaultActions.getCustomerGroups());
       dispatch(defaultActions.getCustomers());
+      dispatch(defaultActions.getState());
+      
   }, []);
 
 
@@ -141,22 +139,21 @@ export function UIProvider({salesorderUIEvents, children}) {
   const submitFormHandler = ({payload, resetForm, setSubmitting}) => {
     const formPayload = {
       data: {
-          "SALEORD_ID" : "", 
           "SALEORD_DATE" : payload?.date,
-          "USE_ID_ASSIGNED_TO" : payload?.assinged_to,
+          "USE_ID_ASSIGNED_TO" : 1,
           "CHANNEL_ID" : payload?.channel,
           "REFERENCE_NUMBER" : payload?.ref_num ,
-          "CUS_ID" : "",
-          "BILL_TO_ID" : payload?.billTo,
+          "CUS_ID" : "76037",
+          "BILL_TO_ID" : payload?.bill_to,
           "ADDRESS" :payload?.address ,
-          "COU_ID" : "",
-          "PROSTA_ID" : "",
+          "COU_ID" : payload?.country,
+          "PROSTA_ID" : payload?.state,
           "CITY_NAME" : payload?.city ,
-          "ZIP_CODE" : payload?.zip_code ,
-          "DISPATCH_NOTES " : "",
-          "INTERNAL_NOTES " : "",
+          "ZIP_CODE" : payload?.zip_code, 
+          "DISPATCH_NOTES" : "",
+          "INTERNAL_NOTES" : "",
           "CUSTOMER_REPORT_NOTES" : "",
-          "TERMS_CONDITION" : "",
+          "TERMS_CONDITION" : termsAndConditions,
           "USE_ID_FINALIZED_BY" : "",
           "FINALIZED_FLAG " : "N",
           "VOID_FLAG" : "N",
@@ -167,6 +164,8 @@ export function UIProvider({salesorderUIEvents, children}) {
         "type": "rpc",
         "tid": "144"
     };
+
+    console.log(formPayload);
 
     if (payload?.salesorder_ID) {
       formPayload.data.SALEORD_ID = payload?.salesorder_ID;
@@ -214,6 +213,8 @@ export function UIProvider({salesorderUIEvents, children}) {
     showSupplierModal,
     toggleSupplierHandler,
     submitFormHandler,
+    termsAndConditions,
+    setTermsAndConditions,
     newSalesOrderForm: salesorderUIEvents.newSalesOrderForm,
     editSalesOrderForm: salesorderUIEvents.editSalesOrderForm,
     openDeleteCustomerDialog: salesorderUIEvents.openDeleteCustomerDialog,

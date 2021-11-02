@@ -197,7 +197,7 @@ export function Table({isViewable}) {
       
       <Row className="mt-4">
         {!isViewable ?  <Col className="col-lg-6">
-          <Input type="textarea" placeholder="terms and conditions"/>
+          <Input type="textarea" onChange={(e) => UIContext.setTermsAndConditions(e.target.value)} value={UIContext.termsAndConditions} placeholder="terms and conditions"/>
         </Col> : <Col className="col-lg-6"></Col>}
           
         <Col className="col-lg-2"></Col>

@@ -17,29 +17,42 @@ export const getCountry = queryParams => dispatch => {
   }))
 };
 
-
-export const getCustomers = queryParams => dispatch => {
+export const getChannels = queryParams => dispatch => {
   dispatch(actions.startCall({ callType: callTypes.action }));
 
-  dispatch(callGenericAsync( {}, '/InventoryWeb/GetCustomer', 'post', (res) => {
-    if ( res ) {
-      dispatch(actions.setCustomers({
+  dispatch(callGenericAsync( {}, '/InventoryWeb/GetChannels', 'post', (res) => {
+    if ( res?.CODE === 'SUCCESS' ) {
+      dispatch(actions.setChannels({
         callType: callTypes.action,
-        entities: res
+        entities: res?.Result
       }));
     }
   }))
 };
 
-export const getCustomerGroups = queryParams => dispatch => {
-    dispatch(actions.startCall({ callType: callTypes.action }));
+export const getState = queryParams => dispatch => {
+  dispatch(actions.startCall({ callType: callTypes.action }));
 
-    dispatch(callGenericAsync( {} , '/InventoryWeb/GetCustomerGroups', 'post', (res) => {
-      if ( res?.CODE === 'SUCCESS' ) {
-        dispatch(actions.setCustomerGroups({
-          callType: callTypes.action,
-          entities: res?.Result
-        }));
-      }
-    }))
-  };
+  dispatch(callGenericAsync( {}, '/InventoryWeb/GetProvinceState', 'post', (res) => {
+    if ( res?.CODE === 'SUCCESS' ) {
+      dispatch(actions.setState({
+        callType: callTypes.action,
+        entities: res?.Result
+      }));
+    }
+  }))
+};
+
+
+export const getCustomers = queryParams => dispatch => {
+  dispatch(actions.startCall({ callType: callTypes.action }));
+
+  dispatch(callGenericAsync( {}, '/InventoryWeb/GetCustomerGroups', 'post', (res) => {
+    if ( res?.CODE === 'SUCCESS' ) {
+      dispatch(actions.setCustomers({
+        callType: callTypes.action,
+        entities: res?.Result
+      }));
+    }
+  }))
+};

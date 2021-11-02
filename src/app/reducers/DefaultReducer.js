@@ -41,20 +41,36 @@ export const defaultSlice = createSlice({
       state.totalCount = 0;
     },
 
+    setChannels: (state, action) => {
+      const { entities } = action.payload;
+      state.listLoading = false;
+      state.error = null;
+      state.channels = entities;
+      state.totalCount = 0;
+    },
+
     setCountry: (state, action) => {
-        const { entities } = action.payload;
-        state.listLoading = false;
-        state.error = null;
-        state.country = entities;
-        state.totalCount = 0;
-      },
+      const { entities } = action.payload;
+      state.listLoading = false;
+      state.error = null;
+      state.country = entities;
+      state.totalCount = 0;
+    },
+
+    setState: (state, action) => {
+      const { entities } = action.payload;
+      state.listLoading = false;
+      state.error = null;
+      state.state = entities;
+      state.totalCount = 0;
+    },
 
     setCustomerGroups: (state, action) => {
-        const { entities } = action.payload;
-        state.listLoading = false;
-        state.error = null;
-        state.customerGroups = entities;
-        state.totalCount = 0;
+      const { entities } = action.payload;
+      state.listLoading = false;
+      state.error = null;
+      state.customerGroups = entities;
+      state.totalCount = 0;
     },
   }
 });

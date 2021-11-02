@@ -23,11 +23,18 @@ const InnerForm = ({
 
 }) => {
     const UIContext = useUIContext();
-    const {  billTo , country , channelsData , provinceSates , customerGroup} = UIContext;
+    const {  billTo , country , channelsData , provinceSates , customerGroup,} = UIContext;
 
     useEffect(() => {
         setFieldValue("po_date", dateFormat(new Date(), "isoDateTime"));
     }, [])
+
+    const [date, setDate] = useState(dateFormat(new Date(), "yyyy-mm-dd"));
+    const setSalesOrderDate = (value) => {
+        const formattedDate = dateFormat(value, "yyyy-mm-dd");
+        setDate(formattedDate)
+        setFieldValue("setSalesOrderDate", formattedDate);
+    };
 
     return (
         <Form onSubmit={handleSubmit}>
@@ -39,9 +46,9 @@ const InnerForm = ({
                         <Col sm={8}>
                             <Input 
                                 size="sm" 
+                                readOnly={true}
                                 tag={Field} 
                                 name="sale_order_num" 
-
                             />
                             <ErrorMessage component={FormFeedback} name="sale_order_num" />
                         </Col>
@@ -55,6 +62,8 @@ const InnerForm = ({
                                 size="sm" 
                                 tag={Field} 
                                 name="date" 
+                                value={values?.setSalesOrderDate ? dateFormat( values?.setSalesOrderDate, "yyyy-mm-dd") : date}
+                                onChange={(e) => setSalesOrderDate(e.target.value)}
 
                             />
                         <ErrorMessage component={FormFeedback} name="date_time" />
@@ -62,13 +71,13 @@ const InnerForm = ({
                     </FormGroup>
 
                     <FormGroup row>
-                        <Label for="assinged_to" sm={3}>Assinged To</Label>
+                        <Label for="assinged_to" sm={3}>Assigned To</Label>
                         <Col sm={8}>
                                 <Input type="select" name="assinged_to" size="sm" onChange={(e) =>{
                                     setFieldValue('assinged_to', e.target.value);
                                 }}>
                                     <option value="">Please select Assinged To</option>
-                                    {billTo?.map(({ID, TITLE}) => <option value={ID} selected={values?.TITLE === ID}>{TITLE}</option>)}
+                                    {billTo?.map(({CUSGRO_ID, NAME}) => <option value={CUSGRO_ID} selected={values?.NAME === CUSGRO_ID}>{NAME}</option>)}
                                 </Input>
                         </Col>
                     </FormGroup>
@@ -92,7 +101,7 @@ const InnerForm = ({
                                 size="sm" 
                                 tag={Field} 
                                 name="ref_num" 
-                                
+                                type="number"
                             />
                             <ErrorMessage component={FormFeedback} name="ref_num" />
                         </Col>
@@ -119,7 +128,6 @@ const InnerForm = ({
                                 size="sm" 
                                 tag={Field} 
                                 name="name" 
-                                readOnly={true}
                                 disabled={isViewable}
                             />
                             <ErrorMessage component={FormFeedback} name="name" />
@@ -133,7 +141,6 @@ const InnerForm = ({
                                 size="sm" 
                                 tag={Field} 
                                 name="email" 
-                                readOnly={true}
                                 disabled={isViewable}
                             />
                             <ErrorMessage component={FormFeedback} name="email" />
@@ -146,7 +153,6 @@ const InnerForm = ({
                                 size="sm" 
                                 tag={Field} 
                                 name="group" 
-                                readOnly={true}
                                 disabled={isViewable}
                             />
                             <ErrorMessage component={FormFeedback} name="group" />
@@ -160,7 +166,7 @@ const InnerForm = ({
                                     setFieldValue('bill_to', e.target.value);
                                 }}>
                                     <option value="">Please select Bill To</option>
-                                    {billTo?.map(({ID, TITLE}) => <option value={ID} selected={values?.TITLE === ID}>{TITLE}</option>)}
+                                    {billTo?.map(({CUSGRO_ID, NAME}) => <option value={CUSGRO_ID} selected={values?.NAME === CUSGRO_ID}>{NAME}</option>)}
                                 </Input>
                             </Col>
                     </FormGroup>
@@ -199,7 +205,7 @@ const InnerForm = ({
                                     setFieldValue('state', e.target.value);
                                 }}>
                                     <option value="">Please select State</option>
-                                    {provinceSates?.map(({PROSTA_ID, COUNTRY_NAME}) => <option value={PROSTA_ID} selected={values?.COUNTRY_NAME === PROSTA_ID}>{COUNTRY_NAME}</option>)}
+                                    {provinceSates?.map(({PROSTA_ID, PROVIENCE_NAME}) => <option value={PROSTA_ID} selected={values?.state === PROSTA_ID}>{PROVIENCE_NAME}</option>)}
                                 </Input>
                         </Col>
                     </FormGroup>
