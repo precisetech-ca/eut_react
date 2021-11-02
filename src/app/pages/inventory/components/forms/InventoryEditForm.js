@@ -14,10 +14,6 @@ import FileUpload from 'app/utils/FileUpload';
 import { Field, ErrorMessage, withFormik, Form } from 'formik';
 import { useIinventoryUIContext } from "app/pages/inventory/context/InventoryUIContext";
 import * as Yup from "yup";
-import DateTimePicker from 'react-datetime-picker';
-import Select from 'react-select'
-import InputMask from 'react-input-mask';
-import dateFormat from 'dateformat';
 import { FormSwitch } from 'app/pages/utils/FormSwitch';
 
 const InnerForm = ({
@@ -57,7 +53,7 @@ const InnerForm = ({
                 
                 <Label for="stock_item" sm="2">Stock Item</Label>
                 <Col sm="1">
-                  <FormSwitch setFieldValue={setFieldValue} name="stock_item" value={values?.stock_item}/>
+                  <FormSwitch  setFieldValue={setFieldValue} name="stock_item" value={values?.stock_item}/>
                 </Col>
                 <Label for="status" sm="2">Status</Label>
                 <Col sm="1">
@@ -152,6 +148,7 @@ const InnerForm = ({
                       placeholder="L"
                       name="length" 
                       disabled={isViewable}
+                      className='text-md-right'
                   />
               </Col>
               <Col sm={1}>
@@ -162,6 +159,7 @@ const InnerForm = ({
                       tag={Field} 
                       name="height" 
                       disabled={isViewable}
+                      className='text-md-right'
                   />
               </Col>
               <Col sm={1}>
@@ -172,6 +170,7 @@ const InnerForm = ({
                       tag={Field} 
                       name="width" 
                       disabled={isViewable}
+                      className='text-md-right'
                   />
               </Col>
               {/* <Col sm={1}></Col> */}
@@ -201,6 +200,7 @@ const InnerForm = ({
                   tag={Field} 
                   name="weight" 
                   disabled={isViewable}
+                  className='text-md-right'
                 />
               </Col>
               <Col sm={3}>
@@ -243,6 +243,7 @@ const InnerForm = ({
                   name="on_hand_qty" 
                   placeholder="On Hand Quantity"
                   disabled={isViewable}
+                  className='text-md-right'
                 />
               </Col>
               <Label for="conversion_uom" sm="1">Conversion to UoM</Label>
@@ -254,6 +255,8 @@ const InnerForm = ({
                   name="conversion_uom" 
                   placeholder="Conversion to UoM"
                   disabled={isViewable}
+                  className='text-md-right'
+
                 />
               </Col>
             </FormGroup>
@@ -269,6 +272,7 @@ const InnerForm = ({
                   placeholder="Quantity Available" 
                   type="number"
                   disabled={isViewable}
+                  className='text-md-right'
                 />
               </Col>
               <Label for="qty_avl" sm="1">Images</Label>
@@ -299,6 +303,7 @@ const InnerForm = ({
                       placeholder="Cost"
                       className={touched && touched.cost ? (errors && errors.cost ? 'is-invalid' : 'is-valid') : ''}
                       disabled={isViewable}
+                      className='text-md-right'
                     />
                     <ErrorMessage component={FormFeedback} name="cost" />
                 </Col>
@@ -314,6 +319,7 @@ const InnerForm = ({
                       placeholder="Price"
                       className={touched && touched.price ? (errors && errors.price ? 'is-invalid' : 'is-valid') : ''}
                       disabled={isViewable}
+                      className='text-md-right'
                     />
                     <ErrorMessage component={FormFeedback} name="price" />
                 </Col>
@@ -329,6 +335,7 @@ const InnerForm = ({
                       type="number"
                       placeholder="Average Cost"
                       disabled={isViewable}
+                      className='text-md-right'
                     />
                 </Col>
             </FormGroup>
@@ -343,6 +350,7 @@ const InnerForm = ({
                       type="number"
                       placeholder="Standard Cost"
                       disabled={isViewable}
+                      className='text-md-right'
                     />
                 </Col>
             </FormGroup>
@@ -350,7 +358,7 @@ const InnerForm = ({
                 <Label for="notes" sm={1}>Notes</Label>
                 <Col sm={11}>
                     <Input
-                      tag={Field} 
+                      // tag={Field} 
                       type="textarea"
                       name="notes"
                       id="notes"
@@ -358,6 +366,7 @@ const InnerForm = ({
                       placeholder="Notes"
                       disabled={isViewable}
                     />
+                    
                 </Col>
             </FormGroup>
             {!isViewable && <Row>
