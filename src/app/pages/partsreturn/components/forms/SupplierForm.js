@@ -111,10 +111,10 @@ const InnerForm = ({
                             <FormGroup>
                             <Label for="phone">Phone<span className="text-danger">*</span></Label>
                             <InputMask
-                            mask="+1 (999)-999-9999"
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            value={values.phone}
+                                mask="+1 (999)-999-9999"
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                                value={values.phone}
                         >
                             {() => (
                                 <Input 

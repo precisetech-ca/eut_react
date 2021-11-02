@@ -36,7 +36,7 @@ const InnerForm = ({
 }) => {
     const PartsReturnUIContext = usePartsReturnUIContext();
     // const {toggleNewPartHandler} = PartsReturnUIContext;
-    const {  prefferedSupplier, weightMockProps, isViewable } = usePartsReturnUIContext();
+    const {  prefferedSupplier, weightMockProps, isViewable , billTo , country ,warehouseMockData  } = usePartsReturnUIContext();
     const [value, onChange] = useState(new Date());
     const [thumbPath, setThumbPath] = useState([]);
     const [filePath, setFilePath] = useState([]);
@@ -111,10 +111,12 @@ const InnerForm = ({
             <FormGroup row>
               <Label for="warehouse" sm="1">Warehouse</Label>
               <Col sm={5}>
-                    <Select options={weightMockProps} onChange={(e) => {
-                        setFieldValue("weight_symbol", e.value);
-                        }}/>
-                    <ErrorMessage component={FormFeedback} name="warehouse" />
+                                <Input type="select" name="warehouse" size="sm" onChange={(e) =>{
+                                    setFieldValue('warehouse', e.target.value);
+                                }}>
+                                    <option value="">Please select Warehouse</option>
+                                    {country?.map(({ID, TITLE}) => <option value={ID} selected={values?.TITLE === ID}>{TITLE}</option>)}
+                                </Input>
               </Col>
                 <Label for="allow_neg_on_off" sm="2">Allow Negative ON OFF</Label>
                 <Col sm="1">
@@ -129,35 +131,48 @@ const InnerForm = ({
             <FormGroup row>
               <Label for="uom" sm="1">UOM<span className="text-danger">*</span></Label>
               <Col sm={5}>
-                    <Select options={weightMockProps} onChange={(e) => {
-                        setFieldValue("weight_symbol", e.value);
-                        }}/>
-                    <ErrorMessage component={FormFeedback} name="uom" />
+                      <Input type="select" name="uom" size="sm" disabled={isViewable} onChange={(e) => {
+                        setFieldValue("uom", e.target.value);
+                      }}>
+                        <option>Please Select UOM</option>
+                        {weightMockProps?.map(({value, label}) => 
+                          <option 
+                            value={value} 
+                            selected={value === values?.uom ? true: false}>
+                              {label}
+                          </option>)}
+                      </Input>
               </Col>
               <Label for="gl_acc_cost" sm="1">GL Account Cost</Label>
               <Col sm={5}>
-                <Select 
-                  getOptionLabel={option => option.SUPPLIER}
-                  getOptionValue={option => option.VEN_ID} 
-                  options={prefferedSupplier} 
-                  // value={prefferedSupplier?.filter(function(option) {
-                  //   return option.VEN_ID === 78619;
-                  // })}
-                  defaultValue={values?.preferred_supply}
-                  styles={reactSelectStyles}
-                  onChange={(e) => {
-                  setFieldValue("preffered_supplier", e.VEN_ID);
-                }}/>
+                      <Input type="select" name="gl_acc_cost" size="sm" disabled={isViewable} onChange={(e) => {
+                        setFieldValue("gl_acc_cost", e.target.value);
+                      }}>
+                        <option>Please Select GL Account Cost</option>
+                        {weightMockProps?.map(({value, label}) => 
+                          <option 
+                            value={value} 
+                            selected={value === values?.uom ? true: false}>
+                              {label}
+                          </option>)}
+                      </Input>
               </Col>
             </FormGroup>
 
             <FormGroup row>
                 <Label for="rerender_uom" sm="1">Rerendering UOM<span className="text-danger">*</span></Label>
                 <Col sm={5}>
-                    <Select options={weightMockProps} onChange={(e) => {
-                        setFieldValue("weight_symbol", e.value);
-                        }}/>
-                    <ErrorMessage component={FormFeedback} name="rerender_uom" />
+                      <Input type="select" name="rerender_uom" size="sm" disabled={isViewable} onChange={(e) => {
+                        setFieldValue("rerender_uom", e.target.value);
+                      }}>
+                        <option>Please Select Rerendering UOM</option>
+                        {weightMockProps?.map(({value, label}) => 
+                          <option 
+                            value={value} 
+                            selected={value === values?.uom ? true: false}>
+                              {label}
+                          </option>)}
+                      </Input>
                 </Col>
               {/* <Col sm={1}></Col> */}
               <Label for="price" sm="1">Price</Label>
@@ -211,27 +226,43 @@ const InnerForm = ({
               </Col>
                 <Label for="system" sm="1">System<span className="text-danger">*</span></Label>
                 <Col sm={5}>
-                    <Select options={weightMockProps} onChange={(e) => {
-                        setFieldValue("weight_symbol", e.value);
-                        }}/>
-                    <ErrorMessage component={FormFeedback} name="system" />
+                                <Input type="select" name="system" size="sm" onChange={(e) =>{
+                                    setFieldValue('system', e.target.value);
+                                }}>
+                                    <option value="">Please select System</option>
+                                    {country?.map(({ID, TITLE}) => <option value={ID} selected={values?.TITLE === ID}>{TITLE}</option>)}
+                                </Input>
                 </Col>
             </FormGroup>
 
             <FormGroup row>
               <Label for="preffered_supplier" sm="1">Prefered Supplier</Label>
               <Col sm={5}>
-                    <Select options={weightMockProps} onChange={(e) => {
-                        setFieldValue("weight_symbol", e.value);
-                        }}/>
-                    <ErrorMessage component={FormFeedback} name="preffered_supplier" />
+                <Input type="select" name="preferred_supply" size="sm" disabled={isViewable} onChange={(e) => {
+                  setFieldValue("preferred_supply", e.target.value);
+                }}>
+                  <option>Please Select</option>
+                  {prefferedSupplier?.map(({VEN_ID, SUPPLIER}) => 
+                    <option 
+                      value={VEN_ID} 
+                      selected={VEN_ID === values?.preferred_supply ? true: false}>
+                        {SUPPLIER}
+                    </option>)}
+                </Input>
               </Col>
                 <Label for="assembly" sm="1">Assembly</Label>
                 <Col sm={5}>
-                    <Select options={weightMockProps} onChange={(e) => {
-                        setFieldValue("weight_symbol", e.value);
-                        }}/>
-                    <ErrorMessage component={FormFeedback} name="assembly" />
+                      <Input type="select" name="assembly" size="sm" disabled={isViewable} onChange={(e) => {
+                        setFieldValue("assembly", e.target.value);
+                      }}>
+                        <option>Please Select Assembly</option>
+                        {weightMockProps?.map(({value, label}) => 
+                          <option 
+                            value={value} 
+                            selected={value === values?.uom ? true: false}>
+                              {label}
+                          </option>)}
+                      </Input>
                 </Col>
               
             </FormGroup>
@@ -253,10 +284,17 @@ const InnerForm = ({
                 </Col>
                 <Label for="component" sm="1">Component</Label>
                 <Col sm={5}>
-                    <Select options={weightMockProps} onChange={(e) => {
-                        setFieldValue("weight_symbol", e.value);
-                        }}/>
-                    <ErrorMessage component={FormFeedback} name="component" />
+                    <Input type="select" name="component" size="sm" disabled={isViewable} onChange={(e) => {
+                        setFieldValue("component", e.target.value);
+                      }}>
+                        <option>Please Select Component</option>
+                        {weightMockProps?.map(({value, label}) => 
+                          <option 
+                            value={value} 
+                            selected={value === values?.uom ? true: false}>
+                              {label}
+                          </option>)}
+                      </Input>
                 </Col>
             </FormGroup>
             <FormGroup row>
@@ -274,10 +312,17 @@ const InnerForm = ({
                 </Col>
                 <Label for="suspended_by" sm="1">Suspended By</Label>
                 <Col sm={5}>
-                    <Select options={weightMockProps} onChange={(e) => {
-                        setFieldValue("weight_symbol", e.value);
-                        }}/>
-                    <ErrorMessage component={FormFeedback} name="suspended_by" />
+                      <Input type="select" name="suspended_by" size="sm" disabled={isViewable} onChange={(e) => {
+                        setFieldValue("suspended_by", e.target.value);
+                      }}>
+                        <option>Please Select Suspended By</option>
+                        {weightMockProps?.map(({value, label}) => 
+                          <option 
+                            value={value} 
+                            selected={value === values?.uom ? true: false}>
+                              {label}
+                          </option>)}
+                      </Input>
                 </Col>
             </FormGroup>
             <FormGroup row>
@@ -295,19 +340,33 @@ const InnerForm = ({
                 </Col>
                 <Label for="gl_account_inventory" sm="1">GL Acconts Inventory<span className="text-danger">*</span></Label>
                 <Col sm={5}>
-                    <Select options={weightMockProps} onChange={(e) => {
-                        setFieldValue("weight_symbol", e.value);
-                        }}/>
-                    <ErrorMessage component={FormFeedback} name="gl_account_inventory" />
+                      <Input type="select" name="gl_account_inventory" size="sm" disabled={isViewable} onChange={(e) => {
+                        setFieldValue("gl_account_inventory", e.target.value);
+                      }}>
+                        <option>Please Select Suspended By</option>
+                        {weightMockProps?.map(({value, label}) => 
+                          <option 
+                            value={value} 
+                            selected={value === values?.uom ? true: false}>
+                              {label}
+                          </option>)}
+                      </Input>
                 </Col>
             </FormGroup>
             <FormGroup row>
                 <Label for="gl_acc_cost" sm={1}>GL Account Cost<span className="text-danger">*</span></Label>
                 <Col sm={5}>
-                    <Select options={weightMockProps} onChange={(e) => {
-                        setFieldValue("weight_symbol", e.value);
-                        }}/>
-                    <ErrorMessage component={FormFeedback} name="gl_acc_cost" />
+                        <Input type="select" name="gl_acc_cost" size="sm" disabled={isViewable} onChange={(e) => {
+                        setFieldValue("gl_acc_cost", e.target.value);
+                      }}>
+                        <option>Please Select GL Account Cost</option>
+                        {weightMockProps?.map(({value, label}) => 
+                          <option 
+                            value={value} 
+                            selected={value === values?.uom ? true: false}>
+                              {label}
+                          </option>)}
+                      </Input> 
                 </Col>
                 <Label for="qty_avl" sm="1">Images</Label>
                 <Col sm={5}>

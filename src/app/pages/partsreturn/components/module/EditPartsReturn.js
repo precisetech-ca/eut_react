@@ -18,12 +18,12 @@ export const EditPartsReturn = ({id}) => {
       <Card>
         <CardHeader title="Parts Return"></CardHeader>
         <CardBody>
-          <PartsReturnForm backToHome={PartsReturnUIContext.backToHome} />
+          <PartsReturnForm backToHome={PartsReturnUIContext.backToHome}  context={PartsReturnUIContext}/>
           <Tabs
             id="controlled-tab-example"
             activeKey={key}
             onSelect={(k) => setKey(k)}
-            className="mb-3 mt-3"
+            className="mb-3 mt-3 purchase_order_tabs"
           >
             {PartsReturnUIContext.partsreturnTabs.map(({key, title}) => 
             <Tab eventKey={key} title={title} className="mt-2 ml-1">

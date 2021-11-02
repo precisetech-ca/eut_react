@@ -26,33 +26,57 @@ export function HomePageTable() {
   
   const columns = [
     {
-      Header: "PO Number",
-      Footer: "PO Number",
+      Header: "PO#",
+      Footer: "PO#",
       accessor: "PO_NUMBER",
       disableFilters: true,
-      Cell: ({value}) => value,
+      Cell: (props) => {
+        return props?.value
+      },
     },
     {
-      Header: "Supplier",
-      Footer: "Supplier",
-      accessor: "SUPPLIER",
+      Header: "Create Date",
+      Footer: "Create Date",
+      accessor: "PO_DATE",
       disableFilters: true,
-      Cell: ({value}) => value,
+       Cell: (props) => {
+          return props?.value
+        },
     },
     {
-      Header: "Inventory",
-      Footer: "Inventory",
+      Header: "Update Date",
+      Footer: "Update Date",
       accessor: "INVENTORY",
       disableFilters: true,
-      Cell: ({value}) => value,
+       Cell: (props) => {
+          return props?.value
+        },
     },
+    {
+      Header: "Update By",
+      Footer: "Update By",
+      accessor: "SUPPLIER",
+      disableFilters: true,
+       Cell: (props) => {
+          return props?.value
+        },
+    },
+    // {
+    //   Header: "Completion Date",
+    //   Footer: "Completion Date",
+    //   accessor: "",
+    //   disableFilters: true,
+    //    Cell: (props) => {
+    //       return props?.value
+    //     },
+    // },
     {
       Header: "Void",
       Footer: "Void",
       accessor: "VOID",
       disableSortBy: true,
       disableFilters: true,
-      Cell: ({value}) => <Input type="checkbox" checked={value === 'Y' ? true: false} disabled={true} value={value}/>,
+      Cell: ({props}) => <Input type="checkbox" checked={props?.value === 'Y' ? true: false} disabled={true} value={props?.value}/>,
     },
     {
       Header: "Action",

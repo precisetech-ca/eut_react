@@ -14,12 +14,14 @@ import { salesorderSlice } from "app/pages/salesorder/_redux/salesorderSlice";
 import { salesReturnSlice } from "app/pages/salesreturn/_redux/salesReturnSlice";
 import { partsreturnSlice } from "app/pages/partsreturn/_redux/partsreturnSlice";
 import { physicalcountSlice } from 'app/pages/physicalcount/_redux/physicalcountSlice'
+import { defaultSlice } from 'app/reducers/DefaultReducer';
 
 
 
 export const rootReducer = combineReducers({
   auth: auth.reducer,
   customers: customersSlice.reducer,
+  default : defaultSlice.reducer,  
   inventory: inventorySlice.reducer,
   receiving: receivingSlice.reducer,
   remarks: remarksSlice.reducer,
@@ -30,7 +32,6 @@ export const rootReducer = combineReducers({
   purchase: purchaseSlice.reducer,
   partsreturn: partsreturnSlice.reducer,
   physicalcount: physicalcountSlice.reducer,
-  
 });
 
 export function* rootSaga() {

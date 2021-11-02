@@ -110,10 +110,10 @@ export function HomePageTable() {
         Cell: ({value}) => {
           return (
             <>
-              <Link href="#salesorder-edit" to={`/salesorder/${value}/edit`} onClick={() => PartsReturnUIContext?.editOrView(value)} >
+              <Link href="#partsreturn-edit" to={`/partsreturn/${value}/edit`} onClick={() => PartsReturnUIContext?.editOrView(value)} >
                 <i class="fas fa-pencil-alt text-success"></i>
               </Link>
-              <Link href="#salesorder-edit" to={`/salesorder/${value}/view`}  onClick={() => PartsReturnUIContext?.editOrView(value , "view")}>
+              <Link href="#partsreturn-edit" to={`/partsreturn/${value}/view`}  onClick={() => PartsReturnUIContext?.editOrView(value , "view")}>
                 <i class="fas fa-eye text-primary ml-3"></i>
               </Link>
           </>)

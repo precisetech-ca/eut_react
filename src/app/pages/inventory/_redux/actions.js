@@ -1,4 +1,4 @@
-import { callGenericGetterAsync, callGenericAsync } from "app/generic/actions";
+import {  callGenericAsync } from "app/generic/actions";
 import {inventorySlice, callTypes} from "./inventorySlice";
 import { table_data } from "./mock/inventory.mock";
 const {actions} = inventorySlice;
@@ -102,6 +102,123 @@ export const getSupplier = queryParams => dispatch => {
   dispatch(callGenericAsync(payload, '/InventoryWeb/GetSupplierCode', 'post', (res) => {
     if ( res?.CODE === 'SUCCESS' ) {
       dispatch(actions.getSupplier({
+        callType: callTypes.action,
+        entities: res?.Result
+      }));
+    }
+  }))
+};
+
+export const getChannels = queryParams => dispatch => {
+  dispatch(actions.startCall({ callType: callTypes.action }));
+
+  const payload = {
+        data : {
+          "SEARCH"     	: "",
+          "VOID_FLAG" 	: "",
+          "ORDER"     	: "",
+          "OFFSET"        : "",
+          "RNUM_FROM"     : "",
+          "RNUM_TO"       : "",
+          "FINZ_FLAG"      : ""
+          },
+      "action": "InventoryWeb",
+      "method": "GetSalesOrderList",
+      "type": "rpc",
+      "tid": "144"
+  };
+
+  dispatch(callGenericAsync(payload, '/InventoryWeb/GetChannels', 'post', (res) => {
+    if ( res?.CODE === 'SUCCESS' ) {
+      dispatch(actions.getChannels({
+        callType: callTypes.action,
+        entities: res?.Result
+      }));
+    }
+  }))
+};
+
+export const getProvince = queryParams => dispatch => {
+  dispatch(actions.startCall({ callType: callTypes.action }));
+
+  const payload = {
+        data : {
+          "SEARCH"     	: "",
+          "VOID_FLAG" 	: "",
+          "ORDER"     	: "",
+          "OFFSET"        : "",
+          "RNUM_FROM"     : "",
+          "RNUM_TO"       : "",
+          "FINZ_FLAG"      : ""
+          },
+      "action": "InventoryWeb",
+      "method": "GetSalesOrderList",
+      "type": "rpc",
+      "tid": "144"
+  };
+
+  dispatch(callGenericAsync(payload, '/InventoryWeb/GetProvinceState', 'post', (res) => {
+    if ( res?.CODE === 'SUCCESS' ) {
+      dispatch(actions.getProvince({
+        callType: callTypes.action,
+        entities: res?.Result
+      }));
+    }
+  }))
+};
+
+export const getCountry = queryParams => dispatch => {
+  dispatch(actions.startCall({ callType: callTypes.action }));
+
+  const payload = {
+        data : {
+          "SEARCH"     	: "",
+          "VOID_FLAG" 	: "",
+          "ORDER"     	: "",
+          "OFFSET"        : "",
+          "RNUM_FROM"     : "",
+          "RNUM_TO"       : "",
+          "FINZ_FLAG"      : ""
+          },
+      "action": "InventoryWeb",
+      "method": "GetSalesOrderList",
+      "type": "rpc",
+      "tid": "144"
+  };
+
+  dispatch(callGenericAsync(payload, '/InventoryWeb/GetCountryList', 'post', (res) => {
+    if ( res?.CODE === 'SUCCESS' ) {
+      dispatch(actions.getCountry({
+        callType: callTypes.action,
+        entities: res?.Result
+      }));
+    }
+  }))
+};
+
+
+export const getCustomers = queryParams => dispatch => {
+  dispatch(actions.startCall({ callType: callTypes.action }));
+
+  const payload = {
+        data : {
+          "SEARCH"     	: "",
+          "VOID_FLAG" 	: "",
+          "ORDER"     	: "",
+          "OFFSET"        : "",
+          "RNUM_FROM"     : "",
+          "RNUM_TO"       : "",
+          "FINZ_FLAG"      : ""
+          },
+      "action": "InventoryWeb",
+      "method": "GetSalesOrderList",
+      "type": "rpc",
+      "tid": "144"
+  };
+
+  dispatch(callGenericAsync(payload, '/InventoryWeb/GetCustomerGroups', 'post', (res) => {
+    if ( res?.CODE === 'SUCCESS' ) {
+      dispatch(actions.getCustomers({
         callType: callTypes.action,
         entities: res?.Result
       }));
