@@ -214,12 +214,17 @@ export const ReceivingOrderForm = withFormik({
             recId: tempData && tempData?.INVREC_ID,
             receiving_number: tempData && tempData?.RECEIVING_NUMBER,
             receiving_date: tempData && tempData?.REC_DATE,
-            supplier : tempData && tempData?.SUPPLIER,
+            supplier : tempData && tempData?.VEN_ID,
             po_number: tempData && tempData?.PO_NUMBER,
-            inventory: tempData && tempData?.INVENTORY,
+            inventory: tempData && tempData?.WAR_ID,
             notes: tempData && tempData?.NOTES,
             reference: tempData && tempData?.REFERENCE_NUMBER,
             phone: tempData && tempData?.PHONE,
+            bin: tempData && tempData?.BIN,
+            shelf: tempData && tempData?.SHELF,
+            rack: tempData && tempData?.RACK,
+            invoice_date: tempData && tempData?.SUPPLIER_INVOICE_DATE
+            
         } 
     },
     handleSubmit: (values, { props: { context }, setSubmitting, resetForm }) => {

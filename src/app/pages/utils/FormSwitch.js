@@ -2,16 +2,25 @@ import React, {useState} from 'react'
 import Switch from "react-switch";
 
 export const FormSwitch = ({setFieldValue, name, value}) => {
-    const [checked, setChecked] = useState(false);
+    const [checked, setChecked] = useState(true);
     const handleChange = () => {
         setChecked(!checked);
         setFieldValue(name, !checked);
     }
 
+    let defaultValue;
+
+    if ( value && value === "Y") {
+        defaultValue = true;
+    } else if ( value && value === "N" ) {
+        defaultValue = false;
+    } else {
+        defaultValue = true;
+    }
     return (
         <div>
             <Switch
-                checked={value === "Y" ? true : false}
+                checked={defaultValue}
                 onChange={handleChange}
                 onColor="#86d3ff"
                 onHandleColor="#2693e6"
