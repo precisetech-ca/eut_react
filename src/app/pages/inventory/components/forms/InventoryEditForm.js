@@ -304,6 +304,7 @@ const InnerForm = ({
                       className={touched && touched.cost ? (errors && errors.cost ? 'is-invalid' : 'is-valid') : ''}
                       disabled={isViewable}
                       className='text-md-right'
+                      onChange={(e) => setFieldValue(e.target.value.toFixed(2))}
                     />
                     <ErrorMessage component={FormFeedback} name="cost" />
                 </Col>
@@ -336,6 +337,7 @@ const InnerForm = ({
                       placeholder="Average Cost"
                       disabled={isViewable}
                       className='text-md-right'
+                      readOnly
                     />
                 </Col>
             </FormGroup>
@@ -351,6 +353,7 @@ const InnerForm = ({
                       placeholder="Standard Cost"
                       disabled={isViewable}
                       className='text-md-right'
+                      readOnly
                     />
                 </Col>
             </FormGroup>

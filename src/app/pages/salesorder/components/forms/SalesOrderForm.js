@@ -23,7 +23,7 @@ const InnerForm = ({
 
 }) => {
     const UIContext = useUIContext();
-    const {  billTo , country} = UIContext;
+    const {  billTo , country , channelsData , provinceSates , customerGroup} = UIContext;
 
     useEffect(() => {
         setFieldValue("po_date", dateFormat(new Date(), "isoDateTime"));
@@ -80,7 +80,7 @@ const InnerForm = ({
                                     setFieldValue('channel', e.target.value);
                                 }}>
                                     <option value="">Please select Channel</option>
-                                    {billTo?.map(({ID, TITLE}) => <option value={ID} selected={values?.TITLE === ID}>{TITLE}</option>)}
+                                    {channelsData?.map(({CHANNEL_ID, CODE}) => <option value={CHANNEL_ID} selected={values?.CODE === CHANNEL_ID}>{CODE}</option>)}
                                 </Input>
                         </Col>
                     </FormGroup>
@@ -107,7 +107,7 @@ const InnerForm = ({
                                     setFieldValue('customer', e.target.value);
                                 }}>
                                     <option value="">Please select Customer</option>
-                                    {billTo?.map(({ID, TITLE}) => <option value={ID} selected={values?.TITLE === ID}>{TITLE}</option>)}
+                                    {customerGroup?.map(({CUSGRO_ID, NAME}) => <option value={CUSGRO_ID} selected={values?.customer === CUSGRO_ID}>{NAME}</option>)}
                                 </Input>
                         </Col>
                     </FormGroup>
@@ -187,7 +187,7 @@ const InnerForm = ({
                                     setFieldValue('country', e.target.value);
                                 }}>
                                     <option value="">Please select country</option>
-                                    {country?.map(({ID, TITLE}) => <option value={ID} selected={values?.TITLE === ID}>{TITLE}</option>)}
+                                    {country?.map(({COU_ID, COUNTRY_NAME}) => <option value={COU_ID} selected={values?.COUNTRY_NAME === COU_ID}>{COUNTRY_NAME}</option>)}
                                 </Input>
                         </Col>
                     </FormGroup>
@@ -199,7 +199,7 @@ const InnerForm = ({
                                     setFieldValue('state', e.target.value);
                                 }}>
                                     <option value="">Please select State</option>
-                                    {country?.map(({ID, TITLE}) => <option value={ID} selected={values?.TITLE === ID}>{TITLE}</option>)}
+                                    {provinceSates?.map(({PROSTA_ID, COUNTRY_NAME}) => <option value={PROSTA_ID} selected={values?.COUNTRY_NAME === PROSTA_ID}>{COUNTRY_NAME}</option>)}
                                 </Input>
                         </Col>
                     </FormGroup>
@@ -283,6 +283,7 @@ export const SalesOrderForm = withFormik({
             address :       tempData && tempData?.ADDRESS,
             city :          tempData && tempData?.CITY_NAME,
             zip_code:       tempData && tempData?.ZIP_CODE,
+
         }
     },
     handleSubmit: (values, { props: { context }, setSubmitting, resetForm }) => {

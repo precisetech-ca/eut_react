@@ -1,10 +1,12 @@
-import React, {createContext, useContext, useState, useCallback} from "react";
+import React, {createContext, useContext, useState, useCallback , useEffect} from "react";
 import {isEqual, isFunction} from "lodash";
 import {initialFilter} from "../utils/UIHelpers";
 import { useHistory } from "react-router-dom";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { callGenericAsync } from "app/generic/actions";
 import * as actions from '../_redux/actions';
+import * as inventoryActions from 'app/pages/inventory/_redux/actions';
+import * as defaultActions from 'app/reducers/actions';
 
 
 
@@ -29,14 +31,16 @@ export function UIProvider({salesorderUIEvents, children}) {
     setShowSupplierModal(!showSupplierModal)
   };
 
-  const { inventoryState, userData } = useSelector(
+  const { inventoryState, userData , defaultData } = useSelector(
     (state) => ({ 
       inventoryState: state.inventory,
       userData: state.auth.user,
+      defaultData : state.default
     }),
     shallowEqual 
   );
 
+  const { channels , province , country , customer} = defaultData;
   const { supplier, uom, warehouses } = inventoryState;
   const {USE_ID, USERNAME} = userData;
   const billTo = [
@@ -46,14 +50,19 @@ export function UIProvider({salesorderUIEvents, children}) {
     }
   ] 
 
-  const country = [
-    {
-      ID : '1',
-      TITLE : 'Pakistan',
-    }
-  ] 
   const warehouseMockData = warehouses;
   const prefferedSupplier = supplier;
+  const channelsData = channels ;
+  const provinceSates = province ;
+  const countryNames = country ;
+  const customerGroup = customer ; 
+
+  useEffect(() => {
+      dispatch(defaultActions.getCountry());
+      dispatch(defaultActions.getCustomerGroups());
+      dispatch(defaultActions.getCustomers());
+  }, []);
+
 
 
   const weightMockProps = [
@@ -188,7 +197,11 @@ export function UIProvider({salesorderUIEvents, children}) {
     warehouseMockData,
     prefferedSupplier,
     weightMockProps,
+    channelsData,
+    provinceSates,
     salesorderTabs,
+    countryNames,
+    customerGroup,
     editOrView,
     editMode,
     tempData,
