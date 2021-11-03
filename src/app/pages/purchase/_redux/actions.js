@@ -38,6 +38,7 @@ export const fetchPurchaseList = () => dispatch => {
 
   dispatch(callGenericAsync(callPayload, '/InventoryWeb/GetPurchaseOrderList', 'post', (res => {
     if (res?.CODE === 'SUCCESS') {
+      
       dispatch(actions.purchaseListFetched({
         callType: callTypes.action,
         entities: res?.Result
@@ -74,7 +75,7 @@ export const auditLogDataAsync = (id, useId, username) => dispatch => {
   }))
 };
 
-export const fetchProducts = (id) => dispatch => {
+export const fetchProductDetails = (id) => dispatch => {
   dispatch(actions.startCall({ callType: callTypes.action }));
   dispatch(callGenericAsync({
       "data": {
@@ -85,7 +86,11 @@ export const fetchProducts = (id) => dispatch => {
       "type": "rpc",
       "tid": "144"
   }, '/InventoryWeb/GetPurchaseOrder', "post", (res => {
-    if (res) {
+    if (res?.CODE === "SUCCESS") {
+      dispatch(actions.purchaseDetailsFetched({
+        callType: callTypes.action,
+        entities: res?.Result?.INV_PURCHASE_ORDER_DETAILS_WV
+      }));
       dispatch(actions.productsFetched({
         callType: callTypes.action,
         entities: res?.Result?.INV_PURCHASE_ORDER_DETAILS_WV

@@ -4,9 +4,11 @@ import {initialFilter} from "../utils/UIHelpers";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector, shallowEqual } from "react-redux";
 import { callGenericAsync } from "app/generic/actions";
-import * as actions from '../_redux/actions';
+import * as purchaseActions from '../_redux/actions';
 import * as inventoryActions from 'app/pages/inventory/_redux/actions';
 import dateFormat from "dateformat";
+import {  callTypes, purchaseSlice } from "app/pages/purchase/_redux/purchaseSlice";
+const { actions } = purchaseSlice;
 
 const UIContext = createContext();
 
@@ -83,6 +85,10 @@ export function UIProvider({purchaseUIEvents, children}) {
 
     dispatch(callGenericAsync(getDataPayload, "/InventoryWeb/GetPurchaseOrder", "post", (res) => {
       if (res?.CODE === "SUCCESS") {
+        dispatch(actions.purchaseDetailsFetched({
+          callType: callTypes.action,
+          entities: res?.Result?.INV_PURCHASE_ORDER_DETAILS_WV
+        }));
         setTempData(res?.Result?.INV_PURCHASE_ORDERS_WV[0]);
       }
     }))
@@ -137,8 +143,8 @@ export function UIProvider({purchaseUIEvents, children}) {
     dispatch(callGenericAsync(formPayload, '/InventoryWeb/PostPurchaseOrder', 'post', (res) => {
       setSubmitting(false);
       if (res?.CODE === 'SUCCESS') { 
-        actions.fetchPurchaseList();
-        actions.auditLogDataAsync(payload?.pOrderId, USE_ID, USERNAME);
+        purchaseActions.fetchPurchaseList();
+        purchaseActions.auditLogDataAsync(payload?.pOrderId, USE_ID, USERNAME);
         history.push("/purchase");
       }
     }))
