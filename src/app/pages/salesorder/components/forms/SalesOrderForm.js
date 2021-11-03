@@ -55,7 +55,7 @@ const InnerForm = ({
                     </FormGroup>
 
                     <FormGroup row>
-                        <Label for="date_time" sm={3}>Date/Time </Label>
+                        <Label for="date" sm={3}>Date/Time </Label>
                         <Col sm={8}>
                             <Input 
                                 type="date"
@@ -66,7 +66,6 @@ const InnerForm = ({
                                 onChange={(e) => setSalesOrderDate(e.target.value)}
 
                             />
-                        <ErrorMessage component={FormFeedback} name="date_time" />
                         </Col>
                     </FormGroup>
 
@@ -108,7 +107,7 @@ const InnerForm = ({
                     </FormGroup>
                 </Col>
                 <Col md={12} sm={12} lg={12} xl={3} id='col2'  className="offset-lg-1 ml-auto">
-                    <Label for="customer_info" id="col2-heading">Customer Information</Label>
+                    <Label for="customer" id="col2-heading">Customer Information</Label>
                     <FormGroup row>
                         <Label for="customer" sm={3}>Customer</Label>
                         <Col sm={8}>
@@ -285,11 +284,18 @@ export const SalesOrderForm = withFormik({
         return {
             salesorder_ID : tempData && tempData?.SALEORD_ID,
             sale_order_num: tempData && tempData?.SALEORD_NUMBER,
-            date :          tempData && tempData?.SALEORD_DATE,
-            address :       tempData && tempData?.ADDRESS,
-            city :          tempData && tempData?.CITY_NAME,
-            zip_code:       tempData && tempData?.ZIP_CODE,
-
+            assinged_to   : tempData && tempData?.ASSIGNED_TO,
+            channel       : tempData && tempData?.CHANNEL_ID,
+            customer      : tempData && tempData?.CUS_ID,
+            name          : tempData && tempData?.CUSTOMER_NAME,
+            email         : tempData && tempData?.email,
+            group         : tempData && tempData?.group,
+            bill_to       : tempData && tempData?.BILL_TO_ID,
+            country       : tempData && tempData?.COUNTRY_NAME,
+            date          : tempData && tempData?.SALEORD_DATE,
+            address       : tempData && tempData?.ADDRESS,
+            city          : tempData && tempData?.CITY_NAME,
+            zip_code      : tempData && tempData?.ZIP_CODE,
         }
     },
     handleSubmit: (values, { props: { context }, setSubmitting, resetForm }) => {

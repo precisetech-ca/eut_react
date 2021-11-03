@@ -21,6 +21,7 @@ export function UIProvider({salesreturnUIEvents, children}) {
   const [editMode, setEditMode] = useState(false);
   const [tempData, setTempData] = useState({});
   const [showSupplierModal, setShowSupplierModal] = useState(false);
+  const [termsAndConditions, setTermsAndConditions] = useState("");
   const dispatch = useDispatch()
 
   const toggleSupplierHandler = () => {
@@ -127,25 +128,25 @@ export function UIProvider({salesreturnUIEvents, children}) {
         const formPayload = {
           data: {
               // "SALEORD_ID" : "", 
-              "SALEORD_DATE" : payload?.date,
-              "USE_ID_ASSIGNED_TO" : "",
-              "CHANNEL_ID" : payload?.channel,
-              "REFERENCE_NUMBER" : "" ,
-              "CUS_ID" : "",
-              "BILL_TO_ID" : payload?.billTo,
-              "ADDRESS" :payload?.address ,
-              "COU_ID" : "",
-              "PROSTA_ID" : "",
-              "CITY_NAME" : payload?.city ,
-              "ZIP_CODE" : payload?.zip_code ,
-              "DISPATCH_NOTES " : "",
-              "INTERNAL_NOTES " : "",
-              "CUSTOMER_REPORT_NOTES" : "",
-              "TERMS_CONDITION" : "",
-              "USE_ID_FINALIZED_BY" : "",
-              "FINALIZED_FLAG " : "N",
-              "VOID_FLAG" : "N",
-              "VOID_NOTES" : ""
+              "SALEORD_DATE"                : payload?.date,
+              "USE_ID_ASSIGNED_TO"          : payload?.use_id_assinged_by,
+              "CHANNEL_ID"                  : payload?.channel,
+              "REFERENCE_NUMBER"            : payload?.ref_num ,
+              "CUS_ID"                      : payload?.cus_id,
+              "BILL_TO_ID"                  : payload?.billTo,
+              "ADDRESS"                     : payload?.address ,
+              "COU_ID"                      : payload?.cou_id,
+              "PROSTA_ID"                   : payload?.prosta_id,
+              "CITY_NAME"                   : payload?.city ,
+              "ZIP_CODE"                    : payload?.zip_code ,
+              "DISPATCH_NOTES "             : "",
+              "INTERNAL_NOTES "             : "",
+              "CUSTOMER_REPORT_NOTES"       : "",
+              "TERMS_CONDITION"             : termsAndConditions,
+              "USE_ID_FINALIZED_BY"         : "N",
+              "FINALIZED_FLAG "             : "N",
+              "VOID_FLAG"                   : "N",
+              "VOID_NOTES"                  : "N"
         },
             "action": "InventoryWeb",
             "method": "PostSaleOrder",
@@ -192,6 +193,7 @@ export function UIProvider({salesreturnUIEvents, children}) {
     tempData,
     setTempData,
     submitFormHandler,
+    setTermsAndConditions,
     country,
     showSupplierModal,
     toggleSupplierHandler,

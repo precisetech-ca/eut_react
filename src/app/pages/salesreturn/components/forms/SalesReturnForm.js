@@ -109,8 +109,8 @@ const InnerForm = ({
                     <FormGroup row>
                         <Label for="customer" sm={3}>Customer</Label>
                         <Col sm={8}>
-                                <Input type="select" name="channel" size="sm" onChange={(e) =>{
-                                    setFieldValue('channel', e.target.value);
+                                <Input type="select" name="customer" size="sm" onChange={(e) =>{
+                                    setFieldValue('customer', e.target.value);
                                 }}>
                                     <option value="">Please select Channel</option>
                                     {country?.map(({ID, TITLE}) => <option value={ID} selected={values?.TITLE === ID}>{TITLE}</option>)}
@@ -163,8 +163,8 @@ const InnerForm = ({
                     <FormGroup row>
                         <Label for="bill_to" sm={3}>Bill to<span className="text-danger">*</span></Label>
                             <Col sm={8}>
-                                <Input type="select" name="channel" size="sm" onChange={(e) =>{
-                                    setFieldValue('channel', e.target.value);
+                                <Input type="select" name="bill_to" size="sm" onChange={(e) =>{
+                                    setFieldValue('bill_to', e.target.value);
                                 }}>
                                     <option value="">Please select Channel</option>
                                     {country?.map(({ID, TITLE}) => <option value={ID} selected={values?.TITLE === ID}>{TITLE}</option>)}
@@ -191,8 +191,8 @@ const InnerForm = ({
                     <FormGroup row>
                         <Label for="country" sm={3}>Country</Label>
                         <Col sm={8}>
-                                <Input type="select" name="channel" size="sm" onChange={(e) =>{
-                                    setFieldValue('channel', e.target.value);
+                                <Input type="select" name="country" size="sm" onChange={(e) =>{
+                                    setFieldValue('country', e.target.value);
                                 }}>
                                     <option value="">Please select Channel</option>
                                     {country?.map(({ID, TITLE}) => <option value={ID} selected={values?.TITLE === ID}>{TITLE}</option>)}
@@ -203,8 +203,8 @@ const InnerForm = ({
                     <FormGroup row>
                         <Label for="province_state" sm={3}>Province/State</Label>
                         <Col sm={8}>
-                                <Input type="select" name="channel" size="sm" onChange={(e) =>{
-                                    setFieldValue('channel', e.target.value);
+                                <Input type="select" name="province_state" size="sm" onChange={(e) =>{
+                                    setFieldValue('province_state', e.target.value);
                                 }}>
                                     <option value="">Please select Channel</option>
                                     {country?.map(({ID, TITLE}) => <option value={ID} selected={values?.TITLE === ID}>{TITLE}</option>)}
@@ -289,8 +289,18 @@ export const SalesReturnForm = withFormik({
         return {
             salesorder_ID : tempData && tempData?.SALEORD_ID,
             sale_order_num: tempData && tempData?.SALEORD_NUMBER,
-            address :       tempData && tempData?.ADDRESS,
-            city :          tempData && tempData?.CITY_NAME,
+            returned_by   : tempData && tempData?.returned_by,
+            ref_num       : tempData && tempData?.ref_num,
+            channel       : tempData && tempData?.CHANNEL_ID,
+            customer      : tempData && tempData?.CUSTOMER_ID,
+            name          : tempData && tempData?.CUSTOMER_NAME,
+            email         : tempData && tempData?.email,
+            group         : tempData && tempData?.group,
+            address       : tempData && tempData?.ADDRESS,
+            date          : tempData && tempData?.SALEORD_DATE,
+            province_state: tempData && tempData?.PROVINCE_NAME,
+            city          : tempData && tempData?.CITY_NAME,
+            zip_code      : tempData && tempData?.ZIP_CODE,
         }
     },
     handleSubmit: (values, { props: { context }, setSubmitting, resetForm }) => {

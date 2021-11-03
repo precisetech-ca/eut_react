@@ -22,6 +22,7 @@ export function Table({isViewable}) {
       queryParams: UIContext.queryParams,
     };
   }, [UIContext]);
+  
 
   // Getting curret state of customers list from store (Redux)
   const { currentState } = useSelector(
