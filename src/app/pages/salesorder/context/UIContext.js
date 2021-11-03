@@ -58,7 +58,6 @@ export function UIProvider({salesorderUIEvents, children}) {
       dispatch(defaultActions.getCountry());
       dispatch(defaultActions.getCustomers());
       dispatch(defaultActions.getState());
-      
   }, []);
 
 
@@ -111,10 +110,14 @@ export function UIProvider({salesorderUIEvents, children}) {
     dispatch(callGenericAsync(getDataPayload, "/InventoryWeb/GetSaleOrder", "post", (res) => {
       if (res?.CODE === "SUCCESS") {
         setTempData(res?.Result[0]);
+        console.log(tempData)
       }
     }))
   }
 
+  
+
+  
   const currentDate = () => {
     var now = new Date();
     var month = (now.getMonth() + 1);               
@@ -139,33 +142,31 @@ export function UIProvider({salesorderUIEvents, children}) {
   const submitFormHandler = ({payload, resetForm, setSubmitting}) => {
     const formPayload = {
       data: {
-          "SALEORD_DATE" : payload?.date,
-          "USE_ID_ASSIGNED_TO" : 1,
-          "CHANNEL_ID" : payload?.channel,
-          "REFERENCE_NUMBER" : payload?.ref_num ,
-          "CUS_ID" : "76037",
-          "BILL_TO_ID" : payload?.bill_to,
-          "ADDRESS" :payload?.address ,
-          "COU_ID" : payload?.country,
-          "PROSTA_ID" : payload?.state,
-          "CITY_NAME" : payload?.city ,
-          "ZIP_CODE" : payload?.zip_code, 
-          "DISPATCH_NOTES" : "",
-          "INTERNAL_NOTES" : "",
-          "CUSTOMER_REPORT_NOTES" : "",
-          "TERMS_CONDITION" : termsAndConditions,
-          "USE_ID_FINALIZED_BY" : "",
-          "FINALIZED_FLAG " : "N",
-          "VOID_FLAG" : "N",
-          "VOID_NOTES" : ""
+          "SALEORD_DATE"              : payload?.date,
+          "USE_ID_ASSIGNED_TO"        : 1,
+          "CHANNEL_ID"                : payload?.channel,
+          "REFERENCE_NUMBER"          : payload?.ref_num ,
+          "CUS_ID"                    : "76037",
+          "BILL_TO_ID"                : payload?.bill_to,
+          "ADDRESS"                   : payload?.address ,
+          "COU_ID"                    : payload?.country,
+          "PROSTA_ID"                 : payload?.state,
+          "CITY_NAME"                 : payload?.city ,
+          "ZIP_CODE"                  : payload?.zip_code, 
+          "DISPATCH_NOTES"            : "N",
+          "INTERNAL_NOTES"            : "N",
+          "CUSTOMER_REPORT_NOTES"     : "N",
+          "TERMS_CONDITION"           : termsAndConditions,
+          "USE_ID_FINALIZED_BY"       : "",
+          "FINALIZED_FLAG "           : "N",
+          "VOID_FLAG"                 : "N",
+          "VOID_NOTES"                : ""
     },
         "action": "InventoryWeb",
         "method": "PostSaleOrder",
         "type": "rpc",
         "tid": "144"
     };
-
-    console.log(formPayload);
 
     if (payload?.salesorder_ID) {
       formPayload.data.SALEORD_ID = payload?.salesorder_ID;
@@ -181,6 +182,7 @@ export function UIProvider({salesorderUIEvents, children}) {
     }))
   }
 
+ 
 
 
   const backToHome = () => {

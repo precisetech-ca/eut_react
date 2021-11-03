@@ -26,22 +26,18 @@ export const fetchSalesOrderList = () => dispatch => {
   dispatch(actions.startCall({ callType: callTypes.action }));
 
   const callPayload = {
-        data: {
-          "SEARCH"     	: "",
-          "VOID_FLAG" 	: "",
-          "ORDER"     	: "",
-          "OFFSET"        : "",
-          "RNUM_FROM"     : "",
-          "RNUM_TO"       : "",
-          "FINZ_FLAG"      : ""
-          },
-      "action": "InventoryWeb",
-      "method": "GetSalesOrderList",
-      "type": "rpc",
-      "tid": "144" 
+    "data": {
+      "SALEORD_ID": "118548",
+      "OFFSET" : "+5:00"
+    },
+    "action": "InventoryWeb",
+    "method": "GetSaleOrder",
+    "type": "rpc",
+    "tid": "144"
+  
   };
   
-  dispatch(callGenericAsync(callPayload, '/InventoryWeb/GetSaleOrderList', 'post', (res => {
+  dispatch(callGenericAsync(callPayload, '/InventoryWeb/GetSaleOrder', 'post', (res => {
     if (res?.CODE === 'SUCCESS') {
       dispatch(actions.salesorderListFetched({
         callType: callTypes.action,
