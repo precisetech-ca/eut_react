@@ -14,6 +14,8 @@ import FileUpload from 'app/utils/FileUpload';
 import { Field, ErrorMessage, withFormik, Form } from 'formik';
 import { useIinventoryUIContext } from "app/pages/inventory/context/InventoryUIContext";
 import * as Yup from "yup";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { FormSwitch } from 'app/pages/utils/FormSwitch';
 
 const InnerForm = ({
@@ -44,7 +46,6 @@ const InnerForm = ({
                       size="sm" 
                       tag={Field} 
                       name="sku" 
-                      type="number"
                       placeholder="SKU"
                       disabled={isViewable}
                     />
@@ -120,7 +121,7 @@ const InnerForm = ({
               </Col>
               <Label for="preferred_supply" sm="1">Supplier</Label>
               <Col sm={5}>
-                <Input type="select" name="preferred_supply" size="sm" disabled={isViewable} onChange={(e) => {
+                <Input type="select" name="" size="sm" disabled={isViewable} onChange={(e) => {
                   setFieldValue("preferred_supply", e.target.value);
                 }}>
                   <option>Please Select</option>
@@ -142,7 +143,7 @@ const InnerForm = ({
                       type="number"
                       tag={Field} 
                       placeholder="L"
-                      name="length" 
+                      name="dimensionLength" 
                       disabled={isViewable}
                       className='text-md-right'
                   />
@@ -195,19 +196,19 @@ const InnerForm = ({
                   placeholder="weight"
                   tag={Field} 
                   name="weight" 
-                  disabled={isViewable}
                   className='text-md-right'
+                  disabled={isViewable}
                 />
               </Col>
               <Col sm={3}>
-                <Input type="select" name="uom" size="sm" disabled={isViewable} onChange={(e) => {
-                  setFieldValue("uom", e.target.value);
+                <Input type="select" name="weight_unit" size="sm" disabled={isViewable} onChange={(e) => {
+                  setFieldValue("weight_unit", e.target.value);
                 }}>
                   <option>Please Select</option>
                   {weightMockProps?.map(({value, label}) => 
                     <option 
                       value={value} 
-                      selected={value === values?.uom ? true: false}>
+                      selected={value === values?.weight_unit ? true: false}>
                         {label}
                     </option>)}
                 </Input>
@@ -229,17 +230,17 @@ const InnerForm = ({
             </FormGroup>
 
             <FormGroup row>
-              <Label for="on_hand_qty" sm="1">On Hand Quantity</Label>
+              <Label for="on_hand_qty" sm="1">OH Qty</Label>
               <Col sm={5}>
                 <Input 
                   size="sm" 
                   type="number"
-                  readOnly={true}
                   tag={Field} 
                   name="on_hand_qty" 
-                  placeholder="On Hand Quantity"
+                  placeholder="OH Quantity"
                   disabled={isViewable}
                   className='text-md-right'
+                  readOnly
                 />
               </Col>
               <Label for="conversion_uom" sm="1">Conversion to UoM</Label>
@@ -258,14 +259,14 @@ const InnerForm = ({
             </FormGroup>
 
             <FormGroup row>
-              <Label for="qty_avl" sm="1">Quantity Available</Label>
+              <Label for="qty_avl" sm="1">Qty Avl</Label>
               <Col sm={5}>
                 <Input 
                   size="sm" 
                   tag={Field} 
                   name="qty_avl"
-                  readOnly={true}
-                  placeholder="Quantity Available" 
+                  readOnly
+                  placeholder="Qty Available" 
                   type="number"
                   disabled={isViewable}
                   className='text-md-right'
@@ -288,7 +289,7 @@ const InnerForm = ({
             </FormGroup>
             
             <FormGroup row>
-                <Label for="cost" sm={1}>Cost</Label>
+                <Label for="cost" sm={1}>Cost <span className="text-danger">*</span></Label>
                 <Col sm={5}>
                     <Input
                       name="cost"
@@ -297,16 +298,14 @@ const InnerForm = ({
                       size="sm"
                       type="number"
                       placeholder="Cost"
-                      className={touched && touched.cost ? (errors && errors.cost ? 'is-invalid' : 'is-valid') : ''}
+                      className={touched && touched.cost ? (errors && errors.cost ? 'is-invalid text-md-right' : 'is-valid text-md-right') : 'text-md-right'}
                       disabled={isViewable}
-                      className='text-md-right'
-                      onChange={(e) => setFieldValue(e.target.value.toFixed(2))}
                     />
                     <ErrorMessage component={FormFeedback} name="cost" />
                 </Col>
             </FormGroup>
             <FormGroup row>
-                <Label for="price" sm={1}>Price</Label>
+                <Label for="price" sm={1}>Price <span className="text-danger">*</span></Label>
                 <Col sm={5}>
                     <Input
                       name="price"
@@ -314,15 +313,14 @@ const InnerForm = ({
                       tag={Field} 
                       type="number"
                       placeholder="Price"
-                      className={touched && touched.price ? (errors && errors.price ? 'is-invalid' : 'is-valid') : ''}
+                      className={touched && touched.price ? (errors && errors.price ? 'is-invalid text-md-right' : 'is-valid text-md-right') : 'text-md-right'}
                       disabled={isViewable}
-                      className='text-md-right'
                     />
                     <ErrorMessage component={FormFeedback} name="price" />
                 </Col>
             </FormGroup>
             <FormGroup row>
-                <Label for="average_cost" sm={1}>Average Cost</Label>
+                <Label for="average_cost" sm={1}>Avg Cost</Label>
                 <Col sm={5}>
                     <Input
                       name="average_cost"
@@ -346,10 +344,10 @@ const InnerForm = ({
                       id="standard_cost"
                       size="sm"
                       type="number"
+                      readOnly
                       placeholder="Standard Cost"
                       disabled={isViewable}
                       className='text-md-right'
-                      readOnly
                     />
                 </Col>
             </FormGroup>
@@ -381,7 +379,7 @@ const InnerForm = ({
                     <Button type="button" size="sm" color="danger" onClick={onHide}>Close</Button> {' '}
                 </Col>
             </Row>}
-            
+            <ToastContainer />
         </Form>
       </ModalBody>
     );
@@ -398,10 +396,11 @@ export const InventoryEditForm = withFormik({
         taxable: tempData && tempData.ALLOW_TAX_FLAG, 
         stock_item: tempData && tempData.STOCK_ITEM_FLAG, 
         status: tempData && tempData.ACTIVE_FLAG, 
-        sku: tempData && tempData.SKU, 
-        price: tempData && tempData.UOM_ID,
-        cost: tempData && tempData.UOM_ID_REORDERING,
-        standard_cost:  tempData && tempData.STANDARD_COST,
+        sku: tempData && tempData.PAR_CODE, 
+        price: tempData && tempData.AVERAGE_COST,
+        cost: tempData && tempData.STANDARD_COST,
+        standard_cost:  tempData && tempData.STANDARD_COST_CALCULATED,
+        preffered_supplier: tempData && tempData.VEN_ID,
         notes:  tempData && tempData.NOTES,
         barcode:  tempData && tempData.BARCODE_NUMBER,
         description:  tempData && tempData.PART_DESCRIPTION,
@@ -409,11 +408,11 @@ export const InventoryEditForm = withFormik({
         conversion_uom:  tempData && tempData.CONVERSION_INTO_STOCKING_UOM,
         preferred_supply:  prefferedSupplier && tempData?.VEN_ID,
         warehouse:  warehouseMockData && tempData?.PARWAR_ID,
-        uom:  uom && tempData?.UOM,
+        uom:  tempData && tempData?.UOM_ID,
         re_ordering_uom:  uom && tempData?.UOM_ID_REORDERING,
-        average_cost:  tempData && tempData.AVERAGE_COST,
+        average_cost:  tempData && tempData.AVERAGE_COST_CALCULATED,
         height:  tempData && tempData.DimensionH,
-        length:  tempData && tempData.DimensionL,
+        dimensionLength:  tempData && tempData.DimensionL,
         width: tempData && tempData.DimensionW,
         weight:  tempData && tempData.Weight,
       })

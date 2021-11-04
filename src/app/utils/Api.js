@@ -22,10 +22,10 @@ const RedirectHandler = (response) => {
 
 const MessagesHandler = (response) => {
   try {
-    let status = response?.data?.status;
-    const message = response?.data?.message;
+    let status = response?.data?.CODE;
+    const message = response?.data?.Message;
 
-    if (status === 0) {
+    if (status === "FAILED") {
       toast.error(message);
     }
 
