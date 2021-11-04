@@ -76,10 +76,6 @@ const InnerForm = ({
               <Col sm="1">
                 <FormSwitch setFieldValue={setFieldValue} name="allow_negative_oh" value={values?.allow_negative_oh} />
               </Col>
-              <Label for="taxable" sm="2">Taxable</Label>
-              <Col sm="1">
-                <FormSwitch setFieldValue={setFieldValue} name="taxable" value={values?.taxable} />
-              </Col>
             </FormGroup>
 
             <FormGroup row>

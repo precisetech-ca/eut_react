@@ -104,7 +104,7 @@ const InnerForm = ({
                 </Col>
                 <Label for="prepared_by" sm="1">Prepared By</Label>
                 <Col sm="3">
-                    <Input type="select" name="prepared_by">
+                    <Input type="select" name="prepared_by" disabled={true}>
                         <option value="">Please select prepared by</option>
                     </Input>
                 </Col>
