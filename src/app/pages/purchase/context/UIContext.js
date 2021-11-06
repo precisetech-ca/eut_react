@@ -4,9 +4,11 @@ import {initialFilter} from "../utils/UIHelpers";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector, shallowEqual } from "react-redux";
 import { callGenericAsync } from "app/generic/actions";
-import * as actions from '../_redux/actions';
+import * as purchaseActions from '../_redux/actions';
 import * as inventoryActions from 'app/pages/inventory/_redux/actions';
 import dateFormat from "dateformat";
+import {  callTypes, purchaseSlice } from "app/pages/purchase/_redux/purchaseSlice";
+const { actions } = purchaseSlice;
 
 const UIContext = createContext();
 
@@ -25,6 +27,7 @@ export function UIProvider({purchaseUIEvents, children}) {
   const [showSupplierModal, setShowSupplierModal] = useState(false);
   const [voidModal, setVoidModal] = useState(false);
   const [tempData, setTempData] = useState({});
+  const [isEdit, setIsEdit] = useState(false);
 
   const toggleSupplierHandler = () => {
     setShowSupplierModal(!showSupplierModal)
@@ -52,6 +55,10 @@ export function UIProvider({purchaseUIEvents, children}) {
     dispatch(inventoryActions.getSupplier());
   }, []);
 
+  const setEditHandler = (flag) => {
+    setIsEdit(flag);
+  }
+
   const weightMockProps = [
     {value: 1, label: "ml"},
     {value: 2, label: "g"},
@@ -64,6 +71,7 @@ export function UIProvider({purchaseUIEvents, children}) {
   ];
 
   const editOrView = (id, route = 'edit') => {
+    setEditHandler(true);
     setEditDataAsync(id);
     setEditMode(true);
     history.push(`/purchase/${id}/${route}`);
@@ -83,6 +91,10 @@ export function UIProvider({purchaseUIEvents, children}) {
 
     dispatch(callGenericAsync(getDataPayload, "/InventoryWeb/GetPurchaseOrder", "post", (res) => {
       if (res?.CODE === "SUCCESS") {
+        dispatch(actions.purchaseDetailsFetched({
+          callType: callTypes.action,
+          entities: res?.Result?.INV_PURCHASE_ORDER_DETAILS_WV
+        }));
         setTempData(res?.Result?.INV_PURCHASE_ORDERS_WV[0]);
       }
     }))
@@ -137,8 +149,8 @@ export function UIProvider({purchaseUIEvents, children}) {
     dispatch(callGenericAsync(formPayload, '/InventoryWeb/PostPurchaseOrder', 'post', (res) => {
       setSubmitting(false);
       if (res?.CODE === 'SUCCESS') { 
-        actions.fetchPurchaseList();
-        actions.auditLogDataAsync(payload?.pOrderId, USE_ID, USERNAME);
+        purchaseActions.fetchPurchaseList();
+        purchaseActions.auditLogDataAsync(payload?.pOrderId, USE_ID, USERNAME);
         history.push("/purchase");
       }
     }))
@@ -172,6 +184,8 @@ export function UIProvider({purchaseUIEvents, children}) {
     voidModal,
     editMode,
     setEditMode,
+    setEditHandler,
+    isEdit,
     newPurchaseForm: purchaseUIEvents.newPurchaseForm,
     editPurchaseForm: purchaseUIEvents.editPurchaseForm,
     openDeleteCustomerDialog: purchaseUIEvents.openDeleteCustomerDialog,

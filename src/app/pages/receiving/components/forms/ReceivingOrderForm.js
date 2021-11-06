@@ -26,10 +26,28 @@ const InnerForm = ({
 }) => {
     const UIContext = useUIContext();
     const {toggleSupplierHandler, warehouseMockData, prefferedSupplier} = UIContext;
-    
-    useEffect(() => {
-        setFieldValue("po_date", dateFormat(new Date(), "isoDateTime"));
-    }, [])
+    const [date, setDate] = useState(dateFormat(new Date(), "yyyy-mm-dd"));
+    const setPoDate = (value) => {
+        const formattedDate = dateFormat(value, "yyyy-mm-dd");
+        setDate(formattedDate)
+        setFieldValue("po_date", formattedDate);
+    };
+
+
+    const [receivingDate, setRecDate] = useState(dateFormat(new Date(), "yyyy-mm-dd"));
+    const setRecDateHandler = (value) => {
+        const formattedDate = dateFormat(value, "yyyy-mm-dd");
+        setRecDate(formattedDate)
+        setFieldValue("receiving_date", formattedDate);
+    };
+
+
+    const [invDate, setInvDate] = useState(dateFormat(new Date(), "yyyy-mm-dd"));
+    const setInvDateHandler = (value) => {
+        const formattedDate = dateFormat(value, "yyyy-mm-dd");
+        setInvDate(formattedDate)
+        setFieldValue("invoice_date", formattedDate);
+    };
 
     return (
         <Form onSubmit={handleSubmit}>
@@ -56,6 +74,8 @@ const InnerForm = ({
                         name="receiving_date"
                         placeholder="Receiving Date"
                         disabled={isViewable}
+                        value={values?.receiving_date ? dateFormat( values?.receiving_date, "yyyy-mm-dd") : receivingDate}
+                        onChange={(e) => setRecDateHandler(e.target.value)}
                     />  
                 </Col>
                 <Label for="supplier" sm={1}>Supplier</Label>
@@ -93,7 +113,16 @@ const InnerForm = ({
                 </Col>
                 <Label for="po_date" sm={1}>PO Date</Label>
                 <Col sm={1}>
-                    <Input size="sm" type="date" disabled={isViewable} tag={Field} name="po_date" id="po_date" />
+                    <Input 
+                        size="sm" 
+                        type="date" 
+                        disabled={isViewable} 
+                        tag={Field} 
+                        name="po_date" 
+                        value={values?.po_date ? dateFormat( values?.po_date, "yyyy-mm-dd") : date}
+                        onChange={(e) => setPoDate(e.target.value)}
+                        id="po_date" 
+                    />
                 </Col>
 
                 <Label for="phone" sm="1">Phone<span className="text-danger">*</span></Label>
@@ -118,11 +147,27 @@ const InnerForm = ({
                 </Col>
                 <Label for="invoice_no" sm={1}>Invoice No</Label>
                 <Col sm={1}>
-                    <Input size="sm" tag={Field} disabled={isViewable} name="invoice_no" placeholder="invoice_no" />
+                    <Input 
+                        size="sm" 
+                        type="number" 
+                        tag={Field} 
+                        disabled={isViewable} 
+                        name="invoice_no" 
+                        placeholder="invoice_no" 
+                    />
                 </Col>
                 <Label for="invoice_date" sm={1}>Invoice Date</Label>
                 <Col sm={1}>
-                    <Input size="sm" type="date" disabled={isViewable} tag={Field} name="invoice_date" placeholder="invoice_date" />
+                    <Input 
+                        size="sm" 
+                        type="date" 
+                        disabled={isViewable} 
+                        tag={Field} 
+                        name="invoice_date" 
+                        placeholder="invoice_date" 
+                        value={values?.invoice_date ? dateFormat( values?.invoice_date, "yyyy-mm-dd") : invDate}
+                        onChange={(e) => setInvDateHandler(e.target.value)}
+                    />
                 </Col>
             </FormGroup>
             <FormGroup row>
@@ -223,7 +268,8 @@ export const ReceivingOrderForm = withFormik({
             bin: tempData && tempData?.BIN,
             shelf: tempData && tempData?.SHELF,
             rack: tempData && tempData?.RACK,
-            invoice_date: tempData && tempData?.SUPPLIER_INVOICE_DATE
+            invoice_date: tempData && tempData?.SUPPLIER_INVOICE_DATE,
+            invoice_no: tempData && tempData?.SUPPLIER_INVOICE_NUMBER
             
         } 
     },

@@ -19,7 +19,7 @@ export function Table({isViewable}) {
   const dispatch = useDispatch();
   useEffect(() => {
       // const id = window?.location?.pathname?.split('/')[2];
-      dispatch(actions.fetchProducts());
+      // dispatch(actions.fetchProductDetails());
   }, []);
 
   const deleteProduct = (id) => {

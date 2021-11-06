@@ -4,6 +4,7 @@ import { useHistory } from "react-router-dom";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import * as inventoryActions from 'app/pages/inventory/_redux/actions';
 import * as actions from '../_redux/actions';
+import * as purchaseActions from 'app/pages/purchase/_redux/actions';
 import {initialFilter} from "../utils/UIHelpers";
 import dateFormat from "dateformat";
 import { callGenericAsync } from "app/generic/actions";
@@ -44,6 +45,7 @@ export function UIProvider({receivingUIEvents, children}) {
   useEffect(() => {
     dispatch(inventoryActions.getWarehouses());
     dispatch(inventoryActions.getSupplier());
+    dispatch(purchaseActions.fetchPurchaseList());
   }, []);
   
 
@@ -125,7 +127,7 @@ export function UIProvider({receivingUIEvents, children}) {
   const submitFormHandler = ({payload, resetForm, setSubmitting}) => {
     const formPayload = {
       data: {
-        // "INVREC_ID"     			: "" ,
+        "INVREC_ID"     			: "" ,
         "WAR_ID" 					:           payload?.warehouse,
         "VEN_ID"     				:         payload?.supplier,
         "RECEIVING_NUMBER"     		:   payload?.receiving_number,
@@ -150,19 +152,20 @@ export function UIProvider({receivingUIEvents, children}) {
       },
       "action": "InventoryWeb",
       "method": "PostRecieving",
+      "username": "admin",
       "type": "rpc",
       "tid": "144"
     };
 
-    if (payload?.recID) {
-      formPayload.data.INVREC_ID = payload?.recID;
+    if (payload?.recId) {
+      formPayload.data.INVREC_ID = payload?.recId;
     }
 
     dispatch(callGenericAsync(formPayload, '/InventoryWeb/PostRecieving', 'post', (res) => {
       setSubmitting(false);
       if (res?.CODE === 'SUCCESS') { 
         actions.fetchReceivingList();
-        // actions.auditLogDataAsync(payload?.pOrderId, USE_ID, USERNAME);
+        actions.auditLogDataAsync(payload?.po_number, USE_ID, USERNAME);
         history.push("/receiving");
       }
     }))

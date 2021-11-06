@@ -30,6 +30,7 @@ const InnerForm = ({
         prefferedSupplier, 
         toggleVoidHandler,
         voidModal,
+        isEdit,
     } = UIContext;
     const [date, setDate] = useState(dateFormat(new Date(), "yyyy-mm-dd"));
     const setPoDate = (value) => {
@@ -39,37 +40,38 @@ const InnerForm = ({
     };
     return (
         <Form onSubmit={handleSubmit}>
-            <Row className="mb-3">
-                <Col className="col-lg-8">
-                </Col>
-                <Col>
-                    <FormGroup check>
-                        <Label check>
-                            <Input 
-                                type="checkbox" 
-                                name="completed" 
-                                disabled={true} 
-                            />{' '}
-                            Completed
-                        </Label>
-                    </FormGroup>
-                </Col>
-                <Col>
-                    <FormGroup check>
-                        <Label check>
-                            <Input 
-                                type="checkbox" 
-                                name="void" 
-                                checked={voidModal}
-                                disabled={isViewable} 
-                                onChange={toggleVoidHandler}
-                            />{' '}
-                            Void
-                        </Label>
-                    </FormGroup>
-                </Col>
-            </Row>
-    
+            {isEdit && 
+                <Row className="mb-3">
+                    <Col className="col-lg-8">
+                    </Col>
+                    <Col>
+                        <FormGroup check>
+                            <Label check>
+                                <Input 
+                                    type="checkbox" 
+                                    name="completed" 
+                                    disabled={true} 
+                                />{' '}
+                                Completed
+                            </Label>
+                        </FormGroup>
+                    </Col>
+                    <Col>
+                        <FormGroup check>
+                            <Label check>
+                                <Input 
+                                    type="checkbox" 
+                                    name="void" 
+                                    checked={voidModal}
+                                    disabled={isViewable} 
+                                    onChange={toggleVoidHandler}
+                                />{' '}
+                                Void
+                            </Label>
+                        </FormGroup>
+                    </Col>
+                </Row>
+            }
             <FormGroup row>
                 <Label for="po_number" sm={1}>PO Number</Label>
                 <Col sm={3}>
@@ -84,27 +86,18 @@ const InnerForm = ({
                 </Col>
                 <Label for="phone" sm="1">Phone</Label>
                 <Col sm={3}>
-                    <InputMask
-                        mask="+1 (999)-999-9999"
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        value={values.phone}
+                    <Input 
+                        size="sm" 
                         disabled={isViewable}
-                    >
-                        {() => (
-                            <Input 
-                                size="sm" 
-                                disabled={isViewable}
-                                tag={Field} 
-                                name="phone" 
-                                placeholder="phone" 
-                            />
-                        )}
-                    </InputMask>
+                        tag={Field} 
+                        name="phone" 
+                        placeholder="phone" 
+                        readOnly
+                    />
                 </Col>
                 <Label for="prepared_by" sm="1">Prepared By</Label>
                 <Col sm="3">
-                    <Input type="select" name="prepared_by">
+                    <Input type="select" name="prepared_by" disabled={true}>
                         <option value="">Please select prepared by</option>
                     </Input>
                 </Col>
@@ -126,17 +119,15 @@ const InnerForm = ({
                 </Col>
                 <Label for="fax" sm={1}>Fax</Label>
                 <Col sm={3}>
-                    <InputMask
-                        mask="+1 (999)-999-9999"
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        value={values.fax}
-                        disabled={isViewable}
-                    >
-                        {() => (
-                            <Input size="sm" disabled={isViewable} tag={Field} name="fax" id="fax" placeholder="fax" />
-                        )}
-                    </InputMask>
+                    <Input 
+                        size="sm" 
+                        disabled={isViewable} 
+                        tag={Field} 
+                        name="fax" 
+                        id="fax" 
+                        placeholder="fax" 
+                        readOnly
+                    />
                 </Col>
                 <Label for="reference" sm={1}>Reference</Label>
                 <Col sm={3}>
@@ -158,7 +149,7 @@ const InnerForm = ({
                 </Col>
                 <Label for="email" sm={1}>Email</Label>
                 <Col sm={3}>
-                    <Input size="sm" tag={Field} disabled={isViewable} name="email" id="email" placeholder="email" />
+                    <Input size="sm" tag={Field} disabled={isViewable} readOnly name="email" id="email" placeholder="email" />
                     <ErrorMessage component={FormFeedback} name="email" />
                 </Col>
                 <Label for="notes" sm={1}>Notes </Label>

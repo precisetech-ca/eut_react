@@ -35,8 +35,8 @@ export function HomePageTable() {
       },
     },
     {
-      Header: "Create Date",
-      Footer: "Create Date",
+      Header: "PO Date",
+      Footer: "PO Date",
       accessor: "PO_DATE",
       disableFilters: true,
        Cell: (props) => {
@@ -44,18 +44,27 @@ export function HomePageTable() {
         },
     },
     {
-      Header: "Update Date",
-      Footer: "Update Date",
-      accessor: "INVENTORY",
+      Header: "Lead Time",
+      Footer: "Lead Time",
+      accessor: "FINALIZED_DATE",
       disableFilters: true,
        Cell: (props) => {
           return props?.value
         },
     },
     {
-      Header: "Update By",
-      Footer: "Update By",
+      Header: "Supplier",
+      Footer: "Supplier",
       accessor: "SUPPLIER",
+      disableFilters: true,
+       Cell: (props) => {
+          return props?.value
+        },
+    },
+    {
+      Header: "Warehouse",
+      Footer: "Warehouse",
+      accessor: "INVENTORY",
       disableFilters: true,
        Cell: (props) => {
           return props?.value

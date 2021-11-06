@@ -20,7 +20,7 @@ export const FormSwitch = ({setFieldValue, name, value}) => {
     return (
         <div>
             <Switch
-                checked={defaultValue}
+                checked={checked}
                 onChange={handleChange}
                 onColor="#86d3ff"
                 onHandleColor="#2693e6"

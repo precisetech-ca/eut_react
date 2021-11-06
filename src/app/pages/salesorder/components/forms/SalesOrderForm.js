@@ -281,6 +281,7 @@ export const SalesOrderForm = withFormik({
     enableReinitialize: true,
     mapPropsToValues: ({ context }) => {
         const {tempData} = context;
+        console.log(tempData);
         return {
             salesorder_ID : tempData && tempData?.SALEORD_ID,
             sale_order_num: tempData && tempData?.SALEORD_NUMBER,

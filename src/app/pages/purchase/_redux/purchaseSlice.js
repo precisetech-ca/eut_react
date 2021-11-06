@@ -41,6 +41,14 @@ export const purchaseSlice = createSlice({
         state.customerForEdit = action.payload.customerForEdit;
         state.error = null;
       },
+
+      purchaseDetailsFetched : (state, action) => {
+        const { totalCount, entities } = action.payload;
+        state.listLoading = false;
+        state.error = null;
+        state.purchaseDetails = entities;
+        state.totalCount = totalCount;
+      },
       purchaseListFetched : (state, action) => {
         const { totalCount, entities } = action.payload;
         state.listLoading = false;
