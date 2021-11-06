@@ -7,8 +7,8 @@ import { Summary } from "./supplier/Summary";
 import { ReactTable } from "../../custom_widgets/table/ReactTable";
 
 export function Table({isViewable}) {
-  const { currentState } = useSelector(
-    (state) => ({ currentState: state.purchase }),
+  const { currentState, inventoryItems } = useSelector(
+    (state) => ({ currentState: state.purchase, inventoryItems: state.inventory.inventoryItems }),
     shallowEqual
   );
 
@@ -29,27 +29,19 @@ export function Table({isViewable}) {
   const columns = [
     {
         Header: () => {
-            return <div className="d-flex justify-content-center">PART_NUMBER</div>
+            return <div className="d-flex justify-content-center">SKU</div>
         },
+        accessor: "SKU",
         disableSortBy: true,
-        accessor: "PART_NUMBER",
         disableFilters: true,
         Cell: ({value, row }) => {
-          return value
-            // if (isViewable) {
-            //   return "SKU-12551"
-            // } else {
-            //   return (<div style={{width: "200px"}}>
-            //     <Input type="select" size="sm" className="d-inline-block" name="select" id="exampleSelect">
-            //         {value?.map(({id, value}) => 
-            //             <option value={id}>{value}</option>
-            //         )}
-            //     </Input>
-            
-            //     {entitiesLength - row?.index && <Button className="mt-2" color="dark" size="sm" >+ Create</Button>}
-            //   </div>)
-            // }
-            
+          return (
+            <Input type="select" size="sm" className="d-inline-block" name="select" id="exampleSelect" >
+              <option value="">Please select</option>
+              {inventoryItems?.map(({PAR_ID, PAR_CODE}) => 
+                <option value={PAR_ID}>{PAR_CODE}</option>
+              )}
+            </Input>)
         }
     },
     {
