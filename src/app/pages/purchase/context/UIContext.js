@@ -111,18 +111,18 @@ export function UIProvider({purchaseUIEvents, children}) {
   const submitFormHandler = ({payload, resetForm, setSubmitting}) => {
     const formPayload = {
       data: {
-        "WAR_ID": "78767",
-        "VEN_ID": payload?.supplier,
-        "PO_DATE": payload?.po_date,
-        "REFERENCE_NUMBER": payload?.reference,
-        "NOTES": payload?.notes,
-        "USE_ID_PREPARED_BY": USE_ID,
-        "PREPARED_DATE": dateFormat( new Date(), "yyyy-mm-dd"),
-        "VOID_FLAG": "",
-        "VOID_NOTES": "",
-        "ETA_DATE": "",
-        "FNZ_FLAG": "",
-        "FNZ_USE_ID": ""
+        "WAR_ID"                : "",
+        "VEN_ID"                : payload?.supplier,
+        "PO_DATE"               : payload?.po_date,
+        "REFERENCE_NUMBER"      : payload?.reference,
+        "NOTES"                 : payload?.notes,
+        "USE_ID_PREPARED_BY"    : USE_ID,
+        "PREPARED_DATE"         : dateFormat( new Date(), "yyyy-mm-dd"),
+        "VOID_FLAG"             : "",
+        "VOID_NOTES"            : "",
+        "ETA_DATE"              : "",
+        "FNZ_FLAG"              : "",
+        "FNZ_USE_ID"            : ""
       },
       "action": "InventoryWeb",
       "method": "PostPurchaseOrder",

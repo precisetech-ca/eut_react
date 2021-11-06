@@ -20,7 +20,7 @@ export const fetchPurchaseList = () => dispatch => {
   dispatch(actions.startCall({ callType: callTypes.action }));
 
   const callPayload = {
-    "data": {
+    data: {
       "SEARCH"     	: "",
       "VOID_FLAG" 	: "",
       "ORDER"     	: "",
@@ -49,7 +49,7 @@ export const fetchPurchaseList = () => dispatch => {
 export const auditLogDataAsync = (id, useId, username) => dispatch => {
   dispatch(actions.startCall({ callType: callTypes.action }));
   const getDataPayload = {
-    "data":
+    data:
       {    
         "SOURCEORASEQ"	: id,     
         "USE_ID"        : useId,
