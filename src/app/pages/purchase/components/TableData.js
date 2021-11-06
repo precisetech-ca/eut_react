@@ -19,7 +19,7 @@ export function Table({isViewable}) {
   const dispatch = useDispatch();
   useEffect(() => {
       // const id = window?.location?.pathname?.split('/')[2];
-      // dispatch(actions.fetchProductDetails());
+      dispatch(actions.fetchProductDetails());
   }, []);
 
   const deleteProduct = (id) => {
@@ -36,19 +36,19 @@ export function Table({isViewable}) {
         disableFilters: true,
         Cell: ({value, row }) => {
           return value
-            // if (isViewable) {
-            //   return "SKU-12551"
-            // } else {
-            //   return (<div style={{width: "200px"}}>
-            //     <Input type="select" size="sm" className="d-inline-block" name="select" id="exampleSelect">
-            //         {value?.map(({id, value}) => 
-            //             <option value={id}>{value}</option>
-            //         )}
-            //     </Input>
+            if (isViewable) {
+              return "SKU-12551"
+            } else {
+              return (<div style={{width: "200px"}}>
+                <Input type="select" size="sm" className="d-inline-block" name="select" id="exampleSelect">
+                    {value?.map(({id, value}) => 
+                        <option value={id}>{value}</option>
+                    )}
+                </Input>
             
-            //     {entitiesLength - row?.index && <Button className="mt-2" color="dark" size="sm" >+ Create</Button>}
-            //   </div>)
-            // }
+                {entitiesLength - row?.index && <Button className="mt-2" color="dark" size="sm" >+ Create</Button>}
+              </div>)
+            }
             
         }
     },
