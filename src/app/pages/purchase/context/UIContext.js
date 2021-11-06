@@ -27,6 +27,7 @@ export function UIProvider({purchaseUIEvents, children}) {
   const [showSupplierModal, setShowSupplierModal] = useState(false);
   const [voidModal, setVoidModal] = useState(false);
   const [tempData, setTempData] = useState({});
+  const [isEdit, setIsEdit] = useState(false);
 
   const toggleSupplierHandler = () => {
     setShowSupplierModal(!showSupplierModal)
@@ -54,6 +55,10 @@ export function UIProvider({purchaseUIEvents, children}) {
     dispatch(inventoryActions.getSupplier());
   }, []);
 
+  const setEditHandler = (flag) => {
+    setIsEdit(flag);
+  }
+
   const weightMockProps = [
     {value: 1, label: "ml"},
     {value: 2, label: "g"},
@@ -66,6 +71,7 @@ export function UIProvider({purchaseUIEvents, children}) {
   ];
 
   const editOrView = (id, route = 'edit') => {
+    setEditHandler(true);
     setEditDataAsync(id);
     setEditMode(true);
     history.push(`/purchase/${id}/${route}`);
@@ -178,6 +184,8 @@ export function UIProvider({purchaseUIEvents, children}) {
     voidModal,
     editMode,
     setEditMode,
+    setEditHandler,
+    isEdit,
     newPurchaseForm: purchaseUIEvents.newPurchaseForm,
     editPurchaseForm: purchaseUIEvents.editPurchaseForm,
     openDeleteCustomerDialog: purchaseUIEvents.openDeleteCustomerDialog,
