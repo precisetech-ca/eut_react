@@ -51,6 +51,7 @@ export function UIProvider({purchaseUIEvents, children}) {
   const prefferedSupplier = supplier;
 
   useEffect(() => {
+    dispatch(inventoryActions.inventoryItemsFetched());
     dispatch(inventoryActions.getWarehouses());
     dispatch(inventoryActions.getSupplier());
   }, []);
