@@ -1,20 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import * as actions from "../_redux/actions";
+import {useIinventoryUIContext} from "app/pages/inventory/context/InventoryUIContext";
+import { useUIContext } from "app/pages/purchase/context/UIContext";
 import {Button, Input, Row, Col} from "reactstrap";
-
 import { Summary } from "./supplier/Summary";
 import { ReactTable } from "../../custom_widgets/table/ReactTable";
 
 export function Table({isViewable}) {
+  const {  itemMasterToggle } = useIinventoryUIContext();
+  const {editMode, setSelectedPartHandler, selectedPart} = useUIContext();
+
   const { currentState, inventoryItems } = useSelector(
     (state) => ({ currentState: state.purchase, inventoryItems: state.inventory.inventoryItems }),
     shallowEqual
   );
 
-  const { entities } = currentState;
-
-  console.log(entities);
+  const { purchaseDetails } = currentState;
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -31,17 +33,34 @@ export function Table({isViewable}) {
         Header: () => {
             return <div className="d-flex justify-content-center">SKU</div>
         },
-        accessor: "SKU",
+        accessor: "PAR_CODE",
         disableSortBy: true,
         disableFilters: true,
         Cell: ({value, row }) => {
           return (
-            <Input type="select" size="sm" className="d-inline-block" name="select" id="exampleSelect" >
-              <option value="">Please select</option>
-              {inventoryItems?.map(({PAR_ID, PAR_CODE}) => 
-                <option value={PAR_ID}>{PAR_CODE}</option>
-              )}
-            </Input>)
+            <>
+              {editMode && value}
+              {!editMode && 
+                <>
+                  <Input 
+                    type="select" 
+                    size="sm"
+                    className="d-inline-block" 
+                    name="select" 
+                    id="exampleSelect" 
+                    onChange={(e) => {
+                      setSelectedPartHandler(e.currentTarget.value)
+                    }}
+                  >
+                    <option value="">Please select</option>
+                    {inventoryItems?.map(({PAR_ID, PAR_CODE}) => 
+                      <option value={PAR_ID} selected={selectedPart ? selectedPart?.PAR_ID === PAR_ID : false}>{PAR_CODE}</option>
+                    )}
+                  </Input>
+                  <Button color="dark" size="sm" className="mt-2" onClick={itemMasterToggle}>Create +</Button>
+                </>
+              }
+            </>)
         }
     },
     {
@@ -49,14 +68,26 @@ export function Table({isViewable}) {
       disableFilters: true,
       disableSortBy: true,
       accessor: "PART_DESCRIPTION",
-      Cell: ({value}) => value,
+      Cell: ({value}) => {
+        if ( selectedPart?.PAR_CODE ) {
+          return selectedPart?.PAR_CODE;
+        } else {
+          return value;
+        }
+      },
     },
     {
       Header: "COST",
       disableFilters: true,
       disableSortBy: true,
       accessor: "COST",
-      Cell: ({value}) => value,
+      Cell: ({value}) => {
+        if ( selectedPart?.STANDARD_COST ) {
+          return selectedPart?.STANDARD_COST;
+        } else {
+          return value;
+        }
+      },
     },
 
     {
@@ -64,21 +95,39 @@ export function Table({isViewable}) {
       disableFilters: true,
       disableSortBy: true,
       accessor: "LAST_COST",
-      Cell: ({value}) => value,
+      Cell: ({value}) => {
+        if ( selectedPart?.AVERAGE_COST ) {
+          return selectedPart?.AVERAGE_COST;
+        } else {
+          return value;
+        }
+      },
     },
     {
       Header: "STANDARD COST",
       disableFilters: true,
       disableSortBy: true,
       accessor: "STANDARD_COST",
-      Cell: ({value}) => value,
+      Cell: ({value}) => {
+        if ( selectedPart?.STANDARD_COST ) {
+          return selectedPart?.STANDARD_COST;
+        } else {
+          return value;
+        }
+      },
     },
     {
       Header: "QUANTITY",
       disableFilters: true,
       disableSortBy: true,
       accessor: "QUANTITY",
-      Cell: ({value}) => value,
+      Cell: ({value}) => {
+        if ( selectedPart?.WARRANTY ) {
+          return selectedPart?.WARRANTY;
+        } else {
+          return value;
+        }
+      },
     },
     
     // {
@@ -102,12 +151,11 @@ export function Table({isViewable}) {
       disableSortBy: true,
       accessor: "REORDERING_UOM",
       Cell: ({value}) => {
-        return value;
-        // if (isViewable) {
-        //   return value
-        // }else {
-        //   return <Input type="text" size="sm" style={{width:"70px"}}/>
-        // }
+        if ( selectedPart?.UOM_ID_REORDERING ) {
+          return selectedPart?.UOM_ID_REORDERING;
+        } else {
+          return value;
+        }
       }
     },
     // {
@@ -208,7 +256,7 @@ export function Table({isViewable}) {
 
   return (
     <>
-      {entities && <ReactTable tableColumns={columns} tableData={entities} deleteProduct={deleteProduct}/>}
+      {purchaseDetails && <ReactTable tableColumns={columns} tableData={purchaseDetails} deleteProduct={deleteProduct}/>}
       {!isViewable && <Row className="mt-4">
         <Col className="col-lg-6">
           <a href="#addproduct" onClick={(e) => {

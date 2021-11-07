@@ -1,4 +1,4 @@
-import React, { useState} from 'react'
+import React, { useState } from 'react'
 import {
     Label,
     FormGroup,
@@ -8,10 +8,8 @@ import {
     Col,
     Button,
 } from 'reactstrap';
-import dateFormat, { masks } from "dateformat";
 import { Field, ErrorMessage, withFormik, Form } from 'formik';
 import { useUIContext } from "app/pages/purchase/context/UIContext";
-import InputMask from 'react-input-mask';
 
 const InnerForm = ({
     isSubmitting,
@@ -31,13 +29,12 @@ const InnerForm = ({
         toggleVoidHandler,
         voidModal,
         isEdit,
+        setSelectedSupplierHandler,
+        selectedSupplier,
+        currentDateTime,
+        userData,
     } = UIContext;
-    const [date, setDate] = useState(dateFormat(new Date(), "yyyy-mm-dd"));
-    const setPoDate = (value) => {
-        const formattedDate = dateFormat(value, "yyyy-mm-dd");
-        setDate(formattedDate)
-        setFieldValue("po_date", formattedDate);
-    };
+
     return (
         <Form onSubmit={handleSubmit}>
             {isEdit && 
@@ -93,12 +90,14 @@ const InnerForm = ({
                         name="phone" 
                         placeholder="phone" 
                         readOnly
+                        value={values?.phone ? values?.phone : selectedSupplier?.PHONE_1 ? selectedSupplier?.PHONE_1 : ""}
                     />
                 </Col>
                 <Label for="prepared_by" sm="1">Prepared By</Label>
                 <Col sm="3">
                     <Input type="select" name="prepared_by" disabled={true}>
                         <option value="">Please select prepared by</option>
+                        <option value={userData?.USE_ID} selected={true}>{userData?.USERNAME}</option>
                     </Input>
                 </Col>
             </FormGroup>
@@ -107,13 +106,13 @@ const InnerForm = ({
                 <Label for="po_date" sm={1}>PO Date/Lead Time</Label>
                 <Col sm={3}>
                     <Input
-                        type="date"
+                        type="text"
                         name="po_date"
                         id="po_date"
                         size="sm"
-                        value={values?.po_date ? dateFormat( values?.po_date, "yyyy-mm-dd") : date}
-                        onChange={(e) => setPoDate(e.target.value)}
+                        value={currentDateTime()}
                         placeholder="PO Date"
+                        readOnly
                         disabled={isViewable}
                     />
                 </Col>
@@ -126,6 +125,7 @@ const InnerForm = ({
                         name="fax" 
                         id="fax" 
                         placeholder="fax" 
+                        value={selectedSupplier?.FAX ? selectedSupplier?.FAX : ""}
                         readOnly
                     />
                 </Col>
@@ -140,16 +140,29 @@ const InnerForm = ({
                 <Col sm={3}>
                     <Input type="select" name="supplier" size="sm" onChange={(e) =>{
                         setFieldValue('supplier', e.target.value);
+                        setSelectedSupplierHandler(e.target.value);
                     }}>
                         <option value="">Please select supplier</option>
-                        {prefferedSupplier?.map(({VEN_ID, SUPPLIER}) => <option value={VEN_ID} selected={values?.supplier === VEN_ID}>{SUPPLIER}</option>)}
+                        {prefferedSupplier?.map(({VEN_ID, SUPPLIER}) => 
+                            <option value={VEN_ID} selected={values?.supplier === VEN_ID}>
+                                {SUPPLIER}
+                            </option>
+                        )}
                     </Input>
                     {isViewable && <Button className="btn btn-dark mt-2 btn-sm" onClick={toggleSupplierHandler} disabled={isViewable}><i className="fa fa-plus"></i> Create Supplier</Button>}
-                    
                 </Col>
                 <Label for="email" sm={1}>Email</Label>
                 <Col sm={3}>
-                    <Input size="sm" tag={Field} disabled={isViewable} readOnly name="email" id="email" placeholder="email" />
+                    <Input 
+                        size="sm" 
+                        tag={Field} 
+                        disabled={isViewable} 
+                        readOnly 
+                        value={selectedSupplier?.EMAIL ? selectedSupplier?.EMAIL : ""} 
+                        name="email" 
+                        id="email"
+                        placeholder="email" 
+                    />
                     <ErrorMessage component={FormFeedback} name="email" />
                 </Col>
                 <Label for="notes" sm={1}>Notes </Label>
@@ -187,7 +200,9 @@ export const PurchaseOrderForm = withFormik({
             notes: tempData && tempData?.NOTES,
             reference: tempData && tempData?.REFERENCE_NUMBER,
             po_date: tempData && tempData?.PO_DATE,
-            phone: tempData && tempData?.phone,
+            phone: tempData && tempData?.PHONE_1,
+            fax: tempData && tempData?.FAX,
+            email: tempData && tempData?.EMAIL,
             supplier: tempData && tempData?.VEN_ID,
         }
     },

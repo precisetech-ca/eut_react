@@ -196,6 +196,14 @@ export const getCountry = queryParams => dispatch => {
   }))
 };
 
+export const setSupplierSelected = (id) => dispatch => {
+  dispatch(actions.startCall({ callType: callTypes.action }));
+
+  dispatch(actions.setSelectedSupplier({
+    callType: callTypes.action,
+    entities: id
+  }))
+}
 
 export const getCustomers = queryParams => dispatch => {
   dispatch(actions.startCall({ callType: callTypes.action }));

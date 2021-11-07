@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Modal, Tabs, Tab } from "react-bootstrap";
+import { Tabs, Tab } from "react-bootstrap";
+import {Modal, ModalBody} from 'reactstrap';
 import { CustomerEditDialogHeader } from "./CustomerEditDialogHeader";
 import { InventoryEditForm } from "./forms/InventoryEditForm";
 import { useIinventoryUIContext } from "../context/InventoryUIContext";
@@ -7,6 +8,7 @@ import { useIinventoryUIContext } from "../context/InventoryUIContext";
 export function InventoryEditDialog({ id, show, onHide }) {
   // Customers UI Context
   const inventoryUIContext = useIinventoryUIContext();
+  const { itemMasterModal, itemMasterToggle } = useIinventoryUIContext();
   const [key, setKey] = useState('details');
 
   const renderTabs = ({items}) => {
@@ -45,20 +47,14 @@ export function InventoryEditDialog({ id, show, onHide }) {
   }
 
   return (
-    <Modal
-      size="xl"
-      show={show}
-      onHide={onHide}
-      aria-labelledby="example-modal-sizes-title-lg"
-    >
-      <CustomerEditDialogHeader id={id} />
+    <Modal toggle={itemMasterToggle} isOpen={itemMasterModal} size="xl">
       <Tabs
-        id="controlled-tab-example"
-        activeKey={key}
-        onSelect={(k) => setKey(k)}
-        className="mb-3 mt-3 form-tab"
-      >
-        {renderTabs({items: inventoryUIContext?.inventoryTabs})}
+          id="controlled-tab-example"
+          activeKey={key}
+          onSelect={(k) => setKey(k)}
+          className="mb-3 mt-3 form-tab"
+        >
+          {renderTabs({items: inventoryUIContext?.inventoryTabs})}
       </Tabs>
     </Modal>
   );

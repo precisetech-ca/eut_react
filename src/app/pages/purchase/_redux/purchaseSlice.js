@@ -7,7 +7,8 @@ const initialState = {
   totalCount: 0,
   entities: [],
   customerForEdit: undefined,
-  lastError: null
+  lastError: null,
+  purchaseDetails: []
 };
 export const callTypes = {
   list: "list",
@@ -73,7 +74,7 @@ export const purchaseSlice = createSlice({
         state.totalCount = totalCount;
       },
       addProduct: (state, action) => {
-        state.entities.push({
+        state.purchaseDetails.push({
           "PURORDDET_ID": "",
           "PURORD_ID": "",
           "PAR_ID": "",

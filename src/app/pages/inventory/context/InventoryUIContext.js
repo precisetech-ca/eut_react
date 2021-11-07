@@ -18,7 +18,10 @@ export function InventoryUIProvider({customersUIEvents, children}) {
   const [ids, setIds] = useState([]);
   const [edit, setEdit] = useState(false);
   const [isViewable, setIsViewable] = useState(false);
-  const history = useHistory();
+  const [itemMasterModal, setItemMasterModal] = useState(false);
+  const itemMasterToggle = () => {
+    setItemMasterModal(!itemMasterModal);
+  }
 
   const setEditHandler = (value) => {
     setEdit(value);
@@ -65,21 +68,6 @@ export function InventoryUIProvider({customersUIEvents, children}) {
       }
     }))
 
-  }
-
-  const defaultValuePicker = ({id, matchingObj = "VEN_ID", arr}) => {
-    const newvalue = arr?.filter(function(option) {
-      if ( option[matchingObj] === id ) {
-        return option;
-      }
-    })
-    if (newvalue?.length > 0) {
-      return newvalue[0];
-      // return {
-      //   SUPPLIER: newvalue[0].SUPPLIER,
-      //   VEN_ID: newvalue[0].VEN_ID,
-      // }
-    }
   }
 
   const submitFormHandler = ({payload}) => {
@@ -145,13 +133,13 @@ export function InventoryUIProvider({customersUIEvents, children}) {
     dispatch(callGenericAsync(itemMasterPayload, "/ItemMaster/PostPartDetails", 'post', (res) => {
       if (res?.CODE === 'SUCCESS') {
         dispatch(actions.inventoryItemsFetched());
-        history.push('/inventory');
+        setItemMasterModal(false);
       }
     }))
   }
 
   const inventoryTabs = [
-    {key: "details", title: "Details", Component: () => <h1>hello</h1>},
+    {key: "details", title: "Details"},
     {key: "override_amount", title: "Override Amount"},
     {key: "price_list", title: "Price List"},
     {key: "catalog", title: "Catalog"},
@@ -167,25 +155,20 @@ export function InventoryUIProvider({customersUIEvents, children}) {
     ids,
     setIds,
     submitFormHandler,
-    newCustomerButtonClick: customersUIEvents.newCustomerButtonClick,
-    openEditCustomerDialog: customersUIEvents.openEditCustomerDialog,
-    openDeleteCustomerDialog: customersUIEvents.openDeleteCustomerDialog,
-    openDeleteCustomersDialog: customersUIEvents.openDeleteCustomersDialog,
-    openFetchCustomersDialog: customersUIEvents.openFetchCustomersDialog,
-    openUpdateCustomersStatusDialog: customersUIEvents.openUpdateCustomersStatusDialog,
     warehouseMockData,
     prefferedSupplier,
     weightMockProps,
     inventoryTabs,
     setEditHandler,
     uom,
+    itemMasterToggle,
+    itemMasterModal,
     editState: edit,
     setEditData,
     isViewable,
     setIsViewable,
     tempData,
     setTempData,
-    defaultValuePicker
   };
 
   return <InventoryUIContext.Provider value={value}>{children}</InventoryUIContext.Provider>;

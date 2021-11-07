@@ -84,16 +84,18 @@ export function InventoryTable() {
           return (
             <>
               <Link href="#inventory-edit" onClick={() => {
-                inventoryUIContext.openEditCustomerDialog(value); 
+                inventoryUIContext.setEditHandler(true);
+                inventoryUIContext.itemMasterToggle();
                 inventoryUIContext.setEditData(value);
                 inventoryUIContext.setIsViewable(false);
               }} >
                 <i class="fas fa-pencil-alt text-success"></i>
               </Link>
               <Link href="#inventory-edit" onClick={() => {
-                inventoryUIContext.openEditCustomerDialog(value); 
+                inventoryUIContext.itemMasterToggle();
                 inventoryUIContext.setEditData(value);
                 inventoryUIContext.setIsViewable(true);
+                inventoryUIContext.setEditHandler(false);
               }} >
                 <i class="fas fa-eye text-primary ml-3"></i>
               </Link>

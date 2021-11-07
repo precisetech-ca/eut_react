@@ -9,6 +9,8 @@ import { SupplierForm } from "./components/forms/SupplierForm";
 import { ViewPurchaseOrder } from "./components/module/ViewPurchaseOrder";
 import { VoidForm } from "./components/forms/VoidForm";
 import * as actions from 'app/pages/purchase/_redux/actions';
+import { InventoryUIProvider } from "../inventory/context/InventoryUIContext";
+import { InventoryEditDialog } from "../inventory/components/EditInventoryDialog";
 const Purchase = ({ history}) => {
     const dispatch = useDispatch();
     const purchaseUIEvents = {
@@ -34,36 +36,39 @@ const Purchase = ({ history}) => {
     
 
   return (
-    <UIProvider purchaseUIEvents={purchaseUIEvents}>
-      <Switch>
-        <Route exact path="/purchase/new">
-          {({ history, match }) => (
-            <NewPurchaseOrder />
-          )}
-        </Route>
-        <Route exact path="/purchase/:id/edit">
-          {({ history, match }) => (
-            <EditPurchaseOrder />
-          )}
-        </Route>
-        <Route exact path="/purchase/:id/view">
-          {({ history, match }) => (
-            <ViewPurchaseOrder />
-          )}
-        </Route>
-        <Route exact path="/purchase">
-          {({ history, match }) => {
-            // for emptying the auditlog
-            dispatch( actions.auditLogDataAsync(1, 1, 'admin'));
-            return (
-              <HomePageCard />
-            )
-          }}
-        </Route>
-      </Switch>
-      <SupplierForm />
-      <VoidForm />
-    </UIProvider>
+    <InventoryUIProvider>
+      <UIProvider purchaseUIEvents={purchaseUIEvents}>
+          <Switch>
+            <Route exact path="/purchase/new">
+              {({ history, match }) => (
+                <NewPurchaseOrder />
+              )}
+            </Route>
+            <Route exact path="/purchase/:id/edit">
+              {({ history, match }) => (
+                <EditPurchaseOrder />
+              )}
+            </Route>
+            <Route exact path="/purchase/:id/view">
+              {({ history, match }) => (
+                <ViewPurchaseOrder />
+              )}
+            </Route>
+            <Route exact path="/purchase">
+              {({ history, match }) => {
+                // for emptying the auditlog
+                dispatch( actions.auditLogDataAsync(1, 1, 'admin'));
+                return (
+                  <HomePageCard />
+                )
+              }}
+            </Route>
+          </Switch>
+          <SupplierForm />
+          <VoidForm />
+          <InventoryEditDialog />
+      </UIProvider>
+    </InventoryUIProvider>
   );
 }
 
