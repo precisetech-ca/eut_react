@@ -75,29 +75,43 @@ export const purchaseSlice = createSlice({
       },
       addProduct: (state, action) => {
         state.purchaseDetails.push({
-          "PURORDDET_ID": "",
-          "PURORD_ID": "",
-          "PAR_ID": "",
-          "SEQ_NUMBER": 1,
-          "PART_NUMBER": "",
-          "PART_DESCRIPTION": "",
-          "QUANTITY": 1,
-          "UOM_ID_REORDERING": "",
-          "REORDERING_UOM": "",
-          "COST": "",
-          "LAST_COST": "",
-          "QTY_RECEIVED": "",
-          "COLOR": null,
-          "CATALOGUE_NUMBER": null,
-          "STANDARD_COST": "",
-          "QUARANTINE_FLAG": "Y",
-          "LOT_NUMBER": null,
-          "EXPIRY_DATE": null
+          RNUM: 10,
+          TOTALROW: 10,
+          PAR_ID: "",
+          PAR_CODE: '',
+          SKU: '',
+          BARCODE_NUMBER: '',
+          DESCRIPTION: '',
+          PARGRO_ID: null,
+          STOCK_ITEM_FLAG: 'Y',
+          ACTIVE_FLAG: 'Y',
+          AVERAGE_COST: 0.00,
+          STANDARD_COST: 0.00,
+          WARRANTY: null,
+          NAME: null,
+          LOT_NUMBER: null,
+          BATCH_EXPIRY: null,
+          QUARANTINE: null,
+          DimensionL: '0',
+          DimensionH: '0',
+          DimensionW: '0',
+          Weight: '0',
+          CONVERSION_INTO_STOCKING_UOM: 0,
+          PAR_ID_SUPERCEDES: null,
+          UOM_ID_REORDERING: 0,
+          ALLOW_NEGATIVE_FLAG: 'Y',
+          SUPPLIER: '',
+          TCL_PART: null
         });
         return state;
       },
+      changeProduct: (state, action) => {
+        const {object, index} = action.payload.data;
+        state.purchaseDetails[index] = object;
+        return state;
+      },
       deleteProduct: (state, action) => {
-        state.entities.splice(state.entities.findIndex((entity) => entity.id === action.payload), 1);
+        state.purchaseDetails.splice(state.entities.findIndex((entity) => entity.id === action.payload), 1);
 
         return state;
       },

@@ -3,8 +3,12 @@ import { data, purchaseData, auditLogData } from "./mock/product.mock";
 import { purchaseSlice, callTypes } from "./purchaseSlice";
 const { actions } = purchaseSlice;
 
-export const addProduct = () => dispatch => {
-  dispatch(actions.addProduct());
+export const addProduct = (payload) => dispatch => {
+  dispatch(actions.addProduct(payload));
+}
+
+export const changeProduct = (payload) => dispatch => {
+  dispatch(actions.changeProduct(payload));
 }
 
 export const deleteProduct = (id) => dispatch => {

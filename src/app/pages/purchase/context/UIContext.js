@@ -109,8 +109,14 @@ export function UIProvider({purchaseUIEvents, children}) {
     setSelectedSupplier(selectedInv[0]);
   }
 
-  const setSelectedPartHandler = (id) => {
+  const setSelectedPartHandler = (id, index) => {
     const selectedInv = inventoryState.inventoryItems.filter(s => s.PAR_ID == id);
+    dispatch(purchaseActions.changeProduct({
+      data: {
+        object: selectedInv[0], 
+        index
+      }
+    }));
     setSelectedPart(selectedInv[0]);
   }
 
