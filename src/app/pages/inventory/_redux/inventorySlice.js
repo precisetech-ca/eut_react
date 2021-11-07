@@ -47,6 +47,13 @@ export const inventorySlice = createSlice({
       state.inventoryItems = entities;
       state.totalCount = 0;
     },
+    skuItemsFetched:(state , action) =>{
+      const { totalCount, entities } = action.payload;
+      state.listLoading = false;
+      state.error = null;
+      state.inventoryItems = entities;
+      state.totalCount = 0;
+    },
     getPartsUomFetch: (state, action) => {
       const { entities } = action.payload;
       state.listLoading = false;
