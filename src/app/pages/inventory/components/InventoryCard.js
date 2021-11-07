@@ -11,14 +11,7 @@ import { useIinventoryUIContext } from "../context/InventoryUIContext";
 
 export const InventoryCard = () => {
     const inventoryUIContext = useIinventoryUIContext();
-    const inventoryUIProps = useMemo(() => {
-        return {
-            ids: inventoryUIContext.ids,
-            newCustomerButtonClick: inventoryUIContext.newCustomerButtonClick,
-        };
-    }, [inventoryUIContext]);
-
-    const {setEditHandler, setTempData, setIsViewable} = inventoryUIContext;
+    const {setEditHandler, setTempData, setIsViewable, itemMasterToggle} = inventoryUIContext;
 
     return (
         <Card>
@@ -28,7 +21,7 @@ export const InventoryCard = () => {
                     type="button"
                     className="btn btn-primary"
                     onClick={() => {
-                        inventoryUIProps.newCustomerButtonClick();
+                        itemMasterToggle();
                         setEditHandler(false);
                         setTempData({});
                         setIsViewable(false);

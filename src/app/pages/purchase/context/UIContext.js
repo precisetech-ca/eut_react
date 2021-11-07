@@ -28,6 +28,8 @@ export function UIProvider({purchaseUIEvents, children}) {
   const [voidModal, setVoidModal] = useState(false);
   const [tempData, setTempData] = useState({});
   const [isEdit, setIsEdit] = useState(false);
+  const [selectedSupplier, setSelectedSupplier] = useState({});
+  const [selectedPart, setSelectedPart] = useState({});
 
   const toggleSupplierHandler = () => {
     setShowSupplierModal(!showSupplierModal)
@@ -54,6 +56,7 @@ export function UIProvider({purchaseUIEvents, children}) {
     dispatch(inventoryActions.inventoryItemsFetched());
     dispatch(inventoryActions.getWarehouses());
     dispatch(inventoryActions.getSupplier());
+    dispatch(inventoryActions.getPartsUom());
   }, []);
 
   const setEditHandler = (flag) => {
@@ -101,6 +104,16 @@ export function UIProvider({purchaseUIEvents, children}) {
     }))
   }
 
+  const setSelectedSupplierHandler = (id) => {
+    const selectedInv = inventoryState.supplier.filter(s => s.VEN_ID == id);
+    setSelectedSupplier(selectedInv[0]);
+  }
+
+  const setSelectedPartHandler = (id) => {
+    const selectedInv = inventoryState.inventoryItems.filter(s => s.PAR_ID == id);
+    setSelectedPart(selectedInv[0]);
+  }
+
   const currentDate = () => {
     var now = new Date();
     var month = (now.getMonth() + 1);               
@@ -115,9 +128,11 @@ export function UIProvider({purchaseUIEvents, children}) {
 
   const currentDateTime = () => {
     var today = new Date();
-    var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-    var time = today.getHours() + ":" + today.getMinutes();
-    var dateTime = date+'T'+time;
+    var date = today.getFullYear()+'/'+(today.getMonth()+1)+'/'+today.getDate();
+    var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+    var hour = today.getHours();
+    var meridiem = hour >= 12 ? "PM" : "AM";
+    var dateTime = date+' '+time + ' ' + meridiem;
     return dateTime;
   }
 
@@ -187,6 +202,11 @@ export function UIProvider({purchaseUIEvents, children}) {
     setEditMode,
     setEditHandler,
     isEdit,
+    selectedSupplier,
+    setSelectedSupplierHandler,
+    userData,
+    setSelectedPartHandler,
+    selectedPart,
     newPurchaseForm: purchaseUIEvents.newPurchaseForm,
     editPurchaseForm: purchaseUIEvents.editPurchaseForm,
     openDeleteCustomerDialog: purchaseUIEvents.openDeleteCustomerDialog,

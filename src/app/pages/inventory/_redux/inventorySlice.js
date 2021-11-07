@@ -75,5 +75,23 @@ export const inventorySlice = createSlice({
       state.supplier = entities;
       state.totalCount = 0;
     },
+    setSelectedSupplier: (state, action) => {
+      const { entities } = action.payload;
+      state.listLoading = false;
+      state.error = null;
+      const selectedSupplier = state.supplier.map(s => {
+        if (s.VEN_ID == entities) {
+          s.selected = true;
+        }else {
+          s.selected = false;
+        }
+
+        return s;
+      });
+
+      state.supplier = selectedSupplier;
+
+      state.totalCount = 0;
+    }
   }
 });
