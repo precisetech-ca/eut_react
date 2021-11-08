@@ -28,6 +28,29 @@ export function Table({isViewable}) {
     dispatch(actions.deleteProduct(id));
   }
 
+  const renderSku = (parId, editMode, items, row) => {
+    if (parId && editMode) {
+      return parId;
+    } else if ( editMode && ( row?.original?.RNUM ) ) {
+      return (<>
+          <Input 
+            type="select" 
+            size="sm"
+            className="d-inline-block" 
+            onChange={(e) => {
+              setSelectedPartHandler(e.currentTarget.value, row.index)
+            }}
+          >
+            <option value="">Please select</option>
+            {items?.map(({PAR_ID, PAR_CODE}) => 
+              <option value={PAR_ID} selected={parId ? parId == PAR_ID : false}>{PAR_CODE}</option>
+            )}
+          </Input>
+          <Button color="dark" size="sm" className="mt-2" onClick={itemMasterToggle}>Create +</Button>
+      </>);
+    }
+  }
+
   const columns = [
     {
         Header: () => {
@@ -37,46 +60,35 @@ export function Table({isViewable}) {
         disableSortBy: true,
         disableFilters: true,
         Cell: ({value, row }) => {
-          return (
-            <>
-              {editMode && value}
-              {!editMode && 
-                <>
-                  <Input 
-                    type="select" 
-                    size="sm"
-                    className="d-inline-block" 
-                    onChange={(e) => {
-                      setSelectedPartHandler(e.currentTarget.value, row.index)
-                    }}
-                  >
-                    <option value="">Please select</option>
-                    {inventoryItems?.map(({PAR_ID, PAR_CODE}) => 
-                      <option value={PAR_ID} selected={value ? value == PAR_ID : false}>{PAR_CODE}</option>
-                    )}
-                  </Input>
-                  <Button color="dark" size="sm" className="mt-2" onClick={itemMasterToggle}>Create +</Button>
-                </>
-              }
-            </>)
+          return renderSku(value, editMode, inventoryItems, row);
         }
     },
     {
       Header: "PART DESCRIPTION",
       disableFilters: true,
       disableSortBy: true,
-      accessor: "DESCRIPTION",
-      Cell: ({value}) => {
-        return value;
+      Cell: ({value, row}) => {
+        if (row?.original?.PART_DESCRIPTION) {
+          return row?.original?.PART_DESCRIPTION;
+        } else if (row?.original?.DESCRIPTION === "" || row?.original?.DESCRIPTION) {
+          return row?.original?.DESCRIPTION;
+        } else {
+          return value;
+        }
       },
     },
     {
       Header: "COST",
       disableFilters: true,
       disableSortBy: true,
-      accessor: "AVERAGE_COST",
-      Cell: ({value}) => {
-        return value;
+      Cell: ({value, row}) => {
+        if (row?.original?.COST) {
+          return row?.original?.COST;
+        } else if (row?.original?.AVERAGE_COST == 0 || row?.original?.AVERAGE_COST) {
+          return row?.original?.AVERAGE_COST;
+        } else {
+          return value;
+        }
       },
     },
 
@@ -106,9 +118,14 @@ export function Table({isViewable}) {
       Header: "QUANTITY",
       disableFilters: true,
       disableSortBy: true,
-      accessor: "WARRANTY",
-      Cell: ({value}) => {
-        return value;
+      Cell: ({value, row}) => {
+        if (row?.original?.QUANTITY) {
+          return row?.original?.QUANTITY;
+        } else if (row?.original?.WARRANTY === null || row?.original?.WARRANTY) {
+          return row?.original?.WARRANTY;
+        } else {
+          return value;
+        }
       },
     },
     
