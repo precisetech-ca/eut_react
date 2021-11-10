@@ -141,7 +141,7 @@ export function Table({isViewable}) {
       },
     },
     {
-      Header: "UoM",
+      Header: "UOM",
       disableFilters: true,
       disableSortBy: true,
       accessor: "REORDERING_UOM",
@@ -170,7 +170,13 @@ export function Table({isViewable}) {
 
   return (
     <>
-      {purchaseDetails && <ReactTable tableColumns={columns} tableData={purchaseDetails} deleteProduct={deleteProduct} isPaginate={false\}/>}
+      {purchaseDetails && 
+        <ReactTable 
+          tableColumns={columns} 
+          tableData={purchaseDetails} 
+          deleteProduct={deleteProduct} 
+          isPaginate={false}
+      />}
       {!isViewable && <Row className="mt-4">
         <Col className="col-lg-6">
           <a href="#addproduct" onClick={(e) => {
