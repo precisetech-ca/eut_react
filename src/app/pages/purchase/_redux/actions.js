@@ -102,3 +102,7 @@ export const fetchProductDetails = (id) => dispatch => {
     }
   })));
 };
+
+export const emptyProductDetails = () => dispatch => {
+  dispatch(actions.emptyProduct());
+}

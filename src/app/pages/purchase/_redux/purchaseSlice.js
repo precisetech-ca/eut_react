@@ -48,6 +48,7 @@ export const purchaseSlice = createSlice({
         state.listLoading = false;
         state.error = null;
         state.purchaseDetails = entities;
+        state.isNewProduct = false;
         state.totalCount = totalCount;
       },
       purchaseListFetched : (state, action) => {
@@ -75,39 +76,57 @@ export const purchaseSlice = createSlice({
       },
       addProduct: (state, action) => {
         state.purchaseDetails.push({
-          RNUM: 10,
-          TOTALROW: 10,
+          PURORDDET_ID: "0",
+          PURORD_ID: "0",
           PAR_ID: "",
-          PAR_CODE: '',
-          SKU: '',
-          BARCODE_NUMBER: '',
-          DESCRIPTION: '',
-          PARGRO_ID: null,
-          STOCK_ITEM_FLAG: 'Y',
-          ACTIVE_FLAG: 'Y',
-          AVERAGE_COST: "0.00",
-          STANDARD_COST: "0.00",
-          WARRANTY: "0",
-          NAME: null,
+          SEQ_NUMBER: "0",
+          BARCODE_NUMBER: "0",
+          PART_NUMBER: '',
+          PART_DESCRIPTION: '',
+          QUANTITY: 0,
+          REORDERING_UOM: '',
+          COST: 0,
+          LAST_COST: "",
+          QTY_RECEIVED: null,
+          COLOR: null,
+          CATALOGUE_NUMBER: null,
+          STANDARD_COST: "",
+          QUARANTINE_FLAG: 'N',
           LOT_NUMBER: null,
-          BATCH_EXPIRY: null,
-          QUARANTINE: "N",
-          DimensionL: '0',
-          DimensionH: '0',
-          DimensionW: '0',
-          Weight: '0',
-          CONVERSION_INTO_STOCKING_UOM: "0",
-          PAR_ID_SUPERCEDES: null,
-          UOM_ID_REORDERING: "0",
-          ALLOW_NEGATIVE_FLAG: 'Y',
-          SUPPLIER: '',
-          TCL_PART: null
+          EXPIRY_DATE: null,
+          isNew: true,
         });
         return state;
       },
       changeProduct: (state, action) => {
         const {object, index} = action.payload.data;
-        state.purchaseDetails[index] = object;
+        console.log(object);
+        const productPayload = {
+          PURORDDET_ID: "0",
+          PURORD_ID: "0",
+          PAR_ID: object?.PAR_ID,
+          SEQ_NUMBER: "0",
+          BARCODE_NUMBER: object?.BARCODE_NUMBER,
+          PART_NUMBER: object?.PAR_ID,
+          PART_DESCRIPTION: object?.DESCRIPTION,
+          QUANTITY: 0,
+          REORDERING_UOM: object?.UOM_ID_REORDERING,
+          COST: 0,
+          LAST_COST: "",
+          QTY_RECEIVED: null,
+          COLOR: null,
+          CATALOGUE_NUMBER: null,
+          STANDARD_COST: object?.STANDARD_COST,
+          QUARANTINE_FLAG: object?.QUARANTINE,
+          LOT_NUMBER: null,
+          EXPIRY_DATE: object?.BATCH_EXPIRY,
+          isNew: true,
+        }
+        state.purchaseDetails[index] = productPayload;
+        return state;
+      },
+      emptyProduct: (state, action) => {
+        state.purchaseDetails = [];
         return state;
       },
       deleteProduct: (state, action) => {

@@ -16,7 +16,7 @@ export function Table({isViewable}) {
     shallowEqual
   );
 
-  const { purchaseDetails } = currentState;
+  const { purchaseDetails, isNewProduct } = currentState;
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -33,14 +33,14 @@ export function Table({isViewable}) {
         Header: () => {
             return <div className="d-flex justify-content-center">SKU</div>
         },
-        accessor: "PAR_ID",
+        accessor: "PART_NUMBER",
         disableSortBy: true,
         disableFilters: true,
         Cell: ({value, row }) => {
           return (
             <>
-              {editMode && value}
-              {!editMode && 
+              {!row?.original?.isNew && editMode && value}
+              {row?.original?.isNew && 
                 <>
                   <Input 
                     type="select" 
@@ -62,157 +62,93 @@ export function Table({isViewable}) {
         }
     },
     {
-      Header: "PART DESCRIPTION",
+      Header: "Barcode",
       disableFilters: true,
       disableSortBy: true,
-      accessor: "DESCRIPTION",
+      Cell: ({value, row}) => {
+        if (row?.original?.PART_NUMBER) {
+          return row?.original?.PART_NUMBER;
+        } else if (row?.original?.BARCODE_NUMBER) {
+          return row?.original?.BARCODE_NUMBER;
+        }
+      },
+    },
+    {
+      Header: "Desc",
+      disableFilters: true,
+      disableSortBy: true,
+      accessor: "PART_DESCRIPTION",
       Cell: ({value}) => {
         return value;
+      },
+    },
+    {
+      Header: "Lot #",
+      disableFilters: true,
+      disableSortBy: true,
+      accessor: "LOT_NUMBER",
+      Cell: ({value, row}) => {
+        if ( (value || value === null) && !row?.original.isNew ) {
+          return value;
+        } else {
+          return <Input type="text" value={value} onChange={(e) => console.log(e.currentTarget.value)} size="sm" />;
+        }
+      },
+    },
+    {
+      Header: "Expiry",
+      disableFilters: true,
+      disableSortBy: true,
+      accessor: "EXPIRY_DATE",
+      Cell: ({value, row}) => {
+        if ( (value || value === null) && !row?.original.isNew ) {
+          return value;
+        } else {
+          return <Input type="datetime-local" value={value} onChange={(e) => console.log(e.currentTarget.value)} size="sm" />;
+        }
+      },
+    },
+    {
+      Header: "Quarantine",
+      disableFilters: true,
+      disableSortBy: true,
+      accessor: "QUARANTINE_FLAG",
+      Cell: ({value}) => {
+        return <Input type="checkbox" value={value === "Y" ? true : false} onChange={(e) => console.log(e.currentTarget.value)} size="sm" />;
       },
     },
     {
       Header: "COST",
       disableFilters: true,
       disableSortBy: true,
-      accessor: "AVERAGE_COST",
-      Cell: ({value}) => {
-        return value;
-      },
-    },
-
-    // {
-    //   Header: "LAST COST",
-    //   disableFilters: true,
-    //   disableSortBy: true,
-    //   accessor: "LAST_COST",
-    //   Cell: ({value}) => {
-    //     if ( selectedPart?.AVERAGE_COST ) {
-    //       return selectedPart?.AVERAGE_COST;
-    //     } else {
-    //       return value;
-    //     }
-    //   },
-    // },
-    {
-      Header: "STANDARD COST",
-      disableFilters: true,
-      disableSortBy: true,
       accessor: "STANDARD_COST",
       Cell: ({value}) => {
-        return value;
+        return <Input 
+                  type="text" 
+                  readOnly 
+                  value={Number(value).toFixed(2)} 
+                  size="sm" 
+                />;
       },
     },
     {
       Header: "QUANTITY",
       disableFilters: true,
       disableSortBy: true,
-      accessor: "WARRANTY",
+      accessor: "QUANTITY",
       Cell: ({value}) => {
         return value;
       },
     },
-    
-    // {
-    //   Header: "Barcode",
-    //   disableFilters: true,
-    //   disableSortBy: true,
-    //     accessor: "barcode",
-    //     Cell: ({value}) => value,
-    // },
-    // {
-    //   Header: "Desc",
-    //   disableFilters: true,
-    //   disableSortBy: true,
-    //     accessor: "desc",
-    //     Cell: ({value}) => value,
-    // },
-    
     {
-      Header: "REORDERING UOM",
+      Header: "UoM",
       disableFilters: true,
       disableSortBy: true,
-      accessor: "UOM_ID_REORDERING",
+      accessor: "REORDERING_UOM",
       Cell: ({value}) => {
         return value;
       }
     },
-    // {
-    //   disableFilters: true,
-    //   disableSortBy: true,
-    //   Header: () => <div style={{width: "200px"}}>Expiry</div>,
-    //   accessor: "expiry",
-    //   Cell: ({value}) => {
-    //     if (isViewable) {
-    //       return value
-    //     }else {
-    //       return <Input
-    //         type="date"
-    //         name="date"
-    //         id="expiry"
-    //         size="sm"
-    //         placeholder="expiry"
-    //       />
-    //     }
-    //   }
-    // },
-    // {
-    //   Header: "Quarantine",
-    //   disableFilters: true,
-    //   disableSortBy: true,
-    //   accessor: "quarantine",
-    //   Cell: ({value}) => (<div className="align-items-center d-flex justify-content-center mt-5">
-    //     <Input type="checkbox" disabled={true} />
-    //   </div>),
-    // },
-    // {
-    //   Header: "Oh Qty",
-    //   disableFilters: true,
-    //   disableSortBy: true,
-    //     accessor: "oh_qty",
-    //     Cell: ({value}) => value,
-    // },
-    // {
-    //   Header: "Avl Qty",
-    //   disableFilters: true,
-    //   disableSortBy: true,
-    //     accessor: "available_qty",
-    //     Cell: ({value}) => value,
-    // },
-    // {
-    //   Header: "Odr Qty",
-    //   disableFilters: true,
-    //   disableSortBy: true,
-    //   accessor: "odr_qty",
-    //   Cell: ({value}) => value,
-    // },
-    // {
-    //   disableFilters: true,
-    //   disableSortBy: true,
-    //   Header: "UoM",
-    //   accessor: "uom",
-    //   Cell: ({value}) => value,
-    // },
-    // {
-    //   disableFilters: true,
-    //   disableSortBy: true,
-    //   Header: "Cost",
-    //   accessor: "cost",
-    //   Cell: ({value}) => value,
-    // },
-    // {
-    //   Header: "Last Cost",
-    //   disableFilters: true,
-    //   disableSortBy: true,
-    //   accessor: "last_cost",
-    //   Cell: ({value}) => value,
-    // },
-    // {
-    //   Header: "Sub Total",
-    //   disableFilters: true,
-    //   disableSortBy: true,
-    //   accessor: "sub_total",
-    //   Cell: ({value}) => value
-    // },
     {
       disableFilters: true,
       disableSortBy: true,
@@ -234,7 +170,7 @@ export function Table({isViewable}) {
 
   return (
     <>
-      {purchaseDetails && <ReactTable tableColumns={columns} tableData={purchaseDetails} deleteProduct={deleteProduct}/>}
+      {purchaseDetails && <ReactTable tableColumns={columns} tableData={purchaseDetails} deleteProduct={deleteProduct} isPaginate={false\}/>}
       {!isViewable && <Row className="mt-4">
         <Col className="col-lg-6">
           <a href="#addproduct" onClick={(e) => {

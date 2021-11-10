@@ -81,6 +81,9 @@ export function UIProvider({purchaseUIEvents, children}) {
     history.push(`/purchase/${id}/${route}`);
   }
   
+  const emptyProductHandler = () => {
+    dispatch(purchaseActions.emptyProductDetails());
+  }
 
   const setEditDataAsync = (id) => {
     const getDataPayload = {
@@ -213,6 +216,7 @@ export function UIProvider({purchaseUIEvents, children}) {
     userData,
     setSelectedPartHandler,
     selectedPart,
+    emptyProductHandler,
     newPurchaseForm: purchaseUIEvents.newPurchaseForm,
     editPurchaseForm: purchaseUIEvents.editPurchaseForm,
     openDeleteCustomerDialog: purchaseUIEvents.openDeleteCustomerDialog,

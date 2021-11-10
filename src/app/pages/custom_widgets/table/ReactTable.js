@@ -3,7 +3,7 @@ import {useTable, useFilters, usePagination, useSortBy} from 'react-table';
 import { Table, Button } from 'react-bootstrap';
 import { ColumnFilter } from './ColumnFilter';
 
-export const  ReactTable = ({tableData, tableColumns}) => {
+export const  ReactTable = ({tableData, tableColumns, isPaginate}) => {
     const columns = tableColumns;
     const data = tableData
 
@@ -75,33 +75,38 @@ export const  ReactTable = ({tableData, tableColumns}) => {
                 </tbody>
             </Table>
             
-            
-            <div className="d-flex table-utils-container">
-                <Button onClick={() => gotoPage(0)} disabled={!canPreviousPage} className="m-1">
-                    {'<<'}
-                </Button> 
-                <Button onClick={() => previousPage()} disabled={!canPreviousPage} className="m-1">
-                    {'<'}
-                </Button>
-                <Button onClick={() => nextPage()} disabled={!canNextPage} className="m-1">
-                    {'>'}
-                </Button>
-                <Button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage} className="m-1">
-                    {'>>'}
-                </Button>
-                <span className="d-flex justify-content-center">
-                    <select className="ml-2" value={pageSize} onChange={ e=> setPageSize(Number(e.target.value))}>
-                        {[10, 15, 25].map (pageSize => (
-                            <option key={pageSize} value={pageSize}>
-                                Show {pageSize}
-                            </option>
-                        ))}
-                    </select>
-                    <span className="d-flex text-white ml-2 align-items-center">
-                        Items per page
+            {isPaginate && 
+                <div className="d-flex table-utils-container">
+                    <Button onClick={() => gotoPage(0)} disabled={!canPreviousPage} className="m-1">
+                        {'<<'}
+                    </Button> 
+                    <Button onClick={() => previousPage()} disabled={!canPreviousPage} className="m-1">
+                        {'<'}
+                    </Button>
+                    <Button onClick={() => nextPage()} disabled={!canNextPage} className="m-1">
+                        {'>'}
+                    </Button>
+                    <Button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage} className="m-1">
+                        {'>>'}
+                    </Button>
+                    <span className="d-flex justify-content-center">
+                        <select className="ml-2" value={pageSize} onChange={ e=> setPageSize(Number(e.target.value))}>
+                            {[10, 15, 25].map (pageSize => (
+                                <option key={pageSize} value={pageSize}>
+                                    Show {pageSize}
+                                </option>
+                            ))}
+                        </select>
+                        <span className="d-flex text-white ml-2 align-items-center">
+                            Items per page
+                        </span>
                     </span>
-                </span>
-            </div>
+                </div>
+            }
         </>
     )
+}
+
+ReactTable.defaultProps = {
+    isPaginate: true,
 }
