@@ -81,6 +81,9 @@ export function UIProvider({purchaseUIEvents, children}) {
     history.push(`/purchase/${id}/${route}`);
   }
   
+  const emptyProductHandler = () => {
+    dispatch(purchaseActions.emptyProductDetails());
+  }
 
   const setEditDataAsync = (id) => {
     const getDataPayload = {
@@ -109,8 +112,14 @@ export function UIProvider({purchaseUIEvents, children}) {
     setSelectedSupplier(selectedInv[0]);
   }
 
-  const setSelectedPartHandler = (id) => {
+  const setSelectedPartHandler = (id, index) => {
     const selectedInv = inventoryState.inventoryItems.filter(s => s.PAR_ID == id);
+    dispatch(purchaseActions.changeProduct({
+      data: {
+        object: selectedInv[0], 
+        index
+      }
+    }));
     setSelectedPart(selectedInv[0]);
   }
 
@@ -207,6 +216,7 @@ export function UIProvider({purchaseUIEvents, children}) {
     userData,
     setSelectedPartHandler,
     selectedPart,
+    emptyProductHandler,
     newPurchaseForm: purchaseUIEvents.newPurchaseForm,
     editPurchaseForm: purchaseUIEvents.editPurchaseForm,
     openDeleteCustomerDialog: purchaseUIEvents.openDeleteCustomerDialog,

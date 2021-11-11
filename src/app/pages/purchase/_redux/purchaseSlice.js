@@ -48,6 +48,7 @@ export const purchaseSlice = createSlice({
         state.listLoading = false;
         state.error = null;
         state.purchaseDetails = entities;
+        state.isNewProduct = false;
         state.totalCount = totalCount;
       },
       purchaseListFetched : (state, action) => {
@@ -75,29 +76,61 @@ export const purchaseSlice = createSlice({
       },
       addProduct: (state, action) => {
         state.purchaseDetails.push({
-          "PURORDDET_ID": "",
-          "PURORD_ID": "",
-          "PAR_ID": "",
-          "SEQ_NUMBER": 1,
-          "PART_NUMBER": "",
-          "PART_DESCRIPTION": "",
-          "QUANTITY": 1,
-          "UOM_ID_REORDERING": "",
-          "REORDERING_UOM": "",
-          "COST": "",
-          "LAST_COST": "",
-          "QTY_RECEIVED": "",
-          "COLOR": null,
-          "CATALOGUE_NUMBER": null,
-          "STANDARD_COST": "",
-          "QUARANTINE_FLAG": "Y",
-          "LOT_NUMBER": null,
-          "EXPIRY_DATE": null
+          PURORDDET_ID: "0",
+          PURORD_ID: "0",
+          PAR_ID: "",
+          SEQ_NUMBER: "0",
+          BARCODE_NUMBER: "0",
+          PART_NUMBER: '',
+          PART_DESCRIPTION: '',
+          QUANTITY: 0,
+          REORDERING_UOM: '',
+          COST: 0,
+          LAST_COST: "",
+          QTY_RECEIVED: null,
+          COLOR: null,
+          CATALOGUE_NUMBER: null,
+          STANDARD_COST: "",
+          QUARANTINE_FLAG: 'N',
+          LOT_NUMBER: null,
+          EXPIRY_DATE: null,
+          isNew: true,
         });
         return state;
       },
+      changeProduct: (state, action) => {
+        const {object, index} = action.payload.data;
+        console.log(object);
+        const productPayload = {
+          PURORDDET_ID: "0",
+          PURORD_ID: "0",
+          PAR_ID: object?.PAR_ID,
+          SEQ_NUMBER: "0",
+          BARCODE_NUMBER: object?.BARCODE_NUMBER,
+          PART_NUMBER: object?.PAR_ID,
+          PART_DESCRIPTION: object?.DESCRIPTION,
+          QUANTITY: 0,
+          REORDERING_UOM: object?.UOM_ID_REORDERING,
+          COST: 0,
+          LAST_COST: "",
+          QTY_RECEIVED: null,
+          COLOR: null,
+          CATALOGUE_NUMBER: null,
+          STANDARD_COST: object?.STANDARD_COST,
+          QUARANTINE_FLAG: object?.QUARANTINE,
+          LOT_NUMBER: null,
+          EXPIRY_DATE: object?.BATCH_EXPIRY,
+          isNew: true,
+        }
+        state.purchaseDetails[index] = productPayload;
+        return state;
+      },
+      emptyProduct: (state, action) => {
+        state.purchaseDetails = [];
+        return state;
+      },
       deleteProduct: (state, action) => {
-        state.entities.splice(state.entities.findIndex((entity) => entity.id === action.payload), 1);
+        state.purchaseDetails.splice(state.entities.findIndex((entity) => entity.id === action.payload), 1);
 
         return state;
       },

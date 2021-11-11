@@ -16,7 +16,7 @@ export function Table({isViewable}) {
     shallowEqual
   );
 
-  const { purchaseDetails } = currentState;
+  const { purchaseDetails, isNewProduct } = currentState;
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -33,28 +33,26 @@ export function Table({isViewable}) {
         Header: () => {
             return <div className="d-flex justify-content-center">SKU</div>
         },
-        accessor: "PAR_CODE",
+        accessor: "PART_NUMBER",
         disableSortBy: true,
         disableFilters: true,
         Cell: ({value, row }) => {
           return (
             <>
-              {editMode && value}
-              {!editMode && 
+              {!row?.original?.isNew && editMode && value}
+              {row?.original?.isNew && 
                 <>
                   <Input 
                     type="select" 
                     size="sm"
                     className="d-inline-block" 
-                    name="select" 
-                    id="exampleSelect" 
                     onChange={(e) => {
-                      setSelectedPartHandler(e.currentTarget.value)
+                      setSelectedPartHandler(e.currentTarget.value, row.index)
                     }}
                   >
                     <option value="">Please select</option>
                     {inventoryItems?.map(({PAR_ID, PAR_CODE}) => 
-                      <option value={PAR_ID} selected={selectedPart ? selectedPart?.PAR_ID === PAR_ID : false}>{PAR_CODE}</option>
+                      <option value={PAR_ID} selected={value ? value == PAR_ID : false}>{PAR_CODE}</option>
                     )}
                   </Input>
                   <Button color="dark" size="sm" className="mt-2" onClick={itemMasterToggle}>Create +</Button>
@@ -64,56 +62,73 @@ export function Table({isViewable}) {
         }
     },
     {
-      Header: "PART DESCRIPTION",
+      Header: "Barcode",
+      disableFilters: true,
+      disableSortBy: true,
+      Cell: ({value, row}) => {
+        if (row?.original?.PART_NUMBER) {
+          return row?.original?.PART_NUMBER;
+        } else if (row?.original?.BARCODE_NUMBER) {
+          return row?.original?.BARCODE_NUMBER;
+        }
+      },
+    },
+    {
+      Header: "Desc",
       disableFilters: true,
       disableSortBy: true,
       accessor: "PART_DESCRIPTION",
       Cell: ({value}) => {
-        if ( selectedPart?.PAR_CODE ) {
-          return selectedPart?.PAR_CODE;
-        } else {
+        return value;
+      },
+    },
+    {
+      Header: "Lot #",
+      disableFilters: true,
+      disableSortBy: true,
+      accessor: "LOT_NUMBER",
+      Cell: ({value, row}) => {
+        if ( (value || value === null) && !row?.original.isNew ) {
           return value;
+        } else {
+          return <Input type="text" value={value} onChange={(e) => console.log(e.currentTarget.value)} size="sm" />;
         }
+      },
+    },
+    {
+      Header: "Expiry",
+      disableFilters: true,
+      disableSortBy: true,
+      accessor: "EXPIRY_DATE",
+      Cell: ({value, row}) => {
+        if ( (value || value === null) && !row?.original.isNew ) {
+          return value;
+        } else {
+          return <Input type="datetime-local" value={value} onChange={(e) => console.log(e.currentTarget.value)} size="sm" />;
+        }
+      },
+    },
+    {
+      Header: "Quarantine",
+      disableFilters: true,
+      disableSortBy: true,
+      accessor: "QUARANTINE_FLAG",
+      Cell: ({value}) => {
+        return <Input type="checkbox" value={value === "Y" ? true : false} onChange={(e) => console.log(e.currentTarget.value)} size="sm" />;
       },
     },
     {
       Header: "COST",
       disableFilters: true,
       disableSortBy: true,
-      accessor: "COST",
-      Cell: ({value}) => {
-        if ( selectedPart?.STANDARD_COST ) {
-          return selectedPart?.STANDARD_COST;
-        } else {
-          return value;
-        }
-      },
-    },
-
-    {
-      Header: "LAST COST",
-      disableFilters: true,
-      disableSortBy: true,
-      accessor: "LAST_COST",
-      Cell: ({value}) => {
-        if ( selectedPart?.AVERAGE_COST ) {
-          return selectedPart?.AVERAGE_COST;
-        } else {
-          return value;
-        }
-      },
-    },
-    {
-      Header: "STANDARD COST",
-      disableFilters: true,
-      disableSortBy: true,
       accessor: "STANDARD_COST",
       Cell: ({value}) => {
-        if ( selectedPart?.STANDARD_COST ) {
-          return selectedPart?.STANDARD_COST;
-        } else {
-          return value;
-        }
+        return <Input 
+                  type="text" 
+                  readOnly 
+                  value={Number(value).toFixed(2)} 
+                  size="sm" 
+                />;
       },
     },
     {
@@ -122,132 +137,31 @@ export function Table({isViewable}) {
       disableSortBy: true,
       accessor: "QUANTITY",
       Cell: ({value}) => {
-        if ( selectedPart?.WARRANTY ) {
-          return selectedPart?.WARRANTY;
-        } else {
-          return value;
-        }
+        return value;
       },
     },
-    
-    // {
-    //   Header: "Barcode",
-    //   disableFilters: true,
-    //   disableSortBy: true,
-    //     accessor: "barcode",
-    //     Cell: ({value}) => value,
-    // },
-    // {
-    //   Header: "Desc",
-    //   disableFilters: true,
-    //   disableSortBy: true,
-    //     accessor: "desc",
-    //     Cell: ({value}) => value,
-    // },
-    
     {
-      Header: "REORDERING UOM",
+      Header: "UOM",
       disableFilters: true,
       disableSortBy: true,
       accessor: "REORDERING_UOM",
       Cell: ({value}) => {
-        if ( selectedPart?.UOM_ID_REORDERING ) {
-          return selectedPart?.UOM_ID_REORDERING;
-        } else {
-          return value;
-        }
+        return value;
       }
     },
-    // {
-    //   disableFilters: true,
-    //   disableSortBy: true,
-    //   Header: () => <div style={{width: "200px"}}>Expiry</div>,
-    //   accessor: "expiry",
-    //   Cell: ({value}) => {
-    //     if (isViewable) {
-    //       return value
-    //     }else {
-    //       return <Input
-    //         type="date"
-    //         name="date"
-    //         id="expiry"
-    //         size="sm"
-    //         placeholder="expiry"
-    //       />
-    //     }
-    //   }
-    // },
-    {
-      Header: "Quarantine",
-      disableFilters: true,
-      disableSortBy: true,
-      accessor: "quarantine",
-      Cell: ({value}) => (<div className="align-items-center d-flex justify-content-center mt-5">
-        <Input type="checkbox" onClick={toggleVoidHandler} />
-      </div>),
-    },
-    // {
-    //   Header: "Oh Qty",
-    //   disableFilters: true,
-    //   disableSortBy: true,
-    //     accessor: "oh_qty",
-    //     Cell: ({value}) => value,
-    // },
-    // {
-    //   Header: "Avl Qty",
-    //   disableFilters: true,
-    //   disableSortBy: true,
-    //     accessor: "available_qty",
-    //     Cell: ({value}) => value,
-    // },
-    // {
-    //   Header: "Odr Qty",
-    //   disableFilters: true,
-    //   disableSortBy: true,
-    //   accessor: "odr_qty",
-    //   Cell: ({value}) => value,
-    // },
-    // {
-    //   disableFilters: true,
-    //   disableSortBy: true,
-    //   Header: "UoM",
-    //   accessor: "uom",
-    //   Cell: ({value}) => value,
-    // },
-    // {
-    //   disableFilters: true,
-    //   disableSortBy: true,
-    //   Header: "Cost",
-    //   accessor: "cost",
-    //   Cell: ({value}) => value,
-    // },
-    // {
-    //   Header: "Last Cost",
-    //   disableFilters: true,
-    //   disableSortBy: true,
-    //   accessor: "last_cost",
-    //   Cell: ({value}) => value,
-    // },
-    // {
-    //   Header: "Sub Total",
-    //   disableFilters: true,
-    //   disableSortBy: true,
-    //   accessor: "sub_total",
-    //   Cell: ({value}) => value
-    // },
     {
       disableFilters: true,
       disableSortBy: true,
       Header: "Action",
-      accessor: "action",
-      Cell: () => {
+      Cell: ({row}) => {
+        console.log(row.original.PAR_ID);
           return <i 
           class="fa fa-trash text-secondary enable-cursor" 
           aria-hidden="true" 
           disabled={isViewable}
           onClick={(e) => {
             e.preventDefault();
-            dispatch(actions.deleteProduct())
+            dispatch(actions.deleteProduct(row.original.PAR_ID))
           }}
           ></i>
       }
@@ -256,12 +170,18 @@ export function Table({isViewable}) {
 
   return (
     <>
-      {purchaseDetails && <ReactTable tableColumns={columns} tableData={purchaseDetails} deleteProduct={deleteProduct}/>}
+      {purchaseDetails && 
+        <ReactTable 
+          tableColumns={columns} 
+          tableData={purchaseDetails} 
+          deleteProduct={deleteProduct} 
+          isPaginate={false}
+      />}
       {!isViewable && <Row className="mt-4">
         <Col className="col-lg-6">
           <a href="#addproduct" onClick={(e) => {
             e.preventDefault();
-            dispatch(actions.addProduct())
+            dispatch(actions.addProduct(selectedPart))
           }}>Add a product</a>
         </Col>
       </Row>}  
@@ -271,11 +191,6 @@ export function Table({isViewable}) {
         {!isViewable ?  <Col className="col-lg-6">
           <Input type="textarea" placeholder="terms and conditions"/>
         </Col> : <Col className="col-lg-6"></Col>}
-          
-        <Col className="col-lg-2"></Col>
-        <Col className="col-lg-4">
-          <Summary />
-        </Col>
       </Row>
       
     </>
