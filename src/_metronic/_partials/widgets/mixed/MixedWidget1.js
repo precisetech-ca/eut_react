@@ -4,6 +4,7 @@ import React, {useMemo, useEffect} from "react";
 import SVG from "react-inlinesvg";
 import objectPath from "object-path";
 import ApexCharts from "apexcharts";
+import { NavLink } from "react-router-dom";
 import {Dropdown} from "react-bootstrap";
 import {toAbsoluteUrl} from "../../../_helpers";
 import {useHtmlClassService} from "../../../layout";
@@ -76,10 +77,11 @@ export function MixedWidget1({ className }) {
                 ></SVG>
               </span>
               <a
-                href="#"
+                href=""
                 className="text-warning font-weight-bold font-size-h6"
+
               >
-                Order
+               <NavLink to="/inventory"> Order </NavLink>
               </a>
             </div>
             <div className="col bg-light-primary px-6 py-8 rounded-xl mb-7">
@@ -109,7 +111,9 @@ export function MixedWidget1({ className }) {
                 href="#"
                 className="text-danger font-weight-bold font-size-h6 mt-2"
               >
+              <NavLink to="/purchase">
                 PO
+              </NavLink>  
               </a>
             </div>
             <div className="col bg-light-success px-6 py-8 rounded-xl">
@@ -124,7 +128,9 @@ export function MixedWidget1({ className }) {
                 href="#"
                 className="text-success font-weight-bold font-size-h6 mt-2"
               >
+              <NavLink to="/receiving">
                 Receiving
+              </NavLink>  
               </a>
             </div>
           </div>

@@ -1,19 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import * as actions from "../_redux/actions";
-<<<<<<< HEAD
-import * as action from "../../inventory/_redux/actions";
-=======
 import {useIinventoryUIContext} from "app/pages/inventory/context/InventoryUIContext";
 import { useUIContext } from "app/pages/purchase/context/UIContext";
->>>>>>> 9007d43b5ba7dda0fc7631fd8028f69bb29884d4
 import {Button, Input, Row, Col} from "reactstrap";
 import { Summary } from "./supplier/Summary";
 import { ReactTable } from "../../custom_widgets/table/ReactTable";
 
 export function Table({isViewable}) {
   const {  itemMasterToggle } = useIinventoryUIContext();
-  const {editMode, setSelectedPartHandler, selectedPart} = useUIContext();
+  const {editMode, setSelectedPartHandler, selectedPart ,toggleVoidHandler ,} = useUIContext();
 
   const { currentState, inventoryItems } = useSelector(
     (state) => ({ currentState: state.purchase, inventoryItems: state.inventory.inventoryItems }),
@@ -181,15 +177,15 @@ export function Table({isViewable}) {
     //     }
     //   }
     // },
-    // {
-    //   Header: "Quarantine",
-    //   disableFilters: true,
-    //   disableSortBy: true,
-    //   accessor: "quarantine",
-    //   Cell: ({value}) => (<div className="align-items-center d-flex justify-content-center mt-5">
-    //     <Input type="checkbox" disabled={true} />
-    //   </div>),
-    // },
+    {
+      Header: "Quarantine",
+      disableFilters: true,
+      disableSortBy: true,
+      accessor: "quarantine",
+      Cell: ({value}) => (<div className="align-items-center d-flex justify-content-center mt-5">
+        <Input type="checkbox" onClick={toggleVoidHandler} />
+      </div>),
+    },
     // {
     //   Header: "Oh Qty",
     //   disableFilters: true,
