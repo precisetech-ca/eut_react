@@ -1,112 +1,14 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
 /* eslint-disable no-script-url,jsx-a11y/anchor-is-valid */
 import React, { useState ,  useEffect, useMemo } from "react";
-// import SVG from "react-inlinesvg";
+import SVG from "react-inlinesvg";
 import { Nav, Tab } from "react-bootstrap";
-// import { toAbsoluteUrl } from "../../../_helpers";
-import { shallowEqual, useDispatch, useSelector } from "react-redux";
-import * as actions from "../../../../app/pages/inventory/_redux/actions";
-import { useIinventoryUIContext } from "../../../../app/pages/inventory/context/InventoryUIContext";
-import { ReactTable } from "../../../../app/pages/custom_widgets/table/ReactTable";
-import {Input} from 'reactstrap';
-import { Link } from "react-router-dom";
+import { toAbsoluteUrl } from "../../../_helpers";
 
 export function AdvanceTablesWidget7({ className }) {
   const [key, setKey] = useState("Month");
 
-  // Customers UI Context
- 
-  const inventoryUIContext = useIinventoryUIContext();
 
-  // Getting curret state of customers list from store (Redux)
-  const { currentState } = useSelector(
-    (state) => ({ currentState: state.inventory }),
-    shallowEqual
-  );
-  const { inventoryItems } = currentState;
-
-  // Customers Redux state
-  const dispatch = useDispatch();
-  useEffect(() => {
-    // server call by queryParams
-    dispatch(actions.inventoryItemsFetched());
-    dispatch(actions.getPartsUom());
-    dispatch(actions.getSupplier());
-    dispatch(actions.getWarehouses());
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch]);
-
-  const columns = [
-    {
-        Header: "Sku",
-        Footer: "Sku",
-        accessor: "PAR_CODE",
-        disableFilters: true,
-        Cell: ({value}) => value,
-    },
-    {
-        Header: "*",
-        Footer: "*",
-        accessor: "DESCRIPTION",
-        disableFilters: true,
-        Cell: ({value}) => value,
-    },
-    {
-        Header: "Preffered Supplier",
-        Footer: "Preffered Supplier",
-        accessor: "SUPPLIER",
-        disableFilters: true,
-        Cell: ({value}) => value,
-    },
-    {
-      Header: "Stock Qty",
-      Footer: "Stock Qty",
-      accessor: "WARRANTY",
-      disableFilters: true,
-      Cell: ({value}) => value,
-    },
-    {
-      Header: "Cost",
-      Footer: "Cost",
-      accessor: "STANDARD_COST",
-      disableFilters: true,
-      Cell: ({value}) => value,
-    },
-    {
-      Header: "Active Flag",
-      Footer: "Active Flag",
-      accessor: "ACTIVE_FLAG",
-      disableFilters: true,
-      Cell: ({value}) => <Input type="checkbox" value={value === 'Y' ? true : false} disabled={true} />,
-    },
-    {
-        Header: "Action",
-        accessor: "PAR_ID",
-        disableSortBy: true,
-        disableFilters: true,
-        Cell: ({value}) => {
-          return (
-            <>
-              <Link href="#inventory-edit" onClick={() => {
-                inventoryUIContext.setEditHandler(true);
-                inventoryUIContext.itemMasterToggle();
-                inventoryUIContext.setEditData(value);
-                inventoryUIContext.setIsViewable(false);
-              }} >
-                <i class="fas fa-pencil-alt text-success"></i>
-              </Link>
-              <Link href="#inventory-edit" onClick={() => {
-                inventoryUIContext.itemMasterToggle();
-                inventoryUIContext.setEditData(value);
-                inventoryUIContext.setIsViewable(true);
-                inventoryUIContext.setEditHandler(false);
-              }} >
-                <i class="fas fa-eye text-primary ml-3"></i>
-              </Link>
-          </>)
-        }
-    },
-  ];
 
   return (
     <div className={`card card-custom ${className}`}>
@@ -162,10 +64,166 @@ export function AdvanceTablesWidget7({ className }) {
         </div>
       </div>
       {/* Body */}
-      <div className="card-body pt-0 pb-3">
-      <div className="table-responsive">
-          {inventoryItems && <ReactTable tableColumns={columns} tableData={inventoryItems} /> }
-      </div>
+      <div className="card-body pt-3 pb-0">
+        <div className="table-responsive">
+          <table className="table table-borderless table-vertical-center">
+            <thead>
+              <tr>
+                <th className="p-0" style={{ width: "100px" }} >Receiving #</th>
+                <th className="p-0" style={{ minWidth: "100px" }} > Receiving Date</th>
+                <th className="p-0" style={{ minWidth: "100px" }} > Supplier</th>
+                <th className="p-0" style={{ minWidth: "100px" }} > Supplier Invoice</th>
+                <th className="p-0" style={{ minWidth: "100px" }} > PO Number</th>
+                <th className="p-0" style={{ minWidth: "100px" }} > Completed Date</th>
+                <th className="p-0" style={{ minWidth: "100px" }} > RFP Date</th>
+
+
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td className="pl-0 py-4">
+                  <div className="symbol symbol-50 symbol-light mr-1">
+                  REC000211
+                  </div>
+                </td>
+                <td className="pl-0">
+                  <div>
+                  1998-01-11T00:00:00-08:00
+                  </div>
+                </td>
+                <td className="pl-0">
+                <div>
+                  MARGARET YANISH	
+                  </div>
+                </td>
+                <td className="">
+                  <span className="text-muted font-weight-500">
+                  23
+                  </span>
+                </td>
+                <td className="">
+                  <span className="label label-lg label-light-primary label-inline">
+                  PO000008 
+                  </span>
+                </td>
+               
+              </tr>
+              <tr>
+                <td className="pl-0 py-4">
+                  <div className="symbol symbol-50 symbol-light">
+                  REC000211
+                  </div>
+                </td>
+                <td className="pl-0">
+                <div>
+                 1998-01-11T00:00:00-08:00
+                  </div>
+                </td>
+                <td className="pl-0">
+                <div>
+                  MARGARET YANISH	
+                  </div>
+                </td>
+                <td className="">
+                  <span className="text-muted font-weight-500">
+                  23
+                  </span>
+                </td>
+                <td className="">
+                  <span className="label label-lg label-light-warning label-inline">
+                  PO000008 
+                  </span>
+                </td>
+                
+              </tr>
+              <tr>
+                <td className="pl-0 py-4">
+                  <div className="symbol symbol-50 symbol-light">
+                  REC000211
+                  </div>
+                </td>
+                <td className="pl-0">
+                <div>
+                 1998-01-11T00:00:00-08:00
+                  </div>
+                </td>
+                <td className="pl-0">
+                <div>
+                  MARGARET YANISH	
+                  </div>
+                </td>
+                <td className="">
+                  <span className="text-muted font-weight-500">
+                  23
+                  </span>
+                </td>
+                <td className="">
+                  <span className="label label-lg label-light-success label-inline">
+                  PO000008 
+                  </span>
+                </td>
+              
+              </tr>
+              <tr>
+                <td className="pl-0 py-4">
+                  <div className="symbol symbol-50 symbol-light">
+                  REC000211
+                  </div>
+                </td>
+                <td className="pl-0">
+                <div>
+                 1998-01-11T00:00:00-08:00
+                  </div>
+                </td>
+                <td className="pl-0">
+                <div>
+                  MARGARET YANISH	
+                  </div>
+                </td>
+                <td className="">
+                  <span className="text-muted font-weight-bold">
+                  23
+                  </span>
+                </td>
+                <td className="">
+                  <span className="label label-lg label-light-danger label-inline">
+                  PO000008
+                  </span>
+                </td>
+                
+              </tr>
+              <tr>
+                <td className="pl-0 py-4">
+                  <div className="symbol symbol-50 symbol-light">
+                  REC000211
+                  </div>
+                </td>
+                <td className="pl-0">
+                <div>
+                 1998-01-11T00:00:00-08:00
+                  </div>
+                </td>
+                <td className="pl-0">
+                <div>
+                  MARGARET YANISH	
+                  </div>
+                </td>
+                <td className="">
+                  <span className="text-muted font-weight-500">
+                  23
+                  </span>
+                </td>
+                <td className="">
+                  <span className="label label-lg label-light-warning label-inline">
+                  PO000008 
+                  </span>
+                </td>
+               
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );
