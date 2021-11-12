@@ -41,8 +41,8 @@ export function InventoryTable() {
         Cell: ({value}) => value,
     },
     {
-        Header: "*",
-        Footer: "*",
+        Header: "Description",
+        Footer: "Description",
         accessor: "DESCRIPTION",
         disableFilters: true,
         Cell: ({value}) => value,
@@ -69,8 +69,8 @@ export function InventoryTable() {
       Cell: ({value}) => value,
     },
     {
-      Header: "Active Flag",
-      Footer: "Active Flag",
+      Header: "Active",
+      Footer: "Active",
       accessor: "ACTIVE_FLAG",
       disableFilters: true,
       Cell: ({value}) => <Input type="checkbox" value={value === 'Y' ? true : false} disabled={true} />,
