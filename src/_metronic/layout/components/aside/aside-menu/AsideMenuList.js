@@ -156,6 +156,19 @@ export function AsideMenuList({ layoutProps }) {
               <span className="menu-text">invoice</span>
             </NavLink>
         </li> 
+        <li
+          className={`menu-item ${getMenuItemActive(
+            "/e-commerce/customers"
+          )}`}
+          aria-haspopup="true"
+        >
+          <NavLink className="menu-link" to="/purchasegroup">
+            {/* <i className="menu-bullet menu-bullet-dot">
+              <span />
+            </i> */}
+            <span className="menu-text">Purchase Group</span>
+          </NavLink>
+        </li>
       </ul>
     </>
   );

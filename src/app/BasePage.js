@@ -24,6 +24,9 @@ const PartsReturnPage = lazy(() =>
 const PhysicalCountPage = lazy(() =>
   import("./pages/physicalcount/PhysicalCount")
 );
+const PurchaseGroupPage = lazy(() =>
+  import("./pages/purchasegroup/PurchaseGroup")
+);
 const ReceivingPage= lazy(() => 
   import("./pages/receiving/Receiving")
 )
@@ -56,6 +59,7 @@ export default function BasePage() {
         <Route path="/purchase"         component={PurchasePage} />
         <Route path="/partsreturn"      component={PartsReturnPage} />
         <Route path='/physicalcount'    component={PhysicalCountPage} />
+        <Route path="/purchasegroup"     component={PurchaseGroupPage} />
         <Route path="/receiving"        component={ReceivingPage} />
         <Route path="/salesorder"       component={Salesorder} />
         <Route path="/salesreturn"      component={SalesReturn} />
