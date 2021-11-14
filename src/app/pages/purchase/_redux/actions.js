@@ -1,5 +1,4 @@
 import { callGenericAsync, callGenericGetterAsync } from "app/generic/actions";
-import { data, purchaseData, auditLogData } from "./mock/product.mock";
 import { purchaseSlice, callTypes } from "./purchaseSlice";
 const { actions } = purchaseSlice;
 

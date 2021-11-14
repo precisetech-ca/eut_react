@@ -114,7 +114,7 @@ export function Table({isViewable}) {
       disableSortBy: true,
       accessor: "QUARANTINE_FLAG",
       Cell: ({value}) => {
-        return <Input type="checkbox" value={value === "Y" ? true : false} onChange={(e) => console.log(e.currentTarget.value)} size="sm" />;
+        return <Input onClick={toggleVoidHandler} type="checkbox" value={value === "Y" ? true : false} onChange={(e) => console.log(e.currentTarget.value)} size="sm" />;
       },
     },
     {
